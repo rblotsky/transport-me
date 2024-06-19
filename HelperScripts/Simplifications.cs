@@ -10,24 +10,32 @@ public static class Simplifications
 
     // FUNCTIONS //
     // Collider detection
-    public static PhysicsShapeQueryParameters3D CreateSphereQuery(float radius, Vector3 position, uint collisionMask = 0xffffffff)
+    private static PhysicsShapeQueryParameters3D CreateCollisionQueryParameters(Shape3D shape, Vector3 position, uint collisionMask)
     {
-        // Creates a sphere to check
-        SphereShape3D checkSphere = new SphereShape3D();
-        checkSphere.Radius = radius;
+        // Creates the transform for the query
         Transform3D scanTransform = Transform3D.Identity;
         scanTransform.Origin = position;
 
         // Creates the physics query for the shape - this includes extra info like collision mask
         PhysicsShapeQueryParameters3D scanParams = new PhysicsShapeQueryParameters3D();
         scanParams.CollisionMask = collisionMask;
-        scanParams.Shape = checkSphere;
+        scanParams.Shape = shape;
         scanParams.Transform = scanTransform;
 
         return scanParams;
     }
 
-    public static CollisionObject3D[] RunCollisionQuery(World3D world, PhysicsShapeQueryParameters3D scanParams)
+
+    public static PhysicsShapeQueryParameters3D CreateCollisionQuerySphere(float radius, Vector3 position, uint collisionMask = 0xffffffff)
+    {
+        // Creates a sphere to check
+        SphereShape3D checkSphere = new SphereShape3D();
+        checkSphere.Radius = radius;
+
+        return CreateCollisionQueryParameters(checkSphere, position, collisionMask);
+    }
+
+    public static CollisionObject3D[] QueryCollidingObjects(World3D world, PhysicsShapeQueryParameters3D scanParams)
     {
         // Runs the query
         Array<Dictionary> intersections = world.DirectSpaceState.IntersectShape(scanParams);
