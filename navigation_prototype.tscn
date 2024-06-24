@@ -1,22 +1,40 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=10 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="1_72f4g"]
 [ext_resource type="Script" path="res://NavigationPrototype/NavGraph.cs" id="1_v1xb2"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="2_ofdb3"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1fst"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_yc0hq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yyrdd"]
+albedo_color = Color(0.892413, 0, 0.403884, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_aghcb"]
+material = SubResource("StandardMaterial3D_yyrdd")
+size = Vector2(200, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_py1ys"]
+size = Vector3(200, 0.1, 200)
 
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.869581, -3.88733e-08, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
 
+[node name="StaticBody3D" type="StaticBody3D" parent="DirectionalLight3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DirectionalLight3D/StaticBody3D"]
+shape = SubResource("SphereShape3D_ciyus")
+
 [node name="NavGraph" type="Node" parent="." node_paths=PackedStringArray("graphMeshInstance")]
 script = ExtResource("1_v1xb2")
 graphMeshInstance = NodePath("MeshInstance3D")
 drawMaterial = SubResource("StandardMaterial3D_p1fst")
+segmentThickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph"]
 
@@ -36,3 +54,12 @@ useSmoothing = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
 mesh = SubResource("SphereMesh_yc0hq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.457376, 0)
+mesh = SubResource("PlaneMesh_aghcb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_py1ys")

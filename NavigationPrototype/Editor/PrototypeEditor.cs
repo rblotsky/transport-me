@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 [GlobalClass]
@@ -10,6 +11,15 @@ public partial class PrototypeEditor : Node
     [Export] private Cursor cursor;
     [Export] private NavGraph navGraph;
 
+    // Placement Configs
+    [Export] private int maxPlacementDistance = 100;
+
+    // Cached Data
+    private NavNode lastClickedNode = null;
+
+
+    // FUNCTIONS //
+    // Godot Defaults
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -26,18 +36,55 @@ public partial class PrototypeEditor : Node
     {
         if (receivedEvent is InputEventMouseButton mouseButtonInput)
         {
-            // If scroll wheel, zoom
             if (mouseButtonInput.Pressed)
             {
+                // Handle click events - creating new nodes or segments.
                 if (mouseButtonInput.ButtonIndex == MouseButton.Left)
                 {
-                    GD.Print("Started");
-                    NavNode newNode = new NavNode(GetMousePosition());
-                    GD.Print("Instantiated");
-                    AddChild(newNode);
-                    GD.Print("Added");
-                    navGraph.AddNode(newNode);
-                    GD.Print("Added to NavGraph");
+                    // Check if clicking ON an existing node - if so, handle segment creation
+                    Vector2 mousePosScreen = GetViewport().GetMousePosition();
+                    PhysicsRayQueryParameters3D mouseRaycast = PhysicsRayQueryParameters3D.Create(
+                        camera.ProjectRayOrigin(mousePosScreen),
+                        camera.ProjectRayOrigin(mousePosScreen)+camera.ProjectRayNormal(mousePosScreen) * maxPlacementDistance);
+
+                    Dictionary raycastResults = camera.GetWorld3D().DirectSpaceState.IntersectRay(mouseRaycast);
+                    
+                    GD.Print("Raycast results:" + raycastResults.ToString());
+                    // If we clicked a NavNode, we try to create a segment
+                    if(raycastResults.Values.Count > 0)
+                    {
+                        Debugging.InstantiateCollisionMarkerAsChild(this, Colors.DarkRed, 0.2f, (Vector3)raycastResults["position"]);
+                    }
+
+                    if (raycastResults.Values.Count > 0 && Simplifications.IsParentOfType<NavNode>((Node)raycastResults["collider"]))
+                    {
+                        NavNode clickedNode = (NavNode)((Node)raycastResults["collider"]).GetParent();
+                        Debugging.ColourNode(clickedNode, Colors.Red);
+
+                        // If we clicked a node before, create a segment between these. Otherwise, cache.
+                        if (lastClickedNode != null)
+                        {
+                            if (!navGraph.ExistsSegment(lastClickedNode, clickedNode))
+                            {
+                                NavSegment newSegment = new NavSegment(lastClickedNode, clickedNode);
+                                AddChild(newSegment);
+                                navGraph.AddSegment(newSegment);
+                            }
+                            lastClickedNode = null;
+                        }
+                        else
+                        {
+                            lastClickedNode = clickedNode;
+                        }
+                    }
+
+                    // If we didn't click an existing node, we create a new node.
+                    else
+                    {
+                        NavNode newNode = new NavNode(GetMousePosition());
+                        AddChild(newNode);
+                        navGraph.AddNode(newNode);
+                    }
                 }
             }
         }
@@ -47,8 +94,7 @@ public partial class PrototypeEditor : Node
     }
 
 
-    // FUNCTIONS //
-    // Cursor
+    // Mouse Position 
     private Vector3 GetMousePosition()
     {
         // Gets mouse position in the world

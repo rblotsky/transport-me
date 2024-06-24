@@ -120,4 +120,9 @@ public static class Simplifications
         if (childrenOfType.Count > 0) return childrenOfType[0];
         else return null;
     }
+
+    public static bool IsParentOfType<T>(Node node) where T : Node
+    {
+        return (node.GetParent() != null) && (node.GetParent() is T);
+    }
 }

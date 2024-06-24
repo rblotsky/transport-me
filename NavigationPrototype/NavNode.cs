@@ -23,13 +23,6 @@ public partial class NavNode : Node3D
     {
         // Puts itself in the intended position
         GlobalPosition = setPosition;
-
-        // Gives itself a mesh
-        MeshInstance3D meshInstance = new MeshInstance3D();
-        SphereMesh sphere = new SphereMesh();
-        meshInstance.Mesh = sphere;
-        AddChild(meshInstance);
-
         base._Ready();
     }
 
@@ -43,5 +36,32 @@ public partial class NavNode : Node3D
     public void DisconnectSegment(NavSegment segment)
     {
         attachedSegments.Remove(segment);
+    }
+
+
+    // Managing Display
+    public void CreatePhysicalRepresentation(float radius)
+    {
+        // Gives itself a mesh and collider
+        MeshInstance3D meshInstance = new MeshInstance3D();
+        SphereMesh sphereMesh = new SphereMesh();
+        sphereMesh.Radius = radius;
+        sphereMesh.Height = radius * 2.0f;
+        meshInstance.Mesh = sphereMesh;
+        AddChild(meshInstance);
+
+        StaticBody3D colliderInstance = new StaticBody3D();
+        CollisionShape3D collisionShape = new CollisionShape3D();
+        SphereShape3D sphereShape = new SphereShape3D();
+        sphereShape.Radius = radius;
+        collisionShape.Shape = sphereShape;
+        AddChild(colliderInstance);
+        colliderInstance.AddChild(collisionShape);
+    }
+
+    public void RemovePhysicalRepresentation()
+    {
+        Simplifications.GetFirstChildOfType<MeshInstance3D>(this).Free();
+        Simplifications.GetFirstChildOfType<StaticBody3D>(this).Free();
     }
 }

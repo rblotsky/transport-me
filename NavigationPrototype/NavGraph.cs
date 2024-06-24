@@ -14,6 +14,10 @@ public partial class NavGraph : Node
     [Export] private MeshInstance3D graphMeshInstance;
     [Export] private Material drawMaterial;
 
+    // Instance Data
+    [Export] private float nodeRadius = 1;
+    [Export] private float segmentThickness = 0.5f;
+
 
     // CONSTRUCTORS //
 
@@ -41,16 +45,29 @@ public partial class NavGraph : Node
         graphMeshInstance.Mesh = mesh;
     }
 
+
+    // Checks
+    /// <summary>
+    /// Returns whether there exists a segment between A and B. Ignores direction.
+    /// (A->B and B->A both count)
+    /// </summary>
+    public bool ExistsSegment(NavNode a, NavNode b)
+    {
+        //TODO
+    }
+
     // Managing Structure
     public void AddNode(NavNode newNode)
     {
         nodes.Add(newNode);
+        newNode.CreatePhysicalRepresentation(nodeRadius);
     }
 
     public void AddSegment(NavSegment segment)
     {
         segment.ConnectToEndpoints();
         segments.Add(segment);
+        segment.CreatePhysicalRepresentation(segmentThickness);
     }
 
     public void RemoveSegment(NavSegment segment)
@@ -61,6 +78,7 @@ public partial class NavGraph : Node
             return;
         }
         segment.DisconnectFromEndpoints();
+        segment.RemovePhysicalRepresentation();
         segments.Remove(segment);
     }
 
@@ -80,6 +98,7 @@ public partial class NavGraph : Node
         }
 
         // Removes itself afterwards
+        node.RemovePhysicalRepresentation();
         nodes.Remove(node);
     }
 }
