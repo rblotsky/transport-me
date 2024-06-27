@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Diagnostics.Tracing;
 
 [GlobalClass]
 public partial class PrototypeEditor : Node
@@ -49,25 +50,21 @@ public partial class PrototypeEditor : Node
 
                     Dictionary raycastResults = camera.GetWorld3D().DirectSpaceState.IntersectRay(mouseRaycast);
                     
-                    GD.Print("Raycast results:" + raycastResults.ToString());
-                    // If we clicked a NavNode, we try to create a segment
-                    if(raycastResults.Values.Count > 0)
-                    {
-                        Debugging.InstantiateCollisionMarkerAsChild(this, Colors.DarkRed, 0.2f, (Vector3)raycastResults["position"]);
-                    }
 
+                    // If we clicked a NavNode, we try to create a segment
                     if (raycastResults.Values.Count > 0 && Simplifications.IsParentOfType<NavNode>((Node)raycastResults["collider"]))
                     {
+                        Debugger3D.instance.SphereEffect((Vector3)raycastResults["position"], 0.2f, Colors.DarkRed, 0.1f, 3);
                         NavNode clickedNode = (NavNode)((Node)raycastResults["collider"]).GetParent();
-                        Debugging.ColourNode(clickedNode, Colors.Red);
 
                         // If we clicked a node before, create a segment between these. Otherwise, cache.
                         if (lastClickedNode != null)
                         {
-                            if (!navGraph.ExistsSegment(lastClickedNode, clickedNode))
+                            if (!navGraph.ExistsSegment(lastClickedNode, clickedNode) && lastClickedNode != clickedNode)
                             {
                                 NavSegment newSegment = new NavSegment(lastClickedNode, clickedNode);
                                 AddChild(newSegment);
+                                if (Engine.IsEditorHint()) newSegment.Owner = GetTree().EditedSceneRoot;
                                 navGraph.AddSegment(newSegment);
                             }
                             lastClickedNode = null;
@@ -83,8 +80,14 @@ public partial class PrototypeEditor : Node
                     {
                         NavNode newNode = new NavNode(GetMousePosition());
                         AddChild(newNode);
+                        if (Engine.IsEditorHint()) newNode.Owner = GetTree().EditedSceneRoot;
                         navGraph.AddNode(newNode);
                     }
+                }
+                
+                else if(mouseButtonInput.ButtonIndex == MouseButton.Right)
+                {
+                    lastClickedNode = null;
                 }
             }
         }

@@ -1,8 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [GlobalClass]
+
 public partial class NavGraph : Node
 {
     // DATA //
@@ -53,7 +55,15 @@ public partial class NavGraph : Node
     /// </summary>
     public bool ExistsSegment(NavNode a, NavNode b)
     {
-        //TODO
+        foreach(NavSegment segment in a.attachedSegments)
+        {
+            if(segment.Endpoints.Contains(b))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Managing Structure

@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
+
 public partial class NavSegment : Node3D
 {
     // DATA //
@@ -11,6 +12,8 @@ public partial class NavSegment : Node3D
     /// Gives the endpoints in an array: [startNode, endNode]
     /// </summary>
     public NavNode[] Endpoints { get { return new NavNode[] { startNode, endNode }; } }
+    public NavNode Start { get { return startNode; } }
+    public NavNode End { get { return endNode; } }
     public Vector3 DirectionalLine { get { return endNode.GlobalPosition - startNode.GlobalPosition; } set { } }
 
     // CONSTRUCTORS //
@@ -32,6 +35,14 @@ public partial class NavSegment : Node3D
         base._Ready();
     }
 
+
+    // Data Retrieval
+    public NavNode GetOtherEnd(NavNode oneEnd)
+    {
+        if (startNode == oneEnd) return endNode;
+        else if (endNode == oneEnd) return startNode;
+        else return null;
+    }
 
     // Managing Structure
     public void ConnectToEndpoints()
@@ -63,6 +74,7 @@ public partial class NavSegment : Node3D
         capsule.Height = DirectionalLine.Length();
         meshInstance.Mesh = capsule;
         AddChild(meshInstance);
+        if(Engine.IsEditorHint()) meshInstance.Owner = GetTree().EditedSceneRoot;
 
         StaticBody3D colliderInstance = new StaticBody3D();
         CapsuleShape3D capsuleShape = new CapsuleShape3D();
@@ -71,6 +83,7 @@ public partial class NavSegment : Node3D
         uint shapeOwnerID = colliderInstance.CreateShapeOwner(colliderInstance);
         colliderInstance.ShapeOwnerAddShape(shapeOwnerID, capsuleShape);
         AddChild(colliderInstance);
+        if (Engine.IsEditorHint()) colliderInstance.Owner = GetTree().EditedSceneRoot;
     }
 
     public void RemovePhysicalRepresentation()

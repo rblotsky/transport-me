@@ -25,7 +25,6 @@ public static class Simplifications
         return scanParams;
     }
 
-
     public static PhysicsShapeQueryParameters3D CreateCollisionQuerySphere(float radius, Vector3 position, uint collisionMask = 0xffffffff)
     {
         // Creates a sphere to check
@@ -121,6 +120,9 @@ public static class Simplifications
         else return null;
     }
 
+    /// <summary>
+    /// Returns true if the first parent of this node is of the given type.
+    /// </summary>
     public static bool IsParentOfType<T>(Node node) where T : Node
     {
         return (node.GetParent() != null) && (node.GetParent() is T);

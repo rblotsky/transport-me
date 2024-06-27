@@ -1,12 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=11 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="1_72f4g"]
-[ext_resource type="Script" path="res://NavigationPrototype/NavGraph.cs" id="1_v1xb2"]
+[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_nfcog"]
+[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="1_v1xb2"]
+[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/PathAlgorithm.cs" id="2_ds774"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="2_ofdb3"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1fst"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_yc0hq"]
 
@@ -22,6 +22,12 @@ size = Vector3(200, 0.1, 200)
 
 [node name="Node3D" type="Node3D"]
 
+[node name="Debugger3D" type="Node3D" parent="."]
+script = ExtResource("1_nfcog")
+
+[node name="PathAlgorithm" type="Node" parent="."]
+script = ExtResource("2_ds774")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.869581, -3.88733e-08, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
 
@@ -33,7 +39,7 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="NavGraph" type="Node" parent="." node_paths=PackedStringArray("graphMeshInstance")]
 script = ExtResource("1_v1xb2")
 graphMeshInstance = NodePath("MeshInstance3D")
-drawMaterial = SubResource("StandardMaterial3D_p1fst")
+nodeRadius = 0.5
 segmentThickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph"]
@@ -49,8 +55,6 @@ navGraph = NodePath("../NavGraph")
 
 [node name="Cursor" type="Node3D" parent="."]
 script = ExtResource("2_ofdb3")
-lerpWeight = 25.0
-useSmoothing = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
 mesh = SubResource("SphereMesh_yc0hq")
