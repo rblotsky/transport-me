@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="1_72f4g"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_nfcog"]
 [ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="1_v1xb2"]
-[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/PathAlgorithm.cs" id="2_ds774"]
+[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="2_ds774"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="2_ofdb3"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
@@ -25,7 +25,7 @@ size = Vector3(200, 0.1, 200)
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("1_nfcog")
 
-[node name="PathAlgorithm" type="Node" parent="."]
+[node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("2_ds774")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

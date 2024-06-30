@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class PathAlgorithm : Node
+public partial class RouteDebugger : Node
 {
     // Godot Defaults
     public override void _Input(InputEvent receivedEvent)

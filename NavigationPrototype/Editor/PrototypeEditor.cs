@@ -12,8 +12,9 @@ public partial class PrototypeEditor : Node
     [Export] private Cursor cursor;
     [Export] private NavGraph navGraph;
 
-    // Placement Configs
+    // Editor Configs
     [Export] private int maxPlacementDistance = 100;
+    [Export] private string savedSceneName = "GraphScene";
 
     // Cached Data
     private NavNode lastClickedNode = null;
@@ -46,10 +47,10 @@ public partial class PrototypeEditor : Node
                     Vector2 mousePosScreen = GetViewport().GetMousePosition();
                     PhysicsRayQueryParameters3D mouseRaycast = PhysicsRayQueryParameters3D.Create(
                         camera.ProjectRayOrigin(mousePosScreen),
-                        camera.ProjectRayOrigin(mousePosScreen)+camera.ProjectRayNormal(mousePosScreen) * maxPlacementDistance);
+                        camera.ProjectRayOrigin(mousePosScreen) + camera.ProjectRayNormal(mousePosScreen) * maxPlacementDistance);
 
                     Dictionary raycastResults = camera.GetWorld3D().DirectSpaceState.IntersectRay(mouseRaycast);
-                    
+
 
                     // If we clicked a NavNode, we try to create a segment
                     if (raycastResults.Values.Count > 0 && Simplifications.IsParentOfType<NavNode>((Node)raycastResults["collider"]))
@@ -62,9 +63,9 @@ public partial class PrototypeEditor : Node
                         {
                             if (!navGraph.ExistsSegment(lastClickedNode, clickedNode) && lastClickedNode != clickedNode)
                             {
-                                NavSegment newSegment = new NavSegment(lastClickedNode, clickedNode);
-                                AddChild(newSegment);
-                                if (Engine.IsEditorHint()) newSegment.Owner = GetTree().EditedSceneRoot;
+                                NavSegment newSegment = new NavSegment();
+                                newSegment.SetStartEnd(lastClickedNode, clickedNode);
+                                Simplifications.AddOwnedChild(this, newSegment);
                                 navGraph.AddSegment(newSegment);
                             }
                             lastClickedNode = null;
@@ -78,17 +79,28 @@ public partial class PrototypeEditor : Node
                     // If we didn't click an existing node, we create a new node.
                     else
                     {
-                        NavNode newNode = new NavNode(GetMousePosition());
-                        AddChild(newNode);
-                        if (Engine.IsEditorHint()) newNode.Owner = GetTree().EditedSceneRoot;
+                        NavNode newNode = new NavNode();
+                        newNode.AddSetPosition(GetMousePosition());
+                        Simplifications.AddOwnedChild(this, newNode);
                         navGraph.AddNode(newNode);
+                        
                     }
                 }
-                
-                else if(mouseButtonInput.ButtonIndex == MouseButton.Right)
+
+                else if (mouseButtonInput.ButtonIndex == MouseButton.Right)
                 {
                     lastClickedNode = null;
                 }
+            }
+        }
+
+        else if (receivedEvent is InputEventKey keyboardInput)
+        {
+            if (keyboardInput.Keycode == Key.S && keyboardInput.IsPressed())
+            {
+                PackedScene savedScene = new PackedScene();
+                savedScene.Pack(GetTree().CurrentScene);
+                ResourceSaver.Save(savedScene, $"res://{savedSceneName}.tscn");
             }
         }
 

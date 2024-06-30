@@ -1,15 +1,13 @@
 using Godot;
-using System;
-using System.Collections.Generic;
+using Godot.Collections;
 using System.Linq;
 
 [GlobalClass]
-
 public partial class NavNode : Node3D
 {
     // DATA //
-    private Vector3 setPosition;
-    public List<NavSegment> attachedSegments = new List<NavSegment>();
+    [Export] private Vector3 setPosition;
+    [Export] public Array<NavSegment> attachedSegments = new Array<NavSegment>();
     public NavSegment[] StartingSegments
     {
         get
@@ -26,10 +24,10 @@ public partial class NavNode : Node3D
     }
 
 
-    // CONSTRUCTORS //
-    public NavNode(Vector3 position)
+    // INITIALIZING //
+    public void AddSetPosition(Vector3 pos)
     {
-        setPosition = position;
+        setPosition = pos;
     }
 
 
@@ -64,17 +62,15 @@ public partial class NavNode : Node3D
         sphereMesh.Radius = radius;
         sphereMesh.Height = radius * 2.0f;
         meshInstance.Mesh = sphereMesh;
-        AddChild(meshInstance);
-        if (Engine.IsEditorHint()) meshInstance.Owner = GetTree().EditedSceneRoot;
+        Simplifications.AddOwnedChild(this, meshInstance);
 
         StaticBody3D colliderInstance = new StaticBody3D();
         CollisionShape3D collisionShape = new CollisionShape3D();
         SphereShape3D sphereShape = new SphereShape3D();
         sphereShape.Radius = radius;
         collisionShape.Shape = sphereShape;
-        AddChild(colliderInstance);
-        colliderInstance.AddChild(collisionShape);
-        if (Engine.IsEditorHint()) colliderInstance.Owner = GetTree().EditedSceneRoot;
+        Simplifications.AddOwnedChild(this, colliderInstance);
+        Simplifications.AddOwnedChild(colliderInstance, collisionShape);
     }
 
     public void RemovePhysicalRepresentation()

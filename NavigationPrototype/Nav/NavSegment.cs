@@ -6,8 +6,8 @@ using System;
 public partial class NavSegment : Node3D
 {
     // DATA //
-    private NavNode startNode;
-    private NavNode endNode;
+    [Export] private NavNode startNode;
+    [Export] private NavNode endNode;
     /// <summary>
     /// Gives the endpoints in an array: [startNode, endNode]
     /// </summary>
@@ -16,8 +16,8 @@ public partial class NavSegment : Node3D
     public NavNode End { get { return endNode; } }
     public Vector3 DirectionalLine { get { return endNode.GlobalPosition - startNode.GlobalPosition; } set { } }
 
-    // CONSTRUCTORS //
-    public NavSegment(NavNode start, NavNode end)
+    // INITIALIZATION //
+    public void SetStartEnd(NavNode start, NavNode end)
     {
         startNode = start;
         endNode = end;
@@ -73,17 +73,16 @@ public partial class NavSegment : Node3D
         capsule.Radius = thickness;
         capsule.Height = DirectionalLine.Length();
         meshInstance.Mesh = capsule;
-        AddChild(meshInstance);
-        if(Engine.IsEditorHint()) meshInstance.Owner = GetTree().EditedSceneRoot;
+        Simplifications.AddOwnedChild(this, meshInstance);
 
         StaticBody3D colliderInstance = new StaticBody3D();
+        CollisionShape3D collisionShape = new CollisionShape3D();
         CapsuleShape3D capsuleShape = new CapsuleShape3D();
         capsuleShape.Radius = thickness;
         capsuleShape.Height = DirectionalLine.Length();
-        uint shapeOwnerID = colliderInstance.CreateShapeOwner(colliderInstance);
-        colliderInstance.ShapeOwnerAddShape(shapeOwnerID, capsuleShape);
-        AddChild(colliderInstance);
-        if (Engine.IsEditorHint()) colliderInstance.Owner = GetTree().EditedSceneRoot;
+        collisionShape.Shape = capsuleShape;
+        Simplifications.AddOwnedChild(this, colliderInstance);
+        Simplifications.AddOwnedChild(colliderInstance, collisionShape);
     }
 
     public void RemovePhysicalRepresentation()

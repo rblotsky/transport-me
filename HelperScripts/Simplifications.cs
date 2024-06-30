@@ -127,4 +127,12 @@ public static class Simplifications
     {
         return (node.GetParent() != null) && (node.GetParent() is T);
     }
+
+
+    // Miscellaneous
+    public static void AddOwnedChild(Node parent, Node child)
+    {
+        parent.AddChild(child, true);
+        child.Owner = parent.GetTree().CurrentScene;
+    }
 }

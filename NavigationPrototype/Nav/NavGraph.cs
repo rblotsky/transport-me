@@ -1,6 +1,6 @@
 using Godot;
+using Godot.Collections;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 [GlobalClass]
@@ -8,9 +8,9 @@ using System.Linq;
 public partial class NavGraph : Node
 {
     // DATA //
-    // Internal graph data
-    public List<NavNode> nodes = new List<NavNode>();
-    public List<NavSegment> segments = new List<NavSegment>();
+    // Graph data
+    [Export] public Array<NavNode> nodes = new Array<NavNode>();
+    [Export] public Array<NavSegment> segments = new Array<NavSegment>();
 
     // Scene references
     [Export] private MeshInstance3D graphMeshInstance;
