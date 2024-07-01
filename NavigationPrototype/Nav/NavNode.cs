@@ -25,7 +25,7 @@ public partial class NavNode : Node3D
 
 
     // INITIALIZING //
-    public void AddSetPosition(Vector3 pos)
+    public void SetPosition(Vector3 pos)
     {
         setPosition = pos;
     }

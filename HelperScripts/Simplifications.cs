@@ -55,6 +55,22 @@ public static class Simplifications
         return new CollisionObject3D[0];
     }
 	
+    public static Vector2 GetMousePosScreen(Node worldNode)
+    {
+        return worldNode.GetViewport().GetMousePosition();
+    }
+
+    public static PhysicsRayQueryParameters3D CreateMousePosRaycastQuery(Camera3D camera, float distance)
+    {
+        Vector2 mousePosScreen = GetMousePosScreen(camera);
+
+        PhysicsRayQueryParameters3D mouseRaycast = PhysicsRayQueryParameters3D.Create(
+                        camera.ProjectRayOrigin(mousePosScreen),
+                        camera.ProjectRayOrigin(mousePosScreen) + camera.ProjectRayNormal(mousePosScreen) * distance);
+
+        return mouseRaycast;
+    }
+
 
     // Retrieving Nodes
     /// <summary>
@@ -134,5 +150,18 @@ public static class Simplifications
     {
         parent.AddChild(child, true);
         child.Owner = parent.GetTree().CurrentScene;
+    }
+
+    public static void FreeOwnedNode(Node node)
+    {
+        // Removes owner from this node and its children
+        node.Owner = null;
+
+        foreach(Node childNode in GetChildrenOfNode(node, true))
+        {
+            childNode.Owner = null;
+        }
+
+        node.QueueFree();
     }
 }

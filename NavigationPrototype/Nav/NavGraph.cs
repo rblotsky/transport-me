@@ -25,14 +25,6 @@ public partial class NavGraph : Node
 
 
     // FUNCTIONS //
-    // Godot Functions
-    public override void _Process(double delta)
-    {
-        
-        base._Process(delta);
-    }
-
-
     // Managing display
     private void UpdateMesh()
     {
@@ -69,6 +61,7 @@ public partial class NavGraph : Node
     // Managing Structure
     public void AddNode(NavNode newNode)
     {
+        Simplifications.AddOwnedChild(this, newNode);
         nodes.Add(newNode);
         newNode.CreatePhysicalRepresentation(nodeRadius);
     }
@@ -76,6 +69,7 @@ public partial class NavGraph : Node
     public void AddSegment(NavSegment segment)
     {
         segment.ConnectToEndpoints();
+        Simplifications.AddOwnedChild(this, segment);
         segments.Add(segment);
         segment.CreatePhysicalRepresentation(segmentThickness);
     }
@@ -90,6 +84,7 @@ public partial class NavGraph : Node
         segment.DisconnectFromEndpoints();
         segment.RemovePhysicalRepresentation();
         segments.Remove(segment);
+        Simplifications.FreeOwnedNode(segment);
     }
 
     public void RemoveNodeAndConnections(NavNode node)
@@ -110,5 +105,6 @@ public partial class NavGraph : Node
         // Removes itself afterwards
         node.RemovePhysicalRepresentation();
         nodes.Remove(node);
+        Simplifications.FreeOwnedNode(node);
     }
 }

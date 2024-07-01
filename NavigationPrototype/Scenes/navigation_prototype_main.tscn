@@ -1,14 +1,20 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=12 format=3 uid="uid://cdsolc63uov8s"]
 
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="1_72f4g"]
-[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_nfcog"]
-[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="1_v1xb2"]
-[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="2_ds774"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="2_ofdb3"]
+[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
+[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
+[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="3_i7k6j"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="4_ywgcf"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="5_mhk0g"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
+albedo_color = Color(0, 0.8977, 0.550284, 1)
+
 [sub_resource type="SphereMesh" id="SphereMesh_yc0hq"]
+material = SubResource("StandardMaterial3D_dnkjm")
+radius = 0.2
+height = 0.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yyrdd"]
 albedo_color = Color(0.892413, 0, 0.403884, 1)
@@ -23,10 +29,10 @@ size = Vector3(200, 0.1, 200)
 [node name="Node3D" type="Node3D"]
 
 [node name="Debugger3D" type="Node3D" parent="."]
-script = ExtResource("1_nfcog")
+script = ExtResource("1_t2p50")
 
 [node name="RouteDebugger" type="Node" parent="."]
-script = ExtResource("2_ds774")
+script = ExtResource("2_jfx1u")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.869581, -3.88733e-08, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
@@ -37,7 +43,7 @@ transform = Transform3D(-0.869581, -3.88733e-08, -0.49379, -0.34255, 0.720249, 0
 shape = SubResource("SphereShape3D_ciyus")
 
 [node name="NavGraph" type="Node" parent="." node_paths=PackedStringArray("graphMeshInstance")]
-script = ExtResource("1_v1xb2")
+script = ExtResource("3_i7k6j")
 graphMeshInstance = NodePath("MeshInstance3D")
 nodeRadius = 0.5
 segmentThickness = 0.1
@@ -48,13 +54,13 @@ segmentThickness = 0.1
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 9, 6)
 
 [node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "navGraph")]
-script = ExtResource("1_72f4g")
+script = ExtResource("4_ywgcf")
 camera = NodePath("../Camera3D")
 cursor = NodePath("../Cursor")
 navGraph = NodePath("../NavGraph")
 
 [node name="Cursor" type="Node3D" parent="."]
-script = ExtResource("2_ofdb3")
+script = ExtResource("5_mhk0g")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
 mesh = SubResource("SphereMesh_yc0hq")

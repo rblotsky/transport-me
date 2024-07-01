@@ -22,15 +22,9 @@ public partial class PrototypeEditor : Node
 
     // FUNCTIONS //
     // Godot Defaults
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        cursor.SetNextPos(GetMousePosition());
+        cursor.SetNextPos(GetRaycastMousePosition());
         base._Process(delta);
     }
 
@@ -44,10 +38,7 @@ public partial class PrototypeEditor : Node
                 if (mouseButtonInput.ButtonIndex == MouseButton.Left)
                 {
                     // Check if clicking ON an existing node - if so, handle segment creation
-                    Vector2 mousePosScreen = GetViewport().GetMousePosition();
-                    PhysicsRayQueryParameters3D mouseRaycast = PhysicsRayQueryParameters3D.Create(
-                        camera.ProjectRayOrigin(mousePosScreen),
-                        camera.ProjectRayOrigin(mousePosScreen) + camera.ProjectRayNormal(mousePosScreen) * maxPlacementDistance);
+                    PhysicsRayQueryParameters3D mouseRaycast = Simplifications.CreateMousePosRaycastQuery(camera, maxPlacementDistance);
 
                     Dictionary raycastResults = camera.GetWorld3D().DirectSpaceState.IntersectRay(mouseRaycast);
 
@@ -55,7 +46,6 @@ public partial class PrototypeEditor : Node
                     // If we clicked a NavNode, we try to create a segment
                     if (raycastResults.Values.Count > 0 && Simplifications.IsParentOfType<NavNode>((Node)raycastResults["collider"]))
                     {
-                        Debugger3D.instance.SphereEffect((Vector3)raycastResults["position"], 0.2f, Colors.DarkRed, 0.1f, 3);
                         NavNode clickedNode = (NavNode)((Node)raycastResults["collider"]).GetParent();
 
                         // If we clicked a node before, create a segment between these. Otherwise, cache.
@@ -65,7 +55,6 @@ public partial class PrototypeEditor : Node
                             {
                                 NavSegment newSegment = new NavSegment();
                                 newSegment.SetStartEnd(lastClickedNode, clickedNode);
-                                Simplifications.AddOwnedChild(this, newSegment);
                                 navGraph.AddSegment(newSegment);
                             }
                             lastClickedNode = null;
@@ -80,16 +69,29 @@ public partial class PrototypeEditor : Node
                     else
                     {
                         NavNode newNode = new NavNode();
-                        newNode.AddSetPosition(GetMousePosition());
-                        Simplifications.AddOwnedChild(this, newNode);
+                        newNode.SetPosition(GetMousePosition());
                         navGraph.AddNode(newNode);
-                        
+
                     }
                 }
 
                 else if (mouseButtonInput.ButtonIndex == MouseButton.Right)
                 {
                     lastClickedNode = null;
+
+                    // Check if clicking ON an existing node - if so, remove it
+                    Vector2 mousePosScreen = Simplifications.GetMousePosScreen(this);
+                    PhysicsRayQueryParameters3D mouseRaycast = Simplifications.CreateMousePosRaycastQuery(camera, maxPlacementDistance);
+
+                    Dictionary raycastResults = camera.GetWorld3D().DirectSpaceState.IntersectRay(mouseRaycast);
+
+
+                    // If we clicked a NavNode, we try to create a segment
+                    if (raycastResults.Values.Count > 0 && Simplifications.IsParentOfType<NavNode>((Node)raycastResults["collider"]))
+                    {
+                        NavNode clickedNode = (NavNode)((Node)raycastResults["collider"]).GetParent();
+                        navGraph.RemoveNodeAndConnections(clickedNode);
+                    }
                 }
             }
         }
@@ -100,7 +102,7 @@ public partial class PrototypeEditor : Node
             {
                 PackedScene savedScene = new PackedScene();
                 savedScene.Pack(GetTree().CurrentScene);
-                ResourceSaver.Save(savedScene, $"res://{savedSceneName}.tscn");
+                ResourceSaver.Save(savedScene, $"res://NavigationPrototype/Scenes/{savedSceneName}.tscn");
             }
         }
 
@@ -113,7 +115,7 @@ public partial class PrototypeEditor : Node
     private Vector3 GetMousePosition()
     {
         // Gets mouse position in the world
-        Vector2 mousePosScreen = GetViewport().GetMousePosition();
+        Vector2 mousePosScreen = Simplifications.GetMousePosScreen(this);
         Plane placementPlane = Plane.PlaneXZ;
         Vector3? mousePosWorld =
             placementPlane.IntersectsRay(
@@ -129,6 +131,24 @@ public partial class PrototypeEditor : Node
         else
         {
             return Vector3.Zero;
+        }
+    }
+
+    private Vector3 GetRaycastMousePosition()
+    {
+        Vector2 mousePosScreen = Simplifications.GetMousePosScreen(this);
+
+        PhysicsRayQueryParameters3D mouseRaycast = Simplifications.CreateMousePosRaycastQuery(camera, maxPlacementDistance);
+
+        Dictionary raycastResults = camera.GetWorld3D().DirectSpaceState.IntersectRay(mouseRaycast);
+
+        if (raycastResults.Values.Count > 0 && Simplifications.IsParentOfType<NavNode>((Node)raycastResults["collider"]))
+        {
+            return (Vector3)raycastResults["position"];
+        }
+        else
+        {
+            return GetMousePosition();
         }
     }
 }
