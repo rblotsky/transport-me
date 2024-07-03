@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5onpgdjessa8"]
+
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_8jpnu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
+font_size = 30
+font_color = Color(1, 0, 0.933333, 1)
+outline_size = 10
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[node name="PrototypeUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="InstructionsUI" type="Node" parent="." node_paths=PackedStringArray("instructionsContainer", "instructions")]
+script = ExtResource("1_8jpnu")
+instructionsContainer = NodePath("../PanelContainer")
+instructions = NodePath("../PanelContainer/VFlowContainer")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 137.0
+offset_bottom = 31.0
+text = "View Menu"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.048
+anchor_bottom = 1.0
+offset_top = -0.104
+offset_right = 345.0
+grow_vertical = 2
+
+[node name="VFlowContainer" type="VFlowContainer" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Label" type="Label" parent="PanelContainer/VFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Menu"
+label_settings = SubResource("LabelSettings_i7tsy")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[connection signal="pressed" from="Button" to="InstructionsUI" method="OnButtonPressed"]

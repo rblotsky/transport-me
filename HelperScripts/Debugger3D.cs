@@ -80,8 +80,8 @@ public partial class Debugger3D : Node3D
         // Instantiates a MeshInstance to store the mesh, creates an effect for it, and sets
         // its position
         MeshInstance3D meshInstance = new MeshInstance3D();
-        AddChild(meshInstance);
         meshInstance.Mesh = mesh;
+        AddChild(meshInstance);
 
         if(pos.HasValue)
         {

@@ -5,7 +5,13 @@ using System;
 public partial class RouteDebugger : Node
 {
     // Godot Defaults
-    public override void _Input(InputEvent receivedEvent)
+    public override void _Ready()
+    {
+        InstructionsUI.instance.AddInstruction("Press P to do a random Route test!");
+        base._Ready();
+    }
+
+    public override void _UnhandledInput(InputEvent receivedEvent)
     {
         if (receivedEvent is InputEventKey keyboardInput)
         {
@@ -28,5 +34,7 @@ public partial class RouteDebugger : Node
                 }
             }
         }
+
+        base._UnhandledInput(receivedEvent);
     }
 }

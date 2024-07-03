@@ -22,13 +22,23 @@ public partial class PrototypeEditor : Node
 
     // FUNCTIONS //
     // Godot Defaults
-	public override void _Process(double delta)
+    public override void _Ready()
+    {
+        InstructionsUI.instance.AddInstruction("Click on an empty space to add a node.");
+        InstructionsUI.instance.AddInstruction("Right click on a node to remove it.");
+        InstructionsUI.instance.AddInstruction("Click on two nodes in a row to make a segment between them.");
+        InstructionsUI.instance.AddInstruction("Right click to cancel making a segment.");
+        InstructionsUI.instance.AddInstruction("Press S to save the scene.");
+        base._Ready();
+    }
+
+    public override void _Process(double delta)
 	{
         cursor.SetNextPos(GetRaycastMousePosition());
         base._Process(delta);
     }
 
-    public override void _Input(InputEvent receivedEvent)
+    public override void _UnhandledInput(InputEvent receivedEvent)
     {
         if (receivedEvent is InputEventMouseButton mouseButtonInput)
         {
@@ -107,7 +117,7 @@ public partial class PrototypeEditor : Node
         }
 
         // Call baseclass input
-        base._Input(receivedEvent);
+        base._UnhandledInput(receivedEvent);
     }
 
 
