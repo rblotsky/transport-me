@@ -6,7 +6,8 @@ using System.Linq;
 public partial class NavNode : Node3D
 {
     // DATA //
-    [Export] private Vector3 setPosition;
+    [Export] public Vector3 NodePosition { get; set;}
+    [Export] public float NodeRadius { get; set; }
     [Export] public Array<NavSegment> attachedSegments = new Array<NavSegment>();
     public NavSegment[] StartingSegments
     {
@@ -24,19 +25,12 @@ public partial class NavNode : Node3D
     }
 
 
-    // INITIALIZING //
-    public void SetPosition(Vector3 pos)
-    {
-        setPosition = pos;
-    }
-
-
     // FUNCTIONS //
     // Godot Functions
     public override void _Ready()
     {
         // Puts itself in the intended position
-        GlobalPosition = setPosition;
+        GlobalPosition = NodePosition;
         base._Ready();
     }
 
@@ -54,20 +48,20 @@ public partial class NavNode : Node3D
 
 
     // Managing Display
-    public void CreatePhysicalRepresentation(float radius)
+    public void CreatePhysicalRepresentation()
     {
         // Gives itself a mesh and collider
         MeshInstance3D meshInstance = new MeshInstance3D();
         SphereMesh sphereMesh = new SphereMesh();
-        sphereMesh.Radius = radius;
-        sphereMesh.Height = radius * 2.0f;
+        sphereMesh.Radius = NodeRadius;
+        sphereMesh.Height = NodeRadius * 2.0f;
         meshInstance.Mesh = sphereMesh;
         Simplifications.AddOwnedChild(this, meshInstance);
 
         StaticBody3D colliderInstance = new StaticBody3D();
         CollisionShape3D collisionShape = new CollisionShape3D();
         SphereShape3D sphereShape = new SphereShape3D();
-        sphereShape.Radius = radius;
+        sphereShape.Radius = NodeRadius;
         collisionShape.Shape = sphereShape;
         Simplifications.AddOwnedChild(this, colliderInstance);
         Simplifications.AddOwnedChild(colliderInstance, collisionShape);

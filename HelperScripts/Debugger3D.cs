@@ -111,7 +111,7 @@ public partial class Debugger3D : Node3D
     {
         SphereMesh sphere = new SphereMesh();
         sphere.Radius = radius;
-        sphere.Height = radius;
+        sphere.Height = radius*2;
         sphere.Material = CreateMaterial(colour, alpha);
 
         CreateMeshEffect(sphere, durationSeconds, pos);

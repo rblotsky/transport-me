@@ -13,7 +13,9 @@ public partial class Vehicle : Node3D
     private Route routeToDestination;
 
     private NavSegment currentSegment;
+    private float distanceAlongSegment;
     private NavNode currentNode;
+
 
     // FUNCTIONS //
 	// Called when the node enters the scene tree for the first time.

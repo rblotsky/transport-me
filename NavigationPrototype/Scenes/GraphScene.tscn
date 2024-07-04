@@ -1,1099 +1,319 @@
-[gd_scene load_steps=329 format=3]
+[gd_scene load_steps=99 format=3]
 
-[ext_resource type="PackedScene" path="res://NavigationPrototype/Scenes/PrototypeUI.tscn" id="1_758gu"]
-[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_ogku5"]
-[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="3_tc8gj"]
-[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="4_bmsll"]
-[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavNode.cs" id="5_5nkme"]
-[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavSegment.cs" id="6_i8g0q"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="7_nj5x6"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="8_c88nd"]
+[ext_resource type="PackedScene" path="res://NavigationPrototype/Scenes/PrototypeUI.tscn" id="1_7owk3"]
+[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_s11ty"]
+[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="3_2kiqj"]
+[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="4_kou7f"]
+[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavNode.cs" id="5_0y4md"]
+[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavSegment.cs" id="6_r5re3"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="7_uuxhs"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="8_i014c"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_8gmkm"]
+[sub_resource type="SphereMesh" id="SphereMesh_kmetc"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_eyq2g"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_odop3"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_tn4mw"]
+[sub_resource type="SphereMesh" id="SphereMesh_bl1yy"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_wf3np"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_xd6va"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_lhhty"]
+[sub_resource type="SphereMesh" id="SphereMesh_vdswt"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_upebu"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_jehv8"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8ueon"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0p585"]
 radius = 0.1
-height = 5.62555
+height = 7.5563
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x1tnh"]
-radius = 0.1
-height = 5.62555
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_bdwen"]
-radius = 0.1
-height = 6.51729
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jbb0h"]
-radius = 0.1
-height = 6.51729
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_lfo1t"]
-radius = 0.1
-height = 4.23979
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lai88"]
-radius = 0.1
-height = 4.23979
-
-[sub_resource type="SphereMesh" id="SphereMesh_4cslc"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_kwoab"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_w8tlw"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ksui3"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_1206b"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_2xfyx"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_3t6k5"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_2qb55"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_181bw"]
-radius = 0.1
-height = 4.47901
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7r0pp"]
-radius = 0.1
-height = 4.47901
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_b2uom"]
-radius = 0.1
-height = 3.25693
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8qhw"]
-radius = 0.1
-height = 3.25693
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_qohh6"]
-radius = 0.1
-height = 3.171
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_spwla"]
-radius = 0.1
-height = 3.171
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_kgc6i"]
-radius = 0.1
-height = 3.69092
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p10nj"]
-radius = 0.1
-height = 3.69092
-
-[sub_resource type="SphereMesh" id="SphereMesh_wqogj"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_a5vjb"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8yoeb"]
-radius = 0.1
-height = 8.34655
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_238ik"]
-radius = 0.1
-height = 8.34655
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_086pl"]
-radius = 0.1
-height = 7.68234
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1e6eg"]
-radius = 0.1
-height = 7.68234
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_3bcbk"]
-radius = 0.1
-height = 3.1278
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p4w0u"]
-radius = 0.1
-height = 3.1278
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_2q311"]
-radius = 0.1
-height = 5.50657
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ym30"]
-radius = 0.1
-height = 5.50657
-
-[sub_resource type="SphereMesh" id="SphereMesh_wvny3"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_425ac"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_qj8v5"]
-radius = 0.1
-height = 1.77444
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7is2o"]
-radius = 0.1
-height = 1.77444
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_yb6cx"]
-radius = 0.1
-height = 1.16756
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mo4ds"]
-radius = 0.1
-height = 1.16756
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4xdah"]
-radius = 0.1
-height = 5.02793
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wb2p3"]
-radius = 0.1
-height = 5.02793
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vhxiq"]
-radius = 0.1
-height = 3.24072
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ks655"]
-radius = 0.1
-height = 3.24072
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_q24q4"]
-radius = 0.1
-height = 6.94429
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r1xtr"]
-radius = 0.1
-height = 6.94429
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_kugtf"]
-radius = 0.1
-height = 4.41104
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c1pct"]
-radius = 0.1
-height = 4.41104
-
-[sub_resource type="SphereMesh" id="SphereMesh_elcbf"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_jhkyy"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_dbgka"]
-radius = 0.1
-height = 2.31584
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6vopy"]
-radius = 0.1
-height = 2.31584
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_7cwtg"]
-radius = 0.1
-height = 2.99542
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kt5ff"]
-radius = 0.1
-height = 2.99542
-
-[sub_resource type="SphereMesh" id="SphereMesh_rir2p"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_80v2g"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_sb8ml"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_m7nmq"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_6q521"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_5mmoi"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_tm4it"]
-radius = 0.1
-height = 2.59537
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xvpq5"]
-radius = 0.1
-height = 2.59537
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_a68pc"]
-radius = 0.1
-height = 2.88117
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6y3cd"]
-radius = 0.1
-height = 2.88117
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ff1jg"]
-radius = 0.1
-height = 3.95604
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_isfg2"]
-radius = 0.1
-height = 3.95604
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_yn7l6"]
-radius = 0.1
-height = 7.63397
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t24jn"]
-radius = 0.1
-height = 7.63397
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_p4heg"]
-radius = 0.1
-height = 6.36626
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lx0um"]
-radius = 0.1
-height = 6.36626
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_6u5to"]
-radius = 0.1
-height = 5.10058
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_px1ro"]
-radius = 0.1
-height = 5.10058
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ej7h6"]
-radius = 0.1
-height = 5.16051
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w1qiq"]
-radius = 0.1
-height = 5.16051
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_7ogut"]
-radius = 0.1
-height = 10.5936
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6bswi"]
-radius = 0.1
-height = 10.5936
-
-[sub_resource type="SphereMesh" id="SphereMesh_mjbwq"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_6guyl"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_h01ao"]
-radius = 0.1
-height = 10.2652
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iwfyh"]
-radius = 0.1
-height = 10.2652
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_1bs0s"]
-radius = 0.1
-height = 6.42904
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h7c4e"]
-radius = 0.1
-height = 6.42904
-
-[sub_resource type="SphereMesh" id="SphereMesh_g76jk"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_0cc6p"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ehl0s"]
-radius = 0.1
-height = 3.61802
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ov2fg"]
-radius = 0.1
-height = 3.61802
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_np5ot"]
-radius = 0.1
-height = 4.78346
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evs61"]
-radius = 0.1
-height = 4.78346
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_2c4my"]
-radius = 0.1
-height = 7.25286
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d3san"]
-radius = 0.1
-height = 7.25286
-
-[sub_resource type="SphereMesh" id="SphereMesh_kfr8u"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_mrepe"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_1j6da"]
-radius = 0.1
-height = 1.51915
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bgipd"]
-radius = 0.1
-height = 1.51915
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vlvn0"]
-radius = 0.1
-height = 5.0519
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0qi1l"]
-radius = 0.1
-height = 5.0519
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_mr36m"]
-radius = 0.1
-height = 5.71984
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dh7cx"]
-radius = 0.1
-height = 5.71984
-
-[sub_resource type="SphereMesh" id="SphereMesh_k7jjx"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_oyxpo"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_iavjp"]
-radius = 0.1
-height = 3.77084
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7vg77"]
-radius = 0.1
-height = 3.77084
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_cr7vf"]
-radius = 0.1
-height = 5.01785
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5cdk0"]
-radius = 0.1
-height = 5.01785
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_aasg1"]
-radius = 0.1
-height = 6.08222
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uyvvu"]
-radius = 0.1
-height = 6.08222
-
-[sub_resource type="SphereMesh" id="SphereMesh_vp1uy"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_gidl1"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_m2d8t"]
-radius = 0.1
-height = 3.05558
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_61xfy"]
-radius = 0.1
-height = 3.05558
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_a0xbb"]
-radius = 0.1
-height = 3.51254
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kops2"]
-radius = 0.1
-height = 3.51254
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_eao8j"]
-radius = 0.1
-height = 1.49632
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7corb"]
-radius = 0.1
-height = 1.49632
-
-[sub_resource type="SphereMesh" id="SphereMesh_uatgw"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_jvjg3"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_rpcy5"]
-radius = 0.1
-height = 4.60544
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_03bes"]
-radius = 0.1
-height = 4.60544
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vatni"]
-radius = 0.1
-height = 4.73103
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tswef"]
-radius = 0.1
-height = 4.73103
-
-[sub_resource type="SphereMesh" id="SphereMesh_ftbvl"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_nsabe"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_m5gno"]
-radius = 0.1
-height = 7.20742
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7lcr4"]
-radius = 0.1
-height = 7.20742
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_enhhx"]
-radius = 0.1
-height = 6.0475
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a8w3d"]
-radius = 0.1
-height = 6.0475
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_p8hfp"]
-radius = 0.1
-height = 7.59667
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lxijy"]
-radius = 0.1
-height = 7.59667
-
-[sub_resource type="SphereMesh" id="SphereMesh_ieqxv"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_b3hph"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sixdh"]
-radius = 0.1
-height = 5.56982
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bej14"]
-radius = 0.1
-height = 5.56982
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_uowsy"]
-radius = 0.1
-height = 4.10459
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_88qxv"]
-radius = 0.1
-height = 4.10459
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_bi3f2"]
-radius = 0.1
-height = 7.46245
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dav6l"]
-radius = 0.1
-height = 7.46245
-
-[sub_resource type="SphereMesh" id="SphereMesh_esone"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_xr6r0"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_s3ljd"]
-radius = 0.1
-height = 4.40985
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l5y2c"]
-radius = 0.1
-height = 4.40985
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_d6ly3"]
-radius = 0.1
-height = 3.84321
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_verxn"]
-radius = 0.1
-height = 3.84321
-
-[sub_resource type="SphereMesh" id="SphereMesh_t0j84"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_gdr0c"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_66g88"]
-radius = 0.1
-height = 11.3623
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o1a1v"]
-radius = 0.1
-height = 11.3623
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_x5rid"]
-radius = 0.1
-height = 6.75905
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nxq2e"]
-radius = 0.1
-height = 6.75905
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_e3nus"]
-radius = 0.1
-height = 10.5212
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4mn3d"]
-radius = 0.1
-height = 10.5212
-
-[sub_resource type="SphereMesh" id="SphereMesh_c5dqm"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_lap7x"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fmgc7"]
-radius = 0.1
-height = 5.65765
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m1ulp"]
-radius = 0.1
-height = 5.65765
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8trqd"]
-radius = 0.1
-height = 8.79382
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5aivc"]
-radius = 0.1
-height = 8.79382
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_nehpa"]
-radius = 0.1
-height = 15.7599
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_twcj8"]
-radius = 0.1
-height = 15.7599
-
-[sub_resource type="SphereMesh" id="SphereMesh_uiu4d"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_uabli"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_yfs7c"]
-radius = 0.1
-height = 5.07715
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0bxor"]
-radius = 0.1
-height = 5.07715
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4fjdj"]
-radius = 0.1
-height = 14.4375
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_omtca"]
-radius = 0.1
-height = 14.4375
-
-[sub_resource type="SphereMesh" id="SphereMesh_v666q"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_le22m"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_wci7k"]
-radius = 0.1
-height = 7.88269
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wk6wp"]
-radius = 0.1
-height = 7.88269
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_mf2kv"]
-radius = 0.1
-height = 5.52927
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jek8d"]
-radius = 0.1
-height = 5.52927
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_tgoxk"]
-radius = 0.1
-height = 5.77337
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yo6iu"]
-radius = 0.1
-height = 5.77337
-
-[sub_resource type="SphereMesh" id="SphereMesh_kssry"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_lra4q"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ltcc7"]
-radius = 0.1
-height = 5.63963
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u2kyu"]
-radius = 0.1
-height = 5.63963
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_tj7db"]
-radius = 0.1
-height = 2.67973
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v41ly"]
-radius = 0.1
-height = 2.67973
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_i0bpd"]
-radius = 0.1
-height = 5.15216
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dkgym"]
-radius = 0.1
-height = 5.15216
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_6y1my"]
-radius = 0.1
-height = 3.05248
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8iae8"]
-radius = 0.1
-height = 3.05248
-
-[sub_resource type="SphereMesh" id="SphereMesh_l7gnv"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_o48vg"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_1d4ic"]
-radius = 0.1
-height = 2.48673
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cibm5"]
-radius = 0.1
-height = 2.48673
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_2k505"]
-radius = 0.1
-height = 3.30591
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ubj34"]
-radius = 0.1
-height = 3.30591
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_jartt"]
-radius = 0.1
-height = 2.64542
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abx7m"]
-radius = 0.1
-height = 2.64542
-
-[sub_resource type="SphereMesh" id="SphereMesh_5gka5"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_owj5x"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4imvd"]
-radius = 0.1
-height = 3.22298
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_01ccu"]
-radius = 0.1
-height = 3.22298
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_pfe8v"]
-radius = 0.1
-height = 2.09271
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s5wcn"]
-radius = 0.1
-height = 2.09271
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_k3gdq"]
-radius = 0.1
-height = 4.17497
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rm4el"]
-radius = 0.1
-height = 4.17497
-
-[sub_resource type="SphereMesh" id="SphereMesh_h2wkr"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_fbtxr"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_gsv8t"]
-radius = 0.1
-height = 1.14143
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ja8t3"]
-radius = 0.1
-height = 1.14143
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_52dae"]
-radius = 0.1
-height = 4.12566
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o8cj7"]
-radius = 0.1
-height = 4.12566
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4stax"]
-radius = 0.1
-height = 3.10624
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5io3o"]
-radius = 0.1
-height = 3.10624
-
-[sub_resource type="SphereMesh" id="SphereMesh_dusii"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_qjdny"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_cegtk"]
-radius = 0.1
-height = 2.22055
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m5tv6"]
-radius = 0.1
-height = 2.22055
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_xyfsh"]
-radius = 0.1
-height = 2.07965
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ixhdt"]
-radius = 0.1
-height = 2.07965
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_lyo05"]
-radius = 0.1
-height = 1.52816
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_631br"]
-radius = 0.1
-height = 1.52816
-
-[sub_resource type="SphereMesh" id="SphereMesh_xbxaf"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_r7rj4"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sajdb"]
-radius = 0.1
-height = 1.87841
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_euc5e"]
-radius = 0.1
-height = 1.87841
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g5ils"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_r84h7"]
-radius = 0.1
-height = 1.54172
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1l3u7"]
-radius = 0.1
-height = 1.54172
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_q6u4x"]
-radius = 0.1
-height = 1.6937
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5g3x3"]
-radius = 0.1
-height = 1.6937
-
-[sub_resource type="SphereMesh" id="SphereMesh_wr6jk"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_6tgtj"]
+[sub_resource type="SphereMesh" id="SphereMesh_36tfb"]
+material = SubResource("StandardMaterial3D_g5ils")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_6qg1w"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7dndm"]
 radius = 0.1
-height = 1.36542
+height = 7.5563
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_he8uc"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6234c"]
 radius = 0.1
-height = 1.36542
+height = 5.40974
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_dcnq7"]
-radius = 0.1
-height = 1.37582
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4kxxw"]
-radius = 0.1
-height = 1.37582
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_joe7r"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_0so4c"]
-radius = 0.1
-height = 2.08062
+[sub_resource type="SphereMesh" id="SphereMesh_ftx4k"]
+material = SubResource("StandardMaterial3D_joe7r")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8708b"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkn1u"]
 radius = 0.1
-height = 2.08062
+height = 5.40974
 
-[sub_resource type="SphereMesh" id="SphereMesh_4g6y3"]
+[sub_resource type="SphereMesh" id="SphereMesh_62ts1"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_q75i8"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_3637a"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fp0h3"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c16h6"]
 radius = 0.1
-height = 4.22732
+height = 7.06684
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b3son"]
-radius = 0.1
-height = 4.22732
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4yar1"]
-radius = 0.1
-height = 3.42878
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qk1vo"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3ktkl"]
-radius = 0.1
-height = 3.42878
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_65kuq"]
-radius = 0.1
-height = 1.50692
+[sub_resource type="SphereMesh" id="SphereMesh_wrj76"]
+material = SubResource("StandardMaterial3D_qk1vo")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_koe5n"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2184w"]
 radius = 0.1
-height = 1.50692
+height = 7.06684
 
-[sub_resource type="SphereMesh" id="SphereMesh_kanhd"]
+[sub_resource type="SphereMesh" id="SphereMesh_0krc7"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_0dwk3"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_1l508"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_7egm2"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mox1o"]
 radius = 0.1
-height = 3.22443
+height = 5.02614
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e6nc3"]
-radius = 0.1
-height = 3.22443
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_cng63"]
-radius = 0.1
-height = 2.68606
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skymq"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_518qk"]
-radius = 0.1
-height = 2.68606
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_28tqq"]
-radius = 0.1
-height = 3.09637
+[sub_resource type="SphereMesh" id="SphereMesh_yy2un"]
+material = SubResource("StandardMaterial3D_skymq")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bafar"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6xxwk"]
 radius = 0.1
-height = 3.09637
-
-[sub_resource type="SphereMesh" id="SphereMesh_2ggfq"]
+height = 5.02614
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_map00"]
+[sub_resource type="SphereMesh" id="SphereMesh_u3msd"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sbm6h"]
-radius = 0.1
-height = 4.43078
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nkhr2"]
-radius = 0.1
-height = 4.43078
+[sub_resource type="SphereShape3D" id="SphereShape3D_q7a1x"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sghsr"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0ev0r"]
 radius = 0.1
-height = 3.49499
+height = 10.6087
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n5uqv"]
-radius = 0.1
-height = 3.49499
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ub2a4"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_46y6o"]
-radius = 0.1
-height = 2.59796
+[sub_resource type="SphereMesh" id="SphereMesh_j8dew"]
+material = SubResource("StandardMaterial3D_ub2a4")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fmos0"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4s0i6"]
 radius = 0.1
-height = 2.59796
-
-[sub_resource type="SphereMesh" id="SphereMesh_7tppb"]
+height = 10.6087
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_1tdji"]
+[sub_resource type="SphereMesh" id="SphereMesh_gbucw"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8lf3r"]
-radius = 0.1
-height = 4.45879
+[sub_resource type="SphereShape3D" id="SphereShape3D_7tgsw"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rntci"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0o0c2"]
 radius = 0.1
-height = 4.45879
+height = 5.53241
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_erk7r"]
-radius = 0.1
-height = 3.78812
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7fhxt"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n0b3o"]
-radius = 0.1
-height = 3.78812
+[sub_resource type="SphereMesh" id="SphereMesh_au1da"]
+material = SubResource("StandardMaterial3D_7fhxt")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_q0wgn"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_68j68"]
 radius = 0.1
-height = 2.19763
+height = 5.53241
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ab4pv"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0842i"]
 radius = 0.1
-height = 2.19763
+height = 4.65585
 
-[sub_resource type="SphereMesh" id="SphereMesh_712kf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lpdk"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_vjffw"]
+[sub_resource type="SphereMesh" id="SphereMesh_rcqah"]
+material = SubResource("StandardMaterial3D_6lpdk")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_tmyxp"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1w7u3"]
 radius = 0.1
-height = 2.97497
+height = 4.65585
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n6dd5"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_basof"]
 radius = 0.1
-height = 2.97497
+height = 4.65585
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ru06o"]
-radius = 0.1
-height = 5.92962
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mlseq"]
-radius = 0.1
-height = 5.92962
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_isk80"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ixq7c"]
-radius = 0.1
-height = 5.81853
+[sub_resource type="SphereMesh" id="SphereMesh_20faf"]
+material = SubResource("StandardMaterial3D_isk80")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e7j3w"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mlmid"]
 radius = 0.1
-height = 5.81853
+height = 4.65585
 
-[sub_resource type="SphereMesh" id="SphereMesh_01xg5"]
+[sub_resource type="SphereMesh" id="SphereMesh_ou8hp"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_pp6sc"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_x6qk6"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8rj1e"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uvt4y"]
 radius = 0.1
-height = 2.75456
+height = 10.1026
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ac7ya"]
-radius = 0.1
-height = 2.75456
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_jksj5"]
-radius = 0.1
-height = 4.54097
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uvxj3"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mggks"]
-radius = 0.1
-height = 4.54097
+[sub_resource type="SphereMesh" id="SphereMesh_xjcts"]
+material = SubResource("StandardMaterial3D_uvxj3")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_wseub"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5rwrh"]
 radius = 0.1
-height = 3.70463
+height = 10.1026
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ku7xo"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xorgg"]
 radius = 0.1
-height = 3.70463
+height = 5.11675
 
-[sub_resource type="SphereMesh" id="SphereMesh_gyspq"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42vg7"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_vptkg"]
+[sub_resource type="SphereMesh" id="SphereMesh_o78hj"]
+material = SubResource("StandardMaterial3D_42vg7")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_cawqk"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6brw"]
 radius = 0.1
-height = 2.79816
+height = 5.11675
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wuqtk"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1co1n"]
 radius = 0.1
-height = 2.79816
+height = 5.11675
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_eojqd"]
-radius = 0.1
-height = 3.09533
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72bow"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ysisb"]
-radius = 0.1
-height = 3.09533
+[sub_resource type="SphereMesh" id="SphereMesh_5ee68"]
+material = SubResource("StandardMaterial3D_72bow")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4y16o"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pllcm"]
 radius = 0.1
-height = 5.68935
+height = 5.11675
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_071dv"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7fk2b"]
 radius = 0.1
-height = 5.68935
+height = 10.1026
 
-[sub_resource type="SphereMesh" id="SphereMesh_t6mqr"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lg5wv"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_io0ew"]
+[sub_resource type="SphereMesh" id="SphereMesh_a784i"]
+material = SubResource("StandardMaterial3D_lg5wv")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ff8n2"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5kefw"]
 radius = 0.1
-height = 2.84489
+height = 10.1026
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kwdri"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hvgae"]
 radius = 0.1
-height = 2.84489
+height = 10.6087
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ptewm"]
-radius = 0.1
-height = 4.39019
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yng5g"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_swlx2"]
-radius = 0.1
-height = 4.39019
+[sub_resource type="SphereMesh" id="SphereMesh_jij1m"]
+material = SubResource("StandardMaterial3D_yng5g")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_brca5"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n4obm"]
 radius = 0.1
-height = 2.10094
+height = 10.6087
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fdexx"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dymgo"]
 radius = 0.1
-height = 2.10094
+height = 7.5563
 
-[sub_resource type="SphereMesh" id="SphereMesh_i5n4s"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxeh5"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_x3tpo"]
+[sub_resource type="SphereMesh" id="SphereMesh_g52ql"]
+material = SubResource("StandardMaterial3D_uxeh5")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_tmyn7"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nldk1"]
 radius = 0.1
-height = 3.07983
+height = 7.5563
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a1kh5"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lxjrs"]
 radius = 0.1
-height = 3.07983
+height = 7.06684
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_7oxc4"]
-radius = 0.1
-height = 3.82869
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6mcy"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cmt8n"]
-radius = 0.1
-height = 3.82869
+[sub_resource type="SphereMesh" id="SphereMesh_j1rmk"]
+material = SubResource("StandardMaterial3D_k6mcy")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_m61aj"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cbcty"]
 radius = 0.1
-height = 7.11503
+height = 7.06684
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xnd2d"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o5iio"]
 radius = 0.1
-height = 7.11503
+height = 5.02615
 
-[sub_resource type="SphereMesh" id="SphereMesh_pge0q"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vo403"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_b226h"]
+[sub_resource type="SphereMesh" id="SphereMesh_5yqa1"]
+material = SubResource("StandardMaterial3D_vo403")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_w81el"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k2dp4"]
 radius = 0.1
-height = 2.59085
+height = 5.02615
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lyrym"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7iuq0"]
 radius = 0.1
-height = 2.59085
+height = 5.40973
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_2gdor"]
-radius = 0.1
-height = 4.78748
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qr5ha"]
-radius = 0.1
-height = 4.78748
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ng0r"]
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fghat"]
-radius = 0.1
-height = 6.20441
+[sub_resource type="SphereMesh" id="SphereMesh_khyaq"]
+material = SubResource("StandardMaterial3D_3ng0r")
+radius = 0.2
+height = 0.4
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lykoq"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83arm"]
 radius = 0.1
-height = 6.20441
+height = 5.40973
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)
@@ -1115,7 +335,7 @@ size = Vector3(200, 0.1, 200)
 
 [node name="Node3D" type="Node3D"]
 
-[node name="PrototypeUi" type="Control" parent="." instance=ExtResource("1_758gu")]
+[node name="PrototypeUi" type="Control" parent="." instance=ExtResource("1_7owk3")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1125,10 +345,10 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="Debugger3D" type="Node3D" parent="."]
-script = ExtResource("2_ogku5")
+script = ExtResource("2_s11ty")
 
 [node name="RouteDebugger" type="Node" parent="."]
-script = ExtResource("3_tc8gj")
+script = ExtResource("3_2kiqj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.869581, -3.88733e-08, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
@@ -1139,9 +359,9 @@ transform = Transform3D(-0.869581, -3.88733e-08, -0.49379, -0.34255, 0.720249, 0
 shape = SubResource("SphereShape3D_ciyus")
 
 [node name="NavGraph" type="Node" parent="." node_paths=PackedStringArray("nodes", "segments", "graphMeshInstance")]
-script = ExtResource("4_bmsll")
-nodes = [NodePath("Node3D"), NodePath("Node3D2"), NodePath("Node3D3"), NodePath("Node3D7"), NodePath("Node3D8"), NodePath("Node3D9"), NodePath("Node3D10"), NodePath("Node3D15"), NodePath("Node3D20"), NodePath("Node3D27"), NodePath("Node3D30"), NodePath("Node3D31"), NodePath("Node3D32"), NodePath("Node3D41"), NodePath("Node3D44"), NodePath("Node3D48"), NodePath("Node3D52"), NodePath("Node3D56"), NodePath("Node3D60"), NodePath("Node3D63"), NodePath("Node3D67"), NodePath("Node3D71"), NodePath("Node3D74"), NodePath("Node3D78"), NodePath("Node3D82"), NodePath("Node3D85"), NodePath("Node3D89"), NodePath("Node3D94"), NodePath("Node3D98"), NodePath("Node3D102"), NodePath("Node3D106"), NodePath("Node3D110"), NodePath("Node3D114"), NodePath("Node3D118"), NodePath("Node3D122"), NodePath("Node3D126"), NodePath("Node3D130"), NodePath("Node3D134"), NodePath("Node3D138"), NodePath("Node3D142"), NodePath("Node3D146"), NodePath("Node3D150"), NodePath("Node3D154")]
-segments = [NodePath("Node3D4"), NodePath("Node3D5"), NodePath("Node3D6"), NodePath("Node3D11"), NodePath("Node3D12"), NodePath("Node3D13"), NodePath("Node3D14"), NodePath("Node3D16"), NodePath("Node3D17"), NodePath("Node3D18"), NodePath("Node3D19"), NodePath("Node3D21"), NodePath("Node3D22"), NodePath("Node3D23"), NodePath("Node3D24"), NodePath("Node3D25"), NodePath("Node3D26"), NodePath("Node3D28"), NodePath("Node3D29"), NodePath("Node3D33"), NodePath("Node3D34"), NodePath("Node3D35"), NodePath("Node3D36"), NodePath("Node3D37"), NodePath("Node3D38"), NodePath("Node3D39"), NodePath("Node3D40"), NodePath("Node3D42"), NodePath("Node3D43"), NodePath("Node3D45"), NodePath("Node3D46"), NodePath("Node3D47"), NodePath("Node3D49"), NodePath("Node3D50"), NodePath("Node3D51"), NodePath("Node3D53"), NodePath("Node3D54"), NodePath("Node3D55"), NodePath("Node3D57"), NodePath("Node3D58"), NodePath("Node3D59"), NodePath("Node3D61"), NodePath("Node3D62"), NodePath("Node3D64"), NodePath("Node3D65"), NodePath("Node3D66"), NodePath("Node3D68"), NodePath("Node3D69"), NodePath("Node3D70"), NodePath("Node3D72"), NodePath("Node3D73"), NodePath("Node3D75"), NodePath("Node3D76"), NodePath("Node3D77"), NodePath("Node3D79"), NodePath("Node3D80"), NodePath("Node3D81"), NodePath("Node3D83"), NodePath("Node3D84"), NodePath("Node3D86"), NodePath("Node3D87"), NodePath("Node3D88"), NodePath("Node3D90"), NodePath("Node3D91"), NodePath("Node3D92"), NodePath("Node3D93"), NodePath("Node3D95"), NodePath("Node3D96"), NodePath("Node3D97"), NodePath("Node3D99"), NodePath("Node3D100"), NodePath("Node3D101"), NodePath("Node3D103"), NodePath("Node3D104"), NodePath("Node3D105"), NodePath("Node3D107"), NodePath("Node3D108"), NodePath("Node3D109"), NodePath("Node3D111"), NodePath("Node3D112"), NodePath("Node3D113"), NodePath("Node3D115"), NodePath("Node3D116"), NodePath("Node3D117"), NodePath("Node3D119"), NodePath("Node3D120"), NodePath("Node3D121"), NodePath("Node3D123"), NodePath("Node3D124"), NodePath("Node3D125"), NodePath("Node3D127"), NodePath("Node3D128"), NodePath("Node3D129"), NodePath("Node3D131"), NodePath("Node3D132"), NodePath("Node3D133"), NodePath("Node3D135"), NodePath("Node3D136"), NodePath("Node3D137"), NodePath("Node3D139"), NodePath("Node3D140"), NodePath("Node3D141"), NodePath("Node3D143"), NodePath("Node3D144"), NodePath("Node3D145"), NodePath("Node3D147"), NodePath("Node3D148"), NodePath("Node3D149"), NodePath("Node3D151"), NodePath("Node3D152"), NodePath("Node3D153"), NodePath("Node3D155"), NodePath("Node3D156"), NodePath("Node3D157")]
+script = ExtResource("4_kou7f")
+nodes = [NodePath("Node3D"), NodePath("Node3D2"), NodePath("Node3D3"), NodePath("Node3D6"), NodePath("Node3D8"), NodePath("Node3D10"), NodePath("Node3D12"), NodePath("Node3D16")]
+segments = [NodePath("Node3D4"), NodePath("Node3D5"), NodePath("Node3D7"), NodePath("Node3D9"), NodePath("Node3D11"), NodePath("Node3D13"), NodePath("Node3D14"), NodePath("Node3D15"), NodePath("Node3D17"), NodePath("Node3D18"), NodePath("Node3D19"), NodePath("Node3D20"), NodePath("Node3D21"), NodePath("Node3D22"), NodePath("Node3D23"), NodePath("Node3D24"), NodePath("Node3D25")]
 graphMeshInstance = NodePath("MeshInstance3D")
 nodeRadius = 0.5
 segmentThickness = 0.1
@@ -1149,2216 +369,461 @@ segmentThickness = 0.1
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph"]
 
 [node name="Node3D" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.208144, 0, -3.52235)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-0.208144, 0, -3.52235)
-attachedSegments = [NodePath("../Node3D5"), NodePath("../Node3D6"), NodePath("../Node3D17"), NodePath("../Node3D38"), NodePath("../Node3D39"), NodePath("../Node3D49"), NodePath("../Node3D141"), NodePath("../Node3D143"), NodePath("../Node3D147")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.77821, 0, -6.6475)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(-3.77821, 0, -6.6475)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D5"), NodePath("../Node3D11"), NodePath("../Node3D21"), NodePath("../Node3D25")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D"]
-mesh = SubResource("SphereMesh_8gmkm")
+mesh = SubResource("SphereMesh_kmetc")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D/StaticBody3D"]
-shape = SubResource("SphereShape3D_eyq2g")
+shape = SubResource("SphereShape3D_odop3")
 
 [node name="Node3D2" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.770346, 0, 0.602985)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(0.770346, 0, 0.602985)
-attachedSegments = [NodePath("../Node3D4"), NodePath("../Node3D6"), NodePath("../Node3D16"), NodePath("../Node3D18"), NodePath("../Node3D22"), NodePath("../Node3D93"), NodePath("../Node3D111"), NodePath("../Node3D144"), NodePath("../Node3D149")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62926, 0, -6.49103)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(1.62926, 0, -6.49103)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D4"), NodePath("../Node3D5"), NodePath("../Node3D7"), NodePath("../Node3D9"), NodePath("../Node3D22"), NodePath("../Node3D23"), NodePath("../Node3D24"), NodePath("../Node3D25")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D2"]
-mesh = SubResource("SphereMesh_tn4mw")
+mesh = SubResource("SphereMesh_bl1yy")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D2/StaticBody3D"]
-shape = SubResource("SphereShape3D_wf3np")
+shape = SubResource("SphereShape3D_xd6va")
 
 [node name="Node3D3" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9877, 0, -1.50082)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(5.9877, 0, -1.50082)
-attachedSegments = [NodePath("../Node3D4"), NodePath("../Node3D5"), NodePath("../Node3D19"), NodePath("../Node3D23"), NodePath("../Node3D26"), NodePath("../Node3D40"), NodePath("../Node3D43"), NodePath("../Node3D46"), NodePath("../Node3D51"), NodePath("../Node3D53"), NodePath("../Node3D59"), NodePath("../Node3D96"), NodePath("../Node3D148")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.17449, 0, -6.08212)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(9.17449, 0, -6.08212)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D4"), NodePath("../Node3D17"), NodePath("../Node3D20"), NodePath("../Node3D22")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D3"]
-mesh = SubResource("SphereMesh_lhhty")
+mesh = SubResource("SphereMesh_vdswt")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D3/StaticBody3D"]
-shape = SubResource("SphereShape3D_upebu")
+shape = SubResource("SphereShape3D_jehv8")
 
 [node name="Node3D4" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.373974, 0.927439, 4.05397e-08, 0, -4.37114e-08, 1, 0.927439, -0.373974, -1.63469e-08, 3.37902, 0, -0.448919)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D2")
-endNode = NodePath("../Node3D3")
+transform = Transform3D(0.0541152, -0.998535, -4.36473e-08, 0, -4.37114e-08, 1, -0.998535, -0.0541152, -2.36545e-09, 5.40188, 0, -6.28658)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D3")
+endNode = NodePath("../Node3D2")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D4"]
-mesh = SubResource("CapsuleMesh_8ueon")
+mesh = SubResource("CapsuleMesh_0p585")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.11022e-16, 0, -1.11022e-16, 1, 0, 3.27815, 1.43292e-07)
+mesh = SubResource("SphereMesh_36tfb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D4"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D4/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_x1tnh")
+shape = SubResource("CapsuleShape3D_7dndm")
 
 [node name="Node3D5" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.310179, -0.950678, -4.15555e-08, 0, -4.37114e-08, 1, -0.950678, -0.310179, -1.35584e-08, 2.88978, 0, -2.51159)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D3")
-endNode = NodePath("../Node3D")
+transform = Transform3D(-0.0289238, 0.999582, 4.36931e-08, 0, -4.37114e-08, 1, 0.999582, 0.0289238, 1.2643e-09, -1.07448, 0, -6.56927)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D")
+endNode = NodePath("../Node3D2")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D5"]
-mesh = SubResource("CapsuleMesh_bdwen")
+mesh = SubResource("CapsuleMesh_6234c")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.19349e-15, 0, 4.7462e-15, 1, 0, 2.20487, 9.63779e-08)
+mesh = SubResource("SphereMesh_ftx4k")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D5"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D5/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_jbb0h")
+shape = SubResource("CapsuleShape3D_xkn1u")
 
-[node name="Node3D6" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.973004, 0.230787, 1.0088e-08, 0, -4.37114e-08, 1, 0.230787, 0.973004, 4.25314e-08, 0.281101, 0, -1.45968)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D")
-endNode = NodePath("../Node3D2")
+[node name="Node3D6" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46817, 0, 0.573974)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(1.46817, 0, 0.573974)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D7"), NodePath("../Node3D13"), NodePath("../Node3D18"), NodePath("../Node3D19"), NodePath("../Node3D23")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D6"]
-mesh = SubResource("CapsuleMesh_lfo1t")
+mesh = SubResource("SphereMesh_62ts1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D6"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D6/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_lai88")
+shape = SubResource("SphereShape3D_3637a")
 
-[node name="Node3D7" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55761, 0, 2.80693)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(2.55761, 0, 2.80693)
-attachedSegments = [NodePath("../Node3D11"), NodePath("../Node3D12"), NodePath("../Node3D14"), NodePath("../Node3D19"), NodePath("../Node3D21"), NodePath("../Node3D95"), NodePath("../Node3D103"), NodePath("../Node3D107"), NodePath("../Node3D116")]
+[node name="Node3D7" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
+transform = Transform3D(0.99974, 0.0227952, 9.96409e-10, 0, -4.37114e-08, 1, 0.0227952, -0.99974, -4.37e-08, 1.54871, 0, -2.95853)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D6")
+endNode = NodePath("../Node3D2")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D7"]
-mesh = SubResource("SphereMesh_4cslc")
+mesh = SubResource("CapsuleMesh_c16h6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, 0, 1, 0, 3.03342, 1.32595e-07)
+mesh = SubResource("SphereMesh_wrj76")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D7"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D7/StaticBody3D"]
-shape = SubResource("SphereShape3D_kwoab")
+shape = SubResource("CapsuleShape3D_2184w")
 
 [node name="Node3D8" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.646436, 0, 3.3915)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-0.646436, 0, 3.3915)
-attachedSegments = [NodePath("../Node3D12"), NodePath("../Node3D13"), NodePath("../Node3D18"), NodePath("../Node3D24"), NodePath("../Node3D29"), NodePath("../Node3D91"), NodePath("../Node3D109"), NodePath("../Node3D113"), NodePath("../Node3D117")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.99848, 0, -11.5036)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(1.99848, 0, -11.5036)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D9"), NodePath("../Node3D24")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D8"]
-mesh = SubResource("SphereMesh_w8tlw")
+mesh = SubResource("SphereMesh_0krc7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D8"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D8/StaticBody3D"]
-shape = SubResource("SphereShape3D_ksui3")
+shape = SubResource("SphereShape3D_1l508")
 
-[node name="Node3D9" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.951849, 0, 6.13025)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(0.951849, 0, 6.13025)
-attachedSegments = [NodePath("../Node3D13"), NodePath("../Node3D14"), NodePath("../Node3D25"), NodePath("../Node3D28"), NodePath("../Node3D68"), NodePath("../Node3D101"), NodePath("../Node3D105"), NodePath("../Node3D108")]
+[node name="Node3D9" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
+transform = Transform3D(-0.997298, -0.0734598, -3.21103e-09, 0, -4.37114e-08, 1, -0.0734598, 0.997298, 4.35933e-08, 1.81387, 0, -8.99732)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D8")
+endNode = NodePath("../Node3D2")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D9"]
-mesh = SubResource("SphereMesh_1206b")
+mesh = SubResource("CapsuleMesh_mox1o")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 2.22045e-16, 0, 1, 1.19209e-07, 2.01307, 8.79941e-08)
+mesh = SubResource("SphereMesh_yy2un")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D9"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D9/StaticBody3D"]
-shape = SubResource("SphereShape3D_2xfyx")
+shape = SubResource("CapsuleShape3D_6xxwk")
 
 [node name="Node3D10" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.03656, 0, 2.7837)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(7.03656, 0, 2.7837)
-attachedSegments = [NodePath("../Node3D11"), NodePath("../Node3D25"), NodePath("../Node3D26"), NodePath("../Node3D55"), NodePath("../Node3D58"), NodePath("../Node3D62"), NodePath("../Node3D69"), NodePath("../Node3D97"), NodePath("../Node3D99"), NodePath("../Node3D104"), NodePath("../Node3D121"), NodePath("../Node3D125")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.77805, 0, 3.96125)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(-3.77805, 0, 3.96125)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D11"), NodePath("../Node3D14"), NodePath("../Node3D15"), NodePath("../Node3D21")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D10"]
-mesh = SubResource("SphereMesh_3t6k5")
+mesh = SubResource("SphereMesh_u3msd")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D10"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D10/StaticBody3D"]
-shape = SubResource("SphereShape3D_2qb55")
+shape = SubResource("SphereShape3D_q7a1x")
 
 [node name="Node3D11" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.00518729, -0.999987, -4.37108e-08, 0, -4.37114e-08, 1, -0.999987, 0.00518729, 2.26744e-10, 4.79708, 0, 2.79532)
-script = ExtResource("6_i8g0q")
+transform = Transform3D(1, -1.51024e-05, -6.60146e-13, 0, -4.37114e-08, 1, -1.51024e-05, -1, -4.37114e-08, -3.77813, 0, -1.34313)
+script = ExtResource("6_r5re3")
 startNode = NodePath("../Node3D10")
-endNode = NodePath("../Node3D7")
+endNode = NodePath("../Node3D")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D11"]
-mesh = SubResource("CapsuleMesh_181bw")
+mesh = SubResource("CapsuleMesh_0ev0r")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.80437, 2.10006e-07)
+mesh = SubResource("SphereMesh_j8dew")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D11"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D11/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_7r0pp")
+shape = SubResource("CapsuleShape3D_4s0i6")
 
-[node name="Node3D12" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.179485, -0.983761, -4.30015e-08, 0, -4.37114e-08, 1, -0.983761, 0.179485, 7.84552e-09, 0.955587, 0, 3.09922)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D7")
-endNode = NodePath("../Node3D8")
+[node name="Node3D12" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.406008, 0, 6.00346)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(0.406008, 0, 6.00346)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D13"), NodePath("../Node3D14"), NodePath("../Node3D15")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D12"]
-mesh = SubResource("CapsuleMesh_b2uom")
+mesh = SubResource("SphereMesh_gbucw")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D12"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D12/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_u8qhw")
+shape = SubResource("SphereShape3D_7tgsw")
 
 [node name="Node3D13" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.863685, 0.504031, 2.20319e-08, 0, -4.37114e-08, 1, 0.504031, 0.863685, 3.77529e-08, 0.152707, 0, 4.76088)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D8")
-endNode = NodePath("../Node3D9")
+transform = Transform3D(0.981397, 0.191989, 8.39211e-09, 0, -4.37114e-08, 1, 0.191989, -0.981397, -4.28982e-08, 0.937089, 0, 3.28872)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D12")
+endNode = NodePath("../Node3D6")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D13"]
-mesh = SubResource("CapsuleMesh_qohh6")
+mesh = SubResource("CapsuleMesh_0o0c2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -3.55271e-15, 1, -1.19209e-07, 2.2662, 9.90589e-08)
+mesh = SubResource("SphereMesh_au1da")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D13"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D13/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_spwla")
+shape = SubResource("CapsuleShape3D_68j68")
 
 [node name="Node3D14" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.900403, 0.435057, 1.90169e-08, 0, -4.37114e-08, 1, 0.435057, -0.900403, -3.93579e-08, 1.75473, 0, 4.46859)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D9")
-endNode = NodePath("../Node3D7")
+transform = Transform3D(-0.438634, 0.898666, 3.92819e-08, 0, -4.37114e-08, 1, 0.898666, 0.438634, 1.91733e-08, -1.68602, 0, 4.98235)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D10")
+endNode = NodePath("../Node3D12")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D14"]
-mesh = SubResource("CapsuleMesh_kgc6i")
+mesh = SubResource("CapsuleMesh_0842i")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D14"]
+transform = Transform3D(1, 0, 0, 0, 1, 8.88178e-16, 0, 8.88178e-16, 1, 0, 1.82793, 7.99012e-08)
+mesh = SubResource("SphereMesh_rcqah")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D14"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D14/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_p10nj")
+shape = SubResource("CapsuleShape3D_1w7u3")
 
-[node name="Node3D15" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43615, 0, -0.919617)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-7.43615, 0, -0.919617)
-attachedSegments = [NodePath("../Node3D16"), NodePath("../Node3D17"), NodePath("../Node3D36"), NodePath("../Node3D37"), NodePath("../Node3D75"), NodePath("../Node3D90"), NodePath("../Node3D137"), NodePath("../Node3D140"), NodePath("../Node3D145")]
+[node name="Node3D15" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
+transform = Transform3D(0.438634, -0.898666, -3.92819e-08, 0, -4.37114e-08, 1, -0.898666, -0.438634, -1.91733e-08, -1.68602, 0, 4.98235)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D12")
+endNode = NodePath("../Node3D10")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D15"]
-mesh = SubResource("SphereMesh_wqogj")
+mesh = SubResource("CapsuleMesh_basof")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D15"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, 1, -8.88178e-16, 0, 2.66454e-15, 1, 0, 1.82793, 7.99012e-08)
+mesh = SubResource("SphereMesh_20faf")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D15"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D15/StaticBody3D"]
-shape = SubResource("SphereShape3D_a5vjb")
+shape = SubResource("CapsuleShape3D_mlmid")
 
-[node name="Node3D16" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.182423, 0.98322, 4.29779e-08, 0, -4.37114e-08, 1, 0.98322, 0.182423, 7.97396e-09, -3.3329, 0, -0.158316)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D15")
-endNode = NodePath("../Node3D2")
+[node name="Node3D16" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.72488, 0, 3.41326)
+script = ExtResource("5_0y4md")
+NodePosition = Vector3(5.72488, 0, 3.41326)
+NodeRadius = 0.5
+attachedSegments = [NodePath("../Node3D17"), NodePath("../Node3D18"), NodePath("../Node3D19"), NodePath("../Node3D20")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D16"]
-mesh = SubResource("CapsuleMesh_8yoeb")
+mesh = SubResource("SphereMesh_ou8hp")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D16"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D16/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_238ik")
+shape = SubResource("SphereShape3D_x6qk6")
 
 [node name="Node3D17" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.338795, -0.94086, -4.11263e-08, 0, -4.37114e-08, 1, -0.94086, 0.338795, 1.48092e-08, -3.82215, 0, -2.22098)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D")
-endNode = NodePath("../Node3D15")
+transform = Transform3D(0.939897, 0.341459, 1.49256e-08, 0, -4.37114e-08, 1, 0.341459, -0.939897, -4.10842e-08, 7.44968, 0, -1.33443)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D16")
+endNode = NodePath("../Node3D3")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D17"]
-mesh = SubResource("CapsuleMesh_086pl")
+mesh = SubResource("CapsuleMesh_uvt4y")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -3.55271e-15, 1, 0, 4.55129, 1.98943e-07)
+mesh = SubResource("SphereMesh_xjcts")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D17"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D17/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_1e6eg")
+shape = SubResource("CapsuleShape3D_5rwrh")
 
 [node name="Node3D18" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.891528, 0.452965, 1.97997e-08, 0, -4.37114e-08, 1, 0.452965, -0.891528, -3.89699e-08, 0.0619552, 0, 1.99724)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D8")
-endNode = NodePath("../Node3D2")
+transform = Transform3D(0.5549, -0.831917, -3.63642e-08, 0, -4.37114e-08, 1, -0.831917, -0.5549, -2.42555e-08, 3.59652, 0, 1.99362)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D16")
+endNode = NodePath("../Node3D6")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D18"]
-mesh = SubResource("CapsuleMesh_3bcbk")
+mesh = SubResource("CapsuleMesh_xorgg")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D18"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.77636e-15, 0, -5.32907e-15, 1, 1.19209e-07, 2.05837, 8.99744e-08)
+mesh = SubResource("SphereMesh_o78hj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D18"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D18/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_p4w0u")
+shape = SubResource("CapsuleShape3D_u6brw")
 
 [node name="Node3D19" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.782294, -0.622909, -2.72282e-08, 0, -4.37114e-08, 1, -0.622909, 0.782294, 3.41952e-08, 4.27265, 0, 0.653056)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D3")
-endNode = NodePath("../Node3D7")
+transform = Transform3D(-0.5549, 0.831917, 3.63642e-08, 0, -4.37114e-08, 1, 0.831917, 0.5549, 2.42555e-08, 3.59652, 0, 1.99362)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D6")
+endNode = NodePath("../Node3D16")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D19"]
-mesh = SubResource("CapsuleMesh_2q311")
+mesh = SubResource("CapsuleMesh_1co1n")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D19"]
+transform = Transform3D(1, 0, 0, 0, 1, -8.88178e-16, 0, -8.88178e-16, 1, 3.57628e-07, 2.05837, 8.99744e-08)
+mesh = SubResource("SphereMesh_5ee68")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D19"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D19/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_5ym30")
+shape = SubResource("CapsuleShape3D_pllcm")
 
-[node name="Node3D20" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76057, 0, 1.22157)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(1.76057, 0, 1.22157)
-attachedSegments = [NodePath("../Node3D21"), NodePath("../Node3D22"), NodePath("../Node3D23"), NodePath("../Node3D24"), NodePath("../Node3D115")]
+[node name="Node3D20" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
+transform = Transform3D(-0.939897, -0.341458, -1.49256e-08, 0, -4.37114e-08, 1, -0.341458, 0.939897, 4.10842e-08, 7.44968, 0, -1.33443)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D3")
+endNode = NodePath("../Node3D16")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D20"]
-mesh = SubResource("SphereMesh_wvny3")
+mesh = SubResource("CapsuleMesh_7fk2b")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D20"]
+transform = Transform3D(1, -2.98023e-08, -8.88178e-16, 2.98023e-08, 1, 0, -8.88178e-16, 0, 1, 4.76837e-07, 4.55129, 1.98943e-07)
+mesh = SubResource("SphereMesh_a784i")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D20"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D20/StaticBody3D"]
-shape = SubResource("SphereShape3D_425ac")
+shape = SubResource("CapsuleShape3D_5kefw")
 
 [node name="Node3D21" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.893443, 0.449177, 1.96341e-08, 0, -4.37114e-08, 1, 0.449177, 0.893443, 3.90536e-08, 2.15909, 0, 2.01425)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D20")
-endNode = NodePath("../Node3D7")
+transform = Transform3D(-1, 1.51714e-05, 6.63161e-13, 0, -4.37114e-08, 1, 1.51714e-05, 1, 4.37114e-08, -3.77813, 0, -1.34313)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D")
+endNode = NodePath("../Node3D10")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D21"]
-mesh = SubResource("CapsuleMesh_qj8v5")
+mesh = SubResource("CapsuleMesh_hvgae")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 4.80437, 2.10006e-07)
+mesh = SubResource("SphereMesh_jij1m")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D21"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D21/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_7is2o")
+shape = SubResource("CapsuleShape3D_n4obm")
 
 [node name="Node3D22" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.529811, -0.848116, -3.70723e-08, 0, -4.37114e-08, 1, -0.848116, -0.529811, -2.31588e-08, 1.26546, 0, 0.912277)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D20")
-endNode = NodePath("../Node3D2")
+transform = Transform3D(-0.0541151, 0.998535, 4.36473e-08, 0, -4.37114e-08, 1, 0.998535, 0.0541151, 2.36545e-09, 5.40188, 0, -6.28658)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D2")
+endNode = NodePath("../Node3D3")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D22"]
-mesh = SubResource("CapsuleMesh_yb6cx")
+mesh = SubResource("CapsuleMesh_dymgo")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D22"]
+transform = Transform3D(1, 0, -2.22045e-16, 0, 1, -1.3739e-15, 2.22045e-16, 2.17881e-15, 1, 4.76837e-07, 3.27815, 1.43293e-07)
+mesh = SubResource("SphereMesh_g52ql")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D22"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D22/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_mo4ds")
+shape = SubResource("CapsuleShape3D_nldk1")
 
 [node name="Node3D23" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.541454, 0.84073, 3.67495e-08, 0, -4.37114e-08, 1, 0.84073, -0.541454, -2.36677e-08, 3.87414, 0, -0.139627)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D20")
-endNode = NodePath("../Node3D3")
+transform = Transform3D(-0.99974, -0.0227953, -9.96414e-10, 0, -4.37114e-08, 1, -0.0227953, 0.99974, 4.37e-08, 1.54871, 0, -2.95853)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D2")
+endNode = NodePath("../Node3D6")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D23"]
-mesh = SubResource("CapsuleMesh_4xdah")
+mesh = SubResource("CapsuleMesh_lxjrs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38419e-07, 3.03342, 1.32595e-07)
+mesh = SubResource("SphereMesh_j1rmk")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D23"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D23/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_wb2p3")
+shape = SubResource("CapsuleShape3D_cbcty")
 
 [node name="Node3D24" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.669583, -0.742737, -3.24661e-08, 0, -4.37114e-08, 1, -0.742737, 0.669583, 2.92684e-08, 0.557067, 0, 2.30654)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D20")
+transform = Transform3D(0.997298, 0.0734598, 3.21103e-09, 0, -4.37114e-08, 1, 0.0734598, -0.997298, -4.35933e-08, 1.81387, 0, -8.99732)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D2")
 endNode = NodePath("../Node3D8")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D24"]
-mesh = SubResource("CapsuleMesh_vhxiq")
+mesh = SubResource("CapsuleMesh_o5iio")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -2.22045e-16, 3.55271e-15, 1, 0, 2.01307, 8.79943e-08)
+mesh = SubResource("SphereMesh_5yqa1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D24"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D24/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ks655")
+shape = SubResource("CapsuleShape3D_k2dp4")
 
 [node name="Node3D25" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.481914, -0.876218, -3.83007e-08, 0, -4.37114e-08, 1, -0.876218, 0.481914, 2.10651e-08, 3.9942, 0, 4.45698)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D10")
-endNode = NodePath("../Node3D9")
+transform = Transform3D(0.0289237, -0.999582, -4.36931e-08, 0, -4.37114e-08, 1, -0.999582, -0.0289237, -1.2643e-09, -1.07447, 0, -6.56927)
+script = ExtResource("6_r5re3")
+startNode = NodePath("../Node3D2")
+endNode = NodePath("../Node3D")
+Thickness = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D25"]
-mesh = SubResource("CapsuleMesh_q24q4")
+mesh = SubResource("CapsuleMesh_7iuq0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavGraph/Node3D25"]
+transform = Transform3D(1, 0, 0, 0, 1, 7.63278e-17, 0, 3.62904e-15, 1, -4.76837e-07, 2.20487, 9.63778e-08)
+mesh = SubResource("SphereMesh_khyaq")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D25"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D25/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_r1xtr")
-
-[node name="Node3D26" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.971319, -0.237781, -1.03937e-08, 0, -4.37114e-08, 1, -0.237781, -0.971319, -4.24577e-08, 6.51213, 0, 0.641439)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D10")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D26"]
-mesh = SubResource("CapsuleMesh_kugtf")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D26"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D26/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_c1pct")
-
-[node name="Node3D27" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35767, 0, 6.30126)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-1.35767, 0, 6.30126)
-attachedSegments = [NodePath("../Node3D28"), NodePath("../Node3D29"), NodePath("../Node3D92")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D27"]
-mesh = SubResource("SphereMesh_elcbf")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D27"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D27/StaticBody3D"]
-shape = SubResource("SphereShape3D_jhkyy")
-
-[node name="Node3D28" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.0738423, -0.99727, -4.35921e-08, 0, -4.37114e-08, 1, -0.99727, 0.0738423, 3.22775e-09, -0.202911, 0, 6.21576)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D9")
-endNode = NodePath("../Node3D27")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D28"]
-mesh = SubResource("CapsuleMesh_dbgka")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D28"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D28/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_6vopy")
-
-[node name="Node3D29" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.971402, -0.237441, -1.03789e-08, 0, -4.37114e-08, 1, -0.237441, 0.971402, 4.24613e-08, -1.00205, 0, 4.84638)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D8")
-endNode = NodePath("../Node3D27")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D29"]
-mesh = SubResource("CapsuleMesh_7cwtg")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D29"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D29/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_kt5ff")
-
-[node name="Node3D30" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0788, 0, -8.43194)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-6.0788, 0, -8.43194)
-attachedSegments = [NodePath("../Node3D33"), NodePath("../Node3D35"), NodePath("../Node3D36"), NodePath("../Node3D76"), NodePath("../Node3D135")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D30"]
-mesh = SubResource("SphereMesh_rir2p")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D30"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D30/StaticBody3D"]
-shape = SubResource("SphereShape3D_80v2g")
-
-[node name="Node3D31" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12452, 0, -8.31384)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-2.12452, 0, -8.31384)
-attachedSegments = [NodePath("../Node3D34"), NodePath("../Node3D35"), NodePath("../Node3D39"), NodePath("../Node3D40"), NodePath("../Node3D42"), NodePath("../Node3D47"), NodePath("../Node3D50"), NodePath("../Node3D77"), NodePath("../Node3D79"), NodePath("../Node3D87"), NodePath("../Node3D152"), NodePath("../Node3D156")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D31"]
-mesh = SubResource("SphereMesh_sb8ml")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D31"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D31/StaticBody3D"]
-shape = SubResource("SphereShape3D_m7nmq")
-
-[node name="Node3D32" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35578, 0, -6.49103)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-4.35578, 0, -6.49103)
-attachedSegments = [NodePath("../Node3D33"), NodePath("../Node3D34"), NodePath("../Node3D37"), NodePath("../Node3D38"), NodePath("../Node3D139")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D32"]
-mesh = SubResource("SphereMesh_6q521")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D32"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D32/StaticBody3D"]
-shape = SubResource("SphereShape3D_5mmoi")
-
-[node name="Node3D33" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.747837, 0.663883, 2.90192e-08, 0, -4.37114e-08, 1, 0.663883, 0.747837, 3.2689e-08, -5.21729, 0, -7.46149)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D30")
-endNode = NodePath("../Node3D32")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D33"]
-mesh = SubResource("CapsuleMesh_tm4it")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D33"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D33/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_xvpq5")
-
-[node name="Node3D34" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.632662, 0.774428, 3.38513e-08, 0, -4.37114e-08, 1, 0.774428, -0.632662, -2.76545e-08, -3.24015, 0, -7.40243)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D32")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D34"]
-mesh = SubResource("CapsuleMesh_a68pc")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D34"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D34/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_6y3cd")
-
-[node name="Node3D35" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.0298551, -0.999554, -4.36919e-08, 0, -4.37114e-08, 1, -0.999554, -0.0298551, -1.30501e-09, -4.10166, 0, -8.37289)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D31")
-endNode = NodePath("../Node3D30")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D35"]
-mesh = SubResource("CapsuleMesh_ff1jg")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D35"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D35/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_isfg2")
-
-[node name="Node3D36" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.984066, -0.177804, -7.77204e-09, 0, -4.37114e-08, 1, -0.177804, 0.984066, 4.30149e-08, -6.75748, 0, -4.67578)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D30")
-endNode = NodePath("../Node3D15")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D36"]
-mesh = SubResource("CapsuleMesh_yn7l6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D36"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D36/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_t24jn")
-
-[node name="Node3D37" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.875146, -0.483858, -2.11501e-08, 0, -4.37114e-08, 1, -0.483858, 0.875146, 3.82539e-08, -5.89597, 0, -3.70532)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D32")
-endNode = NodePath("../Node3D15")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D37"]
-mesh = SubResource("CapsuleMesh_p4heg")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D37"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D37/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_lx0um")
-
-[node name="Node3D38" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.582027, 0.813169, 3.55448e-08, 0, -4.37114e-08, 1, 0.813169, 0.582027, 2.54412e-08, -2.28196, 0, -5.00669)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D32")
-endNode = NodePath("../Node3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D38"]
-mesh = SubResource("CapsuleMesh_6u5to")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D38"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D38/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_px1ro")
-
-[node name="Node3D39" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.928491, 0.371355, 1.62324e-08, 0, -4.37114e-08, 1, 0.371355, 0.928491, 4.05856e-08, -1.16633, 0, -5.91809)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D31")
-endNode = NodePath("../Node3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D39"]
-mesh = SubResource("CapsuleMesh_ej7h6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D39"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D39/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_w1qiq")
-
-[node name="Node3D40" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.643123, 0.765763, 3.34726e-08, 0, -4.37114e-08, 1, 0.765763, 0.643123, 2.81118e-08, 1.93159, 0, -4.90733)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D31")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D40"]
-mesh = SubResource("CapsuleMesh_7ogut")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D40"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D40/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_6bswi")
-
-[node name="Node3D41" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.11356, 0, -7.56821)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(8.11356, 0, -7.56821)
-attachedSegments = [NodePath("../Node3D42"), NodePath("../Node3D43"), NodePath("../Node3D45"), NodePath("../Node3D54"), NodePath("../Node3D64"), NodePath("../Node3D80"), NodePath("../Node3D132"), NodePath("../Node3D153")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D41"]
-mesh = SubResource("SphereMesh_mjbwq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D41"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D41/StaticBody3D"]
-shape = SubResource("SphereShape3D_6guyl")
-
-[node name="Node3D42" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.072636, -0.997359, -4.35959e-08, 0, -4.37114e-08, 1, -0.997359, -0.072636, -3.17502e-09, 2.99452, 0, -7.94102)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D41")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D42"]
-mesh = SubResource("CapsuleMesh_h01ao")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D42"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D42/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_iwfyh")
-
-[node name="Node3D43" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.943748, -0.330665, -1.44538e-08, 0, -4.37114e-08, 1, -0.330665, 0.943748, 4.12525e-08, 7.05063, 0, -4.53452)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D41")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D43"]
-mesh = SubResource("CapsuleMesh_1bs0s")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D43"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D43/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_h7c4e")
-
-[node name="Node3D44" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.79256, 0, -6.13258)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(4.79256, 0, -6.13258)
-attachedSegments = [NodePath("../Node3D45"), NodePath("../Node3D46"), NodePath("../Node3D47")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D44"]
-mesh = SubResource("SphereMesh_g76jk")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D44"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D44/StaticBody3D"]
-shape = SubResource("SphereShape3D_0cc6p")
-
-[node name="Node3D45" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.396802, 0.917904, 4.01229e-08, 0, -4.37114e-08, 1, 0.917904, -0.396802, -1.73448e-08, 6.45306, 0, -6.85039)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D44")
-endNode = NodePath("../Node3D41")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D45"]
-mesh = SubResource("CapsuleMesh_ehl0s")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D45"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D45/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ov2fg")
-
-[node name="Node3D46" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.968285, 0.249848, 1.09212e-08, 0, -4.37114e-08, 1, 0.249848, 0.968285, 4.23251e-08, 5.39013, 0, -3.8167)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D44")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D46"]
-mesh = SubResource("CapsuleMesh_np5ot")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D46"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D46/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_evs61")
-
-[node name="Node3D47" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.300745, -0.953705, -4.16878e-08, 0, -4.37114e-08, 1, -0.953705, -0.300745, -1.3146e-08, 1.33402, 0, -7.22321)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D44")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D47"]
-mesh = SubResource("CapsuleMesh_2c4my")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D47"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D47/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_d3san")
-
-[node name="Node3D48" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.04553, 0, -4.38033)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(1.04553, 0, -4.38033)
-attachedSegments = [NodePath("../Node3D49"), NodePath("../Node3D50"), NodePath("../Node3D51")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D48"]
-mesh = SubResource("SphereMesh_kfr8u")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D48"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D48/StaticBody3D"]
-shape = SubResource("SphereShape3D_mrepe")
-
-[node name="Node3D49" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.564774, -0.825246, -3.60726e-08, 0, -4.37114e-08, 1, -0.825246, 0.564774, 2.4687e-08, 0.418692, 0, -3.95134)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D48")
-endNode = NodePath("../Node3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D49"]
-mesh = SubResource("CapsuleMesh_1j6da")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D49"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D49/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_bgipd")
-
-[node name="Node3D50" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.778619, -0.627497, -2.74288e-08, 0, -4.37114e-08, 1, -0.627497, -0.778619, -3.40345e-08, -0.539497, 0, -6.34708)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D48")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D50"]
-mesh = SubResource("CapsuleMesh_vlvn0")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D50"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D50/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_0qi1l")
-
-[node name="Node3D51" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.503424, 0.86404, 3.77684e-08, 0, -4.37114e-08, 1, 0.86404, 0.503424, 2.20054e-08, 3.51661, 0, -2.94058)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D48")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D51"]
-mesh = SubResource("CapsuleMesh_mr36m")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D51"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D51/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_dh7cx")
-
-[node name="Node3D52" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.54273, 0, -2.75819)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(9.54273, 0, -2.75819)
-attachedSegments = [NodePath("../Node3D53"), NodePath("../Node3D54"), NodePath("../Node3D55"), NodePath("../Node3D57"), NodePath("../Node3D61"), NodePath("../Node3D65"), NodePath("../Node3D123"), NodePath("../Node3D129"), NodePath("../Node3D133")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D52"]
-mesh = SubResource("SphereMesh_k7jjx")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D52"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D52/StaticBody3D"]
-shape = SubResource("SphereShape3D_oyxpo")
-
-[node name="Node3D53" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.333445, -0.94277, -4.12098e-08, 0, -4.37114e-08, 1, -0.94277, 0.333445, 1.45753e-08, 7.76522, 0, -2.12951)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D52")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D53"]
-mesh = SubResource("CapsuleMesh_iavjp")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D53"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D53/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_7vg77")
-
-[node name="Node3D54" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.958582, -0.284817, -1.24498e-08, 0, -4.37114e-08, 1, -0.284817, -0.958582, -4.19009e-08, 8.82815, 0, -5.1632)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D52")
-endNode = NodePath("../Node3D41")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D54"]
-mesh = SubResource("CapsuleMesh_cr7vf")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D54"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D54/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_5cdk0")
-
-[node name="Node3D55" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.911162, -0.412049, -1.80112e-08, 0, -4.37114e-08, 1, -0.412049, 0.911162, 3.98281e-08, 8.28965, 0, 0.0127559)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D52")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D55"]
-mesh = SubResource("CapsuleMesh_aasg1")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D55"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D55/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_uyvvu")
-
-[node name="Node3D56" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.26499, 0, -0.721409)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(7.26499, 0, -0.721409)
-attachedSegments = [NodePath("../Node3D57"), NodePath("../Node3D58"), NodePath("../Node3D59")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D56"]
-mesh = SubResource("SphereMesh_vp1uy")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D56"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D56/StaticBody3D"]
-shape = SubResource("SphereShape3D_gidl1")
-
-[node name="Node3D57" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.666577, 0.745436, 3.2584e-08, 0, -4.37114e-08, 1, 0.745436, -0.666577, -2.9137e-08, 8.40386, 0, -1.7398)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D56")
-endNode = NodePath("../Node3D52")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D57"]
-mesh = SubResource("CapsuleMesh_m2d8t")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D57"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D57/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_61xfy")
-
-[node name="Node3D58" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.997883, -0.0650334, -2.8427e-09, 0, -4.37114e-08, 1, -0.0650334, 0.997883, 4.36189e-08, 7.15078, 0, 1.03115)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D56")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D58"]
-mesh = SubResource("CapsuleMesh_a0xbb")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D58"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D58/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_kops2")
-
-[node name="Node3D59" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.520889, -0.853625, -3.73131e-08, 0, -4.37114e-08, 1, -0.853625, -0.520889, -2.27688e-08, 6.62635, 0, -1.11112)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D56")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D59"]
-mesh = SubResource("CapsuleMesh_eao8j")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D59"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D59/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_7corb")
-
-[node name="Node3D60" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5558, 0, 1.384)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(11.5558, 0, 1.384)
-attachedSegments = [NodePath("../Node3D61"), NodePath("../Node3D62"), NodePath("../Node3D66"), NodePath("../Node3D70"), NodePath("../Node3D72"), NodePath("../Node3D119"), NodePath("../Node3D124"), NodePath("../Node3D128")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D60"]
-mesh = SubResource("SphereMesh_uatgw")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D60"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D60/StaticBody3D"]
-shape = SubResource("SphereShape3D_jvjg3")
-
-[node name="Node3D61" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.89941, -0.437105, -1.91065e-08, 0, -4.37114e-08, 1, -0.437105, -0.89941, -3.93145e-08, 10.5493, 0, -0.687096)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D60")
-endNode = NodePath("../Node3D52")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D61"]
-mesh = SubResource("CapsuleMesh_rpcy5")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D61"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D61/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_03bes")
-
-[node name="Node3D62" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.295856, -0.955233, -4.17545e-08, 0, -4.37114e-08, 1, -0.955233, 0.295856, 1.29323e-08, 9.29618, 0, 2.08385)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D60")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D62"]
-mesh = SubResource("CapsuleMesh_vatni")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D62"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D62/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_tswef")
-
-[node name="Node3D63" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9854, 0, -5.39446)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(14.9854, 0, -5.39446)
-attachedSegments = [NodePath("../Node3D64"), NodePath("../Node3D65"), NodePath("../Node3D66"), NodePath("../Node3D81"), NodePath("../Node3D83"), NodePath("../Node3D127"), NodePath("../Node3D131")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D63"]
-mesh = SubResource("SphereMesh_ftbvl")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D63"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D63/StaticBody3D"]
-shape = SubResource("SphereShape3D_nsabe")
-
-[node name="Node3D64" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.301599, -0.953435, -4.1676e-08, 0, -4.37114e-08, 1, -0.953435, -0.301599, -1.31833e-08, 11.5495, 0, -6.48134)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D63")
-endNode = NodePath("../Node3D41")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D64"]
-mesh = SubResource("CapsuleMesh_m5gno")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D64"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D64/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_7lcr4")
-
-[node name="Node3D65" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.435928, 0.899981, 3.93394e-08, 0, -4.37114e-08, 1, 0.899981, -0.435928, -1.9055e-08, 12.264, 0, -4.07633)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D52")
-endNode = NodePath("../Node3D63")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D65"]
-mesh = SubResource("CapsuleMesh_enhhx")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D65"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D65/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_a8w3d")
-
-[node name="Node3D66" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.892293, -0.451457, -1.97338e-08, 0, -4.37114e-08, 1, -0.451457, 0.892293, 3.90034e-08, 13.2706, 0, -2.00523)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D63")
-endNode = NodePath("../Node3D60")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D66"]
-mesh = SubResource("CapsuleMesh_p8hfp")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D66"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D66/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_lxijy")
-
-[node name="Node3D67" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.47501, 0, 6.84969)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(6.47501, 0, 6.84969)
-attachedSegments = [NodePath("../Node3D68"), NodePath("../Node3D69"), NodePath("../Node3D70"), NodePath("../Node3D73"), NodePath("../Node3D100"), NodePath("../Node3D120")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D67"]
-mesh = SubResource("SphereMesh_ieqxv")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D67"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D67/StaticBody3D"]
-shape = SubResource("SphereShape3D_b3hph")
-
-[node name="Node3D68" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.129168, -0.991623, -4.33452e-08, 0, -4.37114e-08, 1, -0.991623, -0.129168, -5.64609e-09, 3.71343, 0, 6.48997)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D67")
-endNode = NodePath("../Node3D9")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D68"]
-mesh = SubResource("CapsuleMesh_sixdh")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D68"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D68/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_bej14")
-
-[node name="Node3D69" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.990597, 0.13681, 5.98017e-09, 0, -4.37114e-08, 1, 0.13681, -0.990597, -4.33004e-08, 6.75578, 0, 4.8167)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D67")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D69"]
-mesh = SubResource("CapsuleMesh_uowsy")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D69"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D69/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_88qxv")
-
-[node name="Node3D70" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.732426, 0.680847, 2.97608e-08, 0, -4.37114e-08, 1, 0.680847, -0.732426, -3.20154e-08, 9.0154, 0, 4.11684)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D67")
-endNode = NodePath("../Node3D60")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D70"]
-mesh = SubResource("CapsuleMesh_bi3f2")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D70"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D70/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_dav6l")
-
-[node name="Node3D71" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0892, 0, 5.54283)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(10.0892, 0, 5.54283)
-attachedSegments = [NodePath("../Node3D72"), NodePath("../Node3D73")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D71"]
-mesh = SubResource("SphereMesh_esone")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D71"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D71/StaticBody3D"]
-shape = SubResource("SphereShape3D_xr6r0")
-
-[node name="Node3D72" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.943077, 0.332573, 1.45372e-08, 0, -4.37114e-08, 1, 0.332573, -0.943077, -4.12232e-08, 10.8225, 0, 3.46341)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D71")
-endNode = NodePath("../Node3D60")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D72"]
-mesh = SubResource("CapsuleMesh_s3ljd")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D72"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D72/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_l5y2c")
-
-[node name="Node3D73" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.340045, -0.940409, -4.11066e-08, 0, -4.37114e-08, 1, -0.940409, 0.340045, 1.48638e-08, 8.2821, 0, 6.19626)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D71")
-endNode = NodePath("../Node3D67")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D73"]
-mesh = SubResource("CapsuleMesh_d6ly3")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D73"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D73/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_verxn")
-
-[node name="Node3D74" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.237, 0, -11.2179)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-12.237, 0, -11.2179)
-attachedSegments = [NodePath("../Node3D75"), NodePath("../Node3D76"), NodePath("../Node3D77"), NodePath("../Node3D86"), NodePath("../Node3D136"), NodePath("../Node3D157")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D74"]
-mesh = SubResource("SphereMesh_t0j84")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D74"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D74/StaticBody3D"]
-shape = SubResource("SphereShape3D_gdr0c")
-
-[node name="Node3D75" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.906353, 0.422521, 1.8469e-08, 0, -4.37114e-08, 1, 0.422521, 0.906353, 3.9618e-08, -9.83657, 0, -6.06876)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D74")
-endNode = NodePath("../Node3D15")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D75"]
-mesh = SubResource("CapsuleMesh_66g88")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D75"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D75/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_o1a1v")
-
-[node name="Node3D76" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.412184, 0.911101, 3.98255e-08, 0, -4.37114e-08, 1, 0.911101, 0.412184, 1.80171e-08, -9.15789, 0, -9.82493)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D74")
-endNode = NodePath("../Node3D30")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D76"]
-mesh = SubResource("CapsuleMesh_x5rid")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D76"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D76/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_nxq2e")
-
-[node name="Node3D77" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.276022, 0.961151, 4.20133e-08, 0, -4.37114e-08, 1, 0.961151, 0.276022, 1.20653e-08, -7.18075, 0, -9.76587)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D74")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D77"]
-mesh = SubResource("CapsuleMesh_e3nus")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D77"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D77/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_4mn3d")
-
-[node name="Node3D78" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14455, 0, -12.9314)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(1.14455, 0, -12.9314)
-attachedSegments = [NodePath("../Node3D79"), NodePath("../Node3D80"), NodePath("../Node3D81"), NodePath("../Node3D84"), NodePath("../Node3D88"), NodePath("../Node3D151")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D78"]
-mesh = SubResource("SphereMesh_c5dqm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D78"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D78/StaticBody3D"]
-shape = SubResource("SphereShape3D_lap7x")
-
-[node name="Node3D79" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.816168, -0.577814, -2.52571e-08, 0, -4.37114e-08, 1, -0.577814, 0.816168, 3.56759e-08, -0.489988, 0, -10.6226)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D78")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D79"]
-mesh = SubResource("CapsuleMesh_fmgc7")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D79"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D79/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_m1ulp")
-
-[node name="Node3D80" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.609885, 0.79249, 3.46408e-08, 0, -4.37114e-08, 1, 0.79249, 0.609885, 2.66589e-08, 4.62905, 0, -10.2498)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D78")
-endNode = NodePath("../Node3D41")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D80"]
-mesh = SubResource("CapsuleMesh_8trqd")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D80"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D80/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_5aivc")
-
-[node name="Node3D81" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.478237, 0.878231, 3.83887e-08, 0, -4.37114e-08, 1, 0.878231, 0.478237, 2.09044e-08, 8.06496, 0, -9.16295)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D78")
-endNode = NodePath("../Node3D63")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D81"]
-mesh = SubResource("CapsuleMesh_nehpa")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D81"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D81/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_twcj8")
-
-[node name="Node3D82" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.3684, 0, -10.4571)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(15.3684, 0, -10.4571)
-attachedSegments = [NodePath("../Node3D83"), NodePath("../Node3D84")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D82"]
-mesh = SubResource("SphereMesh_uiu4d")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D82"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D82/StaticBody3D"]
-shape = SubResource("SphereShape3D_uabli")
-
-[node name="Node3D83" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.99715, -0.0754449, -3.2978e-09, 0, -4.37114e-08, 1, -0.0754449, 0.99715, 4.35868e-08, 15.1769, 0, -7.9258)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D82")
-endNode = NodePath("../Node3D63")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D83"]
-mesh = SubResource("CapsuleMesh_yfs7c")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D83"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D83/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_0bxor")
-
-[node name="Node3D84" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.17138, -0.985205, -4.30647e-08, 0, -4.37114e-08, 1, -0.985205, -0.17138, -7.49125e-09, 8.25648, 0, -11.6943)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D82")
-endNode = NodePath("../Node3D78")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D84"]
-mesh = SubResource("CapsuleMesh_4fjdj")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D84"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D84/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_omtca")
-
-[node name="Node3D85" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.62015, 0, -13.2479)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-4.62015, 0, -13.2479)
-attachedSegments = [NodePath("../Node3D86"), NodePath("../Node3D87"), NodePath("../Node3D88"), NodePath("../Node3D155")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D85"]
-mesh = SubResource("SphereMesh_v666q")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D85"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D85/StaticBody3D"]
-shape = SubResource("SphereShape3D_le22m")
-
-[node name="Node3D86" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.257521, -0.966273, -4.22371e-08, 0, -4.37114e-08, 1, -0.966273, 0.257521, 1.12566e-08, -8.42856, 0, -12.2329)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D85")
-endNode = NodePath("../Node3D74")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D86"]
-mesh = SubResource("CapsuleMesh_wci7k")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D86"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D86/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_wk6wp")
-
-[node name="Node3D87" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.892348, 0.451348, 1.9729e-08, 0, -4.37114e-08, 1, 0.451348, 0.892348, 3.90058e-08, -3.37234, 0, -10.7809)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D85")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D87"]
-mesh = SubResource("CapsuleMesh_mf2kv")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D87"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D87/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_jek8d")
-
-[node name="Node3D88" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.05481, 0.998497, 4.36457e-08, 0, -4.37114e-08, 1, 0.998497, 0.05481, 2.39582e-09, -1.7378, 0, -13.0897)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D85")
-endNode = NodePath("../Node3D78")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D88"]
-mesh = SubResource("CapsuleMesh_tgoxk")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D88"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D88/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_yo6iu")
-
-[node name="Node3D89" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2188, 0, 1.22157)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-2.2188, 0, 1.22157)
-attachedSegments = [NodePath("../Node3D90"), NodePath("../Node3D91"), NodePath("../Node3D92"), NodePath("../Node3D93"), NodePath("../Node3D112")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D89"]
-mesh = SubResource("SphereMesh_kssry")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D89"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D89/StaticBody3D"]
-shape = SubResource("SphereShape3D_lra4q")
-
-[node name="Node3D90" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.379668, -0.925123, -4.04384e-08, 0, -4.37114e-08, 1, -0.925123, -0.379668, -1.65958e-08, -4.82747, 0, 0.150976)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D89")
-endNode = NodePath("../Node3D15")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D90"]
-mesh = SubResource("CapsuleMesh_ltcc7")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D90"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D90/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_u2kyu")
-
-[node name="Node3D91" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.809759, 0.586762, 2.56482e-08, 0, -4.37114e-08, 1, 0.586762, 0.809759, 3.53957e-08, -1.43262, 0, 2.30654)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D89")
-endNode = NodePath("../Node3D8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D91"]
-mesh = SubResource("CapsuleMesh_tj7db")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D91"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D91/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_v41ly")
-
-[node name="Node3D92" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.985933, 0.167139, 7.30588e-09, 0, -4.37114e-08, 1, 0.167139, 0.985933, 4.30965e-08, -1.78824, 0, 3.76141)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D89")
-endNode = NodePath("../Node3D27")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D92"]
-mesh = SubResource("CapsuleMesh_i0bpd")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D92"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D92/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_dkgym")
-
-[node name="Node3D93" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.20265, 0.979251, 4.28044e-08, 0, -4.37114e-08, 1, 0.979251, -0.20265, -8.8581e-09, -0.724227, 0, 0.912277)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D89")
-endNode = NodePath("../Node3D2")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D93"]
-mesh = SubResource("CapsuleMesh_6y1my")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D93"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D93/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_8iae8")
-
-[node name="Node3D94" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.69968, 0, 1.54385)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(4.69968, 0, 1.54385)
-attachedSegments = [NodePath("../Node3D95"), NodePath("../Node3D96"), NodePath("../Node3D97")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D94"]
-mesh = SubResource("SphereMesh_l7gnv")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D94"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D94/StaticBody3D"]
-shape = SubResource("SphereShape3D_o48vg")
-
-[node name="Node3D95" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.507928, -0.861399, -3.7653e-08, 0, -4.37114e-08, 1, -0.861399, 0.507928, 2.22022e-08, 3.62864, 0, 2.17539)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D94")
-endNode = NodePath("../Node3D7")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D95"]
-mesh = SubResource("CapsuleMesh_1d4ic")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D95"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D95/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_cibm5")
-
-[node name="Node3D96" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.920979, 0.389612, 1.70305e-08, 0, -4.37114e-08, 1, 0.389612, -0.920979, -4.02573e-08, 5.34369, 0, 0.0215151)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D94")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D96"]
-mesh = SubResource("CapsuleMesh_2k505")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D96"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D96/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ubj34")
-
-[node name="Node3D97" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.468677, 0.883369, 3.86133e-08, 0, -4.37114e-08, 1, 0.883369, 0.468677, 2.04865e-08, 5.86812, 0, 2.16378)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D94")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D97"]
-mesh = SubResource("CapsuleMesh_jartt")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D97"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D97/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_abx7m")
-
-[node name="Node3D98" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.04736, 0, 5.31958)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(5.04736, 0, 5.31958)
-attachedSegments = [NodePath("../Node3D99"), NodePath("../Node3D100"), NodePath("../Node3D101")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D98"]
-mesh = SubResource("SphereMesh_5gka5")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D98"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D98/StaticBody3D"]
-shape = SubResource("SphereShape3D_owj5x")
-
-[node name="Node3D99" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.786812, 0.617192, 2.69783e-08, 0, -4.37114e-08, 1, 0.617192, -0.786812, -3.43927e-08, 6.04196, 0, 4.05164)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D98")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D99"]
-mesh = SubResource("CapsuleMesh_4imvd")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D99"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D99/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_01ccu")
-
-[node name="Node3D100" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.731164, 0.682202, 2.982e-08, 0, -4.37114e-08, 1, 0.682202, 0.731164, 3.19602e-08, 5.76119, 0, 6.08464)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D98")
-endNode = NodePath("../Node3D67")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D100"]
-mesh = SubResource("CapsuleMesh_pfe8v")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D100"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D100/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_s5wcn")
-
-[node name="Node3D101" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.194174, -0.980967, -4.28794e-08, 0, -4.37114e-08, 1, -0.980967, 0.194174, 8.48762e-09, 2.9996, 0, 5.72492)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D98")
-endNode = NodePath("../Node3D9")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D101"]
-mesh = SubResource("CapsuleMesh_k3gdq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D101"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D101/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_rm4el")
-
-[node name="Node3D102" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.04782, 0, 3.83774)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(3.04782, 0, 3.83774)
-attachedSegments = [NodePath("../Node3D103"), NodePath("../Node3D104"), NodePath("../Node3D105")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D102"]
-mesh = SubResource("SphereMesh_h2wkr")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D102"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D102/StaticBody3D"]
-shape = SubResource("SphereShape3D_fbtxr")
-
-[node name="Node3D103" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.903081, -0.42947, -1.87727e-08, 0, -4.37114e-08, 1, -0.42947, -0.903081, -3.94749e-08, 2.80272, 0, 3.32234)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D102")
-endNode = NodePath("../Node3D7")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D103"]
-mesh = SubResource("CapsuleMesh_gsv8t")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D103"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D103/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ja8t3")
-
-[node name="Node3D104" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.255485, 0.966813, 4.22607e-08, 0, -4.37114e-08, 1, 0.966813, -0.255485, -1.11676e-08, 5.04219, 0, 3.31072)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D102")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D104"]
-mesh = SubResource("CapsuleMesh_52dae")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D104"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D104/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_o8cj7")
-
-[node name="Node3D105" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.738035, -0.674763, -2.94948e-08, 0, -4.37114e-08, 1, -0.674763, 0.738035, 3.22605e-08, 1.99983, 0, 4.984)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D102")
-endNode = NodePath("../Node3D9")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D105"]
-mesh = SubResource("CapsuleMesh_4stax")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D105"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D105/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_5io3o")
-
-[node name="Node3D106" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.72635, 0, 4.06286)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(0.72635, 0, 4.06286)
-attachedSegments = [NodePath("../Node3D107"), NodePath("../Node3D108"), NodePath("../Node3D109")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D106"]
-mesh = SubResource("SphereMesh_dusii")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D106"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D106/StaticBody3D"]
-shape = SubResource("SphereShape3D_qjdny")
-
-[node name="Node3D107" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.565592, 0.824685, 3.60481e-08, 0, -4.37114e-08, 1, 0.824685, -0.565592, -2.47228e-08, 1.64198, 0, 3.4349)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D106")
-endNode = NodePath("../Node3D7")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D107"]
-mesh = SubResource("CapsuleMesh_cegtk")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D107"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D107/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_m5tv6")
-
-[node name="Node3D108" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.994104, 0.108431, 4.73966e-09, 0, -4.37114e-08, 1, 0.108431, 0.994104, 4.34537e-08, 0.839099, 0, 5.09656)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D106")
-endNode = NodePath("../Node3D9")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D108"]
-mesh = SubResource("CapsuleMesh_xyfsh")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D108"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D108/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ixhdt")
-
-[node name="Node3D109" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.439325, -0.898328, -3.92672e-08, 0, -4.37114e-08, 1, -0.898328, -0.439325, -1.92035e-08, 0.0399572, 0, 3.72718)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D106")
-endNode = NodePath("../Node3D8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D109"]
-mesh = SubResource("CapsuleMesh_lyo05")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D109"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D109/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_631br")
-
-[node name="Node3D110" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.753582, 0, 1.7012)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-0.753582, 0, 1.7012)
-attachedSegments = [NodePath("../Node3D111"), NodePath("../Node3D112"), NodePath("../Node3D113")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D110"]
-mesh = SubResource("SphereMesh_xbxaf")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D110"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D110/StaticBody3D"]
-shape = SubResource("SphereShape3D_r7rj4")
-
-[node name="Node3D111" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.58465, 0.811286, 3.54624e-08, 0, -4.37114e-08, 1, 0.811286, -0.58465, -2.55559e-08, 0.00838178, 0, 1.15209)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D110")
-endNode = NodePath("../Node3D2")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D111"]
-mesh = SubResource("CapsuleMesh_sajdb")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D111"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D111/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_euc5e")
-
-[node name="Node3D112" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.311099, -0.950377, -4.15423e-08, 0, -4.37114e-08, 1, -0.950377, -0.311099, -1.35986e-08, -1.48619, 0, 1.46138)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D110")
-endNode = NodePath("../Node3D89")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D112"]
-mesh = SubResource("CapsuleMesh_r84h7")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D112"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D112/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_1l3u7")
-
-[node name="Node3D113" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.997997, 0.0632621, 2.76527e-09, 0, -4.37114e-08, 1, 0.0632621, 0.997997, 4.36238e-08, -0.700009, 0, 2.54635)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D110")
-endNode = NodePath("../Node3D8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D113"]
-mesh = SubResource("CapsuleMesh_q6u4x")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D113"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D113/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_5g3x3")
-
-[node name="Node3D114" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2221, 0, 2.47634)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(1.2221, 0, 2.47634)
-attachedSegments = [NodePath("../Node3D115"), NodePath("../Node3D116"), NodePath("../Node3D117")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D114"]
-mesh = SubResource("SphereMesh_wr6jk")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D114"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D114/StaticBody3D"]
-shape = SubResource("SphereShape3D_6tgtj")
-
-[node name="Node3D115" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.918957, 0.394358, 1.72379e-08, 0, -4.37114e-08, 1, 0.394358, -0.918957, -4.01689e-08, 1.49134, 0, 1.84895)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D114")
-endNode = NodePath("../Node3D20")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D115"]
-mesh = SubResource("CapsuleMesh_6qg1w")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D115"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D115/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_he8uc")
-
-[node name="Node3D116" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.240293, 0.970701, 4.24307e-08, 0, -4.37114e-08, 1, 0.970701, 0.240293, 1.05035e-08, 1.88986, 0, 2.64163)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D114")
-endNode = NodePath("../Node3D7")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D116"]
-mesh = SubResource("CapsuleMesh_dcnq7")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D116"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D116/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_4kxxw")
-
-[node name="Node3D117" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.439854, -0.898069, -3.92559e-08, 0, -4.37114e-08, 1, -0.898069, 0.439854, 1.92266e-08, 0.287834, 0, 2.93392)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D114")
-endNode = NodePath("../Node3D8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D117"]
-mesh = SubResource("CapsuleMesh_0so4c")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D117"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D117/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_8708b")
-
-[node name="Node3D118" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.11351, 0, 3.83774)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(8.11351, 0, 3.83774)
-attachedSegments = [NodePath("../Node3D119"), NodePath("../Node3D120"), NodePath("../Node3D121")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D118"]
-mesh = SubResource("SphereMesh_4g6y3")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D118"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D118/StaticBody3D"]
-shape = SubResource("SphereShape3D_q75i8")
-
-[node name="Node3D119" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.58045, 0.814296, 3.5594e-08, 0, -4.37114e-08, 1, 0.814296, -0.58045, -2.53723e-08, 9.83465, 0, 2.61087)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D118")
-endNode = NodePath("../Node3D60")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D119"]
-mesh = SubResource("CapsuleMesh_fp0h3")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D119"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D119/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_b3son")
-
-[node name="Node3D120" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.878433, -0.477866, -2.08882e-08, 0, -4.37114e-08, 1, -0.477866, 0.878433, 3.83975e-08, 7.29426, 0, 5.34372)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D118")
-endNode = NodePath("../Node3D67")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D120"]
-mesh = SubResource("CapsuleMesh_4yar1")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D120"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D120/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_3ktkl")
-
-[node name="Node3D121" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.699466, -0.714666, -3.1239e-08, 0, -4.37114e-08, 1, -0.714666, -0.699466, -3.05746e-08, 7.57503, 0, 3.31072)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D118")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D121"]
-mesh = SubResource("CapsuleMesh_65kuq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D121"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D121/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_koe5n")
-
-[node name="Node3D122" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.04574, 0, 0.427705)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(9.04574, 0, 0.427705)
-attachedSegments = [NodePath("../Node3D123"), NodePath("../Node3D124"), NodePath("../Node3D125")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D122"]
-mesh = SubResource("SphereMesh_kanhd")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D122"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D122/StaticBody3D"]
-shape = SubResource("SphereShape3D_0dwk3")
-
-[node name="Node3D123" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.98805, 0.154135, 6.73744e-09, 0, -4.37114e-08, 1, 0.154135, -0.98805, -4.3189e-08, 9.29423, 0, -1.16524)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D122")
-endNode = NodePath("../Node3D52")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D123"]
-mesh = SubResource("CapsuleMesh_7egm2")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D123"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D123/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_e6nc3")
-
-[node name="Node3D124" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.35602, 0.934478, 4.08473e-08, 0, -4.37114e-08, 1, 0.934478, 0.35602, 1.55621e-08, 10.3008, 0, 0.905851)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D122")
-endNode = NodePath("../Node3D60")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D124"]
-mesh = SubResource("CapsuleMesh_cng63")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D124"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D124/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_518qk")
-
-[node name="Node3D125" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.76089, -0.648881, -2.83635e-08, 0, -4.37114e-08, 1, -0.648881, 0.76089, 3.32595e-08, 8.04115, 0, 1.6057)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D122")
-endNode = NodePath("../Node3D10")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D125"]
-mesh = SubResource("CapsuleMesh_28tqq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D125"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D125/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_bafar")
-
-[node name="Node3D126" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0495, 0, -2.07594)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(12.0495, 0, -2.07594)
-attachedSegments = [NodePath("../Node3D127"), NodePath("../Node3D128"), NodePath("../Node3D129")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D126"]
-mesh = SubResource("SphereMesh_2ggfq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D126"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D126/StaticBody3D"]
-shape = SubResource("SphereShape3D_map00")
-
-[node name="Node3D127" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.74897, 0.662604, 2.89634e-08, 0, -4.37114e-08, 1, 0.662604, -0.74897, -3.27385e-08, 13.5174, 0, -3.7352)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D126")
-endNode = NodePath("../Node3D63")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D127"]
-mesh = SubResource("CapsuleMesh_sbm6h")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D127"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D127/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_nkhr2")
-
-[node name="Node3D128" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.989972, -0.141264, -6.17482e-09, 0, -4.37114e-08, 1, -0.141264, 0.989972, 4.32731e-08, 11.8027, 0, -0.345973)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D126")
-endNode = NodePath("../Node3D60")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D128"]
-mesh = SubResource("CapsuleMesh_sghsr")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D128"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D128/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_n5uqv")
-
-[node name="Node3D129" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.262608, -0.964903, -4.21772e-08, 0, -4.37114e-08, 1, -0.964903, -0.262608, -1.1479e-08, 10.7961, 0, -2.41707)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D126")
-endNode = NodePath("../Node3D52")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D129"]
-mesh = SubResource("CapsuleMesh_46y6o")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D129"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D129/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_fmos0")
-
-[node name="Node3D130" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5818, 0, -4.69464)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(10.5818, 0, -4.69464)
-attachedSegments = [NodePath("../Node3D131"), NodePath("../Node3D132"), NodePath("../Node3D133")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D130"]
-mesh = SubResource("SphereMesh_7tppb")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D130"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D130/StaticBody3D"]
-shape = SubResource("SphereShape3D_1tdji")
-
-[node name="Node3D131" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.156954, 0.987606, 4.31696e-08, 0, -4.37114e-08, 1, 0.987606, -0.156954, -6.86067e-09, 12.7836, 0, -5.04455)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D130")
-endNode = NodePath("../Node3D63")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D131"]
-mesh = SubResource("CapsuleMesh_8lf3r")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D131"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D131/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_rntci")
-
-[node name="Node3D132" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.758576, -0.651584, -2.84817e-08, 0, -4.37114e-08, 1, -0.651584, -0.758576, -3.31584e-08, 9.3477, 0, -6.13143)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D130")
-endNode = NodePath("../Node3D41")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D132"]
-mesh = SubResource("CapsuleMesh_erk7r")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D132"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D132/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_n0b3o")
-
-[node name="Node3D133" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.881154, -0.47283, -2.0668e-08, 0, -4.37114e-08, 1, -0.47283, 0.881154, 3.85165e-08, 10.0623, 0, -3.72641)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D130")
-endNode = NodePath("../Node3D52")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D133"]
-mesh = SubResource("CapsuleMesh_q0wgn")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D133"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D133/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ab4pv")
-
-[node name="Node3D134" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.45919, 0, -6.6475)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-8.45919, 0, -6.6475)
-attachedSegments = [NodePath("../Node3D135"), NodePath("../Node3D136"), NodePath("../Node3D137")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D134"]
-mesh = SubResource("SphereMesh_712kf")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D134"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D134/StaticBody3D"]
-shape = SubResource("SphereShape3D_vjffw")
-
-[node name="Node3D135" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.599818, 0.800137, 3.49751e-08, 0, -4.37114e-08, 1, 0.800137, -0.599818, -2.62189e-08, -7.269, 0, -7.53972)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D134")
-endNode = NodePath("../Node3D30")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D135"]
-mesh = SubResource("CapsuleMesh_tmyxp")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D135"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D135/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_n6dd5")
-
-[node name="Node3D136" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.770776, -0.637106, -2.78488e-08, 0, -4.37114e-08, 1, -0.637106, -0.770776, -3.36917e-08, -10.3481, 0, -8.93271)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D134")
-endNode = NodePath("../Node3D74")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D136"]
-mesh = SubResource("CapsuleMesh_ru06o")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D136"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D136/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_mlseq")
-
-[node name="Node3D137" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.984422, 0.175824, 7.68551e-09, 0, -4.37114e-08, 1, 0.175824, 0.984422, 4.30304e-08, -7.94767, 0, -3.78356)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D134")
-endNode = NodePath("../Node3D15")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D137"]
-mesh = SubResource("CapsuleMesh_ixq7c")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D137"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D137/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_e7j3w")
-
-[node name="Node3D138" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.90423, 0, -3.77373)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-3.90423, 0, -3.77373)
-attachedSegments = [NodePath("../Node3D139"), NodePath("../Node3D140"), NodePath("../Node3D141")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D138"]
-mesh = SubResource("SphereMesh_01xg5")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D138"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D138/StaticBody3D"]
-shape = SubResource("SphereShape3D_pp6sc")
-
-[node name="Node3D139" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.986472, -0.163928, -7.16552e-09, 0, -4.37114e-08, 1, -0.163928, -0.986472, -4.31201e-08, -4.13001, 0, -5.13238)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D138")
-endNode = NodePath("../Node3D32")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D139"]
-mesh = SubResource("CapsuleMesh_8rj1e")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D139"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D139/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ac7ya")
-
-[node name="Node3D140" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.628525, -0.777789, -3.39982e-08, 0, -4.37114e-08, 1, -0.777789, 0.628525, 2.74737e-08, -5.67019, 0, -2.34667)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D138")
-endNode = NodePath("../Node3D15")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D140"]
-mesh = SubResource("CapsuleMesh_jksj5")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D140"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D140/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_mggks")
-
-[node name="Node3D141" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.0678557, 0.997695, 4.36106e-08, 0, -4.37114e-08, 1, 0.997695, 0.0678557, 2.96607e-09, -2.05619, 0, -3.64804)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D138")
-endNode = NodePath("../Node3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D141"]
-mesh = SubResource("CapsuleMesh_wseub")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D141"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D141/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ku7xo")
-
-[node name="Node3D142" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7532, 0, -1.18944)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-1.7532, 0, -1.18944)
-attachedSegments = [NodePath("../Node3D143"), NodePath("../Node3D144"), NodePath("../Node3D145")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D142"]
-mesh = SubResource("SphereMesh_gyspq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D142"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D142/StaticBody3D"]
-shape = SubResource("SphereShape3D_vptkg")
-
-[node name="Node3D143" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.833732, 0.55217, 2.41361e-08, 0, -4.37114e-08, 1, 0.55217, -0.833732, -3.64436e-08, -0.980674, 0, -2.35589)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D142")
-endNode = NodePath("../Node3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D143"]
-mesh = SubResource("CapsuleMesh_cawqk")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D143"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D143/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_wuqtk")
-
-[node name="Node3D144" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.579073, 0.815276, 3.56368e-08, 0, -4.37114e-08, 1, 0.815276, 0.579073, 2.53121e-08, -0.491429, 0, -0.293226)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D142")
-endNode = NodePath("../Node3D2")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D144"]
-mesh = SubResource("CapsuleMesh_eojqd")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D144"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D144/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_ysisb")
-
-[node name="Node3D145" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.0474254, -0.998875, -4.36622e-08, 0, -4.37114e-08, 1, -0.998875, 0.0474254, 2.07303e-09, -4.59468, 0, -1.05453)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D142")
-endNode = NodePath("../Node3D15")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D145"]
-mesh = SubResource("CapsuleMesh_4y16o")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D145"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D145/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_071dv")
-
-[node name="Node3D146" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.60097, 0, -1.32679)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(1.60097, 0, -1.32679)
-attachedSegments = [NodePath("../Node3D147"), NodePath("../Node3D148"), NodePath("../Node3D149")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D146"]
-mesh = SubResource("SphereMesh_t6mqr")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D146"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D146/StaticBody3D"]
-shape = SubResource("SphereShape3D_io0ew")
-
-[node name="Node3D147" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.771758, -0.635916, -2.77968e-08, 0, -4.37114e-08, 1, -0.635916, -0.771758, -3.37346e-08, 0.696411, 0, -2.42457)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D146")
-endNode = NodePath("../Node3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D147"]
-mesh = SubResource("CapsuleMesh_ff8n2")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D147"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D147/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_kwdri")
-
-[node name="Node3D148" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.0396419, 0.999214, 4.3677e-08, 0, -4.37114e-08, 1, 0.999214, -0.0396419, -1.7328e-09, 3.79433, 0, -1.4138)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D146")
-endNode = NodePath("../Node3D3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D148"]
-mesh = SubResource("CapsuleMesh_ptewm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D148"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D148/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_swlx2")
-
-[node name="Node3D149" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.918528, -0.395356, -1.72816e-08, 0, -4.37114e-08, 1, -0.395356, 0.918528, 4.01501e-08, 1.18566, 0, -0.361901)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D146")
-endNode = NodePath("../Node3D2")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D149"]
-mesh = SubResource("CapsuleMesh_brca5")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D149"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D149/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_fdexx")
-
-[node name="Node3D150" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.37789, 0, -9.86045)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(1.37789, 0, -9.86045)
-attachedSegments = [NodePath("../Node3D151"), NodePath("../Node3D152"), NodePath("../Node3D153")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D150"]
-mesh = SubResource("SphereMesh_i5n4s")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D150"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D150/StaticBody3D"]
-shape = SubResource("SphereShape3D_x3tpo")
-
-[node name="Node3D151" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.997126, -0.0757636, -3.31173e-09, 0, -4.37114e-08, 1, -0.0757636, -0.997126, -4.35858e-08, 1.26122, 0, -11.3959)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D150")
-endNode = NodePath("../Node3D78")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D151"]
-mesh = SubResource("CapsuleMesh_tmyn7")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D151"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D151/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_a1kh5")
-
-[node name="Node3D152" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.403954, -0.914779, -3.99863e-08, 0, -4.37114e-08, 1, -0.914779, 0.403954, 1.76574e-08, -0.373319, 0, -9.08714)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D150")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D152"]
-mesh = SubResource("CapsuleMesh_7oxc4")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D152"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D152/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_cmt8n")
-
-[node name="Node3D153" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.322169, 0.946682, 4.13808e-08, 0, -4.37114e-08, 1, 0.946682, 0.322169, 1.40824e-08, 4.74572, 0, -8.71433)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D150")
-endNode = NodePath("../Node3D41")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D153"]
-mesh = SubResource("CapsuleMesh_m61aj")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D153"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D153/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_xnd2d")
-
-[node name="Node3D154" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("attachedSegments")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.03417, 0, -11.0769)
-script = ExtResource("5_5nkme")
-setPosition = Vector3(-6.03417, 0, -11.0769)
-attachedSegments = [NodePath("../Node3D155"), NodePath("../Node3D156"), NodePath("../Node3D157")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D154"]
-mesh = SubResource("SphereMesh_pge0q")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D154"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D154/StaticBody3D"]
-shape = SubResource("SphereShape3D_b226h")
-
-[node name="Node3D155" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.837931, 0.545776, 2.38566e-08, 0, -4.37114e-08, 1, 0.545776, -0.837931, -3.66271e-08, -5.32716, 0, -12.1624)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D154")
-endNode = NodePath("../Node3D85")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D155"]
-mesh = SubResource("CapsuleMesh_w81el")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D155"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D155/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_lyrym")
-
-[node name="Node3D156" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(-0.577147, 0.81664, 3.56965e-08, 0, -4.37114e-08, 1, 0.81664, 0.577147, 2.52279e-08, -4.07935, 0, -9.69538)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D154")
-endNode = NodePath("../Node3D31")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D156"]
-mesh = SubResource("CapsuleMesh_2gdor")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D156"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D156/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_qr5ha")
-
-[node name="Node3D157" type="Node3D" parent="NavGraph" node_paths=PackedStringArray("startNode", "endNode")]
-transform = Transform3D(0.0227253, -0.999742, -4.37001e-08, 0, -4.37114e-08, 1, -0.999742, -0.0227253, -9.93352e-10, -9.13558, 0, -11.1474)
-script = ExtResource("6_i8g0q")
-startNode = NodePath("../Node3D154")
-endNode = NodePath("../Node3D74")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph/Node3D157"]
-mesh = SubResource("CapsuleMesh_fghat")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavGraph/Node3D157"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavGraph/Node3D157/StaticBody3D"]
-shape = SubResource("CapsuleShape3D_lykoq")
+shape = SubResource("CapsuleShape3D_83arm")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 9, 6)
 current = true
 
 [node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "navGraph")]
-script = ExtResource("7_nj5x6")
+script = ExtResource("7_uuxhs")
 camera = NodePath("../Camera3D")
 cursor = NodePath("../Cursor")
 navGraph = NodePath("../NavGraph")
 
 [node name="Cursor" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70726, 5.58691e-08, 0.0688384)
-script = ExtResource("8_c88nd")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.12597, 6.45004e-41, -6.08211)
+script = ExtResource("8_i014c")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
 mesh = SubResource("SphereMesh_yc0hq")

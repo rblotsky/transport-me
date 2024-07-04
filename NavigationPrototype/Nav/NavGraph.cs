@@ -42,14 +42,13 @@ public partial class NavGraph : Node
 
     // Checks
     /// <summary>
-    /// Returns whether there exists a segment between A and B. Ignores direction.
-    /// (A->B and B->A both count)
+    /// Returns whether there exists a segment from A TO B.
     /// </summary>
     public bool ExistsSegment(NavNode a, NavNode b)
     {
-        foreach(NavSegment segment in a.attachedSegments)
+        foreach(NavSegment segment in a.StartingSegments)
         {
-            if(segment.Endpoints.Contains(b))
+            if(segment.End == b)
             {
                 return true;
             }
@@ -58,20 +57,23 @@ public partial class NavGraph : Node
         return false;
     }
 
+
     // Managing Structure
     public void AddNode(NavNode newNode)
     {
+        newNode.NodeRadius = nodeRadius;
         Simplifications.AddOwnedChild(this, newNode);
         nodes.Add(newNode);
-        newNode.CreatePhysicalRepresentation(nodeRadius);
+        newNode.CreatePhysicalRepresentation();
     }
 
     public void AddSegment(NavSegment segment)
     {
         segment.ConnectToEndpoints();
+        segment.Thickness = segmentThickness;
         Simplifications.AddOwnedChild(this, segment);
         segments.Add(segment);
-        segment.CreatePhysicalRepresentation(segmentThickness);
+        segment.CreatePhysicalRepresentation();
     }
 
     public void RemoveSegment(NavSegment segment)

@@ -78,8 +78,9 @@ public partial class PrototypeEditor : Node
                     // If we didn't click an existing node, we create a new node.
                     else
                     {
+                        GD.Print("Adding node!");
                         NavNode newNode = new NavNode();
-                        newNode.SetPosition(GetMousePosition());
+                        newNode.NodePosition = GetMousePosition();
                         navGraph.AddNode(newNode);
 
                     }

@@ -45,7 +45,7 @@ public partial class Route : Node
         {
             NavNode currentNode = nodesToScan.Dequeue();
 
-            foreach(NavSegment attachedSegment in currentNode.attachedSegments)
+            foreach(NavSegment attachedSegment in currentNode.StartingSegments)
             {
                 NavNode otherEndNode = attachedSegment.GetOtherEnd(currentNode);
 
@@ -61,7 +61,7 @@ public partial class Route : Node
                     NavNode backwardsCheckNode = currentNode;
                     while(backwardsCheckNode != origin)
                     {
-                        foreach(NavSegment backwardSegment in backwardsCheckNode.attachedSegments)
+                        foreach(NavSegment backwardSegment in backwardsCheckNode.EndingSegments)
                         {
                             NavNode nextBackwardNode = backwardSegment.GetOtherEnd(backwardsCheckNode);
                             if (nodeLevels.ContainsKey(nextBackwardNode) && nodeLevels[nextBackwardNode] == nodeLevels[backwardsCheckNode]-1)

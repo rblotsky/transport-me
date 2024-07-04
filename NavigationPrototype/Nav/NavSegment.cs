@@ -8,6 +8,8 @@ public partial class NavSegment : Node3D
     // DATA //
     [Export] private NavNode startNode;
     [Export] private NavNode endNode;
+    [Export] public float Thickness { get; set; }
+
     /// <summary>
     /// Gives the endpoints in an array: [startNode, endNode]
     /// </summary>
@@ -65,20 +67,31 @@ public partial class NavSegment : Node3D
         LookAt(Vector3.Down+GlobalPosition, DirectionalLine);
     }
     
-    public void CreatePhysicalRepresentation(float thickness)
+    public void CreatePhysicalRepresentation()
     {
-        // Gives itself a mesh and collider
+        // Gives itself a mesh and collider and a cone at the end
         MeshInstance3D meshInstance = new MeshInstance3D();
         CapsuleMesh capsule = new CapsuleMesh();
-        capsule.Radius = thickness;
+        capsule.Radius = Thickness;
         capsule.Height = DirectionalLine.Length();
         meshInstance.Mesh = capsule;
         Simplifications.AddOwnedChild(this, meshInstance);
 
+        MeshInstance3D endpointInstance = new MeshInstance3D();
+        SphereMesh endpointMesh = new SphereMesh();
+        endpointMesh.Radius = Thickness * 2;
+        endpointMesh.Height = Thickness * 4;
+        StandardMaterial3D endpointMaterial = new StandardMaterial3D();
+        endpointMaterial.AlbedoColor = Colors.Red;
+        endpointMesh.Material = endpointMaterial;
+        endpointInstance.Mesh = endpointMesh;
+        Simplifications.AddOwnedChild(this, endpointInstance);
+        endpointInstance.GlobalPosition = End.GlobalPosition - End.NodeRadius * DirectionalLine.Normalized();
+
         StaticBody3D colliderInstance = new StaticBody3D();
         CollisionShape3D collisionShape = new CollisionShape3D();
         CapsuleShape3D capsuleShape = new CapsuleShape3D();
-        capsuleShape.Radius = thickness;
+        capsuleShape.Radius = Thickness;
         capsuleShape.Height = DirectionalLine.Length();
         collisionShape.Shape = capsuleShape;
         Simplifications.AddOwnedChild(this, colliderInstance);
