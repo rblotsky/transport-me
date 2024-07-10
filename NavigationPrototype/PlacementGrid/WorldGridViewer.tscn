@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkodwwif53crr"]
+
+[ext_resource type="Script" path="res://NavigationPrototype/PlacementGrid/WorldGrid.cs" id="1_lqorn"]
+[ext_resource type="Shader" path="res://NavigationPrototype/PlacementGrid/WorldGridShader.gdshader" id="2_nu0ko"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3neww"]
+render_priority = 0
+shader = ExtResource("2_nu0ko")
+shader_parameter/checkerColor = Color(0, 0, 0, 0)
+shader_parameter/fadeStart = 5000.0
+shader_parameter/fadeEnd = 5000.0
+shader_parameter/subdivisions = 1
+shader_parameter/majorLineThickness = 0.0
+shader_parameter/minorLineThickness = 1.0
+shader_parameter/minorLineAlpha = 0.401
+shader_parameter/centerOffset = Vector3(0.5, 0, 0.5)
+
+[sub_resource type="SphereMesh" id="SphereMesh_bsg1f"]
+radius = 1.0
+height = 0.001
+
+[node name="WorldGridViewer" type="Node3D" node_paths=PackedStringArray("gridRenderer")]
+script = ExtResource("1_lqorn")
+gridRenderer = NodePath("MeshInstance3D")
+RenderRadius = 6.765
+GridColour = Color(1, 1, 1, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(6.765, 0, 0, 0, 6.765, 0, 0, 0, 6.765, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_3neww")
+instance_shader_parameters/gridColor = Color(1, 1, 1, 1)
+mesh = SubResource("SphereMesh_bsg1f")

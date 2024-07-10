@@ -59,24 +59,26 @@ public partial class NavGraph : Node
 
 
     // Managing Structure
-    public void AddNode(NavNode newNode)
+    public void AddNode(NavNode newNode, Vector3 globalPosition)
     {
         newNode.NodeRadius = nodeRadius;
-        Simplifications.AddOwnedChild(this, newNode);
+        newNode.GlobalPosition = globalPosition;
+
         nodes.Add(newNode);
         newNode.CreatePhysicalRepresentation();
     }
 
     public void AddSegment(NavSegment segment)
     {
-        segment.ConnectToEndpoints();
         segment.Thickness = segmentThickness;
-        Simplifications.AddOwnedChild(this, segment);
+        segment.ConnectToEndpoints();
+
         segments.Add(segment);
+        segment.SetPositionAndRotation();
         segment.CreatePhysicalRepresentation();
     }
 
-    public void RemoveSegment(NavSegment segment)
+    public void RemoveAndFreeSegment(NavSegment segment)
     {
         if(!segments.Contains(segment))
         {
@@ -89,7 +91,7 @@ public partial class NavGraph : Node
         Simplifications.FreeOwnedNode(segment);
     }
 
-    public void RemoveNodeAndConnections(NavNode node)
+    public void RemoveAndFreeNodeWithConnections(NavNode node)
     {
         if (!nodes.Contains(node))
         {
@@ -99,9 +101,10 @@ public partial class NavGraph : Node
         
         // Removes all attached segments first
         NavSegment[] attachedSegments = node.attachedSegments.ToArray();
+        node.DisconnectFromSegments();
         foreach(NavSegment attached in attachedSegments)
         {
-            RemoveSegment(attached);
+            RemoveAndFreeSegment(attached);
         }
 
         // Removes itself afterwards

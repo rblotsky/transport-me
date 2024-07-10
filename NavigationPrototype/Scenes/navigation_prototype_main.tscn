@@ -1,13 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=17 format=3 uid="uid://cdsolc63uov8s"]
 
-[ext_resource type="PackedScene" uid="uid://c5onpgdjessa8" path="res://NavigationPrototype/Scenes/PrototypeUI.tscn" id="1_rk7uq"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/CameraController.cs" id="3_8gu5q"]
 [ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="3_i7k6j"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="4_ywgcf"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="5_mhk0g"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/SceneSaver.cs" id="5_rsmg7"]
+[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://NavigationPrototype/PlacementGrid/WorldGridViewer.tscn" id="8_fh4jr"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
+[sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
+font_size = 30
+font_color = Color(1, 0, 0.933333, 1)
+outline_size = 10
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)
@@ -27,52 +36,115 @@ size = Vector2(200, 200)
 [sub_resource type="BoxShape3D" id="BoxShape3D_py1ys"]
 size = Vector3(200, 0.1, 200)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
+
 [node name="Node3D" type="Node3D"]
 
-[node name="PrototypeUi" parent="." instance=ExtResource("1_rk7uq")]
+[node name="PrototypeUi" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="InstructionsUI" type="Node" parent="PrototypeUi" node_paths=PackedStringArray("panel", "instructions")]
+script = ExtResource("1_ex2t5")
+panel = NodePath("../Panel")
+instructions = NodePath("../Panel/VBoxContainer2")
+
+[node name="Button" type="Button" parent="PrototypeUi"]
+layout_mode = 0
+offset_right = 137.0
+offset_bottom = 31.0
+text = "View Menu"
+
+[node name="Panel" type="Panel" parent="PrototypeUi"]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 517.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel"]
+layout_mode = 2
+offset_right = 218.0
+offset_bottom = 42.0
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Instructions"
+label_settings = SubResource("LabelSettings_i7tsy")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="EditTypeLabel" type="Label" parent="PrototypeUi"]
+layout_mode = 0
+offset_left = 137.0
+offset_right = 517.0
+offset_bottom = 31.0
+text = "Edit Type: NavGraph"
 
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("1_t2p50")
 
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 9, 6)
+
+[node name="CameraController" type="Node" parent="Camera3D" node_paths=PackedStringArray("cameraRef")]
+script = ExtResource("3_8gu5q")
+cameraRef = NodePath("..")
+minZoomDistance = -6.0
+lerpWeight = 15.0
+
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("2_jfx1u")
 
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "navGraph", "hologramModeLabel", "grid")]
+script = ExtResource("4_ywgcf")
+camera = NodePath("../Camera3D")
+cursor = NodePath("../Cursor")
+navGraph = NodePath("../NavGraph")
+hologramModeLabel = NodePath("../PrototypeUi/EditTypeLabel")
+grid = NodePath("../WorldGridViewer")
+hologramColour = Color(1.44392e-06, 0.604131, 0.66943, 1)
+
+[node name="SceneSaver" type="Node" parent="."]
+script = ExtResource("5_rsmg7")
+savedSceneName = "GraphScenePrototype"
+
+[node name="NavGraph" type="Node" parent="."]
+script = ExtResource("3_i7k6j")
+nodeRadius = 0.5
+segmentThickness = 0.1
+
+[node name="WorldGridViewer" parent="." instance=ExtResource("8_fh4jr")]
+verticalOffsetFromPointer = 0.0
+
+[node name="Cursor" type="Node3D" parent="."]
+script = ExtResource("5_mhk0g")
+useSmoothing = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
+mesh = SubResource("SphereMesh_yc0hq")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.457376, 0)
+mesh = SubResource("PlaneMesh_aghcb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_py1ys")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.869581, -3.88733e-08, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
+transform = Transform3D(-0.869581, 1.55493e-07, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="DirectionalLight3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DirectionalLight3D/StaticBody3D"]
 shape = SubResource("SphereShape3D_ciyus")
 
-[node name="NavGraph" type="Node" parent="." node_paths=PackedStringArray("graphMeshInstance")]
-script = ExtResource("3_i7k6j")
-graphMeshInstance = NodePath("MeshInstance3D")
-nodeRadius = 0.5
-segmentThickness = 0.1
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavGraph"]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 9, 6)
-
-[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "navGraph")]
-script = ExtResource("4_ywgcf")
-camera = NodePath("../Camera3D")
-cursor = NodePath("../Cursor")
-navGraph = NodePath("../NavGraph")
-
-[node name="Cursor" type="Node3D" parent="."]
-script = ExtResource("5_mhk0g")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
-mesh = SubResource("SphereMesh_yc0hq")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.457376, 0)
-mesh = SubResource("PlaneMesh_aghcb")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_py1ys")
+[connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

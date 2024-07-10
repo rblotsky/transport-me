@@ -23,7 +23,7 @@ public partial class Debugger3D : Node3D
         }
         else
         {
-            QueueFree();
+            Free();
         }
 	}
 
@@ -52,7 +52,7 @@ public partial class Debugger3D : Node3D
         // Removes all the elapsed effects
         foreach(DebugEffect effect in effectsToRemove)
         {
-            effect.EffectNode.QueueFree();
+            effect.EffectNode.Free();
             timedEffects.Remove(effect);
         }
     }

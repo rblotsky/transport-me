@@ -6,8 +6,8 @@ using System.Linq;
 public partial class NavNode : Node3D
 {
     // DATA //
-    [Export] public Vector3 NodePosition { get; set;}
     [Export] public float NodeRadius { get; set; }
+
     [Export] public Array<NavSegment> attachedSegments = new Array<NavSegment>();
     public NavSegment[] StartingSegments
     {
@@ -26,12 +26,18 @@ public partial class NavNode : Node3D
 
 
     // FUNCTIONS //
-    // Godot Functions
-    public override void _Ready()
+    // Checks
+    public bool ConnectedTo(NavNode otherNode, bool considerDirection = true)
     {
-        // Puts itself in the intended position
-        GlobalPosition = NodePosition;
-        base._Ready();
+        // Returns whether any segments go from this node to the other node
+        if(considerDirection)
+        {
+            return StartingSegments.Where((NavSegment segment) => { return segment.End == otherNode; }).Count() > 0;
+        }
+        else
+        {
+            return attachedSegments.Where((NavSegment segment) => { return segment.Endpoints.Contains(otherNode); }).Count() > 0;
+        }
     }
 
 
@@ -46,30 +52,23 @@ public partial class NavNode : Node3D
         attachedSegments.Remove(segment);
     }
 
+    public void DisconnectFromSegments()
+    {
+        attachedSegments.Clear();
+    }
+
 
     // Managing Display
     public void CreatePhysicalRepresentation()
     {
         // Gives itself a mesh and collider
-        MeshInstance3D meshInstance = new MeshInstance3D();
-        SphereMesh sphereMesh = new SphereMesh();
-        sphereMesh.Radius = NodeRadius;
-        sphereMesh.Height = NodeRadius * 2.0f;
-        meshInstance.Mesh = sphereMesh;
-        Simplifications.AddOwnedChild(this, meshInstance);
-
-        StaticBody3D colliderInstance = new StaticBody3D();
-        CollisionShape3D collisionShape = new CollisionShape3D();
-        SphereShape3D sphereShape = new SphereShape3D();
-        sphereShape.Radius = NodeRadius;
-        collisionShape.Shape = sphereShape;
-        Simplifications.AddOwnedChild(this, colliderInstance);
-        Simplifications.AddOwnedChild(colliderInstance, collisionShape);
+        EasyShapes.AddGenericShapeMesh(this, EasyShapes.CreateSphereMesh(NodeRadius), true);
+        EasyShapes.AddGenericShapeCollider(this, EasyShapes.CreateSphereShape(NodeRadius), true);
     }
 
     public void RemovePhysicalRepresentation()
     {
-        Simplifications.GetFirstChildOfType<MeshInstance3D>(this).Free();
-        Simplifications.GetFirstChildOfType<StaticBody3D>(this).Free();
+        Simplifications.FreeOwnedNode(Simplifications.GetFirstChildOfType<MeshInstance3D>(this));
+        Simplifications.FreeOwnedNode(Simplifications.GetFirstChildOfType<StaticBody3D>(this));
     }
 }

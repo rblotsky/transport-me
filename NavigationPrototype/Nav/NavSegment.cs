@@ -5,24 +5,27 @@ using System;
 
 public partial class NavSegment : Node3D
 {
-    // DATA //
-    [Export] private NavNode startNode;
-    [Export] private NavNode endNode;
+    // DATA
+    // Exported Properties
     [Export] public float Thickness { get; set; }
+
+    // Instance Data
+    [Export] private NavNode[] endpoints = new NavNode[2];
 
     /// <summary>
     /// Gives the endpoints in an array: [startNode, endNode]
     /// </summary>
-    public NavNode[] Endpoints { get { return new NavNode[] { startNode, endNode }; } }
-    public NavNode Start { get { return startNode; } }
-    public NavNode End { get { return endNode; } }
-    public Vector3 DirectionalLine { get { return endNode.GlobalPosition - startNode.GlobalPosition; } set { } }
+    public NavNode[] Endpoints { get { return endpoints; } }
+    public NavNode Start { get { return Endpoints[0]; } private set { Endpoints[0] = value; } }
+    public NavNode End { get { return Endpoints[1]; } private set { Endpoints[1] = value; } }
+    public Vector3 DirectionalLine { get { return End.GlobalPosition - Start.GlobalPosition; }}
+
 
     // INITIALIZATION //
-    public void SetStartEnd(NavNode start, NavNode end)
+    public void SetEndpoints(NavNode start, NavNode end)
     {
-        startNode = start;
-        endNode = end;
+        Start = start;
+        End = end;
 
         // Note: We do not call the node ConnectSegment functions. The constructor
         // should instantiate THIS object but not make any changes to OTHER objects.
@@ -30,77 +33,61 @@ public partial class NavSegment : Node3D
 
 
     // FUNCTIONS //
-    // Godot Functions
-    public override void _Ready()
-    {
-        SetPositionAndRotation();
-        base._Ready();
-    }
-
-
     // Data Retrieval
     public NavNode GetOtherEnd(NavNode oneEnd)
     {
-        if (startNode == oneEnd) return endNode;
-        else if (endNode == oneEnd) return startNode;
+        if (Start == oneEnd) return End;
+        else if (End == oneEnd) return Start;
         else return null;
     }
 
     // Managing Structure
     public void ConnectToEndpoints()
     {
-        startNode.ConnectSegment(this);
-        endNode.ConnectSegment(this);
+        Start.ConnectSegment(this);
+        End.ConnectSegment(this);
     }
 
     public void DisconnectFromEndpoints()
     {
-        startNode.DisconnectSegment(this);
-        endNode.DisconnectSegment(this);
+        Start.DisconnectSegment(this);
+        End.DisconnectSegment(this);
     }
 
 
     // Managing Physical Representation
-    private void SetPositionAndRotation()
+    public void SetPositionAndRotation()
     {
-        GlobalPosition = startNode.GlobalPosition + (DirectionalLine / 2);
+        GlobalPosition = Start.GlobalPosition + (DirectionalLine / 2);
         LookAt(Vector3.Down+GlobalPosition, DirectionalLine);
     }
     
     public void CreatePhysicalRepresentation()
     {
-        // Gives itself a mesh and collider and a cone at the end
-        MeshInstance3D meshInstance = new MeshInstance3D();
-        CapsuleMesh capsule = new CapsuleMesh();
-        capsule.Radius = Thickness;
-        capsule.Height = DirectionalLine.Length();
-        meshInstance.Mesh = capsule;
-        Simplifications.AddOwnedChild(this, meshInstance);
+        // Gives itself a mesh and collider
+        EasyShapes.AddGenericShapeMesh(this, EasyShapes.CreateCapsuleMesh(Thickness, DirectionalLine.Length()), true);
+        CollisionObject3D collider = EasyShapes.AddGenericShapeCollider(
+            this, 
+            EasyShapes.CreateCapsuleShape(Thickness, DirectionalLine.Length()), 
+            true
+            );
 
-        MeshInstance3D endpointInstance = new MeshInstance3D();
-        SphereMesh endpointMesh = new SphereMesh();
-        endpointMesh.Radius = Thickness * 2;
-        endpointMesh.Height = Thickness * 4;
-        StandardMaterial3D endpointMaterial = new StandardMaterial3D();
-        endpointMaterial.AlbedoColor = Colors.Red;
-        endpointMesh.Material = endpointMaterial;
-        endpointInstance.Mesh = endpointMesh;
-        Simplifications.AddOwnedChild(this, endpointInstance);
+        // Adds the endpoint indicator, moves it to the correct position
+        MeshInstance3D endpointInstance = EasyShapes.AddGenericShapeMesh(
+            this,
+            EasyShapes.CreateSphereMesh(
+                Thickness * 2,
+                EasyShapes.CreateMaterial(Colors.Red, 1)),
+            true
+            );
         endpointInstance.GlobalPosition = End.GlobalPosition - End.NodeRadius * DirectionalLine.Normalized();
-
-        StaticBody3D colliderInstance = new StaticBody3D();
-        CollisionShape3D collisionShape = new CollisionShape3D();
-        CapsuleShape3D capsuleShape = new CapsuleShape3D();
-        capsuleShape.Radius = Thickness;
-        capsuleShape.Height = DirectionalLine.Length();
-        collisionShape.Shape = capsuleShape;
-        Simplifications.AddOwnedChild(this, colliderInstance);
-        Simplifications.AddOwnedChild(colliderInstance, collisionShape);
+        endpointInstance.Name = "LolEndpoint";
     }
 
     public void RemovePhysicalRepresentation()
     {
-        Simplifications.GetFirstChildOfType<MeshInstance3D>(this).Free();
-        Simplifications.GetFirstChildOfType<StaticBody3D>(this).Free();
+        Simplifications.FreeOwnedNode(Simplifications.GetFirstChildOfType<MeshInstance3D>(this));
+        Simplifications.FreeOwnedNode(Simplifications.GetFirstChildOfType<MeshInstance3D>(this));
+        Simplifications.FreeOwnedNode(Simplifications.GetFirstChildOfType<StaticBody3D>(this));
     }
 }

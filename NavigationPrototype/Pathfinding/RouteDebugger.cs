@@ -4,10 +4,13 @@ using System;
 [GlobalClass]
 public partial class RouteDebugger : Node
 {
+    // DATA //
+
+    // FUNCTIONS //
     // Godot Defaults
     public override void _Ready()
     {
-        InstructionsUI.instance.AddInstruction("Press P to do a random Route test!");
+        InstructionsUI.instance.AddInstruction(this, "Press P to do a random Route test!");
         base._Ready();
     }
 

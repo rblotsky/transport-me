@@ -55,11 +55,6 @@ public static class Simplifications
         return new CollisionObject3D[0];
     }
 	
-    public static Vector2 GetMousePosScreen(Node worldNode)
-    {
-        return worldNode.GetViewport().GetMousePosition();
-    }
-
     public static PhysicsRayQueryParameters3D CreateMousePosRaycastQuery(Camera3D camera, float distance)
     {
         Vector2 mousePosScreen = GetMousePosScreen(camera);
@@ -69,6 +64,35 @@ public static class Simplifications
                         camera.ProjectRayOrigin(mousePosScreen) + camera.ProjectRayNormal(mousePosScreen) * distance);
 
         return mouseRaycast;
+    }
+
+
+    // Mouse Tracking
+    public static Vector2 GetMousePosScreen(Node worldNode)
+    {
+        return worldNode.GetViewport().GetMousePosition();
+    }
+
+    public static Vector3 GetWorldMousePosition(Camera3D usedCamera)
+    {
+        // Gets mouse position in the world
+        Vector2 mousePosScreen = GetMousePosScreen(usedCamera);
+        Plane placementPlane = Plane.PlaneXZ;
+        Vector3? mousePosWorld =
+            placementPlane.IntersectsRay(
+            usedCamera.ProjectRayOrigin(mousePosScreen),
+            usedCamera.ProjectRayNormal(mousePosScreen));
+
+
+        // Returns the placement point (at height 0) or a zero vector if mouse position wasn't found
+        if (mousePosWorld != null)
+        {
+            return new Vector3(mousePosWorld.Value.X, 0, mousePosWorld.Value.Z);
+        }
+        else
+        {
+            return Vector3.Zero;
+        }
     }
 
 

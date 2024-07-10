@@ -1,13 +1,17 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 [GlobalClass]
 public partial class InstructionsUI : Node
 {
     // DATA //
     // Scene References
-    [Export] public Container instructionsContainer;
-    [Export] public FlowContainer instructions;
+    [Export] public Control panel;
+    [Export] public Container instructions;
+
+    // Cached Data
+    private List<(Node nodeUsed, string instruction)> instructionsByNode = new List<(Node nodeUsed, string instruction)>();
 
     // Singleton Pattern
     public static InstructionsUI instance;
@@ -23,7 +27,7 @@ public partial class InstructionsUI : Node
         }
         else
         {
-            QueueFree();
+            Free();
         }
 
         base._EnterTree();
@@ -31,25 +35,32 @@ public partial class InstructionsUI : Node
 
 
     // Usage
-    public void AddInstruction(string text)
+    public void AddInstruction(Node nodeUsed, string text)
     {
         Label newLabel = new Label();
         newLabel.Text = text;
 
         instructions.AddChild(newLabel);
+        instructionsByNode.Add((nodeUsed, text));
     }
+
+    public void RemoveInstructionsForNode(Node nodeUsed)
+    {
+        instructionsByNode.RemoveAll(item => { return item.nodeUsed == nodeUsed; });
+    }
+
 
     // Signals
     // This is connected to a Signal from the menu button. It runs when the menu button is pressed.
     private void OnButtonPressed()
     {
-        if(instructionsContainer.Visible)
+        if(panel.Visible)
         {
-            instructionsContainer.Hide();
+            panel.Hide();
         }
         else
         {
-            instructionsContainer.Show();
+            panel.Show();
         }
     }
 }
