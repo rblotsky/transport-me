@@ -165,18 +165,8 @@ public partial class PrototypeEditor : Node
     }
 
     private void HandleHologramPlacement()
-    {
-        Node3D newSceneInstance = (Node3D)lolNewScene.Instantiate();
-        Simplifications.AddOwnedChild(this, newSceneInstance);
-        newSceneInstance.GlobalPosition = GetRaycastMousePosition();
-        Light3D lightThingy = Simplifications.GetFirstChildOfType<Light3D>(newSceneInstance, true);
-        RandomNumberGenerator rng = new RandomNumberGenerator();
-        rng.Seed = Time.GetTicksMsec();
-        if(rng.RandiRange(0,100) > 75)
-        {
-            lightThingy.LightColor = Colors.Red;
-        }
-        //roadHologram.InstantiateRealRoad(this, navGraph);
+    { 
+        roadHologram.InstantiateRealRoad(this, navGraph);
     }
 
     private void ToggleHologramMode()

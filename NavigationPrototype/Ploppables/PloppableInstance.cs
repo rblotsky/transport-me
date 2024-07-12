@@ -5,24 +5,36 @@ using System;
 public partial class PloppableInstance : Node3D
 {
     // DATA //
-    [Export] public bool Hologram { get; set; }
+    private bool isHologram = false;
 
 
     // FUNCTIONS //
     // Godot Defaults
-    public override void _Ready()
+
+
+    // Placement
+    public void PlopIntoWorld(Transform3D ploppedTransform, NavGraph navGraph)
     {
-        GD.Print("LOL I JUST GOT READIED LMAO");
-        base._Ready();
+        Transform = ploppedTransform;
     }
 
 
-    // Instantiation
+    // Holograms
     public void ConvertToHologram(Material hologramMaterial)
     {
-        Hologram = true;
+        // Sets to hologram
+        isHologram = true;
 
+        // Sets all the submeshes to use the hologram material
         MeshInstance3D[] subMeshes = Simplifications.GetChildrenOfType<MeshInstance3D>(this, true).ToArray();
+        foreach(MeshInstance3D meshInstance in subMeshes)
+        {
+            meshInstance.MaterialOverride = hologramMaterial;
+        }
+    }
 
+    public bool IsInPloppablePosition()
+    {
+        return true;
     }
 }
