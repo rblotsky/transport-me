@@ -1,16 +1,15 @@
-[gd_scene load_steps=59 format=3]
+[gd_scene load_steps=18 format=3 uid="uid://bj71cfgy5omcl"]
 
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_84nhf"]
-[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_atdja"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/CameraController.cs" id="3_j7v3i"]
-[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="4_bs8w0"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="5_wsckm"]
-[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavNode.cs" id="6_50aa1"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/SceneSaver.cs" id="7_tdhw6"]
-[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="8_lm3fr"]
-[ext_resource type="PackedScene" path="res://NavigationPrototype/PlacementGrid/WorldGridViewer.tscn" id="9_pxohv"]
-[ext_resource type="Script" path="res://NavigationPrototype/PlacementGrid/WorldGrid.cs" id="10_cdv2l"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="11_x3uc5"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_0u6o6"]
+[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_ecl3b"]
+[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="3_25w2m"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="4_qe1du"]
+[ext_resource type="PackedScene" uid="uid://bjkke6r44d58m" path="res://NavigationPrototype/Ploppables/lolTest2.tscn" id="5_thukx"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/SceneSaver.cs" id="7_sxmv8"]
+[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="8_6gb24"]
+[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="9_ump5u"]
+[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://NavigationPrototype/PlacementGrid/WorldGridViewer.tscn" id="10_6l48d"]
+[ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="12_jeivo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -19,86 +18,6 @@ outline_size = 10
 shadow_size = 20
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(5, 5)
-
-[sub_resource type="SphereMesh" id="SphereMesh_w1g62"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_d5q3q"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_lc7pl"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_bdwas"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_ynx8j"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_4uho8"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_nelkv"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_qk8jg"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_akc0w"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_3feec"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_6ia6y"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_87sgc"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_bmxxl"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_m8obw"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_p0jjj"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_x3ehn"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_x3rol"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_7hpaw"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_uig6a"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_xnmoi"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_3ls1q"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_om77i"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_61g6q"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_8gadr"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_2xvlt"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ecdab"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_exjgm"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_xvcge"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_887w3"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_3nhru"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_55d1v"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_7ufja"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_v4xv8"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_apkdr"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_0hkfm"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ujdve"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_sxy1s"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_6u2ij"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_mcjrx"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_c1spd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)
@@ -132,7 +51,7 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="InstructionsUI" type="Node" parent="PrototypeUi" node_paths=PackedStringArray("panel", "instructions")]
-script = ExtResource("1_84nhf")
+script = ExtResource("1_0u6o6")
 panel = NodePath("../Panel")
 instructions = NodePath("../Panel/VBoxContainer2")
 
@@ -167,361 +86,75 @@ layout_mode = 0
 offset_left = 137.0
 offset_right = 517.0
 offset_bottom = 31.0
-text = "Placement: Single Node"
+text = "Placement: Hologram"
 
 [node name="Debugger3D" type="Node3D" parent="."]
-script = ExtResource("2_atdja")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 17.6603, 11)
-current = true
-
-[node name="CameraController" type="Node" parent="Camera3D" node_paths=PackedStringArray("cameraRef")]
-script = ExtResource("3_j7v3i")
-cameraRef = NodePath("..")
-minZoomDistance = -6.0
-lerpWeight = 15.0
+script = ExtResource("2_ecl3b")
 
 [node name="RouteDebugger" type="Node" parent="."]
-script = ExtResource("4_bs8w0")
+script = ExtResource("3_25w2m")
 
 [node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "navGraph", "hologramModeLabel", "grid")]
-script = ExtResource("5_wsckm")
-camera = NodePath("../Camera3D")
+script = ExtResource("4_qe1du")
+camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 navGraph = NodePath("../NavGraph")
 hologramModeLabel = NodePath("../PrototypeUi/EditTypeLabel")
 grid = NodePath("../WorldGridViewer")
+lolNewScene = ExtResource("5_thukx")
 hologramColour = Color(1.44392e-06, 0.604131, 0.66943, 1)
 
-[node name="Node3D2" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
+[node name="LolTest2" parent="PrototypeEditor" instance=ExtResource("5_thukx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -6)
 
-[node name="Node3D3" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1)
+[node name="LolTest3" parent="PrototypeEditor" instance=ExtResource("5_thukx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 
-[node name="Node3D4" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
+[node name="LolTest4" parent="PrototypeEditor" instance=ExtResource("5_thukx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
 
-[node name="Node3D5" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1)
+[node name="LolTest5" parent="PrototypeEditor" instance=ExtResource("5_thukx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
 
-[node name="Node3D6" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 1)
+[node name="LolTest6" parent="PrototypeEditor" instance=ExtResource("5_thukx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3)
 
-[node name="Node3D7" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 1)
-
-[node name="Node3D8" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 1)
-
-[node name="Node3D9" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
-
-[node name="Node3D10" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -3)
-
-[node name="Node3D11" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -3)
-
-[node name="Node3D12" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -3)
-
-[node name="Node3D13" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
-
-[node name="Node3D14" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -7)
-
-[node name="Node3D15" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -7)
-
-[node name="Node3D16" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -7)
-
-[node name="Node3D17" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -11)
-
-[node name="Node3D" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -3)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D"]
-mesh = SubResource("SphereMesh_w1g62")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D/StaticBody3D"]
-shape = SubResource("SphereShape3D_d5q3q")
-
-[node name="Node3D19" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D19"]
-mesh = SubResource("SphereMesh_lc7pl")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D19"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D19/StaticBody3D"]
-shape = SubResource("SphereShape3D_bdwas")
-
-[node name="Node3D25" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D25"]
-mesh = SubResource("SphereMesh_ynx8j")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D25"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D25/StaticBody3D"]
-shape = SubResource("SphereShape3D_4uho8")
-
-[node name="Node3D30" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D30"]
-mesh = SubResource("SphereMesh_nelkv")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D30"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D30/StaticBody3D"]
-shape = SubResource("SphereShape3D_qk8jg")
-
-[node name="Node3D31" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D31"]
-mesh = SubResource("SphereMesh_akc0w")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D31"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D31/StaticBody3D"]
-shape = SubResource("SphereShape3D_3feec")
-
-[node name="Node3D32" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D32"]
-mesh = SubResource("SphereMesh_6ia6y")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D32"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D32/StaticBody3D"]
-shape = SubResource("SphereShape3D_87sgc")
-
-[node name="Node3D33" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D33"]
-mesh = SubResource("SphereMesh_bmxxl")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D33"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D33/StaticBody3D"]
-shape = SubResource("SphereShape3D_m8obw")
-
-[node name="Node3D34" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D34"]
-mesh = SubResource("SphereMesh_p0jjj")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D34"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D34/StaticBody3D"]
-shape = SubResource("SphereShape3D_x3ehn")
-
-[node name="Node3D35" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 3)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D35"]
-mesh = SubResource("SphereMesh_x3rol")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D35"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D35/StaticBody3D"]
-shape = SubResource("SphereShape3D_7hpaw")
-
-[node name="Node3D37" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 4)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D37"]
-mesh = SubResource("SphereMesh_uig6a")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D37"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D37/StaticBody3D"]
-shape = SubResource("SphereShape3D_xnmoi")
-
-[node name="Node3D38" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D38"]
-mesh = SubResource("SphereMesh_3ls1q")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D38"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D38/StaticBody3D"]
-shape = SubResource("SphereShape3D_om77i")
-
-[node name="Node3D39" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 4)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D39"]
-mesh = SubResource("SphereMesh_61g6q")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D39"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D39/StaticBody3D"]
-shape = SubResource("SphereShape3D_8gadr")
-
-[node name="Node3D40" type="Node3D" parent="PrototypeEditor"]
+[node name="LolTest7" parent="PrototypeEditor" instance=ExtResource("5_thukx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D40"]
-mesh = SubResource("SphereMesh_2xvlt")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D40"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D40/StaticBody3D"]
-shape = SubResource("SphereShape3D_ecdab")
-
-[node name="Node3D41" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D41"]
-mesh = SubResource("SphereMesh_exjgm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D41"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D41/StaticBody3D"]
-shape = SubResource("SphereShape3D_xvcge")
-
-[node name="Node3D26" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D26"]
-mesh = SubResource("SphereMesh_887w3")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D26"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D26/StaticBody3D"]
-shape = SubResource("SphereShape3D_3nhru")
-
-[node name="Node3D23" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 2)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D23"]
-mesh = SubResource("SphereMesh_55d1v")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D23"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D23/StaticBody3D"]
-shape = SubResource("SphereShape3D_7ufja")
-
-[node name="Node3D24" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 4)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D24"]
-mesh = SubResource("SphereMesh_v4xv8")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D24"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D24/StaticBody3D"]
-shape = SubResource("SphereShape3D_apkdr")
-
-[node name="Node3D27" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D27"]
-mesh = SubResource("SphereMesh_0hkfm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D27"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D27/StaticBody3D"]
-shape = SubResource("SphereShape3D_ujdve")
-
-[node name="Node3D18" type="Node3D" parent="PrototypeEditor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D18"]
-mesh = SubResource("SphereMesh_sxy1s")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D18"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D18/StaticBody3D"]
-shape = SubResource("SphereShape3D_6u2ij")
-
-[node name="Node3D20" type="Node3D" parent="PrototypeEditor"]
-script = ExtResource("6_50aa1")
-NodeRadius = 0.5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeEditor/Node3D20"]
-mesh = SubResource("SphereMesh_mcjrx")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="PrototypeEditor/Node3D20"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeEditor/Node3D20/StaticBody3D"]
-shape = SubResource("SphereShape3D_c1spd")
+[node name="LolTest8" parent="PrototypeEditor" instance=ExtResource("5_thukx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -5)
 
 [node name="SceneSaver" type="Node" parent="."]
-script = ExtResource("7_tdhw6")
+script = ExtResource("7_sxmv8")
 savedSceneName = "GraphScenePrototype"
 
-[node name="NavGraph" type="Node" parent="." node_paths=PackedStringArray("nodes")]
-script = ExtResource("8_lm3fr")
-nodes = [NodePath("../PrototypeEditor/Node3D"), NodePath("../PrototypeEditor/Node3D19"), NodePath("../PrototypeEditor/Node3D25"), NodePath("../PrototypeEditor/Node3D30"), NodePath("../PrototypeEditor/Node3D31"), NodePath("../PrototypeEditor/Node3D32"), NodePath("../PrototypeEditor/Node3D33"), NodePath("../PrototypeEditor/Node3D34"), NodePath("../PrototypeEditor/Node3D35"), NodePath("../PrototypeEditor/Node3D37"), NodePath("../PrototypeEditor/Node3D38"), NodePath("../PrototypeEditor/Node3D39"), NodePath("../PrototypeEditor/Node3D40"), NodePath("../PrototypeEditor/Node3D41"), NodePath("../PrototypeEditor/Node3D26"), NodePath("../PrototypeEditor/Node3D23"), NodePath("../PrototypeEditor/Node3D24"), NodePath("../PrototypeEditor/Node3D27"), NodePath("../PrototypeEditor/Node3D18"), NodePath("../PrototypeEditor/Node3D20")]
+[node name="NavGraph" type="Node" parent="."]
+script = ExtResource("8_6gb24")
 nodeRadius = 0.5
 segmentThickness = 0.1
 
-[node name="WorldGridViewer" type="Node3D" parent="." node_paths=PackedStringArray("gridRenderer") instance=ExtResource("9_pxohv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -8)
-script = ExtResource("10_cdv2l")
-gridRenderer = NodePath("MeshInstance3D")
+[node name="CameraAnchor" type="Node3D" parent="."]
+
+[node name="TrackballCamera" type="Camera3D" parent="CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 0.834261, 0.551369, 0, -0.551369, 0.834261, 0, 5.99507, 9)
+current = true
+script = ExtResource("9_ump5u")
+stabilize_horizon = true
+zoom_strength = 4.0
+zoom_inertia_threshold = 0.0
+inertia_enabled = false
+enable_pitch_limit = true
+pitch_top_limit = 0.87
+pitch_bottom_limit = 0.1
+
+[node name="WorldGridViewer" parent="." instance=ExtResource("10_6l48d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -0.938049)
 verticalOffsetFromPointer = 0.0
-RenderRadius = 6.765
-GridColour = Color(1, 1, 1, 1)
 
 [node name="Cursor" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -8)
-script = ExtResource("11_x3uc5")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -999, 0)
+script = ExtResource("12_jeivo")
 useSmoothing = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]

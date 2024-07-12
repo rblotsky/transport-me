@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PloppableResource" load_steps=2 format=3 uid="uid://6u00lpvc8yf4"]
+
+[ext_resource type="Script" path="res://NavigationPrototype/Ploppables/PloppableResource.cs" id="1_i4eqh"]
+
+[resource]
+script = ExtResource("1_i4eqh")
+Name = "Test Ploppable"

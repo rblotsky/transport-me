@@ -14,6 +14,7 @@ public partial class PrototypeEditor : Node
     [Export] private NavGraph navGraph;
     [Export] private Label hologramModeLabel;
     [Export] private WorldGrid grid;
+    [Export] private PackedScene lolNewScene;
 
     // Editor Configs
     [ExportCategory("Configs")]
@@ -165,7 +166,17 @@ public partial class PrototypeEditor : Node
 
     private void HandleHologramPlacement()
     {
-        roadHologram.InstantiateRealRoad(this, navGraph);
+        Node3D newSceneInstance = (Node3D)lolNewScene.Instantiate();
+        Simplifications.AddOwnedChild(this, newSceneInstance);
+        newSceneInstance.GlobalPosition = GetRaycastMousePosition();
+        Light3D lightThingy = Simplifications.GetFirstChildOfType<Light3D>(newSceneInstance, true);
+        RandomNumberGenerator rng = new RandomNumberGenerator();
+        rng.Seed = Time.GetTicksMsec();
+        if(rng.RandiRange(0,100) > 75)
+        {
+            lightThingy.LightColor = Colors.Red;
+        }
+        //roadHologram.InstantiateRealRoad(this, navGraph);
     }
 
     private void ToggleHologramMode()

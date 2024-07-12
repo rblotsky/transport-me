@@ -1,13 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=18 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/CameraController.cs" id="3_8gu5q"]
 [ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="3_i7k6j"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="4_ywgcf"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="5_mhk0g"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/SceneSaver.cs" id="5_rsmg7"]
+[ext_resource type="PackedScene" uid="uid://bjkke6r44d58m" path="res://NavigationPrototype/Ploppables/lolTest2.tscn" id="5_xkrq7"]
+[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://NavigationPrototype/PlacementGrid/WorldGridViewer.tscn" id="8_fh4jr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
@@ -90,25 +91,17 @@ text = "Edit Type: NavGraph"
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("1_t2p50")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 9, 6)
-
-[node name="CameraController" type="Node" parent="Camera3D" node_paths=PackedStringArray("cameraRef")]
-script = ExtResource("3_8gu5q")
-cameraRef = NodePath("..")
-minZoomDistance = -6.0
-lerpWeight = 15.0
-
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("2_jfx1u")
 
 [node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "navGraph", "hologramModeLabel", "grid")]
 script = ExtResource("4_ywgcf")
-camera = NodePath("../Camera3D")
+camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 navGraph = NodePath("../NavGraph")
 hologramModeLabel = NodePath("../PrototypeUi/EditTypeLabel")
 grid = NodePath("../WorldGridViewer")
+lolNewScene = ExtResource("5_xkrq7")
 hologramColour = Color(1.44392e-06, 0.604131, 0.66943, 1)
 
 [node name="SceneSaver" type="Node" parent="."]
@@ -119,6 +112,19 @@ savedSceneName = "GraphScenePrototype"
 script = ExtResource("3_i7k6j")
 nodeRadius = 0.5
 segmentThickness = 0.1
+
+[node name="CameraAnchor" type="Node3D" parent="."]
+
+[node name="TrackballCamera" type="Camera3D" parent="CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 0.834261, 0.551369, 0, -0.551369, 0.834261, 0, 5.99507, 9)
+script = ExtResource("7_1jqut")
+stabilize_horizon = true
+zoom_strength = 4.0
+zoom_inertia_threshold = 0.0
+inertia_enabled = false
+enable_pitch_limit = true
+pitch_top_limit = 0.87
+pitch_bottom_limit = 0.1
 
 [node name="WorldGridViewer" parent="." instance=ExtResource("8_fh4jr")]
 verticalOffsetFromPointer = 0.0

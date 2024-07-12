@@ -12,6 +12,7 @@ public partial class Debugger3D : Node3D
     // Singleton pattern
     public static Debugger3D instance = null;
     
+
     // FUNCTIONS //
     // Godot Defaults
 	// Called when the node enters the scene tree for the first time.
@@ -52,7 +53,8 @@ public partial class Debugger3D : Node3D
         // Removes all the elapsed effects
         foreach(DebugEffect effect in effectsToRemove)
         {
-            effect.EffectNode.Free();
+            RemoveChild(effect.EffectNode);
+            effect.EffectNode.QueueFree();
             timedEffects.Remove(effect);
         }
     }

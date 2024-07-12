@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class Route : Node
+public partial class Route : RefCounted
 {
     // DATA //
     // Instance Data

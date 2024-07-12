@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class DebugEffect
+public partial class DebugEffect : RefCounted
 {
     public Node EffectNode { get; private set; }
     public double StartTime { get; private set; }
