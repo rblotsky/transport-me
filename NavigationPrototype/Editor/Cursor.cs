@@ -28,5 +28,10 @@ public partial class Cursor : Node3D
     public void SetNextPos(Vector3 newPos)
     {
         nextPos = newPos;
+
+        if (!useSmoothing)
+        {
+            GlobalPosition = nextPos;
+        }
     }
 }
