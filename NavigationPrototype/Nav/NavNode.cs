@@ -3,7 +3,7 @@ using Godot.Collections;
 using System.Linq;
 
 [GlobalClass]
-public partial class NavNode : Node3D
+public partial class NavNode : Resource
 {
     // DATA //
     [Export] public float NodeRadius { get; set; }

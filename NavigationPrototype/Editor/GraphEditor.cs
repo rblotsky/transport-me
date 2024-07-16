@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+/// <summary>
+/// This is intended to allow loading an arbitrary Scene and editing the NavGraph within it.
+/// MAY BE DEPRECATED SOON.
+/// </summary>
 public partial class GraphEditor : Node
 {
     // DATA //

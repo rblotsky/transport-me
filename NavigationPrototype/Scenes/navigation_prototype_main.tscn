@@ -1,9 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=17 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
-[ext_resource type="Script" path="res://NavigationPrototype/Nav/NavGraph.cs" id="3_i7k6j"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="4_ywgcf"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="5_mhk0g"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/SceneSaver.cs" id="5_rsmg7"]
@@ -98,7 +97,7 @@ script = ExtResource("2_jfx1u")
 script = ExtResource("4_ywgcf")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
-navGraph = NodePath("../NavGraph")
+navGraph = NodePath("")
 hologramModeLabel = NodePath("../PrototypeUi/EditTypeLabel")
 grid = NodePath("../WorldGridViewer")
 lolNewScene = ExtResource("5_xkrq7")
@@ -107,11 +106,6 @@ hologramColour = Color(1.44392e-06, 0.604131, 0.66943, 1)
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_rsmg7")
 savedSceneName = "GraphScenePrototype"
-
-[node name="NavGraph" type="Node" parent="."]
-script = ExtResource("3_i7k6j")
-nodeRadius = 0.5
-segmentThickness = 0.1
 
 [node name="CameraAnchor" type="Node3D" parent="."]
 

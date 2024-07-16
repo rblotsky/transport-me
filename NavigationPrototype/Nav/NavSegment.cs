@@ -3,7 +3,7 @@ using System;
 
 [GlobalClass]
 
-public partial class NavSegment : Node3D
+public partial class NavSegment : Resource
 {
     // DATA
     // Exported Properties
