@@ -62,8 +62,8 @@ public partial class NavNode : Node3D
     public void CreatePhysicalRepresentation()
     {
         // Gives itself a mesh and collider
-        EasyShapes.AddGenericShapeMesh(this, EasyShapes.CreateSphereMesh(NodeRadius), true);
-        EasyShapes.AddGenericShapeCollider(this, EasyShapes.CreateSphereShape(NodeRadius), true);
+        EasyShapes.AddShapeMesh(this, EasyShapes.SphereMesh(NodeRadius), true);
+        EasyShapes.AddShapeCollider(this, EasyShapes.SphereShape(NodeRadius), true);
     }
 
     public void RemovePhysicalRepresentation()

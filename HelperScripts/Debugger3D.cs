@@ -11,6 +11,9 @@ public partial class Debugger3D : Node3D
 
     // Singleton pattern
     public static Debugger3D instance = null;
+
+    // Constants
+    public static readonly int CURVE_SEGMENTS = 10;
     
 
     // FUNCTIONS //
@@ -99,23 +102,19 @@ public partial class Debugger3D : Node3D
 
     public void LineEffect(Vector3 startPos, Vector3 endPos, Color colour, double durationSeconds)
     {
-        ImmediateMesh line = new ImmediateMesh();
-
-        line.SurfaceBegin(Mesh.PrimitiveType.Lines, CreateMaterial(colour));
-        line.SurfaceAddVertex(startPos);
-        line.SurfaceAddVertex(endPos);
-        line.SurfaceEnd();
-
+        ImmediateMesh line = EasyShapes.LineMesh(startPos, endPos, colour);
         CreateMeshEffect(line, durationSeconds, null);
+    }
+
+    public void BezierEffect(Vector3 start, Vector3 end, Vector3 control, Color colour, double durationSeconds)
+    {
+        ImmediateMesh curve = EasyShapes.CurveMesh(start, end, control, colour, CURVE_SEGMENTS);
+        CreateMeshEffect(curve, durationSeconds, null);
     }
 
     public void SphereEffect(Vector3 pos, float radius, Color colour, float alpha, double durationSeconds)
     {
-        SphereMesh sphere = new SphereMesh();
-        sphere.Radius = radius;
-        sphere.Height = radius*2;
-        sphere.Material = CreateMaterial(colour, alpha);
-
+        SphereMesh sphere = EasyShapes.SphereMesh(radius, EasyShapes.ColouredMaterial(colour, alpha));
         CreateMeshEffect(sphere, durationSeconds, pos);
     }
 
