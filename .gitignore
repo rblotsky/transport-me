@@ -3,3 +3,4 @@
 
 # Ignores Visual Studio files
 .vs/
+.vs/*
