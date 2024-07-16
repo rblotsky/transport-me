@@ -65,19 +65,19 @@ public partial class NavSegment : Node3D
     public void CreatePhysicalRepresentation()
     {
         // Gives itself a mesh and collider
-        EasyShapes.AddGenericShapeMesh(this, EasyShapes.CreateCapsuleMesh(Thickness, DirectionalLine.Length()), true);
-        CollisionObject3D collider = EasyShapes.AddGenericShapeCollider(
+        EasyShapes.AddShapeMesh(this, EasyShapes.CapsuleMesh(Thickness, DirectionalLine.Length()), true);
+        CollisionObject3D collider = EasyShapes.AddShapeCollider(
             this, 
-            EasyShapes.CreateCapsuleShape(Thickness, DirectionalLine.Length()), 
+            EasyShapes.CapsuleShape(Thickness, DirectionalLine.Length()), 
             true
             );
 
         // Adds the endpoint indicator, moves it to the correct position
-        MeshInstance3D endpointInstance = EasyShapes.AddGenericShapeMesh(
+        MeshInstance3D endpointInstance = EasyShapes.AddShapeMesh(
             this,
-            EasyShapes.CreateSphereMesh(
+            EasyShapes.SphereMesh(
                 Thickness * 2,
-                EasyShapes.CreateMaterial(Colors.Red, 1)),
+                EasyShapes.ColouredMaterial(Colors.Red, 1)),
             true
             );
         endpointInstance.GlobalPosition = End.GlobalPosition - End.NodeRadius * DirectionalLine.Normalized();
