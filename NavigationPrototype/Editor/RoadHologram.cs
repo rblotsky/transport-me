@@ -53,11 +53,11 @@ public partial class RoadHologram : Node3D
         // Adds a bunch of shapes representing itself
         foreach(Vector3 nodePos in nodePositions)
         {
-            MeshInstance3D addedMesh = EasyShapes.AddGenericShapeMesh(
+            MeshInstance3D addedMesh = EasyShapes.AddShapeMesh(
                 this, 
-                EasyShapes.CreateSphereMesh(
+                EasyShapes.SphereMesh(
                     CatchmentRadius, 
-                    EasyShapes.CreateMaterial(Colour, 0.5f)
+                    EasyShapes.ColouredMaterial(Colour, 0.5f)
                     )
                 );
 
@@ -67,12 +67,12 @@ public partial class RoadHologram : Node3D
 
         foreach(Vector2I segment in segments)
         {
-            MeshInstance3D addedMesh = EasyShapes.AddGenericShapeMesh(
+            MeshInstance3D addedMesh = EasyShapes.AddShapeMesh(
                 this,
-                EasyShapes.CreateCapsuleMesh(
+                EasyShapes.CapsuleMesh(
                     0.2f,
                     GetSegmentLength(segment),
-                    EasyShapes.CreateMaterial(Colour, 0.5f)
+                    EasyShapes.ColouredMaterial(Colour, 0.5f)
                     )
                 );
 
