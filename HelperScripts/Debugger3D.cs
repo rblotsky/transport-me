@@ -10,7 +10,7 @@ public partial class Debugger3D : Node3D
     private List<DebugEffect> timedEffects = new List<DebugEffect>();
 
     // Singleton pattern
-    public static Debugger3D instance = null;
+    public static Debugger3D main = null;
 
     // Constants
     public static readonly int CURVE_SEGMENTS = 10;
@@ -21,9 +21,9 @@ public partial class Debugger3D : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        if(instance == null)
+        if(main == null)
         {
-            instance = this;
+            main = this;
         }
         else
         {

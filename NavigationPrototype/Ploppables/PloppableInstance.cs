@@ -13,9 +13,9 @@ public partial class PloppableInstance : Node3D
 
 
     // Placement
-    public void PlopIntoWorld(Transform3D ploppedTransform, NavGraph navGraph)
+    public void PlopIntoWorld(Transform3D ploppedTransform)
     {
-        Transform = ploppedTransform;
+        // lol
     }
 
 

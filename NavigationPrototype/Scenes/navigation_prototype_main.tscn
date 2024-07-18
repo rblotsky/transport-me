@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=16 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="4_ywgcf"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="5_mhk0g"]
 [ext_resource type="Script" path="res://NavigationPrototype/Editor/SceneSaver.cs" id="5_rsmg7"]
-[ext_resource type="PackedScene" uid="uid://bjkke6r44d58m" path="res://NavigationPrototype/Ploppables/lolTest2.tscn" id="5_xkrq7"]
 [ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://NavigationPrototype/PlacementGrid/WorldGridViewer.tscn" id="8_fh4jr"]
 
@@ -93,15 +92,12 @@ script = ExtResource("1_t2p50")
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("2_jfx1u")
 
-[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "navGraph", "hologramModeLabel", "grid")]
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "hologramModeLabel")]
 script = ExtResource("4_ywgcf")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
-navGraph = NodePath("")
-hologramModeLabel = NodePath("../PrototypeUi/EditTypeLabel")
 grid = NodePath("../WorldGridViewer")
-lolNewScene = ExtResource("5_xkrq7")
-hologramColour = Color(1.44392e-06, 0.604131, 0.66943, 1)
+hologramModeLabel = NodePath("../PrototypeUi/EditTypeLabel")
 
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_rsmg7")

@@ -7,13 +7,9 @@ public partial class Route : RefCounted
 {
     // DATA //
     // Instance Data
-    private NavSegment[] orderedSegments;
-    private NavNode startNode;
-    private NavNode endNode;
-
-    public NavSegment[] Segments { get { return orderedSegments; } }
-    public NavNode Start { get { return startNode; } }
-    public NavNode End { get { return endNode; } }
+    public NavSegment[] orderedSegments;
+    public NavNode startNode;
+    public NavNode endNode;
 
 
     // CONSTRUCTOR //
@@ -26,9 +22,12 @@ public partial class Route : RefCounted
 
 
     // FUNCTIONS 
+    
     // Pathfinding
     public static Route CreateRouteBFS(NavNode origin, NavNode destination)
     {
+        return null;
+        /*
         // Ignores if origin == destination
         if (origin == destination) return new Route(new NavSegment[0], origin, destination);
 
@@ -98,6 +97,7 @@ public partial class Route : RefCounted
         {
             return null;
         }
-
+        */
     }
+    
 }

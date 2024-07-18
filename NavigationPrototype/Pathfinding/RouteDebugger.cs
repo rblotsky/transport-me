@@ -23,7 +23,7 @@ public partial class RouteDebugger : Node
                 GD.Print("Lol its pressed");
 
                 // Find two random nodes and make a route between them
-                NavGraph graph = Simplifications.GetFirstChildOfType<NavGraph>(GetParent(), true);
+                GraphContainer graph = Simplifications.GetFirstChildOfType<GraphContainer>(GetParent(), true);
                 RandomNumberGenerator rng = new RandomNumberGenerator();
                 NavNode origin = graph.nodes[rng.RandiRange(0, graph.nodes.Count - 1)];
                 NavNode destination = graph.nodes[rng.RandiRange(0, graph.nodes.Count - 1)];
@@ -38,20 +38,20 @@ public partial class RouteDebugger : Node
                 // Only draw the line if we found a route either direction
                 if (createdRoute != null)
                 {
-                    Debugger3D.instance.SphereEffect(origin.GlobalPosition, 0.7f, Colors.LimeGreen, 1, 10);
-                    Debugger3D.instance.SphereEffect(destination.GlobalPosition, 0.7f, Colors.LimeGreen, 1, 10);
+                    Debugger3D.main.SphereEffect(origin.GridPosition, 0.7f, Colors.LimeGreen, 1, 10);
+                    Debugger3D.main.SphereEffect(destination.GridPosition, 0.7f, Colors.LimeGreen, 1, 10);
 
-                    foreach (NavSegment segment in createdRoute.Segments)
+                    foreach (NavSegment segment in createdRoute.orderedSegments)
                     {
-                        Debugger3D.instance.LineEffect(segment.Start.GlobalPosition + Vector3.Up, segment.End.GlobalPosition + Vector3.Up, Colors.LimeGreen, 10);
+                        Debugger3D.main.LineEffect(segment.Start + Vector3.Up, segment.End + Vector3.Up, Colors.LimeGreen, 10);
                     }
                 }
 
                 // If no route, we show in red.
                 else
                 {
-                    Debugger3D.instance.SphereEffect(origin.GlobalPosition, 0.7f, Colors.Red, 1, 10);
-                    Debugger3D.instance.SphereEffect(destination.GlobalPosition, 0.7f, Colors.Red, 1, 10);
+                    Debugger3D.main.SphereEffect(origin.GridPosition, 0.7f, Colors.Red, 1, 10);
+                    Debugger3D.main.SphereEffect(destination.GridPosition, 0.7f, Colors.Red, 1, 10);
                 }
             }
         }
