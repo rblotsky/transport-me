@@ -20,13 +20,14 @@ public partial class RouteDebugger : Node
         {
             if (keyboardInput.Keycode == Key.P && keyboardInput.IsPressed())
             {
+                /*
                 GD.Print("Lol its pressed");
 
                 // Find two random nodes and make a route between them
-                GraphContainer graph = Simplifications.GetFirstChildOfType<GraphContainer>(GetParent(), true);
+                NavGraphContainer graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetParent(), true);
                 RandomNumberGenerator rng = new RandomNumberGenerator();
-                NavNode origin = graph.nodes[rng.RandiRange(0, graph.nodes.Count - 1)];
-                NavNode destination = graph.nodes[rng.RandiRange(0, graph.nodes.Count - 1)];
+                NavNode origin = graph.GetRandomNode(rng);
+                NavNode destination = graph.GetRandomNode(rng);
                 Route createdRoute = Route.CreateRouteBFS(origin, destination);
 
                 // If no route available, try going the other way (probably because of directions lol)
@@ -53,7 +54,9 @@ public partial class RouteDebugger : Node
                     Debugger3D.main.SphereEffect(origin.GridPosition, 0.7f, Colors.Red, 1, 10);
                     Debugger3D.main.SphereEffect(destination.GridPosition, 0.7f, Colors.Red, 1, 10);
                 }
+                */
             }
+
         }
 
         base._UnhandledInput(receivedEvent);

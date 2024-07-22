@@ -54,7 +54,7 @@ public static class EasyShapes
     }
 
     public static ImmediateMesh CurveMesh(Vector3 startLocal, Vector3 endLocal, Vector3 controlLocal, Color colourToUse, int segments)
-    {
+    {        
         // Creates a Bezier curve
         ImmediateMesh mesh = new ImmediateMesh();
         mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, ColouredMaterial(colourToUse, 1));
@@ -68,22 +68,18 @@ public static class EasyShapes
             // and I bypassed that by just adding each line twice. I have no idea why this
             // happens and I do not care.
             mesh.SurfaceAddVertex(
-                Vec2ToVec3(
-                    CalculateBezierQuadratic(
-                        Vec3ToVec2(startLocal), 
-                        Vec3ToVec2(controlLocal), 
-                        Vec3ToVec2(endLocal), 
-                        t/(float)segments), 
-                    startLocal.Y)
+                    CalculateBezierQuadraticWithHeight(
+                        startLocal,
+                        controlLocal,
+                        endLocal,
+                        t / (float)segments)
                 );
             mesh.SurfaceAddVertex(
-                Vec2ToVec3(
-                    CalculateBezierQuadratic(
-                        Vec3ToVec2(startLocal),
-                        Vec3ToVec2(controlLocal),
-                        Vec3ToVec2(endLocal),
-                        t / (float)segments),
-                    startLocal.Y)
+                    CalculateBezierQuadraticWithHeight(
+                        startLocal,
+                        controlLocal,
+                        endLocal,
+                        t / (float)segments)
                 );
         }
         mesh.SurfaceAddVertex(endLocal);
@@ -166,6 +162,15 @@ public static class EasyShapes
 
         Vector2 r = q0.Lerp(q1, t);
         return r;
+    }
+
+    public static Vector3 CalculateBezierQuadraticWithHeight(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    {
+        float heightDifference = p2.Y - p0.Y;
+        float pointHeight = heightDifference * t;
+
+        // Returns a regular bezier with the added height
+        return Vec2ToVec3(CalculateBezierQuadratic(Vec3ToVec2(p0), Vec3ToVec2(p1), Vec3ToVec2(p2), t), pointHeight);
     }
 
     public static Vector3 Vec2ToVec3(Vector2 vec, float height)
