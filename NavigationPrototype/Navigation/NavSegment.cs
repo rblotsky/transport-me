@@ -8,22 +8,28 @@ public partial class NavSegment : Node3D
     // DATA
     // Serializable Properties
     private Vector3I _start = Vector3I.Zero;
-    [Export] public Vector3I Start { get { return _start; } set { _start = value; UpdateVisualization(); } }
+    [Export] private Vector3I Start { get { return _start; } set { _start = value; UpdateVisualization(); } }
     private Vector3I _end = Vector3I.Zero;
-    [Export] public Vector3I End { get { return _end; } set { _end = value; UpdateVisualization(); } }
+    [Export] private Vector3I End { get { return _end; } set { _end = value; UpdateVisualization(); } }
     private Vector3I _control = Vector3I.Zero;
-    [Export] public Vector3I Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
+    [Export] private Vector3I Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
+    private bool _bidirectional = false;
+    [Export] public bool Bidirectional { get { return _bidirectional; } set { _bidirectional = value; UpdateVisualization(); } }
     
-    // Cached data in game
-    private bool stopTraffic = false;
-    
-    // Properties
+    // Readonly Properties
+    public Vector3I GlobalStart { get { return Simplifications.SnapV3ToGrid(GlobalPosition) + Start; } }
+    public Vector3I GlobalEnd { get { return Simplifications.SnapV3ToGrid(GlobalPosition) + End; } }
+    public Vector3I GlobalControl { get { return Simplifications.SnapV3ToGrid(GlobalPosition) + Control; } }
     public Vector3I[] Endpoints { get { return new Vector3I[2] { Start, End}; } }
+    public Vector3I[] GlobalEndpoints { get { return new Vector3I[2] { GlobalStart, GlobalEnd }; } }
     public Vector3 DirectionalLine { get { return End - Start; }}
+    public float SimpleLength { get { return DirectionalLine.Length(); } }
 
     // Editor Cached Data
     private MeshInstance3D curveVisualizer;
     private MeshInstance3D endpointVisualizer;
+    private MeshInstance3D endpointDirectionVisualizer;
+    private MeshInstance3D startpointVisualizer;
 
 
     // FUNCTIONS //
@@ -31,7 +37,10 @@ public partial class NavSegment : Node3D
     public override void _EnterTree()
     {
         // In editor, run visualization
-        UpdateVisualization();
+        if (Engine.IsEditorHint())
+        {
+            UpdateVisualization();
+        }
         base._EnterTree();
     }
 
@@ -47,11 +56,18 @@ public partial class NavSegment : Node3D
 
 
     // Data Retrieval
-    public Vector3I GetOtherEnd(Vector3I oneEnd)
+    public Vector3I GetOtherEndLocal(Vector3I oneEnd)
     {
         if (Start == oneEnd) return End;
         else if (End == oneEnd) return Start;
         else return Vector3I.Zero ;
+    }
+
+    public Vector3I GetOtherEndGlobal(Vector3I oneEnd)
+    {
+        if (GlobalStart == oneEnd) return GlobalEnd;
+        else if (GlobalEnd == oneEnd) return GlobalStart;
+        else return Vector3I.Zero;
     }
 
     // Visualization
@@ -68,6 +84,18 @@ public partial class NavSegment : Node3D
             endpointVisualizer.Free();
             endpointVisualizer = null;
         }
+
+        if(endpointDirectionVisualizer != null)
+        {
+            endpointDirectionVisualizer.Free();
+            endpointDirectionVisualizer = null;
+        }
+
+        if(startpointVisualizer != null)
+        {
+            startpointVisualizer.Free();
+            startpointVisualizer = null;
+        }
     }
 
     private void UpdateVisualization()
@@ -81,10 +109,18 @@ public partial class NavSegment : Node3D
             AddChild(curveVisualizer);
             endpointVisualizer = new MeshInstance3D();
             AddChild(endpointVisualizer);
+            endpointDirectionVisualizer = new MeshInstance3D();
+            AddChild(endpointDirectionVisualizer);
+            startpointVisualizer = new MeshInstance3D();
+            AddChild(startpointVisualizer);
+
 
             curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.LightBlue, 10);
             endpointVisualizer.Position = End;
-            endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.LightBlue, 1));
+            endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
+            endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
+            endpointDirectionVisualizer.Position = EasyShapes.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
+
         }
     }
 }

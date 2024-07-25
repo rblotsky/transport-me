@@ -106,7 +106,7 @@ public partial class Debugger3D : Node3D
         CreateMeshEffect(line, durationSeconds, null);
     }
 
-    public void BezierEffect(Vector3 start, Vector3 end, Vector3 control, Color colour, double durationSeconds)
+    public void CurveEffect(Vector3 start, Vector3 end, Vector3 control, Color colour, double durationSeconds)
     {
         ImmediateMesh curve = EasyShapes.CurveMesh(start, end, control, colour, CURVE_SEGMENTS);
         CreateMeshEffect(curve, durationSeconds, null);
@@ -116,6 +116,23 @@ public partial class Debugger3D : Node3D
     {
         SphereMesh sphere = EasyShapes.SphereMesh(radius, EasyShapes.ColouredMaterial(colour, alpha));
         CreateMeshEffect(sphere, durationSeconds, pos);
+    }
+
+    public void RouteEffectDefault(Route route, float durationSeconds)
+    {
+        SphereEffect(route.StartPoint, 0.7f, Colors.LimeGreen, 1, durationSeconds);
+        SphereEffect(route.EndPoint, 0.7f, Colors.DarkRed, 1, durationSeconds);
+
+        foreach (NavSegment segment in route.OrderedSegments)
+        {
+            CurveEffect(
+                segment.GlobalStart + Vector3I.Up,
+                segment.GlobalEnd + Vector3I.Up,
+                segment.GlobalControl + Vector3I.Up,
+                Colors.Black,
+                durationSeconds
+                );
+        }
     }
 
 }

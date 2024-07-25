@@ -7,49 +7,49 @@ public partial class Route : RefCounted
 {
     // DATA //
     // Instance Data
-    public NavSegment[] orderedSegments;
-    public NavNode startNode;
-    public NavNode endNode;
-
-
-    // CONSTRUCTOR //
-    public Route(IEnumerable<NavSegment> segmentsInOrder, NavNode start, NavNode end)
-    {
-        orderedSegments = segmentsInOrder.ToArray();
-        startNode = start;
-        endNode = end;
-    }
+    public NavSegment[] OrderedSegments { get; set; }
+    public Vector3I StartPoint { get; set; }
+    public Vector3I EndPoint { get; set; }
 
 
     // FUNCTIONS 
-    
-    // Pathfinding
-    public static Route CreateRouteBFS(NavNode origin, NavNode destination)
+    // Constructing
+    public static Route CreateRoute(IEnumerable<NavSegment> segmentsToTake, Vector3I start, Vector3I end)
     {
-        return null;
-        /*
+        Route newRoute = new Route();
+        newRoute.OrderedSegments = segmentsToTake.ToArray();
+        newRoute.StartPoint = start;
+        newRoute.EndPoint = end;
+
+        return newRoute;
+    }
+
+
+    // Pathfinding
+    public static Route CreateRouteBFS(Vector3I origin, Vector3I destination, NavGraphContainer graph)
+    {        
         // Ignores if origin == destination
-        if (origin == destination) return new Route(new NavSegment[0], origin, destination);
+        if (origin == destination) return CreateRoute(new NavSegment[0], origin, destination);
 
         // Runs a BFS algorithm to create the Route
         List<NavSegment> segmentsToUse = new List<NavSegment>();
-        Queue<NavNode> nodesToScan = new Queue<NavNode>();
-        Dictionary<NavNode, int> nodeLevels = new Dictionary<NavNode, int>();
-        
+        Queue<Vector3I> pointsToScan = new Queue<Vector3I>();
+        Dictionary<Vector3I, int> pointLevels = new Dictionary<Vector3I, int>();
+
         // Starting from the origin, check each "level" (number of segments from origin)
         // before moving on to the next.
-        nodesToScan.Enqueue(origin);
-        nodeLevels[origin] = 0;
-        while(nodesToScan.Count != 0)
+        pointsToScan.Enqueue(origin);
+        pointLevels[origin] = 0;
+        while(pointsToScan.Count != 0)
         {
-            NavNode currentNode = nodesToScan.Dequeue();
+            Vector3I currentConnector = pointsToScan.Dequeue();
 
-            foreach(NavSegment attachedSegment in currentNode.StartingSegments)
+            foreach(NavSegment attachedSegment in graph.GetConnections(currentConnector))
             {
-                NavNode otherEndNode = attachedSegment.GetOtherEnd(currentNode);
+                Vector3I otherEnd = attachedSegment.GetOtherEndGlobal(currentConnector);
 
                 // If the segment leads to the destination, goes back to find the shortest path
-                if(attachedSegment.Endpoints.Contains(destination))
+                if(attachedSegment.GlobalEnd == destination || (attachedSegment.Bidirectional && otherEnd == destination))
                 {
                     segmentsToUse.Add(attachedSegment);
 
@@ -57,16 +57,16 @@ public partial class Route : RefCounted
                     // that segment.
                     // This checks all segments around each node for ones that are ONE level below. Any node
                     // exactly 1 level below MUST be the fastest path back.
-                    NavNode backwardsCheckNode = currentNode;
-                    while(backwardsCheckNode != origin)
+                    Vector3I backwardsCheck = currentConnector;
+                    while(backwardsCheck != origin)
                     {
-                        foreach(NavSegment backwardSegment in backwardsCheckNode.EndingSegments)
+                        foreach(NavSegment backwardSegment in graph.GetEndingConnections(backwardsCheck))
                         {
-                            NavNode nextBackwardNode = backwardSegment.GetOtherEnd(backwardsCheckNode);
-                            if (nodeLevels.ContainsKey(nextBackwardNode) && nodeLevels[nextBackwardNode] == nodeLevels[backwardsCheckNode]-1)
+                            Vector3I nextBackwardConnector = backwardSegment.GetOtherEndGlobal(backwardsCheck);
+                            if (pointLevels.ContainsKey(nextBackwardConnector) && pointLevels[nextBackwardConnector] == pointLevels[backwardsCheck] -1)
                             {
                                 segmentsToUse.Add(backwardSegment);
-                                backwardsCheckNode = nextBackwardNode;
+                                backwardsCheck = nextBackwardConnector;
                                 break;
                             }
                         }
@@ -74,15 +74,15 @@ public partial class Route : RefCounted
 
                     // Since we added this backwards, we need to reverse it to get origin->destination.
                     segmentsToUse.Reverse();
-                    nodesToScan.Clear();
+                    pointsToScan.Clear();
                     break;
                 }
 
-                // Adds the attached node to scan if it hasn't been added yet.
-                else if (!nodeLevels.ContainsKey(otherEndNode))
+                // Adds the attached node to scan if it hasn't been added yet and it's bidirectional or starts here
+                else if (!pointLevels.ContainsKey(otherEnd) && (attachedSegment.GlobalStart == currentConnector || attachedSegment.Bidirectional))
                 {
-                    nodesToScan.Enqueue(otherEndNode);
-                    nodeLevels[otherEndNode] = nodeLevels[currentNode] + 1;
+                    pointsToScan.Enqueue(otherEnd);
+                    pointLevels[otherEnd] = pointLevels[currentConnector] + 1;
                 }
             }
         }
@@ -91,13 +91,13 @@ public partial class Route : RefCounted
         // Return null if no route was found.
         if (segmentsToUse.Count > 0)
         {
-            return new Route(segmentsToUse, origin, destination);
+            return CreateRoute(segmentsToUse, origin, destination);
         }
         else
         {
             return null;
         }
-        */
+        
     }
     
 }

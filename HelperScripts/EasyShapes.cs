@@ -170,7 +170,7 @@ public static class EasyShapes
         float pointHeight = heightDifference * t;
 
         // Returns a regular bezier with the added height
-        return Vec2ToVec3(CalculateBezierQuadratic(Vec3ToVec2(p0), Vec3ToVec2(p1), Vec3ToVec2(p2), t), pointHeight);
+        return Vec2ToVec3(CalculateBezierQuadratic(Vec3ToVec2(p0), Vec3ToVec2(p1), Vec3ToVec2(p2), t), pointHeight+p0.Y);
     }
 
     public static Vector3 Vec2ToVec3(Vector2 vec, float height)

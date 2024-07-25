@@ -7,6 +7,9 @@ using System.Linq;
 
 public static class Simplifications
 {
+    // DATA //
+    public static readonly Vector3 GRID_SNAP = new Vector3(1, 1, 1);
+
 
     // FUNCTIONS //
     // Collider detection
@@ -170,6 +173,16 @@ public static class Simplifications
 
 
     // Miscellaneous
+    public static Vector3I FloorVector3(Vector3 vec)
+    {
+        return (Vector3I)vec.Floor();
+    }
+
+    public static Vector3I SnapV3ToGrid(Vector3 vec)
+    {
+        return (Vector3I)vec.Snapped(GRID_SNAP);
+    }
+
     public static void AddOwnedChild(Node parent, Node child)
     {
         parent.AddChild(child, true);

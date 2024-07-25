@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ladnqi2m5u5b"]
+
+[resource]
+albedo_color = Color(0.411212, 0.452867, 0.412744, 1)
+metallic = 0.21
+metallic_specular = 0.25
+roughness = 0.47
+roughness_texture_channel = 4
+rim_tint = 1.0
+heightmap_scale = 0.475
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32

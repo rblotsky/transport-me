@@ -7,28 +7,28 @@
 
 [node name="PloppableGraph" type="Node3D" parent="." node_paths=PackedStringArray("segments")]
 script = ExtResource("2_dn5mt")
-segments = [NodePath("NavSegment2"), NodePath("NavSegment")]
+segments = [NodePath("NavSegment"), NodePath("NavSegment2"), NodePath("NavSegment3"), NodePath("NavSegment4")]
 
 [node name="NavSegment2" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_18dlw")
-Start = Vector3i(-4, 0, -2)
-End = Vector3i(4, 0, -2)
+Start = Vector3i(-3, 0, -2)
+End = Vector3i(3, 0, -2)
 Control = Vector3i(-1, 0, -2)
 
 [node name="NavSegment" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_18dlw")
-Start = Vector3i(-4, 0, 2)
-End = Vector3i(4, 0, 2)
+Start = Vector3i(-3, 0, 2)
+End = Vector3i(3, 0, 2)
 Control = Vector3i(-1, 0, 2)
 
 [node name="NavSegment3" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_18dlw")
-Start = Vector3i(-4, 0, -2)
-End = Vector3i(4, 0, 2)
+Start = Vector3i(-3, 0, -2)
+End = Vector3i(3, 0, 2)
 Control = Vector3i(-1, 0, -2)
 
 [node name="NavSegment4" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_18dlw")
-Start = Vector3i(-4, 0, 2)
-End = Vector3i(4, 0, -2)
+Start = Vector3i(-3, 0, 2)
+End = Vector3i(3, 0, -2)
 Control = Vector3i(-1, 0, 2)

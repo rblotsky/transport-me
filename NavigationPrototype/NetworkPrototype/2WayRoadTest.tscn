@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://cd3hxbasfduee"]
+
+[ext_resource type="Material" uid="uid://b3h2hsdfu4evw" path="res://NavigationPrototype/NetworkPrototype/RoadMaterial.tres" id="2_bn3qr"]
+[ext_resource type="Script" path="res://NavigationPrototype/Navigation/PloppableGraph.cs" id="3_4tpjd"]
+[ext_resource type="Script" path="res://NavigationPrototype/Navigation/NavSegment.cs" id="4_6626q"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l1j8j"]
+material = ExtResource("2_bn3qr")
+size = Vector2(4, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hfu4k"]
+size = Vector3(4, 0.05, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xw3h3"]
+size = Vector3(4, 0.05, 0.4)
+
+[node name="2WayRoadTest" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("PlaneMesh_l1j8j")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+mesh = SubResource("BoxMesh_hfu4k")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+mesh = SubResource("BoxMesh_hfu4k")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+mesh = SubResource("BoxMesh_xw3h3")
+
+[node name="PloppableGraph" type="Node3D" parent="."]
+script = ExtResource("3_4tpjd")
+
+[node name="NavSegment2" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("4_6626q")
+Start = Vector3i(2, 0, -1)
+End = Vector3i(-2, 0, -1)
+Control = Vector3i(0, 0, -1)
+
+[node name="NavSegment" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("4_6626q")
+Start = Vector3i(-2, 0, 1)
+End = Vector3i(2, 0, 1)
+Control = Vector3i(0, 0, 1)
