@@ -27,7 +27,8 @@ public partial class Route : RefCounted
 
     // Pathfinding
     public static Route CreateRouteBFS(Vector3I origin, Vector3I destination, NavGraphContainer graph)
-    {        
+    {
+        GD.Print("\tEntered CreateRouteBFS");
         // Ignores if origin == destination
         if (origin == destination) return CreateRoute(new NavSegment[0], origin, destination);
 
@@ -48,6 +49,10 @@ public partial class Route : RefCounted
             {
                 Vector3I otherEnd = attachedSegment.GetOtherEndGlobal(currentConnector);
 
+                if (attachedSegment.GlobalEnd == destination || attachedSegment.GlobalStart == destination)
+                {
+                    GD.Print("Reached destination lol");
+                }
                 // If the segment leads to the destination, goes back to find the shortest path
                 if(attachedSegment.GlobalEnd == destination || (attachedSegment.Bidirectional && otherEnd == destination))
                 {
@@ -60,15 +65,37 @@ public partial class Route : RefCounted
                     Vector3I backwardsCheck = currentConnector;
                     while(backwardsCheck != origin)
                     {
-                        foreach(NavSegment backwardSegment in graph.GetEndingConnections(backwardsCheck))
+                        // Setting up the kill switch.
+                        int maxChecks = graph.GetEndingConnections(backwardsCheck).Count;
+                        int checksDone = 0;
+                        int segmentsBeforeChecks = segmentsToUse.Count;
+                        foreach(NavSegment backwardSegment in graph.GetConnections(backwardsCheck))
                         {
-                            Vector3I nextBackwardConnector = backwardSegment.GetOtherEndGlobal(backwardsCheck);
-                            if (pointLevels.ContainsKey(nextBackwardConnector) && pointLevels[nextBackwardConnector] == pointLevels[backwardsCheck] -1)
+                            // Kill switch counter
+                            checksDone++;
+
+                            // Only check this segment if it is bidirectional or ENDS at the current node.
+                            if (backwardSegment.GlobalEnd == backwardsCheck || backwardSegment.Bidirectional)
                             {
-                                segmentsToUse.Add(backwardSegment);
-                                backwardsCheck = nextBackwardConnector;
-                                break;
+                                Vector3I nextBackwardConnector = backwardSegment.GetOtherEndGlobal(backwardsCheck);
+
+                                if (pointLevels.ContainsKey(nextBackwardConnector) && pointLevels[nextBackwardConnector] == pointLevels[backwardsCheck] - 1)
+                                {
+                                    segmentsToUse.Add(backwardSegment);
+                                    backwardsCheck = nextBackwardConnector;
+                                    break;
+                                }
                             }
+                        }
+
+                        // Kill switch - if we check every segment and find NOTHING that works, return an empty route.
+                        // This ALWAYS indicates a problem with the program. The only reason this is here is to avoid
+                        // infinite loops crashing the system.
+                        if(checksDone == maxChecks && segmentsBeforeChecks == segmentsToUse.Count)
+                        {
+                            GD.Print($"ERR: Failed to find a way back to origin from {backwardsCheck}. This is from the innermost loop of CreateRouteBFS.");
+                            Debugger3D.main.SphereEffect(backwardsCheck, 0.5f, Colors.Red, 1, 10);
+                            return CreateRoute(new NavSegment[0], origin, destination);
                         }
                     }
 

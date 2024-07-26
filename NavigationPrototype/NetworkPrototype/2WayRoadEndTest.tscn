@@ -39,5 +39,5 @@ script = ExtResource("2_13vpg")
 script = ExtResource("3_2jtba")
 Start = Vector3i(1, 0, -1)
 End = Vector3i(1, 0, 1)
-Control = Vector3i(-1, 0, 0)
+Control = Vector3i(-2, 0, 0)
 Bidirectional = true

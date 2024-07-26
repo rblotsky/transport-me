@@ -17,9 +17,9 @@ public partial class NavSegment : Node3D
     [Export] public bool Bidirectional { get { return _bidirectional; } set { _bidirectional = value; UpdateVisualization(); } }
     
     // Readonly Properties
-    public Vector3I GlobalStart { get { return Simplifications.SnapV3ToGrid(GlobalPosition) + Start; } }
-    public Vector3I GlobalEnd { get { return Simplifications.SnapV3ToGrid(GlobalPosition) + End; } }
-    public Vector3I GlobalControl { get { return Simplifications.SnapV3ToGrid(GlobalPosition) + Control; } }
+    public Vector3I GlobalStart { get { return Simplifications.SnapV3ToGrid(ToGlobal(Start)); } }
+    public Vector3I GlobalEnd { get { return Simplifications.SnapV3ToGrid(ToGlobal(End)); } }
+    public Vector3I GlobalControl { get { return Simplifications.SnapV3ToGrid(ToGlobal(Control)); } }
     public Vector3I[] Endpoints { get { return new Vector3I[2] { Start, End}; } }
     public Vector3I[] GlobalEndpoints { get { return new Vector3I[2] { GlobalStart, GlobalEnd }; } }
     public Vector3 DirectionalLine { get { return End - Start; }}

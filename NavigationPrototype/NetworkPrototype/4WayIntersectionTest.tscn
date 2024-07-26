@@ -91,18 +91,22 @@ Control = Vector3i(1, 0, -1)
 script = ExtResource("4_b3jrp")
 Start = Vector3i(-1, 0, -2)
 End = Vector3i(2, 0, 1)
+Control = Vector3i(-1, 0, 1)
 
 [node name="NavSegment10" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_b3jrp")
 Start = Vector3i(2, 0, -1)
 End = Vector3i(-1, 0, 2)
+Control = Vector3i(-1, 0, -1)
 
 [node name="NavSegment11" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_b3jrp")
 Start = Vector3i(1, 0, 2)
 End = Vector3i(-2, 0, -1)
+Control = Vector3i(1, 0, -1)
 
 [node name="NavSegment12" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_b3jrp")
 Start = Vector3i(-2, 0, 1)
 End = Vector3i(1, 0, -2)
+Control = Vector3i(1, 0, 1)

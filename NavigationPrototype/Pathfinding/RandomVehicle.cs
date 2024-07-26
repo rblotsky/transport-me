@@ -65,7 +65,7 @@ public partial class RandomVehicle : Node3D
         // If we reached the end, starts a new route.
         else
         {
-            //StartRandomRoute();
+            StartRandomRoute();
         }
 
         base._PhysicsProcess(delta);
@@ -83,7 +83,10 @@ public partial class RandomVehicle : Node3D
 
     private void FaceDirectionOfMotion(Vector3 positionDelta)
     {
-        LookAt(GlobalPosition + positionDelta, Vector3.Up);
+        if (positionDelta.Length() != 0)
+        {
+            LookAt(GlobalPosition + positionDelta, Vector3.Up);
+        }
     }
 
     private void StartRoute(Route newRoute)
@@ -95,7 +98,7 @@ public partial class RandomVehicle : Node3D
         else
         {
             route = newRoute;
-            Debugger3D.main.RouteEffectDefault(route, 15);
+            //Debugger3D.main.RouteEffectDefault(route, 15);
             distanceAlongSegment = 0;
             currentSegmentIndex = 0;
         }
