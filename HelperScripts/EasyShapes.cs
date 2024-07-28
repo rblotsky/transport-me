@@ -68,14 +68,14 @@ public static class EasyShapes
             // and I bypassed that by just adding each line twice. I have no idea why this
             // happens and I do not care.
             mesh.SurfaceAddVertex(
-                    CalculateBezierQuadraticWithHeight(
+                    Curves.CalculateBezierQuadraticWithHeight(
                         startLocal,
                         controlLocal,
                         endLocal,
                         t / (float)segments)
                 );
             mesh.SurfaceAddVertex(
-                    CalculateBezierQuadraticWithHeight(
+                    Curves.CalculateBezierQuadraticWithHeight(
                         startLocal,
                         controlLocal,
                         endLocal,
@@ -151,35 +151,5 @@ public static class EasyShapes
             node.AddChild(meshInstance);
         }
         return meshInstance;
-    }
-
-
-    // Curve Calculations
-    public static Vector2 CalculateBezierQuadratic(Vector2 p0, Vector2 p1, Vector2 p2, float t)
-    {
-        Vector2 q0 = p0.Lerp(p1, t);
-        Vector2 q1 = p1.Lerp(p2, t);
-
-        Vector2 r = q0.Lerp(q1, t);
-        return r;
-    }
-
-    public static Vector3 CalculateBezierQuadraticWithHeight(Vector3 p0, Vector3 p1, Vector3 p2, float t)
-    {
-        float heightDifference = p2.Y - p0.Y;
-        float pointHeight = heightDifference * t;
-
-        // Returns a regular bezier with the added height
-        return Vec2ToVec3(CalculateBezierQuadratic(Vec3ToVec2(p0), Vec3ToVec2(p1), Vec3ToVec2(p2), t), pointHeight+p0.Y);
-    }
-
-    public static Vector3 Vec2ToVec3(Vector2 vec, float height)
-    {
-        return new Vector3(vec.X, height, vec.Y);
-    }
-
-    public static Vector2 Vec3ToVec2(Vector3 vec)
-    {
-        return new Vector2(vec.X, vec.Z);
-    }
+    }    
 }

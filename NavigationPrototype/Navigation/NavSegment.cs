@@ -13,8 +13,7 @@ public partial class NavSegment : Node3D
     [Export] private Vector3I End { get { return _end; } set { _end = value; UpdateVisualization(); } }
     private Vector3I _control = Vector3I.Zero;
     [Export] private Vector3I Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
-    private bool _bidirectional = false;
-    [Export] public bool Bidirectional { get { return _bidirectional; } set { _bidirectional = value; UpdateVisualization(); } }
+    [Export(PropertyHint.Flags, "Pedestrian,Automobile,Tram,Bus,Train")] private int allowedVehicleTypes;
     
     // Readonly Properties
     public Vector3I GlobalStart { get { return Simplifications.SnapV3ToGrid(ToGlobal(Start)); } }
@@ -24,6 +23,7 @@ public partial class NavSegment : Node3D
     public Vector3I[] GlobalEndpoints { get { return new Vector3I[2] { GlobalStart, GlobalEnd }; } }
     public Vector3 DirectionalLine { get { return End - Start; }}
     public float SimpleLength { get { return DirectionalLine.Length(); } }
+    public float Length { get { return SimpleLength; } }
 
     // Editor Cached Data
     private MeshInstance3D curveVisualizer;
@@ -119,7 +119,7 @@ public partial class NavSegment : Node3D
             endpointVisualizer.Position = End;
             endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
             endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
-            endpointDirectionVisualizer.Position = EasyShapes.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
+            endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
 
         }
     }

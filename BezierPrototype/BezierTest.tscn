@@ -4,7 +4,7 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_n4ici"]
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_0xcf0"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_sba0j"]
 
 [node name="BezierTest" type="Node3D"]
 
@@ -13,9 +13,9 @@ transform = Transform3D(1, 0, 0, 0, 0.787527, 0.61628, 0, -0.61628, 0.787527, 0,
 
 [node name="BezierGenerator" type="Node" parent="." node_paths=PackedStringArray("pathMesh")]
 script = ExtResource("1_m2bub")
-Start = Vector3(-2.69, 0.4, 0)
-End = Vector3(6.325, 5.71, 3.28)
-Control = Vector3(-1.23, 0, -11.34)
+Start = Vector3(-3.735, 0, 0)
+End = Vector3(3.365, 0, 3.28)
+Control = Vector3(0.35, 0, 2.815)
 Segments = 10
 pathMesh = NodePath("MeshInstance3D2")
 
@@ -23,7 +23,7 @@ pathMesh = NodePath("MeshInstance3D2")
 mesh = SubResource("SphereMesh_n4ici")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="BezierGenerator"]
-mesh = SubResource("ImmediateMesh_0xcf0")
+mesh = SubResource("ImmediateMesh_sba0j")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.779983, 0.625801, 0, -0.625801, -0.779983, 0, 15.4196, 0)

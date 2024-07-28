@@ -24,6 +24,9 @@ public partial class PrototypeEditor : Node
     public override void _Ready()
     {
         InstructionsUI.instance.AddInstruction(this, "Press V to spawn a vehicle that goes between the two checkpoints.");
+        InstructionsUI.instance.AddInstruction(this, "Press E to make them all go faster.");
+        InstructionsUI.instance.AddInstruction(this, "Press Q to make them all go slower.");
+
         base._Ready();
     }
 
@@ -34,6 +37,22 @@ public partial class PrototypeEditor : Node
             if(keyInput.Keycode == Key.V && keyInput.IsPressed())
             {
                 GD.Print("TODO spawn a vehicle!");
+            }
+            else if (keyInput.Keycode == Key.E && keyInput.IsPressed())
+            {
+                Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
+                foreach(Vehicle vehicle in allVehicles)
+                {
+                    vehicle.distancePerSecond+=1;
+                }
+            }
+            else if (keyInput.Keycode == Key.Q && keyInput.IsPressed())
+            {
+                Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
+                foreach (Vehicle vehicle in allVehicles)
+                {
+                    vehicle.distancePerSecond-=1;
+                }
             }
         }
         base._UnhandledInput(@event);

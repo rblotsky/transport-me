@@ -28,7 +28,6 @@ public partial class Route : RefCounted
     // Pathfinding
     public static Route CreateRouteBFS(Vector3I origin, Vector3I destination, NavGraphContainer graph)
     {
-        GD.Print("\tEntered CreateRouteBFS");
         // Ignores if origin == destination
         if (origin == destination) return CreateRoute(new NavSegment[0], origin, destination);
 
@@ -45,16 +44,11 @@ public partial class Route : RefCounted
         {
             Vector3I currentConnector = pointsToScan.Dequeue();
 
-            foreach(NavSegment attachedSegment in graph.GetConnections(currentConnector))
+            foreach(NavSegment attachedSegment in graph.GetStartingConnections(currentConnector))
             {
-                Vector3I otherEnd = attachedSegment.GetOtherEndGlobal(currentConnector);
-
-                if (attachedSegment.GlobalEnd == destination || attachedSegment.GlobalStart == destination)
-                {
-                    GD.Print("Reached destination lol");
-                }
+                Vector3I otherEnd = attachedSegment.GlobalEnd;
                 // If the segment leads to the destination, goes back to find the shortest path
-                if(attachedSegment.GlobalEnd == destination || (attachedSegment.Bidirectional && otherEnd == destination))
+                if(attachedSegment.GlobalEnd == destination)
                 {
                     segmentsToUse.Add(attachedSegment);
 
@@ -69,13 +63,13 @@ public partial class Route : RefCounted
                         int maxChecks = graph.GetEndingConnections(backwardsCheck).Count;
                         int checksDone = 0;
                         int segmentsBeforeChecks = segmentsToUse.Count;
-                        foreach(NavSegment backwardSegment in graph.GetConnections(backwardsCheck))
+                        foreach(NavSegment backwardSegment in graph.GetEndingConnections(backwardsCheck))
                         {
                             // Kill switch counter
                             checksDone++;
 
                             // Only check this segment if it is bidirectional or ENDS at the current node.
-                            if (backwardSegment.GlobalEnd == backwardsCheck || backwardSegment.Bidirectional)
+                            if (backwardSegment.GlobalEnd == backwardsCheck)
                             {
                                 Vector3I nextBackwardConnector = backwardSegment.GetOtherEndGlobal(backwardsCheck);
 
@@ -105,8 +99,8 @@ public partial class Route : RefCounted
                     break;
                 }
 
-                // Adds the attached node to scan if it hasn't been added yet and it's bidirectional or starts here
-                else if (!pointLevels.ContainsKey(otherEnd) && (attachedSegment.GlobalStart == currentConnector || attachedSegment.Bidirectional))
+                // Adds the attached node to scan if it hasn't been added yet
+                else if (!pointLevels.ContainsKey(otherEnd))
                 {
                     pointsToScan.Enqueue(otherEnd);
                     pointLevels[otherEnd] = pointLevels[currentConnector] + 1;
