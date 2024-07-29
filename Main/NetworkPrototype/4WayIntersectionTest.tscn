@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bjh5oenwws237"]
 
-[ext_resource type="Material" uid="uid://b3h2hsdfu4evw" path="res://NavigationPrototype/NetworkPrototype/RoadMaterial.tres" id="2_y8l8r"]
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/PloppableGraph.cs" id="3_8kbfo"]
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/NavSegment.cs" id="4_b3jrp"]
+[ext_resource type="Material" uid="uid://b3h2hsdfu4evw" path="res://Main/NetworkPrototype/RoadMaterial.tres" id="2_y8l8r"]
+[ext_resource type="Script" path="res://Main/Navigation/PloppableGraph.cs" id="3_8kbfo"]
+[ext_resource type="Script" path="res://Main/Navigation/NavSegment.cs" id="4_b3jrp"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_l1j8j"]
 material = ExtResource("2_y8l8r")

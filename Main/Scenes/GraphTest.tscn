@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmljf32j70r2h"]
 
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/PloppableGraph.cs" id="2_dn5mt"]
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/NavSegment.cs" id="4_18dlw"]
+[ext_resource type="Script" path="res://Main/Navigation/PloppableGraph.cs" id="2_dn5mt"]
+[ext_resource type="Script" path="res://Main/Navigation/NavSegment.cs" id="4_18dlw"]
 
 [node name="GraphTest" type="Node3D"]
 

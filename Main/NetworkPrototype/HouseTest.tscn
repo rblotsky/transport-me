@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://c88hq48phuv84"]
 
-[ext_resource type="Material" uid="uid://b3h2hsdfu4evw" path="res://NavigationPrototype/NetworkPrototype/RoadMaterial.tres" id="1_d22q2"]
-[ext_resource type="Material" uid="uid://ladnqi2m5u5b" path="res://NavigationPrototype/NetworkPrototype/DrivewayMaterial.tres" id="1_vqucj"]
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/PloppableGraph.cs" id="2_t8wkc"]
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/NavSegment.cs" id="3_a5mol"]
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/NavCheckpoint.cs" id="4_q2att"]
+[ext_resource type="Material" uid="uid://b3h2hsdfu4evw" path="res://Main/NetworkPrototype/RoadMaterial.tres" id="1_d22q2"]
+[ext_resource type="Material" uid="uid://ladnqi2m5u5b" path="res://Main/NetworkPrototype/DrivewayMaterial.tres" id="1_vqucj"]
+[ext_resource type="Script" path="res://Main/Navigation/PloppableGraph.cs" id="2_t8wkc"]
+[ext_resource type="Script" path="res://Main/Navigation/NavSegment.cs" id="3_a5mol"]
+[ext_resource type="Script" path="res://Main/Navigation/NavCheckpoint.cs" id="4_q2att"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6oi4p"]
 material = ExtResource("1_d22q2")

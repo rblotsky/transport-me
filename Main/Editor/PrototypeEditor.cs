@@ -23,7 +23,6 @@ public partial class PrototypeEditor : Node
     // Godot Defaults
     public override void _Ready()
     {
-        InstructionsUI.instance.AddInstruction(this, "Press V to spawn a vehicle that goes between the two checkpoints.");
         InstructionsUI.instance.AddInstruction(this, "Press E to make them all go faster.");
         InstructionsUI.instance.AddInstruction(this, "Press Q to make them all go slower.");
 

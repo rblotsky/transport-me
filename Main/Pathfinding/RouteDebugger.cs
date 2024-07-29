@@ -31,34 +31,26 @@ public partial class RouteDebugger : Node
                     return;
                 }
 
-                GD.Print("Found two checkpoints!");
-
                 NavCheckpoint origin = checkpoints[0];
                 NavCheckpoint destination = checkpoints[1];
 
                 Route createdRoute = Route.CreateRouteBFS(origin.GlobalSnappedPos, destination.GlobalSnappedPos, graph);
 
-                GD.Print("Created a route!");
                 // If no route available, try going the other way (probably because of directions lol)
                 if (createdRoute == null)
                 {
-                    GD.Print("The route was empty. Creating a new one!");
                     createdRoute = Route.CreateRouteBFS(destination.GlobalSnappedPos, origin.GlobalSnappedPos, graph);
-                    GD.Print("Created the new route!");
                 }
 
                 // Only draw the line if we found a route either direction
                 if (createdRoute != null)
                 {
-                    GD.Print("The first or second route are not null! Displaying the route.");
                     Debugger3D.main.RouteEffectDefault(createdRoute, 5);
-                    GD.Print("Displayed the route!");
                 }
 
                 // If no route, we show in red.
                 else
                 {
-                    GD.Print("Both routes are null! Now showing the failure.");
                     Debugger3D.main.SphereEffect(origin.GlobalSnappedPos, 0.7f, Colors.Red, 1, 5);
                     Debugger3D.main.SphereEffect(destination.GlobalSnappedPos, 0.7f, Colors.Red, 1, 5);
                 }

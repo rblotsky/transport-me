@@ -37,6 +37,12 @@ public static class Simplifications
         return CreateCollisionQueryParameters(checkSphere, position, collisionMask);
     }
 
+    /// <summary>
+    /// Instantaneously checks for any objects colliding with a shape - use CreateCollisionQueryParameters to 
+    /// specify a shape and location, as well as a collision mask.
+    /// </summary>
+    /// <param name="world">Generally, use GetWorld3D() on a Node3D.</param>
+    /// <param name="scanParams">Run CreateCollisionQueryParameters</param>
     public static CollisionObject3D[] QueryCollidingObjects(World3D world, PhysicsShapeQueryParameters3D scanParams)
     {
         // Runs the query

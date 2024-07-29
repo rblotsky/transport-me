@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dkodwwif53crr"]
 
-[ext_resource type="Script" path="res://NavigationPrototype/PlacementGrid/WorldGrid.cs" id="1_lqorn"]
-[ext_resource type="Shader" path="res://NavigationPrototype/PlacementGrid/WorldGridShader.gdshader" id="2_nu0ko"]
+[ext_resource type="Script" path="res://Main/PlacementGrid/WorldGrid.cs" id="1_lqorn"]
+[ext_resource type="Shader" path="res://Main/PlacementGrid/WorldGridShader.gdshader" id="2_nu0ko"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3neww"]
 render_priority = 0

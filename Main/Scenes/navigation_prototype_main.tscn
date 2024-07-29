@@ -1,20 +1,20 @@
-[gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=23 format=3 uid="uid://cdsolc63uov8s"]
 
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/InstructionsUI.cs" id="1_ex2t5"]
+[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
-[ext_resource type="Script" path="res://NavigationPrototype/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/PrototypeEditor.cs" id="4_ywgcf"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/Cursor.cs" id="5_mhk0g"]
-[ext_resource type="Script" path="res://NavigationPrototype/Editor/SceneSaver.cs" id="5_rsmg7"]
+[ext_resource type="Script" path="res://Main/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
+[ext_resource type="Script" path="res://Main/Editor/PrototypeEditor.cs" id="4_ywgcf"]
+[ext_resource type="Script" path="res://Main/Editor/Cursor.cs" id="5_mhk0g"]
+[ext_resource type="Script" path="res://Main/Editor/SceneSaver.cs" id="5_rsmg7"]
 [ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
-[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://NavigationPrototype/PlacementGrid/WorldGridViewer.tscn" id="8_fh4jr"]
-[ext_resource type="Script" path="res://NavigationPrototype/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
-[ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://NavigationPrototype/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
-[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://NavigationPrototype/NetworkPrototype/2WayRoadEndTest.tscn" id="13_x31hm"]
-[ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://NavigationPrototype/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
-[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://NavigationPrototype/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
-[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://NavigationPrototype/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
-[ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://NavigationPrototype/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
+[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="8_fh4jr"]
+[ext_resource type="Script" path="res://Main/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
+[ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
+[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/NetworkPrototype/2WayRoadEndTest.tscn" id="13_x31hm"]
+[ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
+[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
+[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
+[ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -31,8 +31,6 @@ albedo_color = Color(0, 0.8977, 0.550284, 1)
 material = SubResource("StandardMaterial3D_dnkjm")
 radius = 0.2
 height = 0.4
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_0smbt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_53yp5"]
 albedo_color = Color(6.01634e-07, 0.286344, 0.187206, 1)
@@ -90,13 +88,6 @@ label_settings = SubResource("LabelSettings_i7tsy")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
-
-[node name="EditTypeLabel" type="Label" parent="PrototypeUi"]
-layout_mode = 0
-offset_left = 137.0
-offset_right = 517.0
-offset_bottom = 31.0
-text = "Edit Type: NavGraph"
 
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("1_t2p50")
@@ -323,6 +314,9 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 
 [node name="4WayIntersectionTest2" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 20)
 
+[node name="HouseTest15" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -3)
+
 [node name="2WayRoadTest18" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0, 20)
 
@@ -350,11 +344,6 @@ useSmoothing = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
 mesh = SubResource("SphereMesh_yc0hq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Cursor"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Cursor/StaticBody3D"]
-shape = SubResource("SphereShape3D_0smbt")
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.457376, 0)

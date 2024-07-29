@@ -44,7 +44,7 @@ public partial class Route : RefCounted
         {
             Vector3I currentConnector = pointsToScan.Dequeue();
 
-            foreach(NavSegment attachedSegment in graph.GetStartingConnections(currentConnector))
+            foreach(NavSegment attachedSegment in graph.GetStartingSegments(currentConnector))
             {
                 Vector3I otherEnd = attachedSegment.GlobalEnd;
                 // If the segment leads to the destination, goes back to find the shortest path
@@ -60,10 +60,10 @@ public partial class Route : RefCounted
                     while(backwardsCheck != origin)
                     {
                         // Setting up the kill switch.
-                        int maxChecks = graph.GetEndingConnections(backwardsCheck).Count;
+                        int maxChecks = graph.GetEndingSegments(backwardsCheck).Count;
                         int checksDone = 0;
                         int segmentsBeforeChecks = segmentsToUse.Count;
-                        foreach(NavSegment backwardSegment in graph.GetEndingConnections(backwardsCheck))
+                        foreach(NavSegment backwardSegment in graph.GetEndingSegments(backwardsCheck))
                         {
                             // Kill switch counter
                             checksDone++;

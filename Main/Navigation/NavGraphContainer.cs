@@ -9,7 +9,7 @@ public partial class NavGraphContainer : Node3D
 {
     // DATA //
     // Cached Data
-    private Dictionary<Vector3I, List<NavSegment>> segmentConnections; // Optimization: Maybe make it a list of 4, will there ever be more than 4?
+    private Dictionary<Vector3I, List<NavSegment>> segmentConnections; // Optimization: Maybe make it a list of 4, will there ever be more than 4 at one connector?
     private Dictionary<Vector3I, NavCheckpoint> checkpoints;
     private List<NavSegment> segments;
     public bool isGraphReady = false;
@@ -184,7 +184,7 @@ public partial class NavGraphContainer : Node3D
         return null;
     }
 
-    public List<NavSegment> GetConnections(Vector3I position)
+    public List<NavSegment> GetSegments(Vector3I position)
     {
         if(segmentConnections.TryGetValue(position, out List<NavSegment> found))
         {
@@ -194,15 +194,15 @@ public partial class NavGraphContainer : Node3D
         return new List<NavSegment>();
     }
 
-    public List<NavSegment> GetStartingConnections(Vector3I position)
+    public List<NavSegment> GetStartingSegments(Vector3I position)
     {
-        List<NavSegment> foundSegments = GetConnections(position);
+        List<NavSegment> foundSegments = GetSegments(position);
         return foundSegments.Where((NavSegment segment) => { return segment.GlobalStart == position; }).ToList();
     }
 
-    public List<NavSegment> GetEndingConnections(Vector3I position)
+    public List<NavSegment> GetEndingSegments(Vector3I position)
     {
-        List<NavSegment> foundSegments = GetConnections(position);
+        List<NavSegment> foundSegments = GetSegments(position);
         return foundSegments.Where((NavSegment segment) => { return segment.GlobalEnd == position; }).ToList();
     }
 

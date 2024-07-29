@@ -29,7 +29,6 @@ public partial class NavSegment : Node3D
     private MeshInstance3D curveVisualizer;
     private MeshInstance3D endpointVisualizer;
     private MeshInstance3D endpointDirectionVisualizer;
-    private MeshInstance3D startpointVisualizer;
 
 
     // FUNCTIONS //
@@ -90,12 +89,6 @@ public partial class NavSegment : Node3D
             endpointDirectionVisualizer.Free();
             endpointDirectionVisualizer = null;
         }
-
-        if(startpointVisualizer != null)
-        {
-            startpointVisualizer.Free();
-            startpointVisualizer = null;
-        }
     }
 
     private void UpdateVisualization()
@@ -111,8 +104,6 @@ public partial class NavSegment : Node3D
             AddChild(endpointVisualizer);
             endpointDirectionVisualizer = new MeshInstance3D();
             AddChild(endpointDirectionVisualizer);
-            startpointVisualizer = new MeshInstance3D();
-            AddChild(startpointVisualizer);
 
 
             curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.LightBlue, 10);
