@@ -52,15 +52,24 @@ public static class EasyShapes
 
 		return mesh;
 	}
-
-	public static ImmediateMesh TrianglePointerMesh(Vector3 startLocal, Vector3 endLocal, Color colourToUse, float length = 0.05f)
+	/// <summary>
+	/// Creates a triangle mesh, pointing in the direction of the two positions given.
+	/// </summary>
+	/// <param name="startLocal">Starting position</param>
+	/// <param name="endLocal">ending position</param>
+	/// <param name="colourToUse">Color of arrow</param>
+	/// <param name="length">size of the arrow. Should use very small values</param>
+	/// <returns></returns>
+	public static ImmediateMesh TrianglePointerMesh(Color colourToUse, float size = 0.05f)
 	{
 		ImmediateMesh mesh = new ImmediateMesh();
 		mesh.SurfaceBegin(Mesh.PrimitiveType.Triangles, ColouredMaterial(colourToUse,1));
-		Vector3 dir = (endLocal - startLocal).Normalized().LimitLength(length);
-		mesh.SurfaceAddVertex(new Vector3(-dir.Z, 0, dir.X)/1.5f - dir.LimitLength(length));
-		mesh.SurfaceAddVertex(new Vector3(dir.Z, 0, -dir.X)/1.5f - dir.LimitLength(length));
-		mesh.SurfaceAddVertex(Vector3.Zero);
+
+		Vector3 forward = Vector3.Forward * size;
+		Vector3 side = Vector3.Right * size / 2;
+		mesh.SurfaceAddVertex(-forward + side);
+		mesh.SurfaceAddVertex(-forward - side);
+		mesh.SurfaceAddVertex(forward);
 		mesh.SurfaceEnd();
 		return mesh;
 	}

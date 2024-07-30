@@ -120,8 +120,10 @@ public partial class NavSegment : Node3D
             endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
             endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
             endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
-            directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Start, End, Colors.Red, 0.2f);
+            directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
+            directionVisualizer.LookAtFromPosition(GlobalStart, GlobalEnd);
             directionVisualizer.Position = End;
+
         }
     }
 }
