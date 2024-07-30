@@ -5,6 +5,7 @@ using System;
 [Tool]
 public partial class NavSegment : Node3D
 {
+    // TODO refactor curved segments into a subclass
     // DATA
     // Serializable Properties
     private Vector3I _start = Vector3I.Zero;
@@ -68,6 +69,16 @@ public partial class NavSegment : Node3D
         if (GlobalStart == oneEnd) return GlobalEnd;
         else if (GlobalEnd == oneEnd) return GlobalStart;
         else return Vector3I.Zero;
+    }
+
+    public Vector3 GetPositionOnSegment(float percentOfSegment)
+    {
+        return Curves.CalculateBezierQuadraticWithHeight(
+            GlobalStart,
+            GlobalControl,
+            GlobalEnd,
+            percentOfSegment
+            );
     }
 
     // Visualization
