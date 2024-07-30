@@ -5,9 +5,8 @@
 
 [node name="GraphTest" type="Node3D"]
 
-[node name="PloppableGraph" type="Node3D" parent="." node_paths=PackedStringArray("segments")]
+[node name="PloppableGraph" type="Node3D" parent="."]
 script = ExtResource("2_dn5mt")
-segments = [NodePath("NavSegment"), NodePath("NavSegment2"), NodePath("NavSegment3"), NodePath("NavSegment4")]
 
 [node name="NavSegment2" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("4_18dlw")

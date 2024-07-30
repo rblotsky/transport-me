@@ -29,6 +29,7 @@ public partial class NavSegment : Node3D
     private MeshInstance3D curveVisualizer;
     private MeshInstance3D endpointVisualizer;
     private MeshInstance3D endpointDirectionVisualizer;
+    private MeshInstance3D directionVisualizer;
 
 
     // FUNCTIONS //
@@ -89,6 +90,11 @@ public partial class NavSegment : Node3D
             endpointDirectionVisualizer.Free();
             endpointDirectionVisualizer = null;
         }
+        if(directionVisualizer != null)
+        {
+            directionVisualizer.Free();
+            directionVisualizer = null;
+        }
     }
 
     private void UpdateVisualization()
@@ -104,6 +110,9 @@ public partial class NavSegment : Node3D
             AddChild(endpointVisualizer);
             endpointDirectionVisualizer = new MeshInstance3D();
             AddChild(endpointDirectionVisualizer);
+            directionVisualizer = new MeshInstance3D();
+            AddChild (directionVisualizer);
+            
 
 
             curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.LightBlue, 10);
@@ -111,7 +120,8 @@ public partial class NavSegment : Node3D
             endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
             endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
             endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
-
+            directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Start, End, Colors.Red, 0.2f);
+            directionVisualizer.Position = End;
         }
     }
 }
