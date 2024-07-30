@@ -27,8 +27,11 @@ using Godot;
 			outboundConnections = new List<NavSegment>();
 			intersectionPosition = position;
 		}
-
-		public void AddInbound(NavSegment segment)
+	/// <summary>
+	/// Add an inbound (entering) to this connection. NOTE: ensure the segment's global start position matches this connection's position
+	/// </summary>
+	/// <param name="segment">The segment with the matching end position</param>
+	public void AddInbound(NavSegment segment)
 		{
 			if (segment.GlobalEnd.Equals(intersectionPosition))
 			{
@@ -38,6 +41,10 @@ using Godot;
 				GD.PrintErr("Tried to add inbound segment endpoint", segment.GlobalEnd.ToString() , " to intersection", intersectionPosition.ToString());
 			}
 		}
+	/// <summary>
+	/// Add an outbound (leaving) to this connection. NOTE: ensure the segment's global start position matches this connection's position
+	/// </summary>
+	/// <param name="segment">The segment with the matching start position</param>
 		public void AddOutbound(NavSegment segment)
 		{
 			if (segment.GlobalStart.Equals(intersectionPosition))
