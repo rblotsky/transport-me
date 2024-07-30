@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Transportme.Main.Navigation;
 
 [GlobalClass]
 public partial class NavGraphContainer : Node3D
 {
     // DATA //
     // Cached Data
-    private Dictionary<Vector3I, NavSegmentIntersection> segmentConnections; // Optimization: Maybe make it a list of 4, will there ever be more than 4 at one connector?
+    private Dictionary<Vector3I, NavConnection> segmentConnections; // Optimization: Maybe make it a list of 4, will there ever be more than 4 at one connector?
     private Dictionary<Vector3I, NavCheckpoint> checkpoints;
     private List<NavSegment> segments;
     public bool isGraphReady = false;
@@ -21,7 +20,7 @@ public partial class NavGraphContainer : Node3D
     {
         isGraphReady = false;
         SetupNavGraph();
-        CollapseSegments();
+        AssembleSegments();
         AddAllCheckpoints();
         InstructionsUI.instance.AddInstruction(this, "Press G to view a debug version of the nav graph.");
         isGraphReady = true;
@@ -51,7 +50,7 @@ public partial class NavGraphContainer : Node3D
     // Setup and Cleanup
     private void SetupNavGraph()
     {
-        segmentConnections = new Dictionary<Vector3I, NavSegmentIntersection>();
+        segmentConnections = new Dictionary<Vector3I, NavConnection>();
         checkpoints = new Dictionary<Vector3I, NavCheckpoint>();
         segments = new List<NavSegment>();
     }
@@ -71,7 +70,7 @@ public partial class NavGraphContainer : Node3D
         }
     }
 
-    private void CollapseSegments()
+    private void AssembleSegments()
     {
         NavSegment[] foundSegments = Simplifications.GetChildrenOfType<NavSegment>(this, true).ToArray();
         foreach(NavSegment segment in foundSegments)
@@ -92,9 +91,9 @@ public partial class NavGraphContainer : Node3D
         }
     }
     
-    private NavSegmentIntersection GetIntersectionAt(Vector3I position, bool shouldInitialize = false)
+    private NavConnection GetIntersectionAt(Vector3I position, bool shouldInitialize = false)
     {
-        if (segmentConnections.TryGetValue(position, out NavSegmentIntersection existing))
+        if (segmentConnections.TryGetValue(position, out NavConnection existing))
         {
             return existing;
         }
@@ -104,7 +103,7 @@ public partial class NavGraphContainer : Node3D
             {
                 return null;
             }
-            NavSegmentIntersection newIntersection = new NavSegmentIntersection();
+            NavConnection newIntersection = new NavConnection();
             segmentConnections.Add(position, newIntersection);
             newIntersection.initialize(position);
             return newIntersection;
