@@ -11,20 +11,20 @@ using Godot;
 	/// </summary>
 	public partial class NavConnection : RefCounted
 	{
-		private List<NavSegment> inboundConnections;
-		private List<NavSegment> outboundConnections;
+		private List<NavSegment> inboundSegments;
+		private List<NavSegment> outboundSegments;
 		private Vector3I intersectionPosition;
-		public List<NavSegment> InboundSegments { get { return inboundConnections; } }
-		public List<NavSegment> OutboundSegments { get { return outboundConnections; } }
-		public int InboundSegmentCount { get { return inboundConnections.Count;} }
-		public int OutboundSegmentCount { get { return outboundConnections.Count;} }
+		public List<NavSegment> InboundSegments { get { return inboundSegments; } }
+		public List<NavSegment> OutboundSegments { get { return outboundSegments; } }
+		public int InboundSegmentCount { get { return inboundSegments.Count;} }
+		public int OutboundSegmentCount { get { return outboundSegments.Count;} }
 		public Vector3I IntersectionPosition { get { return intersectionPosition; } }
 		
 
 		public void initialize(Vector3I position)
 		{
-			inboundConnections = new List<NavSegment>();
-			outboundConnections = new List<NavSegment>();
+			inboundSegments = new List<NavSegment>();
+			outboundSegments = new List<NavSegment>();
 			intersectionPosition = position;
 		}
 	/// <summary>
@@ -35,10 +35,10 @@ using Godot;
 		{
 			if (segment.GlobalEnd.Equals(intersectionPosition))
 			{
-				inboundConnections.Add(segment);
+				inboundSegments.Add(segment);
 			} else
 			{
-				GD.PrintErr("Tried to add inbound segment endpoint", segment.GlobalEnd.ToString() , " to intersection", intersectionPosition.ToString());
+				GD.PrintErr("Failed to add inbound segment endpoint", segment.GlobalEnd.ToString() , " to intersection", intersectionPosition.ToString());
 			}
 		}
 	/// <summary>
@@ -49,11 +49,11 @@ using Godot;
 		{
 			if (segment.GlobalStart.Equals(intersectionPosition))
 			{
-				outboundConnections.Add(segment);
+				outboundSegments.Add(segment);
 			}
 			else
 			{
-				GD.PrintErr("Tried to add outbound segment endpoint", segment.GlobalStart.ToString(), " to intersection", intersectionPosition.ToString());
+				GD.PrintErr("Failed to add outbound segment endpoint", segment.GlobalStart.ToString(), " to intersection", intersectionPosition.ToString());
 			}
 		}
 
