@@ -34,12 +34,12 @@ public partial class RouteDebugger : Node
                 NavCheckpoint origin = checkpoints[0];
                 NavCheckpoint destination = checkpoints[1];
 
-                Route createdRoute = Route.CreateRouteBFS(origin.GlobalSnappedPos, destination.GlobalSnappedPos, graph);
+                Route createdRoute = Route.CreateRouteDjikstras(origin.GlobalSnappedPos, destination.GlobalSnappedPos, graph);
 
                 // If no route available, try going the other way (probably because of directions lol)
                 if (createdRoute == null)
                 {
-                    createdRoute = Route.CreateRouteBFS(destination.GlobalSnappedPos, origin.GlobalSnappedPos, graph);
+                    createdRoute = Route.CreateRouteDjikstras(destination.GlobalSnappedPos, origin.GlobalSnappedPos, graph);
                 }
 
                 // Only draw the line if we found a route either direction
