@@ -38,7 +38,7 @@ public partial class RandomVehicle : Vehicle
             }
             else
             {
-                StartRoute(Route.CreateRouteBFS(endpoints[0].GlobalSnappedPos, endpoints[1].GlobalSnappedPos, graph));
+                StartRoute(Route.CreateRouteDjikstras(endpoints[0].GlobalPosition, endpoints[1].GlobalPosition, graph));
             }
         }
     }

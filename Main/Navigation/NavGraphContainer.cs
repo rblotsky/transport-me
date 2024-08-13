@@ -98,7 +98,7 @@ public partial class NavGraphContainer : Node3D
         }
     }
     
-    private NavConnection GetIntersectionAt(Vector3 position, bool shouldInitialize = false)
+    public NavConnection GetIntersectionAt(Vector3 position, bool shouldInitialize = false)
     {
         NavConnection found = segmentConnections.Find((NavConnection conn) => Simplifications.Vector3ApproximationEquality(conn.IntersectionPosition, position)); //this probably can be optimized in the future
         if (found != null)
