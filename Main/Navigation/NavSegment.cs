@@ -71,14 +71,15 @@ public partial class NavSegment : Node3D
         else return Vector3I.Zero;
     }
 
-    public Vector3 GetPositionOnSegment(float percentOfSegment)
+    public Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {
-        return Curves.CalculateBezierQuadraticWithHeight(
-            GlobalStart,
-            GlobalControl,
-            GlobalEnd,
+        Vector3 localPos = Curves.CalculateBezierQuadraticWithHeight(
+            Start,
+            Control,
+            End,
             percentOfSegment
             );
+        return globalCoordinates ? ToGlobal(localPos) : localPos;
     }
 
     // Visualization
@@ -133,7 +134,8 @@ public partial class NavSegment : Node3D
             endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
             directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
             directionVisualizer.LookAtFromPosition(GlobalStart, GlobalEnd);
-            directionVisualizer.Position = End;
+            directionVisualizer.Position = GetPositionOnSegment(0.5f, false);
+
 
         }
     }
