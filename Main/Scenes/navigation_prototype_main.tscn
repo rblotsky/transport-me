@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
 [ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/NetworkPrototype/2WayRoadEndTest.tscn" id="13_x31hm"]
 [ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
+[ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
 [ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
@@ -335,6 +336,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 20)
 [node name="4WayIntersectionTest5" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 20)
 
+[node name="CursedHouse" parent="NavGraphContainer" instance=ExtResource("14_onvpj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+
 [node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 20)
 
@@ -365,6 +369,18 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
+[node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle11" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle12" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
 [node name="RandomVehicle2" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
 [node name="RandomVehicle" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
@@ -376,5 +392,37 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="RandomVehicle5" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
 [node name="RandomVehicle6" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle13" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle14" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle15" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle16" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle17" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle18" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle19" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle20" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle21" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle22" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle23" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle24" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle25" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle26" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle27" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle28" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

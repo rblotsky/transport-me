@@ -11,11 +11,11 @@ script = ExtResource("1_n53sf")
 
 [node name="NavSegment2" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("2_w2mn8")
-Start = Vector3i(1, 10, 0)
+Start = Vector3(1, 10, 0)
 
 [node name="NavSegment" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("2_w2mn8")
-End = Vector3i(1, 10, 0)
+End = Vector3(1, 10, 0)
 
 [node name="NavCheckpoint" type="Node3D" parent="PloppableGraph"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 10, 0)
