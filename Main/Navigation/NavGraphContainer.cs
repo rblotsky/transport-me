@@ -78,11 +78,11 @@ public partial class NavGraphContainer : Node3D
             segments.Add(segment);
             segment.DebugPrint();
 
-            NavConnection outbound = GetIntersectionAt(segment.RealStart, true);
+            NavConnection outbound = GetIntersectionAt(segment.GlobalStart, true);
             segment.OutboundConnection = outbound;
             outbound.AddOutbound(segment);
 
-            NavConnection inbound = GetIntersectionAt(segment.RealEnd, true);
+            NavConnection inbound = GetIntersectionAt(segment.GlobalEnd, true);
             segment.InboundConnection = inbound;
             inbound.AddInbound(segment);
         }
@@ -100,7 +100,7 @@ public partial class NavGraphContainer : Node3D
     
     private NavConnection GetIntersectionAt(Vector3 position, bool shouldInitialize = false)
     {
-        NavConnection found = segmentConnections.Find((NavConnection conn) => conn.IntersectionPosition.Equals(position));
+        NavConnection found = segmentConnections.Find((NavConnection conn) => Simplifications.Vector3ApproximationEquality(conn.IntersectionPosition, position)); //this probably can be optimized in the future
         if (found != null)
         {
             return found;
@@ -190,16 +190,16 @@ public partial class NavGraphContainer : Node3D
 
     public NavCheckpoint GetCheckpoint(Vector3 position)
     {
-        return checkpoints.Find((NavCheckpoint conn) => conn.GlobalPosition.Equals(position));
+        return checkpoints.Find((NavCheckpoint conn) => Simplifications.Vector3ApproximationEquality(conn.GlobalPosition, position));
     }
 
-    public List<NavSegment> GetStartingSegments(Vector3I position)
+    public List<NavSegment> GetStartingSegments(Vector3 position)
     {
 
         return GetIntersectionAt(position)?.OutboundSegments ?? new List<NavSegment>();
     }
 
-    public List<NavSegment> GetEndingSegments(Vector3I position)
+    public List<NavSegment> GetEndingSegments(Vector3 position)
     {
         return GetIntersectionAt(position)?.InboundSegments ?? new List<NavSegment>();
     }

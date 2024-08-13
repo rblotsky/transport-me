@@ -33,12 +33,12 @@ using Godot;
 		/// <param name="segment">The segment with the matching end position</param>
 		public void AddInbound(NavSegment segment)
 		{
-			if (segment.RealEnd.Equals(intersectionPosition))
-			{
+			if (Simplifications.Vector3ApproximationEquality(segment.GlobalEnd, intersectionPosition))
+		{
 				inboundConnections.Add(segment);
 			} else
 			{
-				GD.PrintErr("Tried to add inbound segment endpoint", segment.RealEnd.ToString() , " to intersection", intersectionPosition.ToString());
+				GD.PrintErr("Tried to add inbound segment endpoint", segment.GlobalEnd.ToString() , " to intersection", intersectionPosition.ToString());
 			}
 		}
 		/// <summary>
@@ -47,13 +47,13 @@ using Godot;
 		/// <param name="segment">The segment with the matching start position</param>
 		public void AddOutbound(NavSegment segment)
 		{
-			if (segment.RealStart.Equals(intersectionPosition))
+			if (Simplifications.Vector3ApproximationEquality(segment.GlobalStart, intersectionPosition))
 			{
 				outboundConnections.Add(segment);
 			}
 			else
 			{
-				GD.PrintErr("Tried to add outbound segment endpoint", segment.RealStart.ToString(), " to intersection", intersectionPosition.ToString());
+				GD.PrintErr("Tried to add outbound segment endpoint", segment.GlobalStart.ToString(), " to intersection", intersectionPosition.ToString());
 			}
 		}
 
