@@ -18,13 +18,18 @@ public partial class NavSegment : Node3D
     
     // Readonly Properties
     public Vector3I GlobalStart { get { return Simplifications.SnapV3ToGrid(ToGlobal(Start)); } }
+    public Vector3 RealStart { get { return ToGlobal(Start); } }
     public Vector3I GlobalEnd { get { return Simplifications.SnapV3ToGrid(ToGlobal(End)); } }
+    public Vector3 RealEnd { get { return ToGlobal(End); } }
     public Vector3I GlobalControl { get { return Simplifications.SnapV3ToGrid(ToGlobal(Control)); } }
     public Vector3I[] Endpoints { get { return new Vector3I[2] { Start, End}; } }
     public Vector3I[] GlobalEndpoints { get { return new Vector3I[2] { GlobalStart, GlobalEnd }; } }
     public Vector3 DirectionalLine { get { return End - Start; }}
     public float SimpleLength { get { return DirectionalLine.Length(); } }
     public float Length { get { return SimpleLength; } }
+
+    public NavConnection InboundConnection { get; set; }
+    public NavConnection OutboundConnection { get; set; }
 
     // Editor Cached Data
     private MeshInstance3D curveVisualizer;
@@ -138,5 +143,10 @@ public partial class NavSegment : Node3D
 
 
         }
+    }
+
+    public void DebugPrint()
+    {
+        GD.PrintT("START", RealStart.ToString(), "END", RealEnd.ToString());
     }
 }

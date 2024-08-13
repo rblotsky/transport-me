@@ -13,47 +13,47 @@ using Godot;
 	{
 		private List<NavSegment> inboundConnections;
 		private List<NavSegment> outboundConnections;
-		private Vector3I intersectionPosition;
+		private Vector3 intersectionPosition;
 		public List<NavSegment> InboundSegments { get { return inboundConnections; } }
 		public List<NavSegment> OutboundSegments { get { return outboundConnections; } }
 		public int InboundSegmentCount { get { return inboundConnections.Count;} }
 		public int OutboundSegmentCount { get { return outboundConnections.Count;} }
-		public Vector3I IntersectionPosition { get { return intersectionPosition; } }
+		public Vector3 IntersectionPosition { get { return intersectionPosition; } }
 		
 
-		public void initialize(Vector3I position)
+		public void initialize(Vector3 position)
 		{
 			inboundConnections = new List<NavSegment>();
 			outboundConnections = new List<NavSegment>();
 			intersectionPosition = position;
-		}
-	/// <summary>
-	/// Add an inbound (entering) to this connection. NOTE: ensure the segment's global start position matches this connection's position
-	/// </summary>
-	/// <param name="segment">The segment with the matching end position</param>
-	public void AddInbound(NavSegment segment)
+		}	
+		/// <summary>
+		/// Add an inbound (entering) to this connection. NOTE: ensure the segment's global start position matches this connection's position
+		/// </summary>
+		/// <param name="segment">The segment with the matching end position</param>
+		public void AddInbound(NavSegment segment)
 		{
-			if (segment.GlobalEnd.Equals(intersectionPosition))
+			if (segment.RealEnd.Equals(intersectionPosition))
 			{
 				inboundConnections.Add(segment);
 			} else
 			{
-				GD.PrintErr("Tried to add inbound segment endpoint", segment.GlobalEnd.ToString() , " to intersection", intersectionPosition.ToString());
+				GD.PrintErr("Tried to add inbound segment endpoint", segment.RealEnd.ToString() , " to intersection", intersectionPosition.ToString());
 			}
 		}
-	/// <summary>
-	/// Add an outbound (leaving) to this connection. NOTE: ensure the segment's global start position matches this connection's position
-	/// </summary>
-	/// <param name="segment">The segment with the matching start position</param>
+		/// <summary>
+		/// Add an outbound (leaving) to this connection. NOTE: ensure the segment's global start position matches this connection's position
+		/// </summary>
+		/// <param name="segment">The segment with the matching start position</param>
 		public void AddOutbound(NavSegment segment)
 		{
-			if (segment.GlobalStart.Equals(intersectionPosition))
+			if (segment.RealStart.Equals(intersectionPosition))
 			{
 				outboundConnections.Add(segment);
 			}
 			else
 			{
-				GD.PrintErr("Tried to add outbound segment endpoint", segment.GlobalStart.ToString(), " to intersection", intersectionPosition.ToString());
+				GD.PrintErr("Tried to add outbound segment endpoint", segment.RealStart.ToString(), " to intersection", intersectionPosition.ToString());
 			}
 		}
 
