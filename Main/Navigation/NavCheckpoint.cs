@@ -8,8 +8,8 @@ public partial class NavCheckpoint : Node3D
     // DATA //
     
     // Readonly Properties
-    public Vector3I GlobalSnappedPos { get { return Simplifications.SnapV3ToGrid(GlobalPosition); } }
-    public Vector3I LocalSnappedPos { get { return Simplifications.SnapV3ToGrid(Position); } }
+    public Vector3 GlobalSnappedPos { get { return Simplifications.SnapV3ToGrid(GlobalPosition); } }
+    public Vector3 LocalSnappedPos { get { return Simplifications.SnapV3ToGrid(Position); } }
 
     // Editor Cached Data
     private MeshInstance3D renderMesh;

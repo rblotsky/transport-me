@@ -6,11 +6,11 @@ using System;
 [Tool]
 public partial class PloppableGraph : Node3D
 {
-    // DATA //
-    // Graph data
-    [ExportCategory("Graph Data")]
-    [Export] public Array<NavSegment> segments = new Array<NavSegment>();
+	// DATA //
+	// Graph data
+	[ExportCategory("Graph Data")]
+	[Export] public Array<NavSegment> segments = new Array<NavSegment>();
 
 
-    // FUNCTIONS //
+	// FUNCTIONS //
 }

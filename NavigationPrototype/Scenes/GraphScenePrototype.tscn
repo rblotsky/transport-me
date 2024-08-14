@@ -1,0 +1,2712 @@
+[gd_scene load_steps=26 format=3]
+
+[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_jf8gg"]
+[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_cadvg"]
+[ext_resource type="Script" path="res://Main/Pathfinding/RouteDebugger.cs" id="3_gm6h7"]
+[ext_resource type="Script" path="res://Main/Editor/PrototypeEditor.cs" id="4_pn7iy"]
+[ext_resource type="Script" path="res://Main/Editor/SceneSaver.cs" id="5_y16y5"]
+[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_isky3"]
+[ext_resource type="PackedScene" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="7_ogxsj"]
+[ext_resource type="Script" path="res://Main/PlacementGrid/WorldGrid.cs" id="8_1l4ke"]
+[ext_resource type="Script" path="res://Main/Navigation/NavGraphContainer.cs" id="9_7m01s"]
+[ext_resource type="PackedScene" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="10_4che2"]
+[ext_resource type="PackedScene" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="11_lne3x"]
+[ext_resource type="PackedScene" path="res://Main/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="12_dn2i6"]
+[ext_resource type="PackedScene" path="res://Main/NetworkPrototype/2WayRoadEndTest.tscn" id="13_s0vui"]
+[ext_resource type="PackedScene" path="res://Main/NetworkPrototype/HouseTest.tscn" id="14_nhl1b"]
+[ext_resource type="PackedScene" path="res://Main/NetworkPrototype/CursedHouse.tscn" id="15_vq1fs"]
+[ext_resource type="Script" path="res://Main/Editor/Cursor.cs" id="16_2qrxr"]
+[ext_resource type="PackedScene" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="17_0g8by"]
+[ext_resource type="Script" path="res://Main/Pathfinding/RandomVehicle.cs" id="18_m8qiw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
+font_size = 30
+font_color = Color(1, 0, 0.933333, 1)
+outline_size = 10
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
+albedo_color = Color(0, 0.8977, 0.550284, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_yc0hq"]
+material = SubResource("StandardMaterial3D_dnkjm")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_53yp5"]
+albedo_color = Color(6.01634e-07, 0.286344, 0.187206, 1)
+metallic_specular = 0.0
+roughness = 0.2
+roughness_texture_channel = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_aghcb"]
+material = SubResource("StandardMaterial3D_53yp5")
+size = Vector2(200, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_py1ys"]
+size = Vector3(200, 0.1, 200)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="PrototypeUi" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="InstructionsUI" type="Node" parent="PrototypeUi" node_paths=PackedStringArray("panel", "instructions")]
+script = ExtResource("1_jf8gg")
+panel = NodePath("../Panel")
+instructions = NodePath("../Panel/VBoxContainer2")
+
+[node name="Button" type="Button" parent="PrototypeUi"]
+layout_mode = 0
+offset_right = 137.0
+offset_bottom = 31.0
+text = "View Menu"
+
+[node name="Panel" type="Panel" parent="PrototypeUi"]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 517.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel"]
+layout_mode = 2
+offset_right = 218.0
+offset_bottom = 42.0
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Instructions"
+label_settings = SubResource("LabelSettings_i7tsy")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Debugger3D" type="Node3D" parent="."]
+script = ExtResource("2_cadvg")
+
+[node name="RouteDebugger" type="Node" parent="."]
+script = ExtResource("3_gm6h7")
+
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph")]
+script = ExtResource("4_pn7iy")
+camera = NodePath("../CameraAnchor/TrackballCamera")
+cursor = NodePath("../Cursor")
+grid = NodePath("../WorldGridViewer")
+navGraph = NodePath("../NavGraphContainer")
+
+[node name="SceneSaver" type="Node" parent="."]
+script = ExtResource("5_y16y5")
+savedSceneName = "GraphScenePrototype"
+
+[node name="CameraAnchor" type="Node3D" parent="."]
+
+[node name="TrackballCamera" type="Camera3D" parent="CameraAnchor"]
+transform = Transform3D(-0.0545143, 0.636101, -0.769677, 2.18279e-09, 0.770823, 0.637048, 0.998513, 0.0347282, -0.0420208, -12.6964, 10.5594, -0.693166)
+current = true
+script = ExtResource("6_isky3")
+stabilize_horizon = true
+headstand_invert_x = true
+mouse_enabled = true
+mouse_invert_x = false
+mouse_invert_y = false
+mouse_strength = 1.0
+mouse_move_mode = false
+action_enabled = true
+action_strength_x = 1.0
+action_strength_y = 1.0
+action_up = &"ui_up"
+action_down = &"ui_down"
+action_right = &"ui_right"
+action_left = &"ui_left"
+action_zoom_in = &"cam_zoom_in"
+action_zoom_out = &"cam_zoom_out"
+action_free_horizon = &"cam_free_horizon"
+action_barrel_roll = &"cam_barrel_roll"
+orbit_strength = 1.0
+zoom_enabled = true
+zoom_strength = 4.0
+zoom_minimum = 1.0
+zoom_maximum = 100.0
+zoom_inertia_threshold = 0.0
+zoom_in_dampening = 0.0
+barrel_roll_strength = 1.0
+inertia_enabled = false
+inertia_strength = 1.0
+inertia_threshold = 0.0001
+friction = 0.07
+enable_pitch_limit = true
+pitch_top_limit = 0.87
+pitch_bottom_limit = 0.1
+pitch_soft_limit_strength = 1.0
+
+[node name="WorldGridViewer" type="Node3D" parent="." node_paths=PackedStringArray("gridRenderer") instance=ExtResource("7_ogxsj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.94508, 3.0499e-19, 3.98258)
+visible = false
+script = ExtResource("8_1l4ke")
+gridRenderer = NodePath("MeshInstance3D")
+verticalOffsetFromPointer = 0.0
+RenderRadius = 6.765
+GridColour = Color(1, 1, 1, 1)
+
+[node name="NavGraphContainer" type="Node3D" parent="."]
+script = ExtResource("9_7m01s")
+
+[node name="2WayRoadTest" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 0)
+
+[node name="2WayRoadTest2" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="2WayRoadTest3" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="2WayRoadTest4" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+
+[node name="2WayRoadTest5" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 4)
+
+[node name="2WayRoadTest6" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="2WayRoadTest7" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -4)
+
+[node name="2WayRoadTest8" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="2WayRoadTest9" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="2WayRoadTest10" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 4)
+
+[node name="2WayRoadTest11" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 8)
+
+[node name="2WayRoadTest12" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 12)
+
+[node name="2WayRoadTest13" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 12)
+
+[node name="4WayIntersectionTest" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 12)
+
+[node name="2WayRoadTest14" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, 16)
+
+[node name="2WayRoadTest16" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 12)
+
+[node name="2WayRoadTest17" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 12)
+
+[node name="2WayRoadTest19" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, 24)
+
+[node name="2WayRoadTest20" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, 28)
+
+[node name="2WayRoadTest21" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 28)
+
+[node name="2WayRoadTest22" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 28)
+
+[node name="2WayRoadTest23" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 28)
+
+[node name="2WayRoadTest24" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 12)
+
+[node name="2WayRoadTest25" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 12)
+
+[node name="2WayRoadEndTest2" type="Node3D" parent="NavGraphContainer" instance=ExtResource("13_s0vui")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 23, 0, 12)
+
+[node name="2WayRoadTest26" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 16)
+
+[node name="2WayRoadEndTest4" type="Node3D" parent="NavGraphContainer" instance=ExtResource("13_s0vui")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 0, 0)
+
+[node name="2WayRoadEndTest5" type="Node3D" parent="NavGraphContainer" instance=ExtResource("13_s0vui")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, -3)
+
+[node name="2WayRoadTest27" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 28)
+
+[node name="2WayRoadTest28" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12, 0, 24)
+
+[node name="2WayRoadTest30" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12, 0, 16)
+
+[node name="4WayIntersectionTest3" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 12)
+
+[node name="2WayRoadTest31" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 12)
+
+[node name="2WayRoadTest32" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 12)
+
+[node name="2WayRoadTest33" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 12)
+
+[node name="2WayRoadTest34" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24, 0, 8)
+
+[node name="2WayRoadTest35" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24, 0, 4)
+
+[node name="2WayRoadTest36" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24, 0, 0)
+
+[node name="2WayRoadTest37" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+
+[node name="4WayIntersectionTest4" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
+
+[node name="2WayRoadTest38" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 0, 4)
+
+[node name="2WayRoadTest39" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 8)
+
+[node name="2WayRoadTest40" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -12, 0, 8)
+
+[node name="2WayRoadEndTest7" type="Node3D" parent="NavGraphContainer" instance=ExtResource("13_s0vui")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 0, -3)
+
+[node name="2WayRoadEndTest8" type="Node3D" parent="NavGraphContainer" instance=ExtResource("13_s0vui")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -7)
+
+[node name="HouseTest" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 9)
+
+[node name="HouseTest2" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 9)
+
+[node name="HouseTest3" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3)
+
+[node name="HouseTest4" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9, 0, 6)
+
+[node name="HouseTest5" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 25)
+
+[node name="HouseTest6" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 25)
+
+[node name="HouseTest7" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19, 0, 6)
+
+[node name="HouseTest8" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -3)
+
+[node name="HouseTest9" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10, 0, 31)
+
+[node name="HouseTest10" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, 0, 31)
+
+[node name="HouseTest11" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27, 0, 2)
+
+[node name="HouseTest12" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0, 26)
+
+[node name="HouseTest13" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -2, 0, 17)
+
+[node name="HouseTest14" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 0, 18)
+
+[node name="2WayRoadTest15" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="2WayRoadTest41" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="2WayRoadTest42" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 8)
+
+[node name="4WayIntersectionTest2" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 20)
+
+[node name="HouseTest15" type="Node3D" parent="NavGraphContainer" instance=ExtResource("14_nhl1b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -3)
+
+[node name="2WayRoadTest18" type="Node3D" parent="NavGraphContainer" instance=ExtResource("12_dn2i6")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0, 20)
+
+[node name="2WayRoadTest29" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 20)
+
+[node name="2WayRoadTest43" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="2WayRoadTest44" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 20)
+
+[node name="2WayRoadTest45" type="Node3D" parent="NavGraphContainer" instance=ExtResource("10_4che2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 20)
+
+[node name="4WayIntersectionTest5" type="Node3D" parent="NavGraphContainer" instance=ExtResource("11_lne3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 20)
+
+[node name="CursedHouse" type="Node3D" parent="NavGraphContainer" instance=ExtResource("15_vq1fs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+
+[node name="2WayRoadEndTest" type="Node3D" parent="NavGraphContainer" instance=ExtResource("13_s0vui")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 20)
+
+[node name="Cursor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+script = ExtResource("16_2qrxr")
+useSmoothing = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
+mesh = SubResource("SphereMesh_yc0hq")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.457376, 0)
+mesh = SubResource("PlaneMesh_aghcb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_py1ys")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.869581, 1.55493e-07, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
+light_energy = 2.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DirectionalLight3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DirectionalLight3D/StaticBody3D"]
+shape = SubResource("SphereShape3D_ciyus")
+
+[node name="VehicleContainer" type="Node" parent="."]
+
+[node name="RandomVehicle7" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 0.999999, 0, -0.999993, 0, -4.3711e-08, -5.6, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle8" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, -3.34949, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle9" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.89838, 0, 0.439207, 0, 1, 0, -0.439207, 0, -0.898378, -24.7031, 0, 0.40928)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle10" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.242532, 0, 0.970137, 0, 1, 0, -0.970137, 0, 0.242532, -12.9866, 0, 7.10407)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle11" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, 5, 0, 13.676)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle12" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999993, -13, 0, 19.3907)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle2" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.995625, 0, 0.093366, 0, 1, 0, -0.0933662, 0, 0.995623, -11.0297, 0, 9.43278)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 5, 0, 16.0093)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle3" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999995, 0, 1, 0, -0.999995, 0, -4.37112e-08, 17.0833, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle4" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 0.999999, 0, 0.999993, 0, -4.37111e-08, -7.42843, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle5" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999982, 0, 0.00489767, 0, 1, 0, -0.00489767, 0, 0.999982, 12.9994, 0, -2.04997)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle6" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74219e-08, 0, 0.999998, 0, 8.74223e-08, 0, -0.99999, 3, 0, 14.703)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle13" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 1, 0, 0.999992, 0, -4.3711e-08, -2.59264, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle14" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 1, 0, 0.999994, 0, -4.37111e-08, 7.74069, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle15" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, -15, 0, 5.16811)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle16" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, 5, 0, 22.1186)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle17" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74223e-08, 0, 1, 0, 8.74223e-08, 0, -0.999994, -10, 0, 30.9909)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle18" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 13, 0, 6.18773)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle19" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.60663, 0, 0.794975, 0, 1, 0, -0.794975, 0, 0.60663, 11.9875, 0, -0.473166)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle20" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, -18.3186, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle21" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 13.9667, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle22" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.170242, 0, 0.985396, 0, 1, 0, -0.985398, 0, -0.170242, -22.8886, 0, -0.922176)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle23" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.473666, 0, -0.880697, 0, 1, 0, 0.880697, 0, -0.473666, -11.6773, 0, 12.6613)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle24" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999992, 5, 0, 17.6853)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle25" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, -2.94264, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle26" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 1, 0, 0.999993, 0, -4.3711e-08, 4.51484, 0, 1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle27" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -8.61667, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle28" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74221e-08, 0, 1, 0, 8.74222e-08, 0, -0.999992, -17, 0, 4.72944)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle29" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.803948, 0, 0.59469, 0, 1, 0, -0.59469, 0, 0.803948, 4.42199, 0, 7.94436)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle30" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999996, 0, 1, 0, -0.999996, 0, -4.37112e-08, -7.90245, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle31" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -5.41667, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle32" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 0.999999, 0, 0.999993, 0, -4.3711e-08, -3.02547, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle33" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, -2.12843, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle34" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999993, 5, 0, 13.0926)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle35" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, 3.61472, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle36" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 0.999998, 0, 0, 0, 0.999992, -11, 0, 14.7475)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle37" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999992, 0, -4.37111e-08, -5.91912, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle38" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, -4.74069, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle39" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 1, 0, 0.999993, 0, -4.3711e-08, -15.3593, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle40" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999992, 0, 0.999998, 0, 0.999995, 0, -4.3711e-08, -5.94213, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle41" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74223e-08, 0, 1, 0, 8.74223e-08, 0, -0.999994, -13, 0, 15.8765)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle42" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -14.7931, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle43" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999994, 0, -4.37111e-08, -7.51667, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle44" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.917284, 0, -0.398219, 0, 1, 0, 0.398219, 0, 0.917284, 4.7495, 0, 27.4833)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle45" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 0.999999, 0, -0.999994, 0, -4.37111e-08, -16.0574, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle46" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999993, 0, -4.3711e-08, -0.900125, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle47" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.940827, 0, -0.338871, 0, 1, 0, 0.338872, 0, -0.940825, -13.05, 0, 9.60286)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle48" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 5, 0, 23.7519)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle49" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999992, 0, -4.37111e-08, -9.21667, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle50" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999993, 0, -4.3711e-08, 0.347041, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle51" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999992, -13, 0, 17.2907)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle52" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999991, 0, 1, 0, 0.999991, 0, -4.3711e-08, -6.29214, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle53" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, 0.999992, 0, 1, 0, -0.999992, 0, -4.3711e-08, 4.23088, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle54" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999993, 2, 0, 30.7938)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle55" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999992, 0, 0.999999, 0, -0.999995, 0, -4.37111e-08, -16.8835, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle56" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.311887, 0, 0.950113, 0, 1, 0, -0.950113, 0, 0.311887, -12.7631, 0, 19.1634)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle57" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.289352, 0, -0.957212, 0, 1, 0, 0.957214, 0, 0.289351, 11.2939, 0, 20.8186)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle58" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.3711e-08, -6.82547, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle59" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999994, 0, 0.999999, 0, -0.999995, 0, -4.37111e-08, -5.70541, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle60" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, 2.03139, 0, 1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle61" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999996, 0, 1, 0, -0.999996, 0, -4.37112e-08, 14.755, 0, 18)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle62" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.345492, 0, 0.938415, 0, 1, 0, -0.938415, 0, -0.345492, -15.4571, 0, -0.76)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle63" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999991, 5, 0, 17.0877)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle64" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 13, 0, 12.0255)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle65" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, 22, 0, 9)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle66" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, -11, 0, 16.9975)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle67" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -0.535281, 0, 1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle68" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.318496, 0, -0.947916, 0, 1, 0, 0.947918, 0, -0.318495, 4.74309, 0, 12.8304)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle69" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -8.39213, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle70" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999991, 13, 0, 8.19755)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle71" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999994, 6, 0, -1.25778)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle72" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.99999, 0, 0, 0, 1, 0, 0, 0, 0.99999, -23, 0, 7.25195)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle73" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 1, 0, 2.43528)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle74" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 13, 0, 17.3495)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle75" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999996, 0, 0, 0, 1, 0, 0, 0, 0.999995, -11, 0, 23.7309)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle76" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, 8.86472, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle77" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.971876, 0, 0.235473, 0, 1, 0, -0.235473, 0, 0.971876, 12.8692, 0, 0.878078)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle78" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999995, 0, 1, 0, -0.999995, 0, -4.37112e-08, -14.9931, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle79" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 0.999999, 0, -0.999994, 0, -4.37111e-08, 14.9728, 0, 18)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle80" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.925426, 0, -0.378906, 0, 1, 0, 0.378907, 0, -0.925424, -16.7223, 0, 7.54779)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle81" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999991, 0, 1, 0, -0.999993, 0, -4.3711e-08, -15.124, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle82" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 0.999999, 0, -0.999994, 0, -4.37111e-08, 6.6088, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle83" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.95901, 0, 0.283348, 0, 1, 0, -0.283349, 0, -0.959009, -12.8622, 0, 12.8519)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle84" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, 1.37157, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle85" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999991, -11, 0, 21.7809)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle86" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, 4.85, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle87" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.0453695, 0, -0.998964, 0, 1, 0, 0.998964, 0, -0.0453695, -22.1755, 0, 12.9974)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle88" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999992, -13, 0, 14.6838)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle89" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.563182, 0, 0.826325, 0, 1, 0, -0.826325, 0, 0.563182, 3.88941, 0, 7.45996)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle90" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, -5.94213, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle91" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, 0.999992, 0, 1, 0, -0.999992, 0, -4.3711e-08, 9.01421, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle92" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -0.4, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle93" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.628307, 0, 0.777958, 0, 1, 0, -0.777959, 0, -0.628307, 2.64662, 0, 26.8355)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle94" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 0.999999, 0, 0.999994, 0, -4.37111e-08, 10.2716, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle95" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, -4.81176, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle96" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 1, 0, 0.999994, 0, -4.3711e-08, 19.3338, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle97" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74221e-08, 0, 1, 0, 8.74223e-08, 0, -0.999993, 22, 0, 9.17014)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle98" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74221e-08, 0, 1, 0, 8.74222e-08, 0, -0.999992, -17, 0, 2.83189)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle99" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, 5, 0, 24.9186)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle100" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.3711e-08, 0.241198, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle101" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.99999, -2, 0, 17.1496)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle102" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -7.21616, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle103" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999995, 0, 1, 0, -0.999996, 0, -4.37112e-08, 9.50685, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle104" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999995, 0, 1, 0, -0.999995, 0, -4.37112e-08, -14.5265, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle105" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, -0.9964, 0.0847644, 0, 0.0847651, 0.996391, -0.999993, 4.3554e-08, -3.70517e-09, 2.17603, 4.19562, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle106" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999994, 0, -4.37111e-08, 3.33333, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle107" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999996, 0, -2.41463e-05, 0, 0.999999, 0, 2.41463e-05, 0, 0.999994, 13, 0, 17.8877)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle108" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 17.7, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle109" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.903051, 0, 0.429519, 0, 1, 0, -0.429519, 0, -0.903049, -24.7143, 0, 0.434196)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle110" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.769255, 0, 0.638932, 0, 1, 0, -0.638932, 0, -0.769255, 10.755, 0, 18.7449)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle111" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999991, 0, -8.7422e-08, 0, 1, 0, 8.7422e-08, 0, -0.999991, 3, 0, 16.7765)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle112" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 0.999999, 0, 0.999994, 0, -4.3711e-08, -21.7019, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle113" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 0.999999, 0, 0.999993, 0, -4.37111e-08, -6.17843, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle114" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, 13, 0, 7.19949)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle115" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, -8.92547, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle116" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, -9.15736, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle117" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999993, 3, 0, 15.7074)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle118" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -1.71616, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle119" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -13.4688, 0, 26)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle120" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.99986, 0, 0.0161977, 0, 1, 0, -0.0161977, 0, -0.99986, -13, 0, 21.9869)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle121" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999991, -6, 0, 25.1235)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle122" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999992, 0, 0.999999, 0, 0.999992, 0, -4.3711e-08, -4.49214, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle123" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999991, 0, -8.74217e-08, 0, 0.999999, 0, 8.7422e-08, 0, -0.999988, 3, 0, 15.9173)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle124" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 1, 0, 0.999992, 0, -4.3711e-08, -6.7588, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle125" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, 0.999991, 0, 0.999999, 0, -0.999992, 0, -4.3711e-08, -9.01667, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle126" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.37111e-08, -9.35931, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle127" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -1.7, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle128" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.110784, 0, -0.993839, 0, 1, 0, 0.993839, 0, 0.110784, 2.64523, 0, 12.961)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle129" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, 11.1314, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle130" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999993, 2, 0, 30.0634)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle131" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 13, 0, 16.4328)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle132" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, -1.0456, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle133" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, 21.2814, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle134" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.467524, 0, -0.883972, 0, 1, 0, 0.883973, 0, -0.467523, -23.662, 0, 12.669)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle135" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.7422e-08, 0, 0.999999, 0, 8.74221e-08, 0, -0.999991, -25, 0, 8.12403)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle136" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.874052, 0, 0.485817, 0, 1, 0, -0.485819, 0, 0.87405, 4.58707, 0, 8.18692)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle137" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, 5, 0, 25.576)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle138" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.794002, 0, 0.607902, 0, 1, 0, -0.607902, 0, 0.794002, 0.399566, 0, -0.0838175)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle139" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, -0.993807, -0.111113, 0, 0.111113, -0.993801, 0.999994, -4.34407e-08, -4.85689e-09, 2.31903, 5.64831, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle140" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, -11, 0, 23.6475)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle141" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.0302248, 0, -0.999537, 0, 1, 0, 0.999537, 0, -0.0302248, -10.0928, 0, 28.9993)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle142" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999995, 0, -8.74222e-08, 0, 1, 0, 8.74223e-08, 0, -0.999993, 3, 0, 17.2765)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle143" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.3711e-08, -0.899495, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle144" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999994, 0, -4.37111e-08, 8.98824, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle145" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 0.999999, 0, -0.999994, 0, -4.37111e-08, -5.32403, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle146" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.888651, 0, 0.458569, 0, 1, 0, -0.458569, 0, 0.888651, 12.6238, 0, 0.251438)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle147" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.783939, 0, 0.620829, 0, 1, 0, -0.620829, 0, 0.783939, 12.377, 0, 11.8888)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle148" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, 13, 0, 15.5667)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle149" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.7422e-08, 0, 0.999999, 0, 8.74221e-08, 0, -0.999991, -25, 0, 2.33333)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle150" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74221e-08, 0, 1, 0, 8.74223e-08, 0, -0.999992, -13, 0, 16.6672)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle151" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999991, 13, 0, 3.82792)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle152" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999995, 0, -8.7422e-08, 0, 0.999999, 0, 8.74223e-08, 0, -0.999991, 3, 0, 21.1673)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle153" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.7422e-08, 0, 1, 0, 8.74221e-08, 0, -0.999991, 11, 0, 16.0907)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle154" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -8.73333, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle155" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999992, -25, 0, 7)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle156" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999993, 11, 0, 4.86717)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle157" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.480017, 0, -0.877251, 0, 1, 0, 0.877251, 0, -0.480017, -11.6929, 0, 28.6534)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle158" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74223e-08, 0, 1, 0, 8.74223e-08, 0, -0.999994, -2, 0, 25.0068)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle159" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -11.7167, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle160" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.419763, 0, -0.907624, 0, 0.999998, 0, 0.907626, 0, 0.419763, 3.65323, 0, 28.6733)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle161" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -6.7, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle162" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999991, 0, 1, 0, -0.999993, 0, -4.3711e-08, -18.0742, 0, 6)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle163" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.3711e-08, 0.0338387, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle164" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999994, 0, 1, 0, -0.999995, 0, -4.37111e-08, -5.75, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle165" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999993, 13, 0, 3.07107)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle166" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, 6.76472, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle167" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.100635, 0, -0.994916, 0, 1, 0, 0.994916, 0, 0.100635, 2.60018, 0, 12.9665)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle168" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, -11, 0, 16.5809)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle169" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.66245e-07, 0, 1, 0, 8.66245e-07, 0, -0.999992, 2, 0, 30.4217)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle170" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.57404, 0, 0.818819, 0, 1, 0, -0.818819, 0, 0.57404, 11.9142, 0, -0.523878)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle171" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, -3.65, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle172" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999993, 11, 0, 7.73333)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle173" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 0.999999, 0, 0.999993, 0, -4.3711e-08, -4.98283, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle174" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -9.88579, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle175" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999993, 0, 1, 0, -0.999995, 0, -4.37111e-08, -1.57648, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle176" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999244, 0, -0.038734, 0, 1, 0, 0.038734, 0, -0.999244, -16.9922, 0, 6.29859)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle177" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, -14.5426, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle178" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999993, 0, 1, 0, -0.999995, 0, -4.37111e-08, -14.9689, 0, 26)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle179" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, -9.13333, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle180" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, 13, 0, 5.48528)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle181" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999992, -25, 0, 9.68333)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle182" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999991, 0, -8.74219e-08, 0, 0.999999, 0, 8.7422e-08, 0, -0.99999, -13, 0, 13.5172)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle183" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 0.999999, 0, 0, 0, 0.999993, 6, 0, -2.3639)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle184" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, 0.99999, 0, 1, 0, -0.999991, 0, -4.37109e-08, 8.6, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle185" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999993, 18, 0, 9)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle186" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.74219e-08, 0, 0.999999, 0, 8.74221e-08, 0, -0.999991, -13, 0, 11.8173)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle187" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, -0.996781, 0.0801706, 0, 0.0801711, 0.996774, -0.999994, 4.35707e-08, -3.50437e-09, 2.15709, 3.96344, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle188" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999993, 0, 0.999999, 0, -0.999995, 0, -4.37111e-08, -4.2, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle189" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 7.17352, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle190" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, 8.79069, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle191" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.0742843, 0, 0.997225, 0, 1, 0, -0.997228, 0, -0.0742841, -10.4777, 0, 11.0207)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle192" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999992, 0, 0.999999, 0, -0.999995, 0, -4.37111e-08, -4.05012, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle193" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, -11, 0, 25.2809)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle194" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, 0.999991, 0, 1, 0, -0.999991, 0, -4.3711e-08, -3.51522, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle195" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.740617, 0, -0.671918, 0, 0.999999, 0, 0.67192, 0, -0.740616, -12.2814, 0, 20.218)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle196" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.802603, 0, -0.596505, 0, 1, 0, 0.596505, 0, -0.802603, -12.4189, 0, 28.0595)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle197" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999996, 0, 1, 0, -0.999996, 0, -4.37112e-08, -7.75, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle198" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 5, 0, 15.4426)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle199" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.995082, 0, 0.0989941, 0, 1, 0, -0.0989941, 0, 0.995082, 22.9826, 0, 11.7539)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle200" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.7422e-08, 0, 0.999999, 0, 8.74223e-08, 0, -0.999991, 6, 0, -2.44875)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle201" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, 7.12648, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle202" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.23449, 0, -0.972111, 0, 0.999999, 0, 0.972112, 0, -0.23449, -10.9857, 0, 28.9022)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle203" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 1, 0, 0.999993, 0, -4.37111e-08, -6.28333, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle204" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999993, -25, 0, 5.6)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle205" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74222e-08, 0, 1, 0, 8.74223e-08, 0, -0.999994, 11, 0, 8.9)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle206" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -1.23629, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle207" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -26.3194, 0, 2)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle208" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, 5, 0, 25.126)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle209" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, -5.27944, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle210" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.528163, 0, -0.849134, 0, 1, 0, 0.849134, 0, -0.528163, -23.8083, 0, 12.5899)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle211" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, -11, 0, 24.3142)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle212" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.0161976, 0, -0.999861, 0, 1, 0, 0.999861, 0, -0.0161976, -22.0131, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle213" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999992, 2, 0, 29.2587)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle214" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999994, 0, 1, 0, 0.999995, 0, -4.37111e-08, -11.8593, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle215" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.573502, 0, -0.819195, 0, 1, 0, 0.819195, 0, -0.573502, -13.2992, 0, 9.20524)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle216" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999992, 0, 1, 0, 0.999995, 0, -4.37111e-08, -15.2853, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle217" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.901697, 0, -0.432354, 0, 1, 0, 0.432354, 0, -0.901697, -24.6576, 0, 11.6846)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle218" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.937157, 0, -0.34889, 0, 1, 0, 0.34889, 0, 0.937157, 4.80102, 0, 27.3463)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle219" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999994, -13, 0, 22.4481)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle220" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999993, 13, 0, 3.27547)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle221" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.776522, 0, -0.63008, 0, 1, 0, 0.63008, 0, 0.776522, 12.4344, 0, 20.0396)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle222" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.37111e-08, -3.55195, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle223" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999991, 0, 1, 0, -0.999992, 0, -4.3711e-08, -11.3167, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle224" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999991, 0, -8.74219e-08, 0, 0.999999, 0, 8.7422e-08, 0, -0.99999, 3, 0, 14.4559)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle225" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999991, 0, -8.7422e-08, 0, 1, 0, 8.7422e-08, 0, -0.999991, -17, 0, 5.29805)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle226" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 0.999999, 0, 0.999994, 0, -4.3711e-08, 14.0042, 0, 18)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle227" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.859011, 0, 0.511944, 0, 1, 0, -0.511944, 0, -0.859011, -16.6119, 0, 0.230047)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle228" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999993, 11, 0, 7.15)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle229" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.7422e-08, 0, 1, 0, 8.74221e-08, 0, -0.999991, -13, 0, 15.7765)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle230" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999995, 0, -8.74222e-08, 0, 0.999999, 0, 8.74223e-08, 0, -0.999994, -25, 0, 6.84069)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle231" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, -0.998339, -0.0576063, 0, 0.0576066, -0.998332, 0.999994, -4.36388e-08, -2.51805e-09, 2.08662, 2.94319, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle232" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, 8.48333, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle233" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, 14.943, 0, 18)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle234" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999993, -2, 0, 18.2981)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle235" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 1, 0, 0.999993, 0, -4.3711e-08, 1.53333, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle236" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.884346, 0, -0.466815, 0, 1, 0, 0.466815, 0, -0.884345, -16.6128, 0, 7.7683)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle237" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999992, 0, 1, 0, -0.999995, 0, -4.3711e-08, -6.33333, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle238" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74221e-08, 0, 1, 0, 8.74222e-08, 0, -0.999992, 3, 0, 23.8647)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle239" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, -1.73333, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle240" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.7422e-08, 0, 0.999999, 0, 8.74222e-08, 0, -0.999991, -1, 0, 2.29082)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle241" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999995, 0, 1, 0, -0.999995, 0, -4.37112e-08, -3.43333, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle242" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999992, -25, 0, 5.79069)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle243" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.901252, 0, 0.43328, 0, 1, 0, -0.433282, 0, 0.901249, -11.3436, 0, 8.31307)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle244" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.395312, 0, -0.918541, 0, 1, 0, 0.918541, 0, 0.395312, 22.5672, 0, 12.8829)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle245" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999992, 0, 0.999999, 0, 0.999994, 0, -4.3711e-08, -5.44949, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle246" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999991, 0, -8.74219e-08, 0, 1, 0, 8.7422e-08, 0, -0.99999, -1, 0, 5.32415)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle247" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74219e-08, 0, 0.999998, 0, 8.74222e-08, 0, -0.99999, -13, 0, 12.8673)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle248" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999994, 13, 0, 10.3167)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle249" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, 9.06866, 0, 6)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle250" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, 8.97352, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle251" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 6, 0, -2.65157)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle252" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.95085, 0, -0.309626, 0, 1, 0, 0.309626, 0, -0.95085, 3.20185, 0, 11.3545)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle253" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.781817, 0, -0.623501, 0, 1, 0, 0.623501, 0, 0.781817, -10.7648, 0, 13.2653)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle254" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, -20.8853, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle255" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.806645, 0, -0.591024, 0, 1, 0, 0.591024, 0, 0.806645, 22.8544, 0, 12.6176)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle256" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -2.00931, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle257" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999993, 0, 0.999999, 0, -0.999995, 0, -4.37111e-08, -5.01277, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle258" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74221e-08, 0, 1, 0, 8.74222e-08, 0, -0.999992, -1, 0, -3.40918)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle259" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.0156609, 0, -0.999869, 0, 1, 0, 0.99987, 0, -0.0156609, 2.08943, 0, 9.00209)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle260" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 16.5333, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle261" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999991, 0, 1, 0, 0.999995, 0, -4.3711e-08, -2.83283, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle262" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, 0.999992, 0, 1, 0, -0.999992, 0, -4.3711e-08, -11.2, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle263" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999993, 13, 0, 10.1544)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle264" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 0.999999, 0, -0.999993, 0, -4.3711e-08, -7.81667, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle265" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999992, 5, 0, 11.476)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle266" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999995, 0, -8.74223e-08, 0, 1, 0, 8.74223e-08, 0, -0.999995, -13, 0, 25.2765)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle267" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.93019, 0, -0.367063, 0, 1, 0, 0.367063, 0, 0.93019, 12.7826, 0, 19.3978)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle268" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -2.32843, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle269" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, 4.61472, 0, 1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle270" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999994, 0, -4.3711e-08, -8.98333, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle271" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999991, -11, 0, 22.3642)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle272" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.99999, 0, 0.999999, 0, 0.999993, 0, -4.3711e-08, -9.82597, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle273" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999993, 0, 1, 0, 0.999995, 0, -4.37111e-08, -15.1686, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle274" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -3.85, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle275" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.7422e-08, 0, 1, 0, 8.74221e-08, 0, -0.999991, -6, 0, 26.1501)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle276" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.959765, 0, -0.280785, 0, 1, 0, 0.280785, 0, 0.959765, 22.9657, 0, 12.3359)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle277" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 0.999999, 0, 0, 0, 0.999989, 5, 0, 17.1019)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle278" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.580459, 0, 0.814281, 0, 1, 0, -0.814281, 0, -0.580459, -16.0251, 0, -0.445488)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle279" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999992, 0, -8.74218e-08, 0, 1, 0, 8.74221e-08, 0, -0.999988, 3, 0, 15.2314)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle280" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.533195, 0, 0.845985, 0, 1, 0, -0.845985, 0, -0.533195, -23.9213, 0, -0.51915)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle281" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74222e-08, 0, 1, 0, 8.74222e-08, 0, -0.999994, -25, 0, 4.43333)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle282" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 1.71667, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle283" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, 7.37352, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle284" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 0.999999, 0, -0.999993, 0, -4.3711e-08, -15.3245, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle285" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.887307, 0, 0.461167, 0, 1, 0, -0.461167, 0, -0.887307, -16.6768, 0, 0.35375)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle286" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, -0.994906, 0.10081, 0, 0.100811, 0.994899, -0.999994, 4.34887e-08, -4.40656e-09, 2.25082, 5.00823, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle287" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74221e-08, 0, 0.999999, 0, 8.74223e-08, 0, -0.999993, 11, 0, 8.08333)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle288" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999991, 0, 1, 0, -0.999993, 0, -4.3711e-08, -1.85308, 0, 19)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle289" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, -9.70931, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle290" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, 0.866667, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle291" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 6, 0, -2.82323)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle292" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999993, 0, -4.37111e-08, 3.68333, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle293" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999993, 3, 0, 21.8196)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle294" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 0.999998, 0, -0.999994, 0, -4.37111e-08, -8.16667, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle295" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.997091, 0, 0.076128, 0, 1, 0, -0.076128, 0, -0.997091, -16.9902, 0, 1.66667)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle296" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, 13, 0, 17.2)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle297" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 1, 0, 2.87792)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle298" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999618, 0, -0.0273856, 0, 1, 0, 0.0273856, 0, 0.999618, 5.00411, 0, 13.8759)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle299" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999993, -25, 0, 6.06667)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle300" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999994, 5, 0, 11.7353)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle301" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999994, 0, -4.3711e-08, -8.78333, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle302" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74222e-08, 0, 0.999999, 0, 8.74222e-08, 0, -0.999993, 3, 0, 25.177)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle303" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.899999, 0, -0.435876, 0, 0.999999, 0, 0.435877, 0, 0.899998, 4.70697, 0, 27.5822)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle304" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 1.10931, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle305" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999996, 0, 0, 0, 1, 0, 0, 0, 0.999996, -11, 0, 22.6809)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle306" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -6.76861, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle307" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.41626, 0, 0.909239, 0, 1, 0, -0.909239, 0, -0.41626, 4.3556, 0, 11.3223)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle308" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.711248, 0, 0.702928, 0, 1, 0, -0.702928, 0, 0.711248, 0.217227, 0, -0.282072)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle309" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, 5, 0, 22.6593)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle310" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 5, 0, 11.3853)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle311" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.98576, 0, -0.168122, 0, 0.999999, 0, 0.168122, 0, -0.98576, -12.9237, 0, 26.8804)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle312" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999991, 0, 1, 0, 0.999991, 0, -4.3711e-08, -8.54264, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle313" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.3711e-08, 3.18824, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle314" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999993, 5, 0, 22.1926)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle315" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999993, 13, 0, 7.05195)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle316" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 13, 0, 16.2667)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle317" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 1, 0, 0.999993, 0, -4.3711e-08, -3.10868, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle318" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, -6, 0, -1.74035)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle319" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -16.8333, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle320" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.0991116, 0, 0.995069, 0, 1, 0, -0.995069, 0, 0.0991116, 10.4433, 0, 11.0177)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle321" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, 5, 0, 25.2426)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle322" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 1, 0, 0, 0, 0.999995, 13, 0, 7.97107)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle323" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999998, 0, 0, 0, 0.999993, 13, 0, 4.23088)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle324" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, -18.2019, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle325" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.822398, 0, -0.568901, 0, 1, 0, 0.568901, 0, -0.822398, -12.4641, 0, 28)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle326" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999994, 22, 0, 10.4642)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle327" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999991, 0, 0.999998, 0, 0.999993, 0, -4.3711e-08, 4.28151, 0, 1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle328" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 0.999999, 0, -0.999993, 0, -4.37111e-08, -1.21717, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle329" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.932794, 0, -0.36039, 0, 1, 0, 0.36039, 0, 0.932794, -10.8976, 0, 21.4625)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle330" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999991, 0, 1, 0, 0.999992, 0, -4.3711e-08, -8.96667, 0, 29)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle331" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.891988, 0, -0.452045, 0, 1, 0, 0.452046, 0, 0.891987, 4.68782, 0, 27.6233)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle332" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, -7.5, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle333" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.864506, 0, 0.502608, 0, 1, 0, -0.502608, 0, -0.864506, -16.6243, 0, 0.252361)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle334" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.620277, 0, 0.784373, 0, 1, 0, -0.784373, 0, -0.620277, 2.6404, 0, 18.8397)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle335" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 13, 0, 9.39214)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle336" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.934864, 0, 0.354987, 0, 1, 0, -0.354987, 0, 0.934864, -10.9453, 0, 18.4132)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle337" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999995, 0, 1, 0, -0.999995, 0, -4.37112e-08, -14.8956, 0, 26)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle338" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999992, 0, 0.999998, 0, -0.999995, 0, -4.3711e-08, -11.8668, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle339" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999994, 0, -4.37111e-08, -5.01667, 0, 27)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle340" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 0.999999, 0, 0, 0, 0.999992, 13, 0, 16.9255)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle341" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 1, 0, 0, 0, 0.999993, 13, 0, 9.74755)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle342" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999992, 0, 1, 0, 0.999992, 0, -4.3711e-08, 6.50051, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle343" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.554136, 0, -0.832416, 0, 1, 0, 0.832418, 0, 0.554135, 5.41165, 0, 13.1285)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle344" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 21.55, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle345" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, 9.10491, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle346" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.615449, 0, -0.788168, 0, 0.999999, 0, 0.788168, 0, -0.615449, -24.0072, 0, 12.4588)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle347" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, 17.5049, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle348" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999994, 0, 1, 0, -0.999994, 0, -4.37111e-08, 3.35, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle349" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 1, 0, 2.79459)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle350" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999996, 0, 0, 0, 1, 0, 0, 0, 0.999995, -2, 0, 25)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle351" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999994, 0, 0, 0, 0.999999, 0, 0, 0, 0.999992, -2, 0, 17.3772)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle352" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.249157, 0, -0.968455, 0, 1, 0, 0.968455, 0, 0.249157, 11.1672, 0, 20.8569)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle353" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 1, 0, -0.999994, 0, -4.37111e-08, -18.6363, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle354" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.109781, 0, 0.993948, 0, 1, 0, -0.993948, 0, -0.109781, 2.11303, 0, 26.9966)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle355" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.985081, 0, 0.172052, 0, 1, 0, -0.172052, 0, 0.985081, 13.0115, 0, 10.2033)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle356" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999972, 0, -0.00623849, 0, 1, 0, 0.00623851, 0, -0.999968, -0.999087, 0, -1.89622)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle357" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, 0, -0.999991, 0, 0.999999, 0, 0.999991, 0, -4.3711e-08, -13.4926, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle358" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.90099, 0, 0.433823, 0, 0.999998, 0, -0.433824, 0, -0.900987, -16.7094, 0, 0.42309)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle359" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999992, 0, -4.37111e-08, -3.07453, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle360" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.911995, 0, 0.410182, 0, 1, 0, -0.410182, 0, 0.911995, 4.68511, 0, 8.37101)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle361" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74222e-08, 0, 0.999999, 0, 8.74222e-08, 0, -0.999993, 11, 0, 8.66667)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle362" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999991, 0, 0.999999, 0, -0.999994, 0, -4.3711e-08, 0.149875, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle363" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 13, 0, 16.3833)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle364" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999993, 0, 1, 0, 0.999995, 0, -4.37111e-08, -7.63528, 0, 1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle365" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.416804, 0, -0.908987, 0, 1, 0, 0.908989, 0, -0.416804, 4.46735, 0, 12.7289)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle366" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999994, 0, 1, 0, 0.999994, 0, -4.37111e-08, -8.12597, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle367" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999997, 0, -8.74224e-08, 0, 1, 0, 8.74225e-08, 0, -0.999996, 3, 0, 15.2074)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle368" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, 0.999995, 0, 1, 0, -0.999995, 0, -4.37112e-08, -10.1833, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle369" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.409988, 0, 0.912083, 0, 1, 0, -0.912083, 0, -0.409988, -11.6285, 0, 11.3147)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle370" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, -0.999972, -0.0074292, 0, 0.00742925, -0.999966, 0.999993, -4.37102e-08, -3.24741e-10, 2.00185, 0.429748, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle371" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, -0.992333, 0.123586, 0, 0.123588, 0.992323, -0.999992, 4.33763e-08, -5.40214e-09, 2.38058, 6.16911, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle372" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37112e-08, 0, -0.999995, 0, 1, 0, 0.999995, 0, -4.37112e-08, 14.6672, 0, 13)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle373" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, -11, 0, 21.1975)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle374" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999995, 0, -8.74223e-08, 0, 1, 0, 8.74223e-08, 0, -0.999995, 3, 0, 19.2074)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle375" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 0.999993, 5, 0, 22.7019)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle376" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999819, 0, -0.0185958, 0, 0.999999, 0, 0.0185958, 0, -0.999818, -12.9997, 0, 10.0607)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle377" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999993, 0, -8.74221e-08, 0, 1, 0, 8.74221e-08, 0, -0.999993, -25, 0, 5.79069)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle378" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999993, 0, 0.999999, 0, -0.999994, 0, -4.37111e-08, -17.0931, 0, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle379" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999994, 0, -4.37111e-08, 10.6492, 0, 6)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle380" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, 0.999992, 0, 1, 0, -0.999992, 0, -4.37111e-08, 21.3167, 0, 11)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle381" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.3711e-08, -0.987892, 0.155144, 0, 0.155145, 0.987883, -0.999991, 4.31821e-08, -6.78155e-09, 2.60752, 7.79433, -1)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle382" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999994, 0, -8.74222e-08, 0, 0.999999, 0, 8.74223e-08, 0, -0.999993, -13, 0, 19.7265)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle383" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-4.37111e-08, 0, -0.999993, 0, 1, 0, 0.999993, 0, -4.37111e-08, 9.97648, 0, 21)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[node name="RandomVehicle384" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("17_0g8by")]
+transform = Transform3D(-0.999995, 0, -8.74223e-08, 0, 1, 0, 8.74224e-08, 0, -0.999994, -13, 0, 22.7598)
+script = ExtResource("18_m8qiw")
+distancePerSecond = 7.0
+graph = NodePath("../../NavGraphContainer")
+
+[connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

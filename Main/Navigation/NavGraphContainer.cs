@@ -9,8 +9,8 @@ public partial class NavGraphContainer : Node3D
 {
     // DATA //
     // Cached Data
-    private Dictionary<Vector3I, List<NavSegment>> segmentConnections; // Optimization: Maybe make it a list of 4, will there ever be more than 4 at one connector?
-    private Dictionary<Vector3I, NavCheckpoint> checkpoints;
+    private List<NavConnection> connections;
+    private List<NavCheckpoint> checkpoints;
     private List<NavSegment> segments;
     public bool isGraphReady = false;
 
@@ -18,9 +18,8 @@ public partial class NavGraphContainer : Node3D
     // FUNCTIONS //
     public override void _Ready()
     {
-        isGraphReady = false;
         SetupNavGraph();
-        CollapseSegments();
+        AssembleSegments();
         AddAllCheckpoints();
         InstructionsUI.instance.AddInstruction(this, "Press G to view a debug version of the nav graph.");
         isGraphReady = true;
@@ -29,6 +28,7 @@ public partial class NavGraphContainer : Node3D
 
     public override void _ExitTree()
     {
+        isGraphReady = false;
         ClearNavGraph();
         base._ExitTree();
     }
@@ -50,17 +50,17 @@ public partial class NavGraphContainer : Node3D
     // Setup and Cleanup
     private void SetupNavGraph()
     {
-        segmentConnections = new Dictionary<Vector3I, List<NavSegment>>();
-        checkpoints = new Dictionary<Vector3I, NavCheckpoint>();
+        connections = new List<NavConnection>();
+        checkpoints = new List<NavCheckpoint>();
         segments = new List<NavSegment>();
     }
 
     private void ClearNavGraph()
     {
-        if(segmentConnections != null)
+        if(connections != null)
         {
-            segmentConnections.Clear();
-            segmentConnections = null;
+            connections.Clear();
+            connections = null;
         }
 
         if(segments != null)
@@ -70,14 +70,21 @@ public partial class NavGraphContainer : Node3D
         }
     }
 
-    private void CollapseSegments()
+    private void AssembleSegments()
     {
         NavSegment[] foundSegments = Simplifications.GetChildrenOfType<NavSegment>(this, true).ToArray();
         foreach(NavSegment segment in foundSegments)
         {
             segments.Add(segment);
-            AddConnectedSegment(segment.GlobalStart, segment);
-            AddConnectedSegment(segment.GlobalEnd, segment);
+            segment.DebugPrint();
+
+            NavConnection outbound = GetIntersectionAtPosition(segment.GlobalStart, true);
+            segment.StartConnection = outbound;
+            outbound.AddOutbound(segment);
+
+            NavConnection inbound = GetIntersectionAtPosition(segment.GlobalEnd, true);
+            segment.EndConnection = inbound;
+            inbound.AddInbound(segment);
         }
     }
 
@@ -90,30 +97,37 @@ public partial class NavGraphContainer : Node3D
             AddCheckpoint(point.GlobalSnappedPos, point);
         }
     }
-
-    private void AddConnectedSegment(Vector3I position, NavSegment segment)
+    
+    public NavConnection GetIntersectionAtPosition(Vector3 position, bool shouldInitialize = false)
     {
-        if (segmentConnections.TryGetValue(position, out List<NavSegment> existing))
+        NavConnection found = connections.Find((NavConnection conn) => Simplifications.V3ApproximatelyEqual(conn.IntersectionPosition, position));
+        if (found != null)
         {
-            existing.Add(segment);
+            return found;
         }
         else
         {
-            List<NavSegment> newList = new List<NavSegment>();
-            newList.Add(segment);
-            segmentConnections.Add(position, newList);
+            if (!shouldInitialize)
+            {
+                return null;
+            }
+            NavConnection newIntersection = new NavConnection();
+            connections.Add(newIntersection);
+            newIntersection.IntersectionPosition = position;
+            return newIntersection;
         }
     }
 
-    private void AddCheckpoint(Vector3I position, NavCheckpoint checkpoint)
+    private void AddCheckpoint(Vector3 position, NavCheckpoint checkpoint)
     {
-        if (checkpoints.ContainsKey(position))
+        NavCheckpoint found = GetCheckpointAtPosition(position);
+        if (found != null)
         {
             GD.PrintErr($"Checkpoint already exists at position: {position}");
         }
         else
         {
-            checkpoints.Add(position, checkpoint);
+            checkpoints.Add(checkpoint);
         }
     }
 
@@ -126,14 +140,14 @@ public partial class NavGraphContainer : Node3D
             Debugger3D.main.CurveEffect(segment.GlobalStart, segment.GlobalEnd, segment.GlobalControl, Colors.Red, 5);
         }
 
-        foreach(Vector3I connector in segmentConnections.Keys)
+        foreach(NavConnection connector in connections)
         {
-            Debugger3D.main.SphereEffect(connector, 0.5f, Colors.Black, 0.3f, 5);
+            Debugger3D.main.SphereEffect(connector.IntersectionPosition, 0.5f, Colors.Black, 0.3f, 5);
         }
 
-        foreach(NavCheckpoint checkpoint in checkpoints.Values)
+        foreach(NavCheckpoint checkpoint in checkpoints)
         {
-            Debugger3D.main.SphereEffect(checkpoint.GlobalSnappedPos, 0.7f, Colors.Orange, 0.3f, 5);
+            Debugger3D.main.SphereEffect(checkpoint.GlobalPosition, 0.7f, Colors.Orange, 0.3f, 5);
         }
     }
 
@@ -141,7 +155,7 @@ public partial class NavGraphContainer : Node3D
     // Data Retrieval
     public NavCheckpoint GetRandomCheckpoint(RandomNumberGenerator rng)
     {
-        return checkpoints.Values.ToList()[rng.RandiRange(0, checkpoints.Count - 1)];
+        return checkpoints.ToList()[rng.RandiRange(0, checkpoints.Count - 1)];
     }
 
     public NavCheckpoint[] GetTwoRandomCheckpoints(RandomNumberGenerator rng)
@@ -170,41 +184,12 @@ public partial class NavGraphContainer : Node3D
             }
 
             // Returns
-            return new NavCheckpoint[2] { checkpoints.Values.ToList()[first], checkpoints.Values.ToList()[second] };
+            return new NavCheckpoint[2] { checkpoints[first], checkpoints[second] };
         }
     }
 
-    public NavCheckpoint GetCheckpoint(Vector3I position)
+    public NavCheckpoint GetCheckpointAtPosition(Vector3 position)
     {
-        if(checkpoints.TryGetValue(position, out NavCheckpoint found))
-        {
-            return found;
-        }
-
-        return null;
+        return checkpoints.Find((NavCheckpoint conn) => Simplifications.V3ApproximatelyEqual(conn.GlobalPosition, position));
     }
-
-    public List<NavSegment> GetSegments(Vector3I position)
-    {
-        if(segmentConnections.TryGetValue(position, out List<NavSegment> found))
-        {
-            return found;
-        }
-
-        return new List<NavSegment>();
-    }
-
-    public List<NavSegment> GetStartingSegments(Vector3I position)
-    {
-        List<NavSegment> foundSegments = GetSegments(position);
-        return foundSegments.Where((NavSegment segment) => { return segment.GlobalStart == position; }).ToList();
-    }
-
-    public List<NavSegment> GetEndingSegments(Vector3I position)
-    {
-        List<NavSegment> foundSegments = GetSegments(position);
-        return foundSegments.Where((NavSegment segment) => { return segment.GlobalEnd == position; }).ToList();
-    }
-
-
 }
