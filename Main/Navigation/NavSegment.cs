@@ -14,7 +14,6 @@ public partial class NavSegment : Node3D
     [Export] private Vector3 End { get { return _end; } set { _end = value; UpdateVisualization(); } }
     private Vector3 _control = Vector3.Zero;
     [Export] private Vector3 Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
-    [Export(PropertyHint.Flags, "Pedestrian,Automobile,Tram,Bus,Train")] private int allowedVehicleTypes;
     
     // Readonly Properties
     public Vector3 GlobalStart { get { return ToGlobal(Start); } }
@@ -26,8 +25,9 @@ public partial class NavSegment : Node3D
     public float SimpleLength { get { return DirectionalLine.Length(); } }
     public float Length { get { return SimpleLength; } }
 
-    public NavConnection InboundConnection { get; set; }
-    public NavConnection OutboundConnection { get; set; }
+    // Runtime only properties
+    public NavConnection EndConnection { get; set; }
+    public NavConnection StartConnection { get; set; }
 
     // Editor Cached Data
     private MeshInstance3D curveVisualizer;
@@ -126,9 +126,7 @@ public partial class NavSegment : Node3D
             endpointDirectionVisualizer = new MeshInstance3D();
             AddChild(endpointDirectionVisualizer);
             directionVisualizer = new MeshInstance3D();
-            AddChild (directionVisualizer);
-            
-
+            AddChild(directionVisualizer);
 
             curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.LightBlue, 10);
             endpointVisualizer.Position = End;
@@ -138,8 +136,6 @@ public partial class NavSegment : Node3D
             directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
             directionVisualizer.LookAtFromPosition(GlobalStart, GlobalEnd);
             directionVisualizer.Position = GetPositionOnSegment(0.5f, false);
-
-
         }
     }
 

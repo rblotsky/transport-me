@@ -9,7 +9,7 @@ public partial class NavGraphContainer : Node3D
 {
     // DATA //
     // Cached Data
-    private List<NavConnection> segmentConnections; // Optimization: Maybe make it a list of 4, will there ever be more than 4 at one connector?
+    private List<NavConnection> connections;
     private List<NavCheckpoint> checkpoints;
     private List<NavSegment> segments;
     public bool isGraphReady = false;
@@ -18,7 +18,6 @@ public partial class NavGraphContainer : Node3D
     // FUNCTIONS //
     public override void _Ready()
     {
-        isGraphReady = false;
         SetupNavGraph();
         AssembleSegments();
         AddAllCheckpoints();
@@ -29,6 +28,7 @@ public partial class NavGraphContainer : Node3D
 
     public override void _ExitTree()
     {
+        isGraphReady = false;
         ClearNavGraph();
         base._ExitTree();
     }
@@ -50,17 +50,17 @@ public partial class NavGraphContainer : Node3D
     // Setup and Cleanup
     private void SetupNavGraph()
     {
-        segmentConnections = new List<NavConnection>();
+        connections = new List<NavConnection>();
         checkpoints = new List<NavCheckpoint>();
         segments = new List<NavSegment>();
     }
 
     private void ClearNavGraph()
     {
-        if(segmentConnections != null)
+        if(connections != null)
         {
-            segmentConnections.Clear();
-            segmentConnections = null;
+            connections.Clear();
+            connections = null;
         }
 
         if(segments != null)
@@ -78,12 +78,12 @@ public partial class NavGraphContainer : Node3D
             segments.Add(segment);
             segment.DebugPrint();
 
-            NavConnection outbound = GetIntersectionAt(segment.GlobalStart, true);
-            segment.OutboundConnection = outbound;
+            NavConnection outbound = IntersectionAtPosition(segment.GlobalStart, true);
+            segment.StartConnection = outbound;
             outbound.AddOutbound(segment);
 
-            NavConnection inbound = GetIntersectionAt(segment.GlobalEnd, true);
-            segment.InboundConnection = inbound;
+            NavConnection inbound = IntersectionAtPosition(segment.GlobalEnd, true);
+            segment.EndConnection = inbound;
             inbound.AddInbound(segment);
         }
     }
@@ -98,9 +98,9 @@ public partial class NavGraphContainer : Node3D
         }
     }
     
-    public NavConnection GetIntersectionAt(Vector3 position, bool shouldInitialize = false)
+    public NavConnection IntersectionAtPosition(Vector3 position, bool shouldInitialize = false)
     {
-        NavConnection found = segmentConnections.Find((NavConnection conn) => Simplifications.Vector3ApproximationEquality(conn.IntersectionPosition, position)); //this probably can be optimized in the future
+        NavConnection found = connections.Find((NavConnection conn) => Simplifications.V3ApproximatelyEqual(conn.IntersectionPosition, position));
         if (found != null)
         {
             return found;
@@ -112,15 +112,15 @@ public partial class NavGraphContainer : Node3D
                 return null;
             }
             NavConnection newIntersection = new NavConnection();
-            segmentConnections.Add(newIntersection);
-            newIntersection.initialize(position);
+            connections.Add(newIntersection);
+            newIntersection.IntersectionPosition = position;
             return newIntersection;
         }
     }
 
     private void AddCheckpoint(Vector3 position, NavCheckpoint checkpoint)
     {
-        NavCheckpoint found = GetCheckpoint(position);
+        NavCheckpoint found = CheckpointByPosition(position);
         if (found != null)
         {
             GD.PrintErr($"Checkpoint already exists at position: {position}");
@@ -140,7 +140,7 @@ public partial class NavGraphContainer : Node3D
             Debugger3D.main.CurveEffect(segment.GlobalStart, segment.GlobalEnd, segment.GlobalControl, Colors.Red, 5);
         }
 
-        foreach(NavConnection connector in segmentConnections)
+        foreach(NavConnection connector in connections)
         {
             Debugger3D.main.SphereEffect(connector.IntersectionPosition, 0.5f, Colors.Black, 0.3f, 5);
         }
@@ -188,20 +188,19 @@ public partial class NavGraphContainer : Node3D
         }
     }
 
-    public NavCheckpoint GetCheckpoint(Vector3 position)
+    public NavCheckpoint CheckpointByPosition(Vector3 position)
     {
-        return checkpoints.Find((NavCheckpoint conn) => Simplifications.Vector3ApproximationEquality(conn.GlobalPosition, position));
+        return checkpoints.Find((NavCheckpoint conn) => Simplifications.V3ApproximatelyEqual(conn.GlobalPosition, position));
     }
 
-    public List<NavSegment> GetStartingSegments(Vector3 position)
+    public NavSegment[] OutboundsByPosition(Vector3 position)
     {
-
-        return GetIntersectionAt(position)?.OutboundSegments ?? new List<NavSegment>();
+        return IntersectionAtPosition(position)?.Outbound ?? new NavSegment[0];
     }
 
-    public List<NavSegment> GetEndingSegments(Vector3 position)
+    public NavSegment[] InboundsByPosition(Vector3 position)
     {
-        return GetIntersectionAt(position)?.InboundSegments ?? new List<NavSegment>();
+        return IntersectionAtPosition(position)?.Inbound ?? new NavSegment[0];
     }
 
 
