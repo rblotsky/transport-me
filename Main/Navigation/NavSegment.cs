@@ -9,11 +9,11 @@ public partial class NavSegment : Node3D
     // DATA
     // Serializable Properties
     private Vector3 _start = Vector3.Zero;
-    [Export] private Vector3 Start { get { return _start; } set { _start = value; UpdateVisualization(); } }
+    [Export] public Vector3 Start { get { return _start; } set { _start = value; UpdateVisualization(); } }
     private Vector3 _end = Vector3.Zero;
-    [Export] private Vector3 End { get { return _end; } set { _end = value; UpdateVisualization(); } }
+    [Export] public Vector3 End { get { return _end; } set { _end = value; UpdateVisualization(); } }
     private Vector3 _control = Vector3.Zero;
-    [Export] private Vector3 Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
+    [Export] public Vector3 Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
     
     // Readonly Properties
     public Vector3 GlobalStart { get { return ToGlobal(Start); } }
