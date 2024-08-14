@@ -78,11 +78,11 @@ public partial class NavGraphContainer : Node3D
             segments.Add(segment);
             segment.DebugPrint();
 
-            NavConnection outbound = IntersectionAtPosition(segment.GlobalStart, true);
+            NavConnection outbound = GetIntersectionAtPosition(segment.GlobalStart, true);
             segment.StartConnection = outbound;
             outbound.AddOutbound(segment);
 
-            NavConnection inbound = IntersectionAtPosition(segment.GlobalEnd, true);
+            NavConnection inbound = GetIntersectionAtPosition(segment.GlobalEnd, true);
             segment.EndConnection = inbound;
             inbound.AddInbound(segment);
         }
@@ -98,7 +98,7 @@ public partial class NavGraphContainer : Node3D
         }
     }
     
-    public NavConnection IntersectionAtPosition(Vector3 position, bool shouldInitialize = false)
+    public NavConnection GetIntersectionAtPosition(Vector3 position, bool shouldInitialize = false)
     {
         NavConnection found = connections.Find((NavConnection conn) => Simplifications.V3ApproximatelyEqual(conn.IntersectionPosition, position));
         if (found != null)
@@ -120,7 +120,7 @@ public partial class NavGraphContainer : Node3D
 
     private void AddCheckpoint(Vector3 position, NavCheckpoint checkpoint)
     {
-        NavCheckpoint found = CheckpointByPosition(position);
+        NavCheckpoint found = GetCheckpointAtPosition(position);
         if (found != null)
         {
             GD.PrintErr($"Checkpoint already exists at position: {position}");
@@ -188,20 +188,8 @@ public partial class NavGraphContainer : Node3D
         }
     }
 
-    public NavCheckpoint CheckpointByPosition(Vector3 position)
+    public NavCheckpoint GetCheckpointAtPosition(Vector3 position)
     {
         return checkpoints.Find((NavCheckpoint conn) => Simplifications.V3ApproximatelyEqual(conn.GlobalPosition, position));
     }
-
-    public NavSegment[] OutboundsByPosition(Vector3 position)
-    {
-        return IntersectionAtPosition(position)?.Outbound ?? new NavSegment[0];
-    }
-
-    public NavSegment[] InboundsByPosition(Vector3 position)
-    {
-        return IntersectionAtPosition(position)?.Inbound ?? new NavSegment[0];
-    }
-
-
 }

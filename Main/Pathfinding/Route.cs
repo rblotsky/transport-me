@@ -33,8 +33,8 @@ public partial class Route : RefCounted
         Dictionary<NavConnection, NavSegment> prev = new Dictionary<NavConnection, NavSegment>(); //segment used (inbound)
         HashSet<NavConnection> visited = new HashSet<NavConnection>();
 
-        NavConnection src = graph.IntersectionAtPosition(origin);
-        NavConnection dst = graph.IntersectionAtPosition(destination);
+        NavConnection src = graph.GetIntersectionAtPosition(origin);
+        NavConnection dst = graph.GetIntersectionAtPosition(destination);
         dist.Add(src, 0f);
         prev.Add(src, null);
 
