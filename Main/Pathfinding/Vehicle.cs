@@ -88,7 +88,7 @@ public partial class Vehicle : Node3D
             else
             {
                 float percentOfSegment = (float)distanceAlongSegment / CurrentSegment.Length;
-                Vector3 newPosition = GetPositionOnSegment(percentOfSegment);
+                Vector3 newPosition = CurrentSegment.GetPositionOnSegment(percentOfSegment);
                 FaceDirectionOfMotion(newPosition - GlobalPosition);
                 GlobalPosition = newPosition;
             }
@@ -97,16 +97,6 @@ public partial class Vehicle : Node3D
         {
             timeStopped += iterationDelta;
         }
-    }
-
-    protected Vector3 GetPositionOnSegment(float percentOfSegment)
-    {
-        return graphOffset + Curves.CalculateBezierQuadraticWithHeight(
-            CurrentSegment.GlobalStart, 
-            CurrentSegment.GlobalControl, 
-            CurrentSegment.GlobalEnd, 
-            percentOfSegment
-            );
     }
 
     protected void FaceDirectionOfMotion(Vector3 positionDelta)

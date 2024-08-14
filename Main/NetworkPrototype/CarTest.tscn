@@ -10,11 +10,13 @@ size = Vector3(1, 0.7, 2.2)
 [node name="low_poly_car_no_light" parent="." instance=ExtResource("1_jkw01")]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="low_poly_car_no_light"]
+visible = false
 light_energy = 1.7
 spot_range = 8.0
 spot_angle = 37.65
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="low_poly_car_no_light"]
+visible = false
 light_energy = 1.7
 spot_range = 8.0
 spot_angle = 37.65
