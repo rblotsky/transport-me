@@ -26,14 +26,15 @@ public partial class Route : RefCounted
     public static Route CreateRouteDjikstras(Vector3 origin, Vector3 destination, NavGraphContainer graph)
     {
         if (origin == destination) return CreateRoute(new NavSegment[0], origin, destination);
-        // Runs a BFS algorithm to create the Route
+
+        // Runs a Djikstras algorithm to create the Route
 
         Dictionary<NavConnection, float> dist = new Dictionary<NavConnection, float>(); //length from this nav connection to src
         Dictionary<NavConnection, NavSegment> prev = new Dictionary<NavConnection, NavSegment>(); //segment used (inbound)
         HashSet<NavConnection> visited = new HashSet<NavConnection>();
 
-        NavConnection src = graph.GetIntersectionAt(origin);
-        NavConnection dst = graph.GetIntersectionAt(destination);
+        NavConnection src = graph.GetIntersectionAtPosition(origin);
+        NavConnection dst = graph.GetIntersectionAtPosition(destination);
         dist.Add(src, 0f);
         prev.Add(src, null);
 
@@ -59,34 +60,35 @@ public partial class Route : RefCounted
             }
 
             //look at all outbound (leaving) segments
-            foreach (NavSegment segment in next.OutboundSegments)
+            foreach (NavSegment segment in next.Outbound)
             {
                 //if we haven't ever seen this connection before, this segment is the only way to it
-                if (!prev.ContainsKey(segment.InboundConnection)) {
+                if (!prev.ContainsKey(segment.EndConnection)) {
 
                     // add to prev
-                    prev.Add(segment.InboundConnection, segment);
+                    prev.Add(segment.EndConnection, segment);
 
                     //compute the path length from the origin to here
                     float pathLength = dist[next] + segment.Length;
-                    dist.Add(segment.InboundConnection, pathLength);
+                    dist.Add(segment.EndConnection, pathLength);
 
                     //throw this into the queue
-                    queue.Enqueue(segment.InboundConnection, pathLength);
-                } else
+                    queue.Enqueue(segment.EndConnection, pathLength);
+                } 
+                else
                 {
                     //if we have seen this connection before, the only reason why we would do anything
                     // is if this new segment has a shorter length than what we have seen already
-                    if(dist[next] + segment.Length < dist[segment.InboundConnection])
+                    if(dist[next] + segment.Length < dist[segment.EndConnection])
                     {
                         //we have found that this segment results in shorter path.
-                        prev[segment.InboundConnection] = segment;
+                        prev[segment.EndConnection] = segment;
 
                         float pathLength = dist[next] + segment.Length;
-                        dist[segment.InboundConnection] = pathLength;
+                        dist[segment.EndConnection] = pathLength;
 
                         //throw this new length into the queue
-                        queue.Enqueue(segment.InboundConnection, pathLength);
+                        queue.Enqueue(segment.EndConnection, pathLength);
                     }
                 }
             }
@@ -106,7 +108,7 @@ public partial class Route : RefCounted
         while(prev[curPrevious] != null)
         {
             routeSegments.Add(prev[curPrevious]);
-            curPrevious = prev[curPrevious].OutboundConnection;
+            curPrevious = prev[curPrevious].StartConnection;
         }
 
         //reverse since the segments are from destination to origin currently
