@@ -369,60 +369,12 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
-[node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
 [node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
 [node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
-[node name="RandomVehicle11" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
-[node name="RandomVehicle12" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle2" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle3" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle4" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle5" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle6" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle13" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle14" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle15" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle16" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle17" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle18" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle19" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle20" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle21" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle22" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle23" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle24" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle25" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle26" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle27" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle28" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

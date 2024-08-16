@@ -7,10 +7,58 @@ public partial class Route : RefCounted
 {
     // DATA //
     // Instance Data
-    public NavSegment[] OrderedSegments { get; set; }
+    public NavSegment[] _orderedSegments;
+    public NavSegment[] OrderedSegments { get { return _orderedSegments; } set { length = null; _orderedSegments = value; } }
     public Vector3 StartPoint { get; set; }
     public Vector3 EndPoint { get; set; }
+    private float? length = null;
 
+    //get the vector3 position along a route
+    public Vector3 GetPositionAlongRoute(float distanceAlongRoute)
+    {
+        if (OrderedSegments == null) return Vector3.Zero;
+        int segmentIndex = 0;
+
+        while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
+        {
+            distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
+            if (OrderedSegments.Length == segmentIndex)
+            {
+                return OrderedSegments[segmentIndex - 1].GlobalEnd;
+            }
+        }
+        float percentOfSegment = (float)distanceAlongRoute / OrderedSegments[segmentIndex].Length;
+        return OrderedSegments[segmentIndex].GetPositionOnSegment(percentOfSegment);
+    }
+
+    public NavSegment GetSegmentAlongRoute(float distanceAlongRoute)
+    {
+        if (OrderedSegments == null) return null;
+        int segmentIndex = 0;
+
+        while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
+        {
+            distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
+            if (OrderedSegments.Length == segmentIndex)
+            {
+                return null;
+            }
+        }
+        return OrderedSegments[segmentIndex];
+    }
+
+    public float GetLength()
+    {
+        if(length == null)
+        {
+            length = 0f;
+            foreach(NavSegment segment in OrderedSegments)
+            {
+                length += segment.Length;
+            }
+        }
+        return (float)length;
+    }
 
     // FUNCTIONS 
     // Constructing

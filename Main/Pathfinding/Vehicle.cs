@@ -22,39 +22,18 @@ public partial class Vehicle : Node3D
     { 
         get 
         {
-            if (route == null) return null;
-            else if (currentSegmentIndex < 0) return null;
-            else if (currentSegmentIndex >= route.OrderedSegments.Length) return null;
-            return route.OrderedSegments[currentSegmentIndex]; 
+            return route?.GetSegmentAlongRoute(distanceAlongRoute);
         } 
     }
 
     // Cached Data
     private Route route = null;
-    private double distanceAlongSegment = -1;
-    private int currentSegmentIndex = -1;
+    private float distanceAlongRoute = 0f;
     private double timeStopped = 0;
     public double speed = 0;
     private MeshInstance3D visualization;
 
-    //using the current segment
-    private Vector3 GetPositionOnSegment(float currentDistanceAlongSegment) 
-    {
-        if(CurrentSegment == null) return Position;
-        NavSegment currentSegment = CurrentSegment;
-        int segmentIndex = currentSegmentIndex;
-        while(currentDistanceAlongSegment > currentSegment.Length)
-        {
-            currentDistanceAlongSegment -= currentSegment.Length;
-            if(route.OrderedSegments.Length == segmentIndex - 1)
-            {
-                return currentSegment.GlobalEnd;
-            }
-            currentSegment = route.OrderedSegments[++segmentIndex];
-        }
-        float percentOfSegment = (float)currentDistanceAlongSegment / currentSegment.Length;
-        return currentSegment.GetPositionOnSegment(percentOfSegment);
-    }
+    
 
     // FUNCTIONS //
     // Godot Defaults
@@ -104,30 +83,23 @@ public partial class Vehicle : Node3D
         // Gets how far to move this process frame
         double newDistance = speed * iterationDelta;
 
-        distanceAlongSegment += newDistance;
+        distanceAlongRoute += (float)newDistance;
 
-        // Moves to next segment if needed
-        if (distanceAlongSegment > CurrentSegment.Length)
-        {
-            distanceAlongSegment -= CurrentSegment.Length;
-            currentSegmentIndex += 1;
-        }
-
-        // If we reached the destination, stop. 
-        if (CurrentSegment == null)
+        // We have 
+        if (distanceAlongRoute > route.GetLength())
         {
             FinishCurrentRoute(true);
         }
+
         // Sets its position along the segment
         else
         {
-            float percentOfSegment = (float)distanceAlongSegment / CurrentSegment.Length;
-            Vector3 newPosition = CurrentSegment.GetPositionOnSegment(percentOfSegment);
+            Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
             FaceDirectionOfMotion(newPosition - GlobalPosition);
             GlobalPosition = newPosition;
         }
 
-        Vector3 colliderPosition = GetPositionOnSegment((float)distanceAlongSegment + (float)speed);
+        Vector3 colliderPosition = route.GetPositionAlongRoute((float)distanceAlongRoute + (float)speed);
         areas[0].Position = ToLocal(colliderPosition);
         UpdateVisualization();
         
@@ -166,8 +138,7 @@ public partial class Vehicle : Node3D
     protected void StartRoute(Route newRoute)
     {
         route = newRoute;
-        distanceAlongSegment = 0;
-        currentSegmentIndex = 0;
+        distanceAlongRoute = 0;
     }
 
     protected void FinishCurrentRoute(bool moveToEnd)
@@ -180,8 +151,7 @@ public partial class Vehicle : Node3D
         Route finishedRoute = route;
 
         route = null;
-        distanceAlongSegment = -1;
-        currentSegmentIndex = -1;
+        distanceAlongRoute = 0;
 
         OnRouteFinish(finishedRoute);
     }
