@@ -17,7 +17,7 @@ public partial class Vehicle : Node3D
     [Export] public bool showVisualizations;
 
     private List<Area3D> areas;
-
+    private List<bool> collisions;
     // Properties
     protected NavSegment CurrentSegment 
     { 
@@ -45,26 +45,43 @@ public partial class Vehicle : Node3D
         graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
         areas = Simplifications.GetChildrenOfType<Area3D>(this, true);
         GD.Print(areas.Count);
+        collisions = new List<bool>(areas.Count);
+        for(int i = 0; i< areas.Count; i++)
+        {
+            areas[i].AreaEntered += (Area3D area) => OnAreaEntered(i, area);
+            areas[i].AreaExited += (Area3D area) => OnAreaExited(i, area);
+
+        }
         base._EnterTree();
+    }
+
+    private void OnAreaEntered (int number, Area3D area)
+    {
+        if (areas.Contains(area))
+        {
+            // GD.Print("entered myself");
+            return;
+        }
+        collisions[number] = true;
+        GD.Print("entered");
+
+    }
+
+    private void OnAreaExited (int number, Area3D area)
+    {
+        if (areas.Contains(area))
+        {
+            // GD.Print(";eft myself");
+            return;
+        }
+        collisions[number] = false;
+        GD.Print("exited");
     }
 
 
     // Collision Detection
     protected bool ShouldStop(Vector3 startPos, Vector3 direction)
     {
-        return false;
-        PhysicsRayQueryParameters3D raycast = PhysicsRayQueryParameters3D.Create(
-                        startPos,
-                        (direction.Normalized()*stoppingDistance)+startPos);
-
-        Dictionary raycastResult = GetWorld3D().DirectSpaceState.IntersectRay(raycast);
-
-        // If it collides with anything, the vehicle should stop.
-        if(raycastResult.Count > 0)
-        {
-            return true;
-        }
-
         return false;
     }
        
@@ -79,28 +96,37 @@ public partial class Vehicle : Node3D
             return;
         }
         // Decides whether to move at all this frame (is another vehicle blocking it?)
-        
-        // Clears time stopped
-        timeStopped = 0;
-        speed = speed >= maxSpeed ? maxSpeed : speed + acceleration * iterationDelta;
-        // Gets how far to move this process frame
-        double newDistance = speed * iterationDelta;
-
-        distanceAlongRoute += (float)newDistance;
-
-        // We have 
         if (distanceAlongRoute > route.GetLength())
         {
             FinishCurrentRoute(true);
+            return;
         }
+        // Clears time stopped
+        timeStopped = 0;
+        NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
+        float maxMaxSpeed = maxSpeed < curSegment.MaxSpeed ? (float)maxSpeed : curSegment.MaxSpeed;
+
+        if(speed - maxMaxSpeed > 0.1f)
+        {
+            speed -= brakeSpeed * iterationDelta;
+        } else if (speed - maxMaxSpeed < -0.1f)
+        {
+            speed += acceleration * iterationDelta;
+        }
+        
+        // Gets how far to move this process frame
+        double newDistance = speed * iterationDelta;
+        distanceAlongRoute += (float)newDistance;
+
+        // We have 
+
 
         // Sets its position along the segment
-        else
-        {
+
             Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
             FaceDirectionOfMotion(newPosition - GlobalPosition);
             GlobalPosition = newPosition;
-        }
+        
 
         Vector3 colliderPosition = route.GetPositionAlongRoute((float)distanceAlongRoute + (float)speed);
         areas[0].Position = ToLocal(colliderPosition);
@@ -115,8 +141,10 @@ public partial class Vehicle : Node3D
         DeleteVisualization();
         visualization = EasyShapes.AddShapeMesh(this, new BoxMesh());
         visualization.Position = areas[0].Position;
+        visualization.Scale = areas[0].Scale;
         visualization2 = EasyShapes.AddShapeMesh(this, new BoxMesh());
         visualization2.Position = areas[1].Position;
+        visualization2.Scale = areas[1].Scale;
     }
 
     private void DeleteVisualization()

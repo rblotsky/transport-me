@@ -370,6 +370,9 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+maxSpeed = 3.5
+acceleration = 2.5
+brakeSpeed = 7.5
 
 [node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
 
