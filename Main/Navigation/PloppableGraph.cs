@@ -23,6 +23,9 @@ public partial class PloppableGraph : Node3D
     private MeshInstance3D endVisualizer;
     private MeshInstance3D curveVisualizer;
 
+    // TODO CHANGE CONSTANTS TO MODIFIABLE VALUES
+    private float segmentOffset = 2;
+
 
     // FUNCTIONS //
 
@@ -51,68 +54,117 @@ public partial class PloppableGraph : Node3D
     // Controlling
     private void SetNewStart(Vector3 newValue)
     {
-        // Updates the start of all children by difference
-        Vector3 diff = newValue - _start;
-
+        // Updates the start of all children by adding their vectors to the new position, but rotated
+        // to face the correct direction
+        Vector3 oldFacing = new Vector3(Control.X, Start.Y, Control.Z) - Start;
+        Vector3 newFacing = new Vector3(Control.X, newValue.Y, Control.Z) - newValue;
+        
+        float angleToNew = oldFacing.SignedAngleTo(newFacing, Vector3.Up);
+        
         foreach (NavSegment segment in Simplifications.GetChildrenOfType<NavSegment>(this))
         {
             // Decides if the segments start or end is closer to the road's start, then moves that.
             // This is because segments might be forwards or backwards relative to the road.
-            float startDist = (segment.Start - Start).Length();
-            float endDist = (segment.End - Start).Length();
+            Vector3 vectorToStart = segment.Start - Start;
+            Vector3 vectorToEnd = segment.End - Start;
 
-            if(startDist < endDist)
+            float startDist = vectorToStart.LengthSquared();
+            float endDist = vectorToEnd.LengthSquared();
+
+            if (startDist < endDist)
             {
-                segment.Start += diff;
+                segment.Start = newFacing.Normalized().Rotated(Vector3.Up, Mathf.Pi / 2) *segmentOffset + newValue;
             }
             else
             {
-                segment.End += diff;
+                segment.End = newFacing.Normalized().Rotated(Vector3.Up, -Mathf.Pi / 2) * segmentOffset + newValue;
             }
         }
 
         _start = newValue;
+        RecalculateControlPoints();
         UpdateVisualization();
     }
 
     private void SetNewControl(Vector3 newValue)
     {
-        // Updates the start of all children by difference
-        Vector3 diff = newValue - _control;
-
-        foreach (NavSegment segment in Simplifications.GetChildrenOfType<NavSegment>(this))
-        {
-            segment.Control += diff;
-        }
-
         _control = newValue;
+        RecalculateControlPoints();
         UpdateVisualization();
     }
 
     private void SetNewEnd(Vector3 newValue)
     {
-        // Updates the start of all children by difference
-        Vector3 diff = newValue - _end;
+        // Updates the end of all children by adding their vectors to the new position, but rotated
+        // to face the correct direction
+        Vector3 oldFacing = new Vector3(Control.X, End.Y, Control.Z) - End;
+        Vector3 newFacing = new Vector3(Control.X, newValue.Y, Control.Z) - newValue;
+
+        float angleToNew = oldFacing.SignedAngleTo(newFacing, Vector3.Up);
 
         foreach (NavSegment segment in Simplifications.GetChildrenOfType<NavSegment>(this))
         {
             // Decides if the segments start or end is closer to the road's end, then moves that.
             // This is because segments might be forwards or backwards relative to the road.
-            float startDist = (segment.Start - End).Length();
-            float endDist = (segment.End - End).Length();
+            Vector3 vectorToStart = segment.Start - End;
+            Vector3 vectorToEnd = segment.End - End;
+
+            float startDist = vectorToStart.LengthSquared();
+            float endDist = vectorToEnd.LengthSquared();
 
             if (startDist < endDist)
             {
-                segment.Start += diff;
+                segment.Start = newFacing.Normalized().Rotated(Vector3.Up, Mathf.Pi / 2) *segmentOffset + newValue;
             }
             else
             {
-                segment.End += diff;
+                segment.End = newFacing.Normalized().Rotated(Vector3.Up, -Mathf.Pi/2) * segmentOffset + newValue;
             }
         }
 
+        
+
         _end = newValue;
+        RecalculateControlPoints();
         UpdateVisualization();
+    }
+
+    private void RecalculateEndPoints(Vector3 old, Vector3 newPoint)
+    {
+
+    }
+
+    private void RecalculateStartPoints(Vector3 old, Vector3 newPoint)
+    {
+
+    }
+
+    private void RecalculateControlPoints()
+    {
+        // Puts control points on a straight line perpendicular to the path from
+        // start to end
+        Vector3 overallDirection = (End - Start).Normalized();
+
+        foreach (NavSegment segment in Simplifications.GetChildrenOfType<NavSegment>(this))
+        {
+            // Decides if the segments start or end is closer to the road's end, then moves that.
+            // This is because segments might be forwards or backwards relative to the road.
+            Vector3 vectorToStart = segment.Start - End;
+            Vector3 vectorToEnd = segment.End - End;
+
+            float startDist = vectorToStart.LengthSquared();
+            float endDist = vectorToEnd.LengthSquared();
+
+            if (startDist < endDist)
+            {
+                segment.Control = overallDirection.Rotated(Vector3.Up, -Mathf.Pi / 2) * segmentOffset + Control;
+            }
+            else
+            {
+                segment.Control = overallDirection.Rotated(Vector3.Up, Mathf.Pi / 2) * segmentOffset + Control;
+            }
+            
+        }
     }
 
 

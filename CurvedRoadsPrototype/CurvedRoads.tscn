@@ -123,14 +123,14 @@ End = Vector3(2, 0, 0)
 
 [node name="NavSegment2" type="Node3D" parent="2WayRoadTest/PloppableGraph"]
 script = ExtResource("7_ncv62")
-Start = Vector3(-2, 0, -1)
-End = Vector3(1.77, 0, -0.999998)
-Control = Vector3(0, 0, -1)
+Start = Vector3(-2, 0, -2)
+End = Vector3(2, 0, -2)
+Control = Vector3(-1.74846e-07, 0, -2)
 
 [node name="NavSegment" type="Node3D" parent="2WayRoadTest/PloppableGraph"]
 script = ExtResource("7_ncv62")
-Start = Vector3(1.77, 0, 1)
-End = Vector3(-2, 0, 1)
-Control = Vector3(0, 0, 0.999998)
+Start = Vector3(2, 0, 2)
+End = Vector3(-2, 0, 2)
+Control = Vector3(-1.74846e-07, 0, 2)
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]
