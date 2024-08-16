@@ -28,3 +28,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 1.19209e-07)
 shape = SubResource("BoxShape3D_prxr3")
 
 [node name="Area3D" type="Area3D" parent="."]
+
+[node name="Area3D2" type="Area3D" parent="."]

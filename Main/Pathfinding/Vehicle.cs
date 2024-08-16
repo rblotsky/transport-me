@@ -8,8 +8,9 @@ public partial class Vehicle : Node3D
 {
     // DATA //
     // Instance Configs
-    [Export] public double maxSpeed = 1;
-    [Export] public double acceleration = 0.2;
+    [Export] public double maxSpeed = 7.5;
+    [Export] public double acceleration = 1;
+    [Export] public double brakeSpeed = 3;
     [Export] protected NavGraphContainer graph;
     [Export] protected Vector3 graphOffset;
     [Export] protected float stoppingDistance;
@@ -32,8 +33,10 @@ public partial class Vehicle : Node3D
     private double timeStopped = 0;
     public double speed = 0;
     private MeshInstance3D visualization;
+    private MeshInstance3D visualization2;
 
-    
+
+
 
     // FUNCTIONS //
     // Godot Defaults
@@ -79,7 +82,7 @@ public partial class Vehicle : Node3D
         
         // Clears time stopped
         timeStopped = 0;
-
+        speed = speed >= maxSpeed ? maxSpeed : speed + acceleration * iterationDelta;
         // Gets how far to move this process frame
         double newDistance = speed * iterationDelta;
 
@@ -101,6 +104,9 @@ public partial class Vehicle : Node3D
 
         Vector3 colliderPosition = route.GetPositionAlongRoute((float)distanceAlongRoute + (float)speed);
         areas[0].Position = ToLocal(colliderPosition);
+        float timeToStop = (float)(speed / brakeSpeed);
+        Vector3 brakeColliderPosition = route.GetPositionAlongRoute((float)distanceAlongRoute + (float)(speed * timeToStop) + 0.5f * (float)brakeSpeed * timeToStop * timeToStop);
+        areas[1].Position = ToLocal(brakeColliderPosition);
         UpdateVisualization();
         
     }
@@ -109,6 +115,8 @@ public partial class Vehicle : Node3D
         DeleteVisualization();
         visualization = EasyShapes.AddShapeMesh(this, new BoxMesh());
         visualization.Position = areas[0].Position;
+        visualization2 = EasyShapes.AddShapeMesh(this, new BoxMesh());
+        visualization2.Position = areas[1].Position;
     }
 
     private void DeleteVisualization()
@@ -117,6 +125,11 @@ public partial class Vehicle : Node3D
         {
             visualization.Free();
             visualization = null;
+        }
+        if (visualization2 != null)
+        {
+            visualization2.Free();
+            visualization2 = null;
         }
     }
 
