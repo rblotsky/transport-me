@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
 [ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
-[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
+[ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/NetworkPrototype/Vehicle.tscn" id="16_f2xv3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -121,7 +121,6 @@ pitch_top_limit = 0.87
 pitch_bottom_limit = 0.1
 
 [node name="WorldGridViewer" parent="." instance=ExtResource("8_fh4jr")]
-visible = false
 verticalOffsetFromPointer = 0.0
 
 [node name="NavGraphContainer" type="Node3D" parent="."]
@@ -369,15 +368,15 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
-[node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-maxSpeed = 3.5
-acceleration = 2.5
-brakeSpeed = 7.5
+[node name="Vehicle" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+maxSpeed = 10.0
+brakeSpeed = 15.0
 
-[node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle2" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+maxSpeed = 4.0
+brakeSpeed = 12.0
 
-[node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle3" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+brakeSpeed = 10.0
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

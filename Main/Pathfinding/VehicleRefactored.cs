@@ -135,7 +135,11 @@ public partial class VehicleRefactored : Node3D
         foreach(VehicleCollider col in areas)
         {
             col.HandleUpdatePosition(this);
-            col.UpdateVisualization();
+            if (showVisualizations)
+            {
+
+                col.UpdateVisualization();
+            }
         }
     }
 
