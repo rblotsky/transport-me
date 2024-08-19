@@ -55,11 +55,9 @@ public partial class VehicleRefactored : Node3D
         graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
         areas = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
         GD.Print(areas.Count);
-        for (int i = 0; i < areas.Count; i++)
+        foreach(VehicleCollider c in areas)
         {
-            areas[i].AreaEntered += areas[i].OnAreaEntered;
-            areas[i].AreaExited += areas[i].OnAreaExited;
-
+            c.SetAssociatedVehicle(this);
         }
         base._EnterTree();
     }
@@ -114,8 +112,14 @@ public partial class VehicleRefactored : Node3D
         timeStopped = 0;
         NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
         float maxMaxSpeed = maxSpeed < curSegment.MaxSpeed ? (float)maxSpeed : curSegment.MaxSpeed;
+        bool shouldStop = false;
+        for(int i = 0; i<areas.Count; i++)
+        {
+            shouldStop = areas[i].GetColliderStatus();
+            if (shouldStop) { break; }
+        }
 
-        if (speed - maxMaxSpeed > 0.1f)
+        if (shouldStop || speed - maxMaxSpeed > 0.1f)
         {
             speed -= brakeSpeed * iterationDelta;
         }
@@ -123,6 +127,7 @@ public partial class VehicleRefactored : Node3D
         {
             speed += acceleration * iterationDelta;
         }
+        if(speed < 0) { speed = 0; }
 
         // Gets how far to move this process frame
         double newDistance = speed * iterationDelta;

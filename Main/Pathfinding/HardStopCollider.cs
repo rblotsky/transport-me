@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class HardStopCollider : VehicleCollider
 {
@@ -23,4 +24,9 @@ public partial class HardStopCollider : VehicleCollider
 		FaceDirectionOfMotion(brakeColliderPosition - GlobalPosition);
 		GlobalPosition = brakeColliderPosition;
 	}
+
+    protected override bool ShouldStop(List<VehicleCollider> colliders)
+    {
+        return (bool)(colliders.Count > 0);
+    }
 }

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class MainVehicle : VehicleCollider
 {
@@ -20,5 +21,9 @@ public partial class MainVehicle : VehicleCollider
 		Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
 		FaceDirectionOfMotion(newPosition - GlobalPosition);
 		GlobalPosition = newPosition;
+	}
+	protected override bool ShouldStop(List<VehicleCollider> colliders)
+	{
+		return false;
 	}
 }

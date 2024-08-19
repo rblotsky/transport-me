@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+
 public enum CollisionState
 {
 	NO_COLLISIONS,
@@ -12,12 +14,29 @@ public abstract partial class VehicleCollider : Area3D
 	protected VehicleRefactored associatedVehicle;
 	protected CollisionState collsionState;
 	private MeshInstance3D visualization;
+	[Export] private int NumIntersecting;
 
 	public VehicleRefactored GetAssociatedVehicle()
 	{
 		return associatedVehicle;
 	}
 	public abstract void HandleUpdatePosition(VehicleRefactored vehicle);
+	protected abstract bool ShouldStop(List<VehicleCollider> colliders);
+
+	public bool GetColliderStatus()
+	{
+		List<VehicleCollider> validColliders = new List<VehicleCollider>();
+		NumIntersecting = GetOverlappingAreas().Count;
+		foreach (Area3D area in GetOverlappingAreas())
+		{
+			if(area is VehicleCollider && ((VehicleCollider)area).GetAssociatedVehicle() != associatedVehicle)
+			{
+				validColliders.Add((VehicleCollider)area);
+			}
+		}
+		return ShouldStop(validColliders);
+	}
+
 	public void UpdateVisualization()
 	{
 		DeleteVisualization();
@@ -42,31 +61,14 @@ public abstract partial class VehicleCollider : Area3D
 		}
 	}
 
-	public void OnAreaEntered(Area3D area)
+	public void SetAssociatedVehicle(VehicleRefactored vehicle) 
 	{
-		if (((VehicleCollider)area)?.GetAssociatedVehicle() == associatedVehicle)
-		{
-			GD.Print("entered myself");
-			return;
-		}
-		GD.Print("entered");
-
-	}
-
-	public void OnAreaExited(Area3D area)
-	{
-		if (((VehicleCollider)area)?.GetAssociatedVehicle() == associatedVehicle)
-		{
-			GD.Print(";eft myself");
-			return;
-		}
-		GD.Print("exited");
+		associatedVehicle = vehicle;
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		associatedVehicle = GetParent<VehicleRefactored>();
 		base._Ready();
 	}
 }
