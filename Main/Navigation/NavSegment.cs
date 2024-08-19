@@ -14,7 +14,8 @@ public partial class NavSegment : Node3D
     [Export] private Vector3 End { get { return _end; } set { _end = value; UpdateVisualization(); } }
     private Vector3 _control = Vector3.Zero;
     [Export] private Vector3 Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
-    
+
+    [Export] public float MaxSpeed = 30f;
     // Readonly Properties
     public Vector3 GlobalStart { get { return ToGlobal(Start); } }
     public Vector3 GlobalEnd { get { return ToGlobal(End); } }

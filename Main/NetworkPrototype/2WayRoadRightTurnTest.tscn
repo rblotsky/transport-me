@@ -54,9 +54,11 @@ script = ExtResource("3_2rhgh")
 Start = Vector3(2, 0, -1)
 End = Vector3(1, 0, -2)
 Control = Vector3(1, 0, -1)
+MaxSpeed = 1.0
 
 [node name="NavSegment" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("3_2rhgh")
 Start = Vector3(-1, 0, -2)
 End = Vector3(2, 0, 1)
 Control = Vector3(-1, 0, 1)
+MaxSpeed = 1.0

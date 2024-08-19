@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class RandomVehicle : Vehicle
+public partial class RandomVehicleRefactored : VehicleRefactored
 {
 	// FUNCTIONS //
 	public override void _PhysicsProcess(double delta)

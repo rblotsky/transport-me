@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://dj7ka8sphrkpk"]
+
+[ext_resource type="Script" path="res://Main/Pathfinding/RandomVehicleRefactored.cs" id="1_8wvlu"]
+[ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/NetworkPrototype/low_poly_car_no_light.glb" id="1_g51oh"]
+[ext_resource type="Script" path="res://Main/Pathfinding/MainVehicle.cs" id="1_mpqlx"]
+[ext_resource type="Script" path="res://Main/Pathfinding/HardStopCollider.cs" id="3_hsyqr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gsqbt"]
+size = Vector3(1, 1, 2.16626)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_872b6"]
+size = Vector3(1, 1.01514, 2.1499)
+
+[node name="Vehicle" type="Node3D"]
+script = ExtResource("1_8wvlu")
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("1_mpqlx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460936, -0.0267334)
+shape = SubResource("BoxShape3D_gsqbt")
+
+[node name="low_poly_car_no_light" parent="Area3D" instance=ExtResource("1_g51oh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="Area3D2" type="Area3D" parent="."]
+script = ExtResource("3_hsyqr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.467529, -0.020752)
+shape = SubResource("BoxShape3D_872b6")
