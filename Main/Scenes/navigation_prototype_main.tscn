@@ -368,6 +368,12 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
+[node name="Vehicle5" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+brakeSpeed = 10.0
+
+[node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+brakeSpeed = 10.0
+
 [node name="Vehicle" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
 maxSpeed = 10.0
 brakeSpeed = 15.0

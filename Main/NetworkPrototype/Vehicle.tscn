@@ -9,7 +9,7 @@
 size = Vector3(1, 1, 2.16626)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_872b6"]
-size = Vector3(1, 1.01514, 2.1499)
+size = Vector3(0.743591, 1.01514, 2.1499)
 
 [node name="Vehicle" type="Node3D"]
 script = ExtResource("1_8wvlu")
@@ -28,5 +28,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 script = ExtResource("3_hsyqr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.467529, -0.020752)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0138245, 0.467529, -0.020752)
 shape = SubResource("BoxShape3D_872b6")
