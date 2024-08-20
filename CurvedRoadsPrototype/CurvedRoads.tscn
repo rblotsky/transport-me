@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://bn8bvwsvukofm"]
+[gd_scene load_steps=13 format=3 uid="uid://bn8bvwsvukofm"]
 
 [ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_1qxvf"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_880qr"]
 [ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="3_0xv0s"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="4_ui2bi"]
 [ext_resource type="Script" path="res://Main/Editor/Cursor.cs" id="5_4lhhj"]
-[ext_resource type="Script" path="res://Main/Navigation/PloppableGraph.cs" id="6_i3cvv"]
-[ext_resource type="Script" path="res://Main/Navigation/NavSegment.cs" id="7_ncv62"]
+[ext_resource type="PackedScene" uid="uid://l2dun676hjxf" path="res://CurvedRoadsPrototype/Curved2Lane2Way.tscn" id="6_kdr6q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ui3pw"]
 font_size = 30
@@ -114,23 +113,9 @@ mesh = SubResource("PlaneMesh_vepot")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
 shape = SubResource("BoxShape3D_77wgw")
 
-[node name="2WayRoadTest" type="Node3D" parent="."]
-
-[node name="PloppableGraph" type="Node3D" parent="2WayRoadTest"]
-script = ExtResource("6_i3cvv")
-Start = Vector3(-2, 0, 0)
-End = Vector3(2, 0, 0)
-
-[node name="NavSegment2" type="Node3D" parent="2WayRoadTest/PloppableGraph"]
-script = ExtResource("7_ncv62")
-Start = Vector3(-2, 0, -2)
-End = Vector3(2, 0, -2)
-Control = Vector3(-1.74846e-07, 0, -2)
-
-[node name="NavSegment" type="Node3D" parent="2WayRoadTest/PloppableGraph"]
-script = ExtResource("7_ncv62")
-Start = Vector3(2, 0, 2)
-End = Vector3(-2, 0, 2)
-Control = Vector3(-1.74846e-07, 0, 2)
+[node name="Curved2Lane2Way" parent="." instance=ExtResource("6_kdr6q")]
+Start = Vector3(-0.39, 0, 0)
+End = Vector3(3.46, 0, 4.475)
+Control = Vector2(3, 0)
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

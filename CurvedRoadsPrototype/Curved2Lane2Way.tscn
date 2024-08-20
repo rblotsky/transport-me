@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://l2dun676hjxf"]
+
+[ext_resource type="Script" path="res://CurvedRoadsPrototype/CurvedRoad.cs" id="1_kt86m"]
+[ext_resource type="Script" path="res://Main/Navigation/NavSegment.cs" id="2_4v7a3"]
+
+[node name="Curved2Lane2Way" type="Node3D"]
+script = ExtResource("1_kt86m")
+Start = Vector3(-1, 0, 0)
+End = Vector3(1, 0, 0)
+
+[node name="NavSegment" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 2)
+End = Vector3(1, 0, 2)
+Control = Vector3(0, 0, 2)
+
+[node name="NavSegment2" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 1)
+End = Vector3(1, 0, 1)
+Control = Vector3(0, 0, 1)
+
+[node name="NavSegment3" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 1)
+End = Vector3(1, 0, 2)
+Control = Vector3(0, 0, 1.41)
+
+[node name="NavSegment4" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 2)
+End = Vector3(1, 0, 1)
+Control = Vector3(0, 0, 1.45)
+
+[node name="NavSegment5" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -1)
+End = Vector3(-1, 0, -1)
+Control = Vector3(0, 0, -1)
+
+[node name="NavSegment6" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -2)
+End = Vector3(-1, 0, -2)
+Control = Vector3(0, 0, -2)
+
+[node name="NavSegment7" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -2)
+End = Vector3(-1, 0, -1)
+Control = Vector3(0, 0, -1.58)
+
+[node name="NavSegment8" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -1)
+End = Vector3(-1, 0, -2)
+Control = Vector3(0, 0, -1.645)
