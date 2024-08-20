@@ -30,7 +30,7 @@ public partial class VehicleRefactored : Node3D
     // Cached Data
     private Route route = null;
     private float distanceAlongRoute = 0f;
-    private double timeStopped = 0;
+    protected double timeStopped = 0;
     public double speed = 0;
 
 
@@ -109,7 +109,6 @@ public partial class VehicleRefactored : Node3D
             return;
         }
         // Clears time stopped
-        timeStopped = 0;
         NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
         float maxMaxSpeed = maxSpeed < curSegment.MaxSpeed ? (float)maxSpeed : curSegment.MaxSpeed;
         bool shouldStop = false;
@@ -127,7 +126,7 @@ public partial class VehicleRefactored : Node3D
         {
             speed += acceleration * iterationDelta;
         }
-        if(speed < 0) { speed = 0; }
+        if(speed < 0) { speed = 0; timeStopped += iterationDelta; }
 
         // Gets how far to move this process frame
         double newDistance = speed * iterationDelta;

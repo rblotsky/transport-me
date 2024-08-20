@@ -47,7 +47,7 @@ public abstract partial class VehicleCollider : Area3D
 
 	protected void FaceDirectionOfMotion(Vector3 positionDelta)
 	{
-		if (positionDelta.LengthSquared() >= 0.001f)
+		if (positionDelta.LengthSquared() != 0)
 		{
 			LookAt(GlobalPosition + positionDelta, Vector3.Up);
 		}
