@@ -8,13 +8,14 @@ public partial class RandomVehicleRefactored : VehicleRefactored
 	public override void _PhysicsProcess(double delta)
 	{
 		// Only moves if we haven't reached the end yet.
-		if (CurrentSegment != null && timeStopped < 5)
+		if (CurrentSegment != null && timeStopped < 2)
 		{
 			RunMovementIteration(delta);
 		}
 		else
 		{
 			StartRandomRoute();
+			speed = 0f;
 			timeStopped = 0;
 		}
 

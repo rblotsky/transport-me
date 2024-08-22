@@ -13,7 +13,7 @@ public abstract partial class VehicleCollider : Area3D
 {
 	protected VehicleRefactored associatedVehicle;
 	protected CollisionState collsionState;
-	private MeshInstance3D visualization;
+	protected MeshInstance3D visualization;
 	[Export] private int NumIntersecting;
 
 	public VehicleRefactored GetAssociatedVehicle()
@@ -37,12 +37,13 @@ public abstract partial class VehicleCollider : Area3D
 		return ShouldStop(validColliders);
 	}
 
-	public void UpdateVisualization()
+	public virtual void UpdateVisualization()
 	{
 		DeleteVisualization();
 		visualization = EasyShapes.AddShapeMesh(this, new BoxMesh());
 		visualization.GlobalPosition = GlobalPosition;
 		visualization.GlobalRotation = GlobalRotation;
+		//visualization.Scale = ((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size;
 	}
 
 	protected void FaceDirectionOfMotion(Vector3 positionDelta)

@@ -108,9 +108,7 @@ public partial class VehicleRefactored : Node3D
             FinishCurrentRoute(true);
             return;
         }
-        // Clears time stopped
-        NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
-        float maxMaxSpeed = maxSpeed < curSegment.MaxSpeed ? (float)maxSpeed : curSegment.MaxSpeed;
+        // collider checks
         bool shouldStop = false;
         for(int i = 0; i<areas.Count; i++)
         {
@@ -118,6 +116,11 @@ public partial class VehicleRefactored : Node3D
             if (shouldStop) { break; }
         }
 
+        // max speed calculations
+        NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
+        float maxMaxSpeed = maxSpeed < curSegment.MaxSpeed ? (float)maxSpeed : curSegment.MaxSpeed;
+
+        //accelerating or decelerating
         if (shouldStop || speed - maxMaxSpeed > 0.1f)
         {
             speed -= brakeSpeed * iterationDelta;
@@ -126,9 +129,12 @@ public partial class VehicleRefactored : Node3D
         {
             speed += acceleration * iterationDelta;
         }
-        if(speed < 0) { speed = 0; timeStopped += iterationDelta; }
 
-        // Gets how far to move this process frame
+        //prevent reversing
+        if(speed < 0) { speed = 0; timeStopped += iterationDelta; }
+        else { timeStopped = 0; }
+
+        // update distance along route
         double newDistance = speed * iterationDelta;
         distanceAlongRoute += (float)newDistance;
         foreach(VehicleCollider col in areas)

@@ -14,6 +14,12 @@ public partial class MainVehicle : VehicleCollider
 	{
 	}
 
+	public override void UpdateVisualization()
+	{
+		base.UpdateVisualization();
+		visualization.Scale = new Vector3(1, 1, 2);
+	}
+
 	public override void HandleUpdatePosition(VehicleRefactored vehicle)
 	{
 		Route route = vehicle.GetRoute();
