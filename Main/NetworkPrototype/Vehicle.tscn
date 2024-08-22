@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://Main/Pathfinding/MainVehicle.cs" id="1_mpqlx"]
 [ext_resource type="Script" path="res://Main/Pathfinding/HardStopCollider.cs" id="3_hsyqr"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_gsqbt"]
-size = Vector3(1, 1, 2.16626)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6deww"]
+height = 2.30079
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_872b6"]
 size = Vector3(0.743591, 1.01514, 2.08533)
@@ -18,11 +18,21 @@ script = ExtResource("1_8wvlu")
 script = ExtResource("1_mpqlx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460936, -0.0267334)
-shape = SubResource("BoxShape3D_gsqbt")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.460936, 0.00593746)
+shape = SubResource("CapsuleShape3D_6deww")
 
 [node name="low_poly_car_no_light" parent="Area3D" instance=ExtResource("1_g51oh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Area3D/low_poly_car_no_light"]
+light_energy = 1.7
+spot_range = 8.0
+spot_angle = 37.65
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Area3D/low_poly_car_no_light"]
+light_energy = 1.7
+spot_range = 8.0
+spot_angle = 37.65
 
 [node name="Area3D2" type="Area3D" parent="."]
 script = ExtResource("3_hsyqr")
