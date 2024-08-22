@@ -31,6 +31,23 @@ public partial class Route : RefCounted
         return OrderedSegments[segmentIndex].GetPositionOnSegment(percentOfSegment);
     }
 
+    public Vector3 GetDirectionOnRoute(float distanceAlongRoute)
+    {
+        if (OrderedSegments == null) return Vector3.Zero;
+        int segmentIndex = 0;
+
+        while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
+        {
+            distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
+            if (OrderedSegments.Length == segmentIndex)
+            {
+                return OrderedSegments[segmentIndex - 1].GetDirectionVectorOnSegment(1);
+            }
+        }
+        float percentOfSegment = (float)distanceAlongRoute / OrderedSegments[segmentIndex].Length;
+        return OrderedSegments[segmentIndex].GetDirectionVectorOnSegment(percentOfSegment);
+    }
+
     public NavSegment GetSegmentAlongRoute(float distanceAlongRoute)
     {
         if (OrderedSegments == null) return null;

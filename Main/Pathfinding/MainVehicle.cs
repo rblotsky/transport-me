@@ -20,12 +20,13 @@ public partial class MainVehicle : VehicleCollider
 		visualization.Scale = new Vector3(1, 1, 2);
 	}
 
-	public override void HandleUpdatePosition(VehicleRefactored vehicle)
+	public override void HandleUpdatePosition()
 	{
-		Route route = vehicle.GetRoute();
-		float distanceAlongRoute = vehicle.GetDistanceAlongRoute();
+		Route route = associatedVehicle.GetRoute();
+		float distanceAlongRoute = associatedVehicle.GetDistanceAlongRoute();
+		Vector3 rotationDirection = route.GetDirectionOnRoute(distanceAlongRoute);
 		Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
-		FaceDirectionOfMotion(newPosition - GlobalPosition);
+		FaceDirectionOfMotion(rotationDirection);
 		GlobalPosition = newPosition;
 	}
 	protected override bool ShouldStop(List<VehicleCollider> colliders)

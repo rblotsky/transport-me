@@ -20,14 +20,17 @@ public partial class HardStopCollider : VehicleCollider
 		visualization.Scale = ((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size;
 	}
 
-	public override void HandleUpdatePosition(VehicleRefactored vehicle)
+	public override void HandleUpdatePosition()
     {
-		Route route = vehicle.GetRoute();
-		float distanceAlongRoute = vehicle.GetDistanceAlongRoute();
-		float speed = (float)vehicle.GetCurrentSpeed();
-		float timeToStop = speed / (float)vehicle.brakeSpeed;
-		Vector3 brakeColliderPosition = route.GetPositionAlongRoute((float)distanceAlongRoute + (float)(speed * timeToStop) - 0.25f * (float)vehicle.brakeSpeed * timeToStop * timeToStop);
-		FaceDirectionOfMotion(brakeColliderPosition - GlobalPosition);
+		Route route = associatedVehicle.GetRoute();
+		float distanceAlongRoute = associatedVehicle.GetDistanceAlongRoute();
+		float speed = (float)associatedVehicle.GetCurrentSpeed();
+		float timeToStop = speed / (float)associatedVehicle.brakeSpeed;
+		float brakingDistanceOnRoute = (float)distanceAlongRoute + (float)(speed * timeToStop) - 0.25f * (float)associatedVehicle.brakeSpeed * timeToStop * timeToStop;
+		brakingDistanceOnRoute = Mathf.Min(brakingDistanceOnRoute, route.GetLength());
+		Vector3 brakeColliderPosition = route.GetPositionAlongRoute(brakingDistanceOnRoute);
+		Vector3 brakeColliderDirection = route.GetDirectionOnRoute(brakingDistanceOnRoute);
+		FaceDirectionOfMotion(brakeColliderDirection);
 		GlobalPosition = brakeColliderPosition;
 	}
 

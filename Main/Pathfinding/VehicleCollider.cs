@@ -20,7 +20,7 @@ public abstract partial class VehicleCollider : Area3D
 	{
 		return associatedVehicle;
 	}
-	public abstract void HandleUpdatePosition(VehicleRefactored vehicle);
+	public abstract void HandleUpdatePosition();
 	protected abstract bool ShouldStop(List<VehicleCollider> colliders);
 
 	public bool GetColliderStatus()
@@ -48,9 +48,13 @@ public abstract partial class VehicleCollider : Area3D
 
 	protected void FaceDirectionOfMotion(Vector3 positionDelta)
 	{
-		if (positionDelta.LengthSquared() != 0)
+		if (!positionDelta.IsEqualApprox(Vector3.Zero))
 		{
 			LookAt(GlobalPosition + positionDelta, Vector3.Up);
+		}
+		else
+		{
+			GD.Print(positionDelta, associatedVehicle.speed);
 		}
 	}
 
