@@ -3,7 +3,7 @@ using System;
 
 [GlobalClass]
 [Tool]
-public partial class CurvedRoadSegmentOffset : RefCounted
+public partial class CurvedRoadSegmentOffset : Resource
 {
     // DATA //
     /*
@@ -14,10 +14,10 @@ public partial class CurvedRoadSegmentOffset : RefCounted
     */
 
     // Properties
-    public NavSegment Segment { get; private set; }
-    public Vector3 RoadStartOffset { get; private set; }
-    public Vector3 RoadEndOffset { get; private set; }
-    public bool Direction { get; private set; }
+    [Export] public int SegmentIndex { get; private set; }
+    [Export] public Vector3 RoadStartOffset { get; private set; }
+    [Export] public Vector3 RoadEndOffset { get; private set; }
+    [Export] public bool Direction { get; private set; }
 
     // Readonly Properties
     public int EndpointAtRoadStart { get { if (Direction) return 0; else return 1; } }
@@ -25,11 +25,12 @@ public partial class CurvedRoadSegmentOffset : RefCounted
 
 
     // FUNCTIONS //
-    public static CurvedRoadSegmentOffset GetSegmentOffset(NavSegment segment, CurvedRoad road)
+    public static CurvedRoadSegmentOffset GetSegmentOffset(int segmentIndex, CurvedRoad road)
     {
         CurvedRoadSegmentOffset segmentOffsetData = new CurvedRoadSegmentOffset();
 
-        segmentOffsetData.Segment = segment;
+        segmentOffsetData.SegmentIndex = segmentIndex;
+        NavSegment segment = road.GetSegment(segmentIndex);
 
 
         // Decides which direction the segment is going. Using that, saves

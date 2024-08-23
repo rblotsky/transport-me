@@ -1,6 +1,6 @@
 using Godot;
+using Godot.Collections;
 using System;
-using System.Collections.Generic;
 
 [GlobalClass]
 [Tool]
@@ -32,8 +32,12 @@ public partial class CurvedRoad : Node3D
     public Transform3D EndTransform { get { return new Transform3D(Basis.LookingAt(ControlAtEndHeight - End), End); } }
 
 
-    // Runtime Cached Data
-    private List<CurvedRoadSegmentOffset> segmentOffsets;
+    // Segment Offset Data
+    [ExportCategory("Saving Controlled Segments")]
+    [Export] private bool SaveSegmentOffsetsToggle { set { SaveSegmentOffsets(); } get { return true; } }
+    [Export] private Array<NavSegment> segments;
+    [Export] private Array<CurvedRoadSegmentOffset> segmentOffsets;
+
 
     // Editor Cached Data
     private MeshInstance3D startVisualizer;
@@ -43,7 +47,6 @@ public partial class CurvedRoad : Node3D
 
 
     // FUNCTIONS //
-
     // Godot Defaults
     public override void _Ready()
     {
@@ -51,13 +54,6 @@ public partial class CurvedRoad : Node3D
         if (Engine.IsEditorHint())
         {
             UpdateVisualization();
-        }
-
-        // Save segment offsets
-        segmentOffsets = new List<CurvedRoadSegmentOffset>();
-        foreach (NavSegment childSegment in Simplifications.GetChildrenOfType<NavSegment>(this))
-        {
-            segmentOffsets.Add(CurvedRoadSegmentOffset.GetSegmentOffset(childSegment, this));
         }
 
         base._Ready();
@@ -70,9 +66,6 @@ public partial class CurvedRoad : Node3D
         {
             RemoveVisualizers();
         }
-
-        // Clear segment offsets
-        segmentOffsets = null;
 
         RequestReady();
 
@@ -106,6 +99,18 @@ public partial class CurvedRoad : Node3D
         UpdateVisualization();
     }
 
+    private void SaveSegmentOffsets()
+    {
+        // Creates a new list for segment offsets and segments
+        segments = new Array<NavSegment>(Simplifications.GetChildrenOfType<NavSegment>(this, true));
+        segmentOffsets = new Array<CurvedRoadSegmentOffset>();
+
+        for(int i = 0; i < segments.Count; i++)
+        {
+            segmentOffsets.Add(CurvedRoadSegmentOffset.GetSegmentOffset(i, this));
+        }
+    }
+
     private void RecalculateEndPoints()
     {
         if (segmentOffsets != null)
@@ -113,7 +118,10 @@ public partial class CurvedRoad : Node3D
             // Recalculates all segment offsets using new endpoint
             foreach (CurvedRoadSegmentOffset offset in segmentOffsets)
             {
-                offset.Segment.SetEndpoint(offset.EndpointAtRoadEnd, LocalizeOffsetToSegment(offset.Segment, EndTransform, offset.RoadEndOffset));
+                GetSegment(offset.SegmentIndex).SetEndpoint(
+                    offset.EndpointAtRoadEnd, 
+                    LocalizeOffsetToSegment(GetSegment(offset.SegmentIndex), EndTransform, offset.RoadEndOffset)
+                    );
             }
         }
     }
@@ -125,7 +133,10 @@ public partial class CurvedRoad : Node3D
         {
             foreach (CurvedRoadSegmentOffset offset in segmentOffsets)
             {
-                offset.Segment.SetEndpoint(offset.EndpointAtRoadStart, LocalizeOffsetToSegment(offset.Segment, StartTransform, offset.RoadStartOffset));
+                GetSegment(offset.SegmentIndex).SetEndpoint(
+                    offset.EndpointAtRoadStart, 
+                    LocalizeOffsetToSegment(GetSegment(offset.SegmentIndex), StartTransform, offset.RoadStartOffset)
+                    );
             }
         }
     }
@@ -139,8 +150,18 @@ public partial class CurvedRoad : Node3D
             {
                 // Gets the control position: intersection of a line drawn through the start and end
                 // of this segment
-                Vector2 startV2 = Curves.Vec3RemoveHeight(LocalizeSegmentPointToRoad(offset.Segment, offset.Segment.Endpoints[offset.EndpointAtRoadStart]));
-                Vector2 endV2 = Curves.Vec3RemoveHeight(LocalizeSegmentPointToRoad(offset.Segment, offset.Segment.Endpoints[offset.EndpointAtRoadEnd]));
+                Vector2 startV2 = Curves.Vec3RemoveHeight(
+                    LocalizeSegmentPointToRoad(
+                        GetSegment(offset.SegmentIndex), 
+                        GetSegment(offset.SegmentIndex).Endpoints[offset.EndpointAtRoadStart]
+                        )
+                    );
+                Vector2 endV2 = Curves.Vec3RemoveHeight(
+                    LocalizeSegmentPointToRoad(
+                        GetSegment(offset.SegmentIndex), 
+                        GetSegment(offset.SegmentIndex).Endpoints[offset.EndpointAtRoadEnd]
+                        )
+                    );
 
                 Vector2 startDirection = Control - Curves.Vec3RemoveHeight(Start);
                 Vector2 endDirection = Control - Curves.Vec3RemoveHeight(End);
@@ -149,7 +170,11 @@ public partial class CurvedRoad : Node3D
 
                 if (intersection.VariantType != Variant.Type.Nil)
                 {
-                    offset.Segment.Control = LocalizeRoadPointToSegment(offset.Segment, Curves.Vec2WithHeight(intersection.AsVector2(), Start.Y));
+                    GetSegment(offset.SegmentIndex).Control = LocalizeRoadPointToSegment(
+                        GetSegment(offset.SegmentIndex), 
+                        Curves.Vec2WithHeight(intersection.AsVector2(), 
+                        Start.Y)
+                        );
                 }
             }
         }
@@ -170,6 +195,12 @@ public partial class CurvedRoad : Node3D
         return segment.ToLocal(ToGlobal(point));
     }
 
+
+    // Data Retrieval
+    public NavSegment GetSegment(int index)
+    {
+        return segments[index];
+    }
 
     // Visualization
     private void RemoveVisualizers()

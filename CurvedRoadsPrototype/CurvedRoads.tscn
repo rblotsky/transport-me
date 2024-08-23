@@ -114,8 +114,8 @@ mesh = SubResource("PlaneMesh_vepot")
 shape = SubResource("BoxShape3D_77wgw")
 
 [node name="Curved2Lane2Way" parent="." instance=ExtResource("6_kdr6q")]
-Start = Vector3(-0.39, 0, 0)
-End = Vector3(3.46, 0, 4.475)
-Control = Vector2(3, 0)
+Start = Vector3(-1.91, 0, -5.885)
+End = Vector3(-0.48, 0, 3.36)
+Control = Vector2(9.095, -0.96)
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]
