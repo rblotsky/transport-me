@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Transportme.Main.Pathfinding;
 
 public partial class Route : RefCounted
 {
@@ -18,7 +19,10 @@ public partial class Route : RefCounted
     {
         if (OrderedSegments == null) return Vector3.Zero;
         int segmentIndex = 0;
-
+        if(distanceAlongRoute < 0)
+        {
+            return OrderedSegments[0].GlobalStart;
+        }
         while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
         {
             distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
@@ -34,8 +38,13 @@ public partial class Route : RefCounted
     public Vector3 GetDirectionOnRoute(float distanceAlongRoute)
     {
         if (OrderedSegments == null) return Vector3.Zero;
-        int segmentIndex = 0;
 
+        float distanceFrom = Mathf.Max(distanceAlongRoute - 0.1f, 0f);
+        float distanceTo = Mathf.Min(distanceAlongRoute + 0.1f, (float)length);
+        Vector3 direction = GetPositionAlongRoute(distanceTo) - GetPositionAlongRoute(distanceFrom);
+        return direction.Normalized();
+        
+        int segmentIndex = 0;
         while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
         {
             distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
@@ -62,6 +71,31 @@ public partial class Route : RefCounted
             }
         }
         return OrderedSegments[segmentIndex];
+    }
+
+    public RoutePoint GetVehiclePropsOnRoute(float distanceAlongRoute)
+    {
+        RoutePoint routePoint = new();
+        float distanceFrom = Mathf.Max(distanceAlongRoute - 0.8f, 0f);
+        float distanceTo = Mathf.Min(distanceAlongRoute + 0.2f, (float)length);
+        Vector3 from = GetPositionAlongRoute(distanceFrom);
+        Vector3 to = GetPositionAlongRoute(distanceTo);
+        float lerpValue;
+        if(distanceFrom == 0f)
+        {
+            lerpValue = distanceAlongRoute / distanceTo;
+        } else if(distanceTo == (float)length)
+        {
+            lerpValue = 1 - ((distanceTo - distanceAlongRoute) / (distanceTo - distanceFrom));
+            GD.Print(lerpValue);
+        } else
+        {
+            lerpValue = 0.8f;
+        }
+
+        routePoint.Position = from.Lerp(to, lerpValue);
+        routePoint.Rotation = (to - from).Normalized();
+        return routePoint;
     }
 
     public float GetLength()

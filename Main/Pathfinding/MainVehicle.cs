@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.Pathfinding;
 
 public partial class MainVehicle : VehicleCollider
 {
@@ -24,10 +25,18 @@ public partial class MainVehicle : VehicleCollider
 	{
 		Route route = associatedVehicle.GetRoute();
 		float distanceAlongRoute = associatedVehicle.GetDistanceAlongRoute();
-		Vector3 rotationDirection = route.GetDirectionOnRoute(distanceAlongRoute);
-		Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
-		FaceDirectionOfMotion(rotationDirection);
-		GlobalPosition = newPosition;
+		RoutePoint point = route.GetVehiclePropsOnRoute(distanceAlongRoute);
+		if (false) //previous implementation
+		{
+			Vector3 rotationDirection = route.GetDirectionOnRoute(distanceAlongRoute);
+			Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
+			FaceDirectionOfMotion(rotationDirection);
+			GlobalPosition = newPosition;
+			return;
+		}
+
+		FaceDirectionOfMotion(point.Rotation);
+		GlobalPosition = point.Position;
 	}
 	protected override bool ShouldStop(List<VehicleCollider> colliders)
 	{

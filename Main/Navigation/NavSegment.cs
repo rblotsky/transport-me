@@ -77,11 +77,11 @@ public partial class NavSegment : Node3D
     public Vector3 GetDirectionVectorOnSegment(float percentOfSegment)
     {
         float offset = Mathf.Max(0.1f / Length, 0.01f);
+
         float to = Mathf.Min(1f, percentOfSegment + offset);
         float from = Mathf.Max(0f, percentOfSegment - offset);
         Vector3 dir = GetPositionOnSegment(to) - GetPositionOnSegment(from);
         return dir.Normalized();
-
     }
     public Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {

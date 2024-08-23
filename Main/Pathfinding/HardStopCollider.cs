@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.Pathfinding;
 
 public partial class HardStopCollider : VehicleCollider
 {
@@ -27,11 +28,11 @@ public partial class HardStopCollider : VehicleCollider
 		float speed = (float)associatedVehicle.GetCurrentSpeed();
 		float timeToStop = speed / (float)associatedVehicle.brakeSpeed;
 		float brakingDistanceOnRoute = (float)distanceAlongRoute + (float)(speed * timeToStop) - 0.25f * (float)associatedVehicle.brakeSpeed * timeToStop * timeToStop;
+		
 		brakingDistanceOnRoute = Mathf.Min(brakingDistanceOnRoute, route.GetLength());
-		Vector3 brakeColliderPosition = route.GetPositionAlongRoute(brakingDistanceOnRoute);
-		Vector3 brakeColliderDirection = route.GetDirectionOnRoute(brakingDistanceOnRoute);
-		FaceDirectionOfMotion(brakeColliderDirection);
-		GlobalPosition = brakeColliderPosition;
+		RoutePoint point = route.GetVehiclePropsOnRoute(brakingDistanceOnRoute);
+		FaceDirectionOfMotion(point.Rotation);
+		GlobalPosition = point.Position;
 	}
 
     protected override bool ShouldStop(List<VehicleCollider> colliders)
