@@ -76,7 +76,7 @@ public partial class Route : RefCounted
     public RoutePoint GetVehiclePropsOnRoute(float distanceAlongRoute)
     {
         RoutePoint routePoint = new();
-        float distanceFrom = Mathf.Max(distanceAlongRoute - 0.8f, 0f);
+        float distanceFrom = Mathf.Max(distanceAlongRoute - 0.4f, 0f);
         float distanceTo = Mathf.Min(distanceAlongRoute + 0.2f, (float)length);
         Vector3 from = GetPositionAlongRoute(distanceFrom);
         Vector3 to = GetPositionAlongRoute(distanceTo);

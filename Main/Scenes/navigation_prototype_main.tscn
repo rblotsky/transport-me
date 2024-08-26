@@ -369,20 +369,9 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="Vehicle5" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 2.0
 brakeSpeed = 10.0
-
-[node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
-brakeSpeed = 10.0
-
-[node name="Vehicle" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
-maxSpeed = 10.0
-brakeSpeed = 15.0
-
-[node name="Vehicle2" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
-maxSpeed = 4.0
-brakeSpeed = 12.0
-
-[node name="Vehicle3" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
-brakeSpeed = 10.0
+showVisualizations = true
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

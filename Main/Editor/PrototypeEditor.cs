@@ -39,16 +39,16 @@ public partial class PrototypeEditor : Node
 			}
 			else if (keyInput.Keycode == Key.E && keyInput.IsPressed())
 			{
-				VehicleRefactored[] allVehicles = Simplifications.GetChildrenOfType<VehicleRefactored>(GetParent(), true).ToArray();
-				foreach(VehicleRefactored vehicle in allVehicles)
+				Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
+				foreach(Vehicle vehicle in allVehicles)
 				{
 					vehicle.speed+=1;
 				}
 			}
 			else if (keyInput.Keycode == Key.Q && keyInput.IsPressed())
 			{
-				VehicleRefactored[] allVehicles = Simplifications.GetChildrenOfType<VehicleRefactored>(GetParent(), true).ToArray();
-				foreach (VehicleRefactored vehicle in allVehicles)
+				Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
+				foreach (Vehicle vehicle in allVehicles)
 				{
 					vehicle.speed-=1;
 				}

@@ -11,12 +11,12 @@ public enum CollisionState
 
 public abstract partial class VehicleCollider : Area3D
 {
-	protected VehicleRefactored associatedVehicle;
+	protected Vehicle associatedVehicle;
 	protected CollisionState collsionState;
 	protected MeshInstance3D visualization;
 	[Export] private int NumIntersecting;
 
-	public VehicleRefactored GetAssociatedVehicle()
+	public Vehicle GetAssociatedVehicle()
 	{
 		return associatedVehicle;
 	}
@@ -66,7 +66,7 @@ public abstract partial class VehicleCollider : Area3D
 		}
 	}
 
-	public void SetAssociatedVehicle(VehicleRefactored vehicle) 
+	public void SetAssociatedVehicle(Vehicle vehicle) 
 	{
 		associatedVehicle = vehicle;
 	}

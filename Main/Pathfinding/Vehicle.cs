@@ -16,24 +16,22 @@ public partial class Vehicle : Node3D
 	[Export] protected float stoppingDistance;
 	[Export] public bool showVisualizations;
 
-	private List<Area3D> areas;
+	private List<VehicleCollider> areas;
 	private List<bool> collisions;
 	// Properties
-	protected NavSegment CurrentSegment 
-	{ 
-		get 
+	protected NavSegment CurrentSegment
+	{
+		get
 		{
 			return route?.GetSegmentAlongRoute(distanceAlongRoute);
-		} 
+		}
 	}
 
 	// Cached Data
 	private Route route = null;
 	private float distanceAlongRoute = 0f;
-	private double timeStopped = 0;
+	protected double timeStopped = 0;
 	public double speed = 0;
-	private MeshInstance3D visualization;
-	private MeshInstance3D visualization2;
 
 
 	public Route GetRoute()
@@ -55,19 +53,16 @@ public partial class Vehicle : Node3D
 	public override void _EnterTree()
 	{
 		graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
-		areas = Simplifications.GetChildrenOfType<Area3D>(this, true);
+		areas = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
 		GD.Print(areas.Count);
-		collisions = new List<bool>(areas.Count);
-		for(int i = 0; i< areas.Count; i++)
+		foreach(VehicleCollider c in areas)
 		{
-			areas[i].AreaEntered += (Area3D area) => OnAreaEntered(i, area);
-			areas[i].AreaExited += (Area3D area) => OnAreaExited(i, area);
-
+			c.SetAssociatedVehicle(this);
 		}
 		base._EnterTree();
 	}
 
-	private void OnAreaEntered (int number, Area3D area)
+	private void OnAreaEntered(int number, VehicleCollider area)
 	{
 		if (areas.Contains(area))
 		{
@@ -79,7 +74,7 @@ public partial class Vehicle : Node3D
 
 	}
 
-	private void OnAreaExited (int number, Area3D area)
+	private void OnAreaExited(int number, VehicleCollider area)
 	{
 		if (areas.Contains(area))
 		{
@@ -96,7 +91,7 @@ public partial class Vehicle : Node3D
 	{
 		return false;
 	}
-	   
+
 
 	// Movement Functions
 	protected void RunMovementIteration(double iterationDelta)
@@ -113,74 +108,45 @@ public partial class Vehicle : Node3D
 			FinishCurrentRoute(true);
 			return;
 		}
-		// Clears time stopped
-		timeStopped = 0;
+		// collider checks
+		bool shouldStop = false;
+		for(int i = 0; i<areas.Count; i++)
+		{
+			shouldStop = areas[i].GetColliderStatus();
+			if (shouldStop) { break; }
+		}
+
+		// max speed calculations
 		NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
 		float maxMaxSpeed = maxSpeed < curSegment.MaxSpeed ? (float)maxSpeed : curSegment.MaxSpeed;
 
-		if(speed - maxMaxSpeed > 0.1f)
+		//accelerating or decelerating
+		if (shouldStop || speed - maxMaxSpeed > 0.1f)
 		{
 			speed -= brakeSpeed * iterationDelta;
-		} else if (speed - maxMaxSpeed < -0.1f)
+		}
+		else if (speed - maxMaxSpeed < -0.1f)
 		{
 			speed += acceleration * iterationDelta;
 		}
-		
-		// Gets how far to move this process frame
+
+		//prevent reversing
+		if(speed < 0) { speed = 0; timeStopped += iterationDelta; }
+		else { timeStopped = 0; }
+
+		// update distance along route
 		double newDistance = speed * iterationDelta;
 		distanceAlongRoute += (float)newDistance;
-
-		// We have 
-
-
-		// Sets its position along the segment
-
-			Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
-			FaceDirectionOfMotion(newPosition - GlobalPosition);
-			GlobalPosition = newPosition;
-		
-
-		Vector3 colliderPosition = route.GetPositionAlongRoute((float)distanceAlongRoute + (float)speed);
-		areas[0].Position = ToLocal(colliderPosition);
-		float timeToStop = (float)(speed / brakeSpeed);
-		Vector3 brakeColliderPosition = route.GetPositionAlongRoute((float)distanceAlongRoute + (float)(speed * timeToStop) + 0.5f * (float)brakeSpeed * timeToStop * timeToStop);
-		areas[1].Position = ToLocal(brakeColliderPosition);
-		UpdateVisualization();
-		
-	}
-	private void UpdateVisualization()
-	{
-		DeleteVisualization();
-		visualization = EasyShapes.AddShapeMesh(this, new BoxMesh());
-		visualization.Position = areas[0].Position;
-		visualization.Scale = areas[0].Scale;
-		visualization2 = EasyShapes.AddShapeMesh(this, new BoxMesh());
-		visualization2.Position = areas[1].Position;
-		visualization2.Scale = areas[1].Scale;
-	}
-
-	private void DeleteVisualization()
-	{
-		if (visualization != null)
+		foreach(VehicleCollider col in areas)
 		{
-			visualization.Free();
-			visualization = null;
-		}
-		if (visualization2 != null)
-		{
-			visualization2.Free();
-			visualization2 = null;
+			col.HandleUpdatePosition();
+			if (showVisualizations)
+			{
+
+				col.UpdateVisualization();
+			}
 		}
 	}
-
-	protected void FaceDirectionOfMotion(Vector3 positionDelta)
-	{
-		if (positionDelta.LengthSquared() != 0)
-		{
-			LookAt(GlobalPosition + positionDelta, Vector3.Up);
-		}
-	}
-
 
 	// Virtual Functions
 	protected virtual void OnRouteFinish(Route finished)
@@ -210,3 +176,4 @@ public partial class Vehicle : Node3D
 	}
 
 }
+
