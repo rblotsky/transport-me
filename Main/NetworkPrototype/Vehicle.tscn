@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dj7ka8sphrkpk"]
 
-[ext_resource type="Script" path="res://Main/Pathfinding/RandomVehicleRefactored.cs" id="1_8wvlu"]
 [ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/NetworkPrototype/low_poly_car_no_light.glb" id="1_g51oh"]
+[ext_resource type="Script" path="res://Main/Pathfinding/RandomVehicle.cs" id="1_jb367"]
 [ext_resource type="Script" path="res://Main/Pathfinding/MainVehicle.cs" id="1_mpqlx"]
 [ext_resource type="Script" path="res://Main/Pathfinding/HardStopCollider.cs" id="3_hsyqr"]
 
@@ -12,7 +12,7 @@ height = 2.30079
 size = Vector3(0.543085, 1.01514, 2.08533)
 
 [node name="Vehicle" type="Node3D"]
-script = ExtResource("1_8wvlu")
+script = ExtResource("1_jb367")
 
 [node name="Area3D" type="Area3D" parent="."]
 script = ExtResource("1_mpqlx")
