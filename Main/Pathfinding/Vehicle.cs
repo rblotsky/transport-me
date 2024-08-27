@@ -8,7 +8,7 @@ public partial class Vehicle : Node3D
 {
 	// DATA //
 	// Instance Configs
-	[Export] public double maxSpeed = 7.5;
+	[Export] public double maxVehicleSpeed = 7.5;
 	[Export] public double acceleration = 1;
 	[Export] public double brakeSpeed = 3;
 	[Export] protected NavGraphContainer graph;
@@ -17,7 +17,7 @@ public partial class Vehicle : Node3D
 	[Export] public bool showVisualizations;
 	[Export] public bool showPositionVisualizations;
 
-	private List<VehicleCollider> areas;
+	private List<VehicleCollider> attachedColliders;
 	private List<bool> collisions;
 	// Properties
 	protected NavSegment CurrentSegment
@@ -54,96 +54,61 @@ public partial class Vehicle : Node3D
 	public override void _EnterTree()
 	{
 		graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
-		areas = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
-		GD.Print(areas.Count);
-		foreach(VehicleCollider c in areas)
+		attachedColliders = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
+		GD.Print(attachedColliders.Count);
+		foreach(VehicleCollider c in attachedColliders)
 		{
 			c.SetAssociatedVehicle(this);
 		}
 		base._EnterTree();
 	}
 
-	private void OnAreaEntered(int number, VehicleCollider area)
-	{
-		if (areas.Contains(area))
-		{
-			// GD.Print("entered myself");
-			return;
-		}
-		collisions[number] = true;
-		GD.Print("entered");
-
-	}
-
-	private void OnAreaExited(int number, VehicleCollider area)
-	{
-		if (areas.Contains(area))
-		{
-			// GD.Print(";eft myself");
-			return;
-		}
-		collisions[number] = false;
-		GD.Print("exited");
-	}
-
-
-	// Collision Detection
-	protected bool ShouldStop(Vector3 startPos, Vector3 direction)
-	{
-		return false;
-	}
-
-
 	// Movement Functions
 	protected void RunMovementIteration(double iterationDelta)
 	{
-		if (ShouldStop(GlobalPosition, -GlobalTransform.Basis.Z) && timeStopped > 10)
-		{
-			GD.Print("i hate mvoing");
-			timeStopped += iterationDelta;
-			return;
-		}
-		// Decides whether to move at all this frame (is another vehicle blocking it?)
 		if (distanceAlongRoute > route.GetLength())
 		{
 			FinishCurrentRoute(true);
 			return;
 		}
 		// collider checks
+		// Decides whether to move at all this frame (is another vehicle blocking it?)
 		bool shouldStop = false;
-		for(int i = 0; i<areas.Count; i++)
+		for(int i = 0; i<attachedColliders.Count; i++)
 		{
-			shouldStop = areas[i].GetColliderStatus();
+			shouldStop = attachedColliders[i].GetColliderStatus();
 			if (shouldStop) { break; }
 		}
 
 		// max speed calculations
 		NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
-		float maxMaxSpeed = maxSpeed < curSegment.MaxSpeed ? (float)maxSpeed : curSegment.MaxSpeed;
+		float speedLimit = Mathf.Min((float)maxVehicleSpeed, curSegment.MaxSpeed);
 
 		//accelerating or decelerating
-		if (shouldStop || speed - maxMaxSpeed > 0.1f)
+		if (shouldStop || speed - speedLimit > 0.1f)
 		{
 			speed -= brakeSpeed * iterationDelta;
 		}
-		else if (speed - maxMaxSpeed < -0.1f)
+		else if (speed - speedLimit < -0.1f)
 		{
 			speed += acceleration * iterationDelta;
 		}
 
-		//prevent reversing
+		//stop at 0
 		if(speed < 0) { speed = 0; timeStopped += iterationDelta; }
 		else { timeStopped = 0; }
 
 		// update distance along route
 		double newDistance = speed * iterationDelta;
 		distanceAlongRoute += (float)newDistance;
-		foreach(VehicleCollider col in areas)
+
+		//update collider positions
+		foreach(VehicleCollider col in attachedColliders)
 		{
 			col.HandleUpdatePosition();
+
 			if (showVisualizations)
 			{
-
 				col.UpdateVisualization();
 			}
 			if (showPositionVisualizations)

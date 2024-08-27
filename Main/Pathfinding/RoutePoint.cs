@@ -7,7 +7,7 @@ using Godot;
 
 namespace Transportme.Main.Pathfinding
 {
-    public class RoutePoint
+    public class RoutePoint : RefCounted
     {
         private Vector3 _globalPoint;
         private Vector3 _rotationVector;
