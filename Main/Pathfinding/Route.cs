@@ -34,29 +34,6 @@ public partial class Route : RefCounted
         float percentOfSegment = (float)distanceAlongRoute / OrderedSegments[segmentIndex].Length;
         return OrderedSegments[segmentIndex].GetPositionOnSegment(percentOfSegment);
     }
-
-    public Vector3 GetDirectionOnRoute(float distanceAlongRoute)
-    {
-        if (OrderedSegments == null) return Vector3.Zero;
-
-        float distanceFrom = Mathf.Max(distanceAlongRoute - 0.1f, 0f);
-        float distanceTo = Mathf.Min(distanceAlongRoute + 0.1f, (float)length);
-        Vector3 direction = GetPositionAlongRoute(distanceTo) - GetPositionAlongRoute(distanceFrom);
-        return direction.Normalized();
-        
-        int segmentIndex = 0;
-        while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
-        {
-            distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
-            if (OrderedSegments.Length == segmentIndex)
-            {
-                return OrderedSegments[segmentIndex - 1].GetDirectionVectorOnSegment(1);
-            }
-        }
-        float percentOfSegment = (float)distanceAlongRoute / OrderedSegments[segmentIndex].Length;
-        return OrderedSegments[segmentIndex].GetDirectionVectorOnSegment(percentOfSegment);
-    }
-
     public NavSegment GetSegmentAlongRoute(float distanceAlongRoute)
     {
         if (OrderedSegments == null) return null;
@@ -73,11 +50,14 @@ public partial class Route : RefCounted
         return OrderedSegments[segmentIndex];
     }
 
-    public RoutePoint GetVehiclePropsOnRoute(float distanceAlongRoute)
+    public RoutePoint GetVehicleRoutePositionAtPoint(float distanceAlongRoute)
     {
         RoutePoint routePoint = new();
-        float distanceFrom = Mathf.Max(distanceAlongRoute - 0.4f, 0f);
-        float distanceTo = Mathf.Min(distanceAlongRoute + 0.2f, (float)length);
+        float backDistance = 1.0f;
+        float frontDistance = 0.4f;
+        float distanceFrom = Mathf.Max(distanceAlongRoute - backDistance, 0f);
+        float distanceTo = Mathf.Min(distanceAlongRoute + frontDistance, (float)length);
+
         Vector3 from = GetPositionAlongRoute(distanceFrom);
         Vector3 to = GetPositionAlongRoute(distanceTo);
         float lerpValue;
@@ -86,15 +66,18 @@ public partial class Route : RefCounted
             lerpValue = distanceAlongRoute / distanceTo;
         } else if(distanceTo == (float)length)
         {
-            lerpValue = 1 - ((distanceTo - distanceAlongRoute) / (distanceTo - distanceFrom));
+            lerpValue = 1f - Mathf.Min((distanceTo - distanceAlongRoute) / (distanceTo - distanceFrom), 1f);
             GD.Print(lerpValue);
         } else
         {
-            lerpValue = 0.8f;
+            lerpValue = backDistance / (backDistance + frontDistance);
         }
 
         routePoint.Position = from.Lerp(to, lerpValue);
         routePoint.Rotation = (to - from).Normalized();
+        routePoint.backPoint = from;
+        routePoint.forwardPoint = to;
+        routePoint.lerpValue = lerpValue;
         return routePoint;
     }
 

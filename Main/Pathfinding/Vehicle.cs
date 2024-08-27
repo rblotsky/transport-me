@@ -15,6 +15,7 @@ public partial class Vehicle : Node3D
 	[Export] protected Vector3 graphOffset;
 	[Export] protected float stoppingDistance;
 	[Export] public bool showVisualizations;
+	[Export] public bool showPositionVisualizations;
 
 	private List<VehicleCollider> areas;
 	private List<bool> collisions;
@@ -144,6 +145,10 @@ public partial class Vehicle : Node3D
 			{
 
 				col.UpdateVisualization();
+			}
+			if (showPositionVisualizations)
+			{
+				col.UpdatePositionVisualizations();
 			}
 		}
 	}

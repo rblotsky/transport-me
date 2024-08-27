@@ -21,16 +21,24 @@ public partial class HardStopCollider : VehicleCollider
 		visualization.Scale = ((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size;
 	}
 
-	public override void HandleUpdatePosition()
+    public override void UpdatePositionVisualizations()
     {
-		Route route = associatedVehicle.GetRoute();
+        //base.UpdatePositionVisualizations();
+    }
+    private float GetComputedPositionOnRoute()
+    {
 		float distanceAlongRoute = associatedVehicle.GetDistanceAlongRoute();
 		float speed = (float)associatedVehicle.GetCurrentSpeed();
 		float timeToStop = speed / (float)associatedVehicle.brakeSpeed;
 		float brakingDistanceOnRoute = (float)distanceAlongRoute + (float)(speed * timeToStop) - 0.25f * (float)associatedVehicle.brakeSpeed * timeToStop * timeToStop;
+		return brakingDistanceOnRoute;
+	}
+	public override void HandleUpdatePosition()
+    {
+		Route route = associatedVehicle.GetRoute();
 		
-		brakingDistanceOnRoute = Mathf.Min(brakingDistanceOnRoute, route.GetLength());
-		RoutePoint point = route.GetVehiclePropsOnRoute(brakingDistanceOnRoute);
+		float brakingDistanceOnRoute = Mathf.Min(GetComputedPositionOnRoute(), route.GetLength());
+		RoutePoint point = route.GetVehicleRoutePositionAtPoint(brakingDistanceOnRoute);
 		FaceDirectionOfMotion(point.Rotation);
 		GlobalPosition = point.Position;
 	}

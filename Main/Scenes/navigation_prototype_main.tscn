@@ -370,7 +370,31 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="Vehicle5" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
-maxSpeed = 2.0
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle6" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle7" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle8" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle9" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
 brakeSpeed = 10.0
 showVisualizations = true
 

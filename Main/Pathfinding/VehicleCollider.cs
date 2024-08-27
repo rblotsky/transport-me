@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.Pathfinding;
 
 public enum CollisionState
 {
@@ -14,6 +15,8 @@ public abstract partial class VehicleCollider : Area3D
 	protected Vehicle associatedVehicle;
 	protected CollisionState collsionState;
 	protected MeshInstance3D visualization;
+	protected MeshInstance3D tangentLine;
+	protected MeshInstance3D visPos;
 	[Export] private int NumIntersecting;
 
 	public Vehicle GetAssociatedVehicle()
@@ -45,6 +48,15 @@ public abstract partial class VehicleCollider : Area3D
 		visualization.GlobalRotation = GlobalRotation;
 		//visualization.Scale = ((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size;
 	}
+	public virtual void UpdatePositionVisualizations()
+	{
+		DeletePosVisualization();
+		Route route = associatedVehicle.GetRoute();
+		RoutePoint point = route.GetVehicleRoutePositionAtPoint(associatedVehicle.GetDistanceAlongRoute());
+		tangentLine = EasyShapes.AddShapeMesh(this, EasyShapes.LineMesh(ToLocal(point.backPoint), ToLocal(point.forwardPoint), Colors.Black));
+		visPos = EasyShapes.AddShapeMesh(this, EasyShapes.SphereMesh(0.1f));
+		visPos.GlobalPosition = GlobalPosition;
+	}
 
 	protected void FaceDirectionOfMotion(Vector3 positionDelta)
 	{
@@ -63,6 +75,18 @@ public abstract partial class VehicleCollider : Area3D
 		if(visualization != null)
 		{
 			visualization.Free();
+		}
+	}
+
+	public void DeletePosVisualization()
+	{
+		if (visPos != null)
+		{
+			visPos.Free();
+		}
+		if(tangentLine != null)
+		{
+			tangentLine.Free();
 		}
 	}
 

@@ -17,6 +17,9 @@ public partial class MainVehicle : VehicleCollider
 
 	public override void UpdateVisualization()
 	{
+		//DeleteVisualization();
+		//visualization = EasyShapes.AddShapeMesh(this, EasyShapes.Box(0.1f));
+		//visualization.GlobalPosition = GlobalPosition;
 		base.UpdateVisualization();
 		visualization.Scale = new Vector3(1, 1, 2);
 	}
@@ -25,15 +28,7 @@ public partial class MainVehicle : VehicleCollider
 	{
 		Route route = associatedVehicle.GetRoute();
 		float distanceAlongRoute = associatedVehicle.GetDistanceAlongRoute();
-		RoutePoint point = route.GetVehiclePropsOnRoute(distanceAlongRoute);
-		if (false) //previous implementation
-		{
-			Vector3 rotationDirection = route.GetDirectionOnRoute(distanceAlongRoute);
-			Vector3 newPosition = route.GetPositionAlongRoute(distanceAlongRoute);
-			FaceDirectionOfMotion(rotationDirection);
-			GlobalPosition = newPosition;
-			return;
-		}
+		RoutePoint point = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute);
 
 		FaceDirectionOfMotion(point.Rotation);
 		GlobalPosition = point.Position;

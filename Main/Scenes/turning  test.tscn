@@ -1,19 +1,19 @@
-[gd_scene load_steps=22 format=3 uid="uid://bf5ftcmk5mykk"]
+[gd_scene load_steps=22 format=3 uid="uid://dsjqklri6wma5"]
 
-[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_a3rsw"]
-[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_wfnwe"]
-[ext_resource type="Script" path="res://Main/Pathfinding/RouteDebugger.cs" id="3_24h18"]
-[ext_resource type="Script" path="res://Main/Editor/PrototypeEditor.cs" id="4_2vxk4"]
-[ext_resource type="Script" path="res://Main/Editor/SceneSaver.cs" id="5_37s05"]
-[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_nqqs1"]
-[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="7_ia4b1"]
-[ext_resource type="Script" path="res://Main/Navigation/NavGraphContainer.cs" id="8_mc8cg"]
-[ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="9_2a874"]
-[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="10_gl0rq"]
-[ext_resource type="Script" path="res://Main/Navigation/NavCheckpoint.cs" id="12_cxnxt"]
-[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/NetworkPrototype/2WayRoadEndTest.tscn" id="12_r504d"]
-[ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/NetworkPrototype/Vehicle.tscn" id="14_whmy2"]
-[ext_resource type="Script" path="res://Main/Editor/Cursor.cs" id="15_rk8ku"]
+[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_o8n0e"]
+[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_dx22g"]
+[ext_resource type="Script" path="res://Main/Pathfinding/RouteDebugger.cs" id="3_fon6f"]
+[ext_resource type="Script" path="res://Main/Editor/PrototypeEditor.cs" id="4_jd5dk"]
+[ext_resource type="Script" path="res://Main/Editor/SceneSaver.cs" id="5_o5pxy"]
+[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_3j5hg"]
+[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="7_0rqjj"]
+[ext_resource type="Script" path="res://Main/Navigation/NavGraphContainer.cs" id="8_glrcr"]
+[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/NetworkPrototype/2WayRoadEndTest.tscn" id="9_tt4oe"]
+[ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="10_mtn85"]
+[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="11_dy2la"]
+[ext_resource type="Script" path="res://Main/Navigation/NavCheckpoint.cs" id="12_fwvoe"]
+[ext_resource type="Script" path="res://Main/Editor/Cursor.cs" id="13_crkly"]
+[ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/NetworkPrototype/Vehicle.tscn" id="14_yisdv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -58,7 +58,7 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="InstructionsUI" type="Node" parent="PrototypeUi" node_paths=PackedStringArray("panel", "instructions")]
-script = ExtResource("1_a3rsw")
+script = ExtResource("1_o8n0e")
 panel = NodePath("../Panel")
 instructions = NodePath("../Panel/VBoxContainer2")
 
@@ -89,27 +89,28 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="Debugger3D" type="Node3D" parent="."]
-script = ExtResource("2_wfnwe")
+script = ExtResource("2_dx22g")
 
 [node name="RouteDebugger" type="Node" parent="."]
-script = ExtResource("3_24h18")
+script = ExtResource("3_fon6f")
 
 [node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph")]
-script = ExtResource("4_2vxk4")
+script = ExtResource("4_jd5dk")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 grid = NodePath("../WorldGridViewer")
 navGraph = NodePath("../NavGraphContainer")
 
 [node name="SceneSaver" type="Node" parent="."]
-script = ExtResource("5_37s05")
+script = ExtResource("5_o5pxy")
 savedSceneName = "GraphScenePrototype"
 
 [node name="CameraAnchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
 [node name="TrackballCamera" type="Camera3D" parent="CameraAnchor"]
 transform = Transform3D(1, 0, 0, 0, 0.834261, 0.551369, 0, -0.551369, 0.834261, 0, 5.99507, 9)
-script = ExtResource("6_nqqs1")
+script = ExtResource("6_3j5hg")
 stabilize_horizon = true
 zoom_strength = 4.0
 zoom_inertia_threshold = 0.0
@@ -118,45 +119,38 @@ enable_pitch_limit = true
 pitch_top_limit = 0.87
 pitch_bottom_limit = 0.1
 
-[node name="WorldGridViewer" parent="." instance=ExtResource("7_ia4b1")]
+[node name="WorldGridViewer" parent="." instance=ExtResource("7_0rqjj")]
 visible = false
 verticalOffsetFromPointer = 0.0
 
 [node name="NavGraphContainer" type="Node3D" parent="."]
-script = ExtResource("8_mc8cg")
+script = ExtResource("8_glrcr")
 
-[node name="2WayRoadEndTest3" parent="NavGraphContainer" instance=ExtResource("12_r504d")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.71742, 0, -2.98574)
-
-[node name="2WayRoadEndTest2" parent="NavGraphContainer" instance=ExtResource("12_r504d")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.727279, 0, 0)
-
-[node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("12_r504d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.72021, 0, 0)
-
-[node name="2WayRoadTest" parent="NavGraphContainer" instance=ExtResource("9_2a874")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.7174, 0, 3.99271)
-
-[node name="4WayIntersectionTest" parent="NavGraphContainer" instance=ExtResource("10_gl0rq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.7174, 0, 0)
-
-[node name="2WayRoadEndTest4" parent="NavGraphContainer" instance=ExtResource("12_r504d")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.71263, 0, 6.97809)
+[node name="4WayIntersectionTest" parent="NavGraphContainer" instance=ExtResource("11_dy2la")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.7174, -0.00752997, 0)
 
 [node name="Checkpoint" type="Node3D" parent="NavGraphContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.717496, -0.010167, 0)
-script = ExtResource("12_cxnxt")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27537, -0.010167, -1.00065)
+script = ExtResource("12_fwvoe")
 
 [node name="Checkpoint2" type="Node3D" parent="NavGraphContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.71977, -0.020334, 1.0099)
-script = ExtResource("12_cxnxt")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72239, 0.000602519, -5.99784)
+script = ExtResource("12_fwvoe")
 
-[node name="Checkpoint3" type="Node3D" parent="NavGraphContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.70845, 0.000941824, 5.98709)
-script = ExtResource("12_cxnxt")
+[node name="2WayRoadTest" parent="NavGraphContainer" instance=ExtResource("10_mtn85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.277487, -0.010167, 0)
+
+[node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("9_tt4oe")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.7157, 0, -6.98946)
+
+[node name="2WayRoadEndTest2" parent="NavGraphContainer" instance=ExtResource("9_tt4oe")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.27288, -0.0091117, 0)
+
+[node name="2WayRoadTest2" parent="NavGraphContainer" instance=ExtResource("10_mtn85")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.71151, -0.0187422, -3.99892)
 
 [node name="Cursor" type="Node3D" parent="."]
-script = ExtResource("15_rk8ku")
+script = ExtResource("13_crkly")
 useSmoothing = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
@@ -182,15 +176,9 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
-[node name="Vehicle3" parent="VehicleContainer" instance=ExtResource("14_whmy2")]
-maxSpeed = 4.0
+[node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_yisdv")]
+maxSpeed = 0.7
 brakeSpeed = 7.5
-showPositionVisualizations = true
-
-[node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_whmy2")]
-maxSpeed = 4.0
-brakeSpeed = 7.5
-showVisualizations = true
 showPositionVisualizations = true
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]
