@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Transportme.Main.Pathfinding;
 
 public partial class Route : RefCounted
 {
