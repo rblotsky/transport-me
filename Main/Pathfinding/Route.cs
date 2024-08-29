@@ -7,10 +7,91 @@ public partial class Route : RefCounted
 {
     // DATA //
     // Instance Data
-    public NavSegment[] OrderedSegments { get; set; }
+    public NavSegment[] _orderedSegments;
+    public NavSegment[] OrderedSegments { get { return _orderedSegments; } set { length = null; _orderedSegments = value; } }
     public Vector3 StartPoint { get; set; }
     public Vector3 EndPoint { get; set; }
+    private float? length = null;
 
+    //get the vector3 position along a route
+    public Vector3 GetPositionAlongRoute(float distanceAlongRoute)
+    {
+        if (OrderedSegments == null) return Vector3.Zero;
+        int segmentIndex = 0;
+        if(distanceAlongRoute < 0)
+        {
+            return OrderedSegments[0].GlobalStart;
+        }
+        while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
+        {
+            distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
+            if (OrderedSegments.Length == segmentIndex)
+            {
+                return OrderedSegments[segmentIndex - 1].GlobalEnd;
+            }
+        }
+        float percentOfSegment = (float)distanceAlongRoute / OrderedSegments[segmentIndex].Length;
+        return OrderedSegments[segmentIndex].GetPositionOnSegment(percentOfSegment);
+    }
+    public NavSegment GetSegmentAlongRoute(float distanceAlongRoute)
+    {
+        if (OrderedSegments == null) return null;
+        int segmentIndex = 0;
+
+        while (distanceAlongRoute > OrderedSegments[segmentIndex].Length)
+        {
+            distanceAlongRoute -= OrderedSegments[segmentIndex++].Length;
+            if (OrderedSegments.Length == segmentIndex)
+            {
+                return null;
+            }
+        }
+        return OrderedSegments[segmentIndex];
+    }
+
+    public RoutePoint GetVehicleRoutePositionAtPoint(float distanceAlongRoute)
+    {
+        RoutePoint routePoint = new();
+        float backDistance = 1.0f;
+        float frontDistance = 0.4f;
+        float distanceFrom = Mathf.Max(distanceAlongRoute - backDistance, 0f);
+        float distanceTo = Mathf.Min(distanceAlongRoute + frontDistance, (float)length);
+
+        Vector3 from = GetPositionAlongRoute(distanceFrom);
+        Vector3 to = GetPositionAlongRoute(distanceTo);
+        float lerpValue;
+        if(distanceFrom == 0f)
+        {
+            lerpValue = distanceAlongRoute / distanceTo;
+        } else if(distanceTo == (float)length)
+        {
+            lerpValue = 1f - Mathf.Min((distanceTo - distanceAlongRoute) / (distanceTo - distanceFrom), 1f);
+            GD.Print(lerpValue);
+        } else
+        {
+            lerpValue = backDistance / (backDistance + frontDistance);
+        }
+
+        routePoint.Position = from.Lerp(to, lerpValue);
+        routePoint.Rotation = (to - from).Normalized();
+        routePoint.backPoint = from;
+        routePoint.forwardPoint = to;
+        routePoint.lerpValue = lerpValue;
+        return routePoint;
+    }
+
+    public float GetLength()
+    {
+        if(length == null)
+        {
+            length = 0f;
+            foreach(NavSegment segment in OrderedSegments)
+            {
+                length += segment.Length;
+            }
+        }
+        return (float)length;
+    }
 
     // FUNCTIONS 
     // Constructing

@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
 [ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
-[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
+[ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/NetworkPrototype/Vehicle.tscn" id="16_f2xv3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -121,7 +121,6 @@ pitch_top_limit = 0.87
 pitch_bottom_limit = 0.1
 
 [node name="WorldGridViewer" parent="." instance=ExtResource("8_fh4jr")]
-visible = false
 verticalOffsetFromPointer = 0.0
 
 [node name="NavGraphContainer" type="Node3D" parent="."]
@@ -369,60 +368,34 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
-[node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle5" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
 
-[node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle6" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
 
-[node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle7" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
 
-[node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle8" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
 
-[node name="RandomVehicle11" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle12" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle2" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle3" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle4" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle5" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle6" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle13" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle14" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle15" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle16" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle17" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle18" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle19" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle20" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle21" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle22" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle23" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle24" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle25" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle26" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle27" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle28" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle9" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+maxSpeed = 4.0
+brakeSpeed = 10.0
+showVisualizations = true
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]
