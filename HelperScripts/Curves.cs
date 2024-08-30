@@ -59,6 +59,6 @@ public static class Curves
 
     public static Vector3 ControlAtAvgHeight(Vector3 start, Vector2 control, Vector3 end)
     {
-        return Vec2WithHeight(control, (end.Y - start.Y) / 2);
+        return Vec2WithHeight(control, ((end.Y - start.Y) / 2) + start.Y);
     }
 }

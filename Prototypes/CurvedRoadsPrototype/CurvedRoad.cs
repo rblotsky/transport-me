@@ -32,6 +32,12 @@ public partial class CurvedRoad : Node3D
     public Transform3D EndTransform { get { return new Transform3D(Basis.LookingAt(ControlAtEndHeight - End), End); } }
 
 
+    // Road Mesh Data
+    [ExportCategory("Mesh")]
+    [Export] private RoadMesh roadMesh;
+    [Export] private MeshInstance3D meshRenderer;
+
+
     // Segment Offset Data
     [ExportCategory("Saving Controlled Segments")]
     [Export] private bool SaveSegmentOffsetsToggle { set { SaveSegmentOffsets(); } get { return true; } }
@@ -259,6 +265,12 @@ public partial class CurvedRoad : Node3D
             endVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
 
             curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.Gray, 10);
+        }
+
+        // Runs regardless of editor
+        if (roadMesh != null && meshRenderer != null)
+        {
+            meshRenderer.Mesh = roadMesh.GenerateRoadMesh(this);
         }
     }
 }

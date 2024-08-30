@@ -3,11 +3,14 @@ using Godot.Collections;
 using System.Collections.Generic;
 
 [GlobalClass]
+[Tool]
 public partial class RoadMesh : Resource
 {
     // DATA //
-    [Export] private Array<Vector2> points;
+    [Export] private Array<Vector2> points = new Array<Vector2>();
     [Export] private int numSegments = 9;
+    [Export] private Material meshMaterial;
+
 
     // FUNCTIONS //
     // Mesh Generation
@@ -25,7 +28,7 @@ public partial class RoadMesh : Resource
 
         // Creates all the vertices with their associated values
         float vValue = 0;
-        for (int t = 0; t < numSegments; t++)
+        for (int t = 0; t <= numSegments; t++)
         {
             // Get a transform for this point on the curve
             Vector3 sliceOrigin = Curves.BezierQuadratic3D(
@@ -41,6 +44,17 @@ public partial class RoadMesh : Resource
                 road.End,
                 t / (float)numSegments);
 
+            if (t == 0)
+            {
+                GD.Print($"At first point. Value is {t / (float)numSegments}! Facing: {sliceFacing}");
+            }
+            if (t == numSegments)
+            {
+                GD.Print($"At last point. Value is {t / (float)numSegments}! Facing: {sliceFacing}");
+            }
+            //Debugger3D.main.SphereEffect(road.ToGlobal(sliceOrigin), 0.1f, Colors.Orange, 1, 20);
+            //Debugger3D.main.LineEffect(road.ToGlobal(sliceOrigin), road.ToGlobal(sliceOrigin + (sliceFacing)), Colors.Orange, 20);
+
             Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing), sliceOrigin);
 
             // Prepare UV values for this slice (u = 0, v += segment length)
@@ -50,12 +64,15 @@ public partial class RoadMesh : Resource
             // Assign vertices for this specific slice
             for(int i = 0; i < points.Count; i++)
             {
-                // Put the point as a v3 and transform it to the bezier vector space
-                Vector3 pointVert = new Vector3(points[i].X, points[i].Y, 0) * sliceTransform;
+                // Put the point as a v3 and transform it to the space of the point on the curve
+                Vector3 pointRelToSlice = sliceTransform * new Vector3(points[i].X, points[i].Y, 0);
+                Vector3 pointVert = pointRelToSlice;
+
                 verts.Add(pointVert);
+                //Debugger3D.main.SphereEffect(road.ToGlobal(pointVert + sliceOrigin), 0.1f, Colors.Lime, 1, 20);
 
                 // Increment the current U value by the distance from the last point to this one, or 1 if at the end
-                if(i != 0)
+                if (i != 0)
                 {
                     uValue += (points[i] - points[i - 1]).Length();
                 }
@@ -70,22 +87,42 @@ public partial class RoadMesh : Resource
                 // Set the normal to origin -> vertex, normalized
                 normals.Add(pointVert.Normalized());
             }
-
         }
 
         // Connects vertices to form triangles
+        
         for(int segmentIndex = 0; segmentIndex < numSegments; segmentIndex++)
         {
             for(int i = 0; i < points.Count; i++)
             {
-                if(i != points.Count-1)
+                int startPoint = i + (segmentIndex * points.Count);
+
+                // Formula for all regular points (except last slice)
+                if (i != points.Count - 1)
                 {
-                    //TODO: Create triangles, factor in multipliers
+                    indices.Add(startPoint);
+                    indices.Add(startPoint + points.Count);
+                    indices.Add(startPoint + 1);
+
+                    indices.Add(startPoint + points.Count);
+                    indices.Add(startPoint + points.Count + 1);
+                    indices.Add(startPoint + 1);
                 }
 
-                //TODO: Handle last rectangle/point, it has a different formula
+                // Formula for last slice
+                else
+                {
+                    indices.Add(startPoint);
+                    indices.Add(startPoint + points.Count);
+                    indices.Add(segmentIndex * points.Count);
+
+                    indices.Add(startPoint + points.Count);
+                    indices.Add(startPoint + 1);
+                    indices.Add(segmentIndex * points.Count);
+                }
             }
         }
+        
 
         // Convert Lists to arrays and assign to surface array
         surfaceArray[(int)Mesh.ArrayType.Vertex] = verts.ToArray();
@@ -96,6 +133,8 @@ public partial class RoadMesh : Resource
         // Commit to an ArrayMesh and return it
         ArrayMesh generatedMesh = new ArrayMesh();
         generatedMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
+        generatedMesh.RegenNormalMaps();
+        generatedMesh.SurfaceSetMaterial(0, meshMaterial);
 
         return generatedMesh;
     }

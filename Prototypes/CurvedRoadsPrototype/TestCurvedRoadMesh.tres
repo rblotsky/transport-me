@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoadMesh" load_steps=3 format=3 uid="uid://c8pwcoy7tay2u"]
+
+[ext_resource type="Script" path="res://Prototypes/MeshTesting/RoadMesh.cs" id="1_cc2ug"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gshwp"]
+
+[resource]
+script = ExtResource("1_cc2ug")
+points = [Vector2(-2, 0.5), Vector2(-1.5, 0.5), Vector2(-1.5, 0.25), Vector2(1.5, 0.25), Vector2(1.5, 0.5), Vector2(2, 0.5), Vector2(2, 0), Vector2(-2, 0)]
+numSegments = 9
+meshMaterial = SubResource("StandardMaterial3D_gshwp")
