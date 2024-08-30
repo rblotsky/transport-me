@@ -1,59 +1,59 @@
 [gd_scene load_steps=12 format=3 uid="uid://l2dun676hjxf"]
 
-[ext_resource type="Script" path="res://CurvedRoadsPrototype/CurvedRoad.cs" id="1_kt86m"]
+[ext_resource type="Script" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoad.cs" id="1_kt86m"]
 [ext_resource type="Script" path="res://Main/Navigation/NavSegment.cs" id="2_4v7a3"]
-[ext_resource type="Script" path="res://CurvedRoadsPrototype/CurvedRoadSegmentOffset.cs" id="2_b7yv1"]
+[ext_resource type="Script" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadSegmentOffset.cs" id="2_b7yv1"]
 
-[sub_resource type="Resource" id="Resource_qp0bx"]
+[sub_resource type="Resource" id="Resource_tg8jc"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 0
 RoadStartOffset = Vector3(-2, 0, 0)
 RoadEndOffset = Vector3(-2, 0, 0)
 Direction = true
 
-[sub_resource type="Resource" id="Resource_crat4"]
+[sub_resource type="Resource" id="Resource_34mgc"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 1
 RoadStartOffset = Vector3(-1, 0, 0)
 RoadEndOffset = Vector3(-1, 0, 0)
 Direction = true
 
-[sub_resource type="Resource" id="Resource_ppqar"]
+[sub_resource type="Resource" id="Resource_4eqfr"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 2
 RoadStartOffset = Vector3(-1, 0, 0)
 RoadEndOffset = Vector3(-2, 0, 0)
 Direction = true
 
-[sub_resource type="Resource" id="Resource_mpa86"]
+[sub_resource type="Resource" id="Resource_f8yu3"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 3
 RoadStartOffset = Vector3(-2, 0, 0)
 RoadEndOffset = Vector3(-1, 0, 0)
 Direction = true
 
-[sub_resource type="Resource" id="Resource_hojlf"]
+[sub_resource type="Resource" id="Resource_y4i83"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 4
 RoadStartOffset = Vector3(1, 0, 0)
 RoadEndOffset = Vector3(1, 0, 0)
 Direction = false
 
-[sub_resource type="Resource" id="Resource_ixajt"]
+[sub_resource type="Resource" id="Resource_nxvfc"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 5
 RoadStartOffset = Vector3(2, 0, 0)
 RoadEndOffset = Vector3(2, 0, 0)
 Direction = false
 
-[sub_resource type="Resource" id="Resource_22x4c"]
+[sub_resource type="Resource" id="Resource_gyg6o"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 6
 RoadStartOffset = Vector3(1, 0, 0)
 RoadEndOffset = Vector3(2, 0, 0)
 Direction = false
 
-[sub_resource type="Resource" id="Resource_tgpf8"]
+[sub_resource type="Resource" id="Resource_pedv1"]
 script = ExtResource("2_b7yv1")
 SegmentIndex = 7
 RoadStartOffset = Vector3(2, 0, 0)
@@ -66,7 +66,7 @@ Start = Vector3(-1, 0, 0)
 End = Vector3(1, 0, 0)
 SaveSegmentOffsetsToggle = true
 segments = [NodePath("NavSegment"), NodePath("NavSegment2"), NodePath("NavSegment3"), NodePath("NavSegment4"), NodePath("NavSegment5"), NodePath("NavSegment6"), NodePath("NavSegment7"), NodePath("NavSegment8")]
-segmentOffsets = [SubResource("Resource_qp0bx"), SubResource("Resource_crat4"), SubResource("Resource_ppqar"), SubResource("Resource_mpa86"), SubResource("Resource_hojlf"), SubResource("Resource_ixajt"), SubResource("Resource_22x4c"), SubResource("Resource_tgpf8")]
+segmentOffsets = [SubResource("Resource_tg8jc"), SubResource("Resource_34mgc"), SubResource("Resource_4eqfr"), SubResource("Resource_f8yu3"), SubResource("Resource_y4i83"), SubResource("Resource_nxvfc"), SubResource("Resource_gyg6o"), SubResource("Resource_pedv1")]
 
 [node name="NavSegment" type="Node3D" parent="."]
 script = ExtResource("2_4v7a3")

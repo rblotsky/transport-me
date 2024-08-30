@@ -68,7 +68,7 @@ public partial class BezierGenerator : Node
 
             if (pathMesh != null)
             {
-                pathMesh.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.Red, Segments);
+                pathMesh.Mesh = EasyShapes.CurveMesh(Start, End, Curves.Vec3RemoveHeight(Control), Colors.Red, Segments);
             }
         }
     }

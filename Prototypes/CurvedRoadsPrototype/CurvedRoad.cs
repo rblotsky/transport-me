@@ -74,11 +74,24 @@ public partial class CurvedRoad : Node3D
 
 
     // Controlling
+    private void SaveSegmentOffsets()
+    {
+        // Creates a new list for segment offsets and segments
+        segments = new Array<NavSegment>(Simplifications.GetChildrenOfType<NavSegment>(this, true));
+        segmentOffsets = new Array<CurvedRoadSegmentOffset>();
+
+        for (int i = 0; i < segments.Count; i++)
+        {
+            segmentOffsets.Add(CurvedRoadSegmentOffset.GetSegmentOffset(i, this));
+        }
+    }
+
     private void SetNewStart(Vector3 newValue)
     {
         _start = newValue;
         RecalculateStartPoints();
         RecalculateControlPoints();
+
         UpdateVisualization();
     }
 
@@ -88,6 +101,7 @@ public partial class CurvedRoad : Node3D
         RecalculateControlPoints();
         RecalculateEndPoints();
         RecalculateStartPoints();
+
         UpdateVisualization();
     }
 
@@ -96,19 +110,8 @@ public partial class CurvedRoad : Node3D
         _end = newValue;
         RecalculateEndPoints();
         RecalculateControlPoints();
+
         UpdateVisualization();
-    }
-
-    private void SaveSegmentOffsets()
-    {
-        // Creates a new list for segment offsets and segments
-        segments = new Array<NavSegment>(Simplifications.GetChildrenOfType<NavSegment>(this, true));
-        segmentOffsets = new Array<CurvedRoadSegmentOffset>();
-
-        for(int i = 0; i < segments.Count; i++)
-        {
-            segmentOffsets.Add(CurvedRoadSegmentOffset.GetSegmentOffset(i, this));
-        }
     }
 
     private void RecalculateEndPoints()
@@ -255,8 +258,7 @@ public partial class CurvedRoad : Node3D
             endVisualizer.Position = End;
             endVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
 
-            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, ControlAtAvgHeight, Colors.Gray, 10);
-
+            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.Gray, 10);
         }
     }
 }

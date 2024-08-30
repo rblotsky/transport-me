@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
 [ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
-[ext_resource type="PackedScene" uid="uid://l2dun676hjxf" path="res://CurvedRoadsPrototype/Curved2Lane2Way.tscn" id="17_w04j1"]
+[ext_resource type="PackedScene" uid="uid://l2dun676hjxf" path="res://Prototypes/CurvedRoadsPrototype/Curved2Lane2Way.tscn" id="17_w04j1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
