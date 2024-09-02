@@ -8,6 +8,6 @@ metallic_specular = 0.0
 
 [resource]
 script = ExtResource("1_cc2ug")
-points = [Vector2(-2, 0.5), Vector2(-1.5, 0.5), Vector2(-1.5, 0.25), Vector2(0, 0.25), Vector2(1.5, 0.25), Vector2(1.5, 0.5), Vector2(2, 0.5), Vector2(2, 0), Vector2(-2, 0)]
+points = [Vector2(-2, 0.5), Vector2(-1.5, 0.5), Vector2(-1.5, 0.25), Vector2(1.5, 0.25), Vector2(1.5, 0.5), Vector2(2, 0.5), Vector2(2, 0), Vector2(-2, 0)]
 numSegments = 15
 meshMaterial = SubResource("StandardMaterial3D_d3smy")

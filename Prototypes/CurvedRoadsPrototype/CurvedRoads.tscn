@@ -46,9 +46,10 @@ mesh = SubResource("SphereMesh_7amty")
 
 [node name="Curved2Lane2Way" parent="." instance=ExtResource("6_kdr6q")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
-Start = Vector3(-3, 0, 0)
-End = Vector3(2, 0, 5)
+Start = Vector3(-7.195, 0, 0)
+End = Vector3(2, 0, 9.47)
 Control = Vector2(2, 0)
+debugNormals = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.0744536, -0.993961, 0.0806167, 0.577281, 0.108878, 0.809255, -0.813145, -0.0137135, 0.5819, 0, 6, 4)
+transform = Transform3D(0.741431, -0.485104, -0.463632, 0.577281, 0.108878, 0.809255, -0.342093, -0.867652, 0.360766, 0, 6, 4)

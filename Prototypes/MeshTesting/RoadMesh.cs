@@ -16,51 +16,29 @@ public partial class RoadMesh : Resource
     // Mesh Generation
     public ImmediateMesh GenerateRoadNormalsMesh(CurvedRoad road)
     {
-        // Creates a surface array and lists of values to assign to it
-        ImmediateMesh mesh = new ImmediateMesh();
-        mesh.SurfaceBegin(Mesh.PrimitiveType.Lines);
+        // Creates a regular mesh to get normals from
+        ArrayMesh generatedMesh = GenerateRoadMesh(road);
+        MeshDataTool meshData = new MeshDataTool();
+        meshData.CreateFromSurface(generatedMesh, 0);
 
-        // Creates all the vertices with their associated values
-        for (int t = 0; t <= numSegments; t++)
+        // Creates the normals mesh
+        ImmediateMesh normalsMesh = new ImmediateMesh();
+        normalsMesh.SurfaceBegin(Mesh.PrimitiveType.Lines);
+
+        // Creates a line for every normal
+        for (int v = 0; v <= meshData.GetVertexCount(); v++)
         {
-            // Get a transform for this point on the curve
-            Vector3 sliceOrigin = Curves.BezierQuadratic3D(
-                road.Start,
-                road.Control,
-                road.End,
-                t / (float)numSegments
-                );
+            Vector3 pointVert = meshData.GetVertex(v);
+            Vector3 normal3D = meshData.GetVertexNormal(v);
 
-            Vector3 sliceFacing = Curves.BezierTangentQuadratic3D(
-                road.Start,
-                road.Control,
-                road.End,
-                t / (float)numSegments);
-
-            //Debugger3D.main.SphereEffect(road.ToGlobal(sliceOrigin), 0.1f, Colors.Orange, 1, 20);
-            //Debugger3D.main.LineEffect(road.ToGlobal(sliceOrigin), road.ToGlobal(sliceOrigin + (sliceFacing)), Colors.Orange, 20);
-
-            Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing*new Vector3(1,0,1), road.Transform.Basis.Y), sliceOrigin);
-
-            // Assign vertices for this specific slice
-            for (int i = 0; i < points.Count; i++)
-            {
-                // Put the point as a v3 and transform it to the space of the point on the curve
-                Vector3 pointRelToSlice = sliceTransform * new Vector3(points[i].X, points[i].Y, 0);
-                Vector3 pointVert = pointRelToSlice;
-
-                // Calculates normal and adds a line for it
-                Vector2 pointNormal = CalculateNormal2D(i, i - 1, i + 1);
-                Vector3 normal3D = sliceTransform*new Vector3(pointNormal.X, pointNormal.Y, 0) - sliceOrigin;
-
-                mesh.SurfaceAddVertex(pointVert);
-                mesh.SurfaceAddVertex(normal3D.Normalized() + pointVert);
-            }
+            normalsMesh.SurfaceAddVertex(pointVert);
+            normalsMesh.SurfaceAddVertex(normal3D.Normalized() + pointVert);
         }
 
-        mesh.SurfaceEnd();
+        // Finishes and returns
+        normalsMesh.SurfaceEnd();
 
-        return mesh;
+        return normalsMesh;
     }
 
     public ArrayMesh GenerateRoadMesh(CurvedRoad road)
@@ -75,7 +53,7 @@ public partial class RoadMesh : Resource
         List<Vector3> normals = new List<Vector3>();
         List<int> indices = new List<int>();
 
-        // Creates all the vertices with their associated values
+        // Extrudes the slice along the curve for each segment
         float vValue = 0;
         for (int t = 0; t <= numSegments; t++)
         {
@@ -93,23 +71,21 @@ public partial class RoadMesh : Resource
                 road.End,
                 t / (float)numSegments);
 
-            //Debugger3D.main.SphereEffect(road.ToGlobal(sliceOrigin), 0.1f, Colors.Orange, 1, 20);
-            //Debugger3D.main.LineEffect(road.ToGlobal(sliceOrigin), road.ToGlobal(sliceOrigin + (sliceFacing)), Colors.Orange, 20);
-
             Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing * new Vector3(1, 0, 1), road.Transform.Basis.Y), sliceOrigin);
 
             // Prepare UV values for this slice (u = 0, v += segment length)
             float uValue = 0;
             vValue += t / (float)numSegments;
 
-            // Assign vertices for this specific slice
-            for(int i = 0; i < points.Count; i++)
-            {
-                // Put the point as a v3 and transform it to the space of the point on the curve
-                Vector3 pointRelToSlice = sliceTransform * new Vector3(points[i].X, points[i].Y, 0);
-                Vector3 pointVert = pointRelToSlice;
+            // Prepare cached values for storing previous vertex
+            Vector3 previousPointVert = Vector3.Zero;
+            float previousPointU = 0;
 
-                //Debugger3D.main.SphereEffect(road.ToGlobal(pointVert + sliceOrigin), 0.1f, Colors.Lime, 1, 20);
+            // Create vertices for this specific slice
+            for (int i = 0; i < points.Count; i++)
+            {
+                // Prepare the point, U value and normal for this vertex
+                Vector3 pointVert = sliceTransform * new Vector3(points[i].X, points[i].Y, 0);
 
                 // Increment the current U value by the distance from the last point to this one, or 1 if at the end
                 if (i != 0)
@@ -119,24 +95,30 @@ public partial class RoadMesh : Resource
                 if(i == points.Count-1)
                 {
                     uValue = 1;
+                }                
+
+                Vector2 pointNormal = CalculateNormal2D(i, i - 1);
+                Vector3 normal3D = sliceTransform * new Vector3(pointNormal.X, pointNormal.Y, 0) - sliceOrigin;
+
+                // Creates a copy of the previous point and creates this point (only if this isn't the first)
+                if (i != 0)
+                {
+                    normals.Add(normal3D.Normalized());
+                    uvs.Add(new Vector2(previousPointU, vValue));
+                    verts.Add(previousPointVert);
+
+                    normals.Add(normal3D.Normalized());
+                    uvs.Add(new Vector2(uValue, vValue));
+                    verts.Add(pointVert);
                 }
 
-                // Save the UV
-                uvs.Add(new Vector2(uValue, vValue));
-
-
-                // Sets the normal - calculates it in 2D because it's easier, then transforms to
-                // 3D space relative to the curve
-                Vector2 pointNormal = CalculateNormal2D(i, i - 1, i + 1);
-                Vector3 normal3D = sliceTransform * new Vector3(pointNormal.X, pointNormal.Y, 0) - sliceOrigin;
-                normals.Add((normal3D).Normalized()) ;
-
-                verts.Add(pointVert);
+                // Stores this vertex as the previous vertex
+                previousPointVert = pointVert;
+                previousPointU = uValue;
             }
         }
 
         // Connects vertices to form triangles
-        
         for(int segmentIndex = 0; segmentIndex < numSegments; segmentIndex++)
         {
             for(int i = 0; i < points.Count; i++)
@@ -144,28 +126,13 @@ public partial class RoadMesh : Resource
                 int startPoint = i + (segmentIndex * points.Count);
 
                 // Formula for all regular points (except last slice)
-                if (i != points.Count - 1)
-                {
-                    indices.Add(startPoint);
-                    indices.Add(startPoint + points.Count);
-                    indices.Add(startPoint + 1);
+                indices.Add(startPoint-1);
+                indices.Add(startPoint + points.Count*2-1);
+                indices.Add(startPoint);
 
-                    indices.Add(startPoint + points.Count);
-                    indices.Add(startPoint + points.Count + 1);
-                    indices.Add(startPoint + 1);
-                }
-
-                // Formula for last slice
-                else
-                {
-                    indices.Add(startPoint);
-                    indices.Add(startPoint + points.Count);
-                    indices.Add(segmentIndex * points.Count);
-
-                    indices.Add(startPoint + points.Count);
-                    indices.Add(startPoint + 1);
-                    indices.Add(segmentIndex * points.Count);
-                }
+                indices.Add(startPoint + points.Count*2-1);
+                indices.Add(startPoint + points.Count*2 + 1);
+                indices.Add(startPoint + 2);
             }
         }
         
@@ -195,20 +162,12 @@ public partial class RoadMesh : Resource
     }
 
 
-    private Vector2 CalculateNormal2D(int currentIndex, int previousIndex, int nextIndex)
+    private Vector2 CalculateNormal2D(int currentIndex, int previousIndex)
     {
-        // Gets vectors to and from this point.
         // Gets a normal vector, assuming LEFT is outside of the mesh (only works on clockwise meshes)
         Vector2 prevToCurrent = points[Simplifications.RealModulo(currentIndex,points.Count)] - 
             points[Simplifications.RealModulo(previousIndex, points.Count)];
-        Vector2 currentToNext = points[Simplifications.RealModulo(nextIndex, points.Count)] - 
-            points[Simplifications.RealModulo(currentIndex, points.Count)];
 
-        Vector2 previousLeft = prevToCurrent.PerpendicularCounterClockwise();
-        Vector2 nextLeft = currentToNext.PerpendicularCounterClockwise();
-
-        // Returns the normal: (v1.left.normalized + v2.left.normalized).normalized,
-        // where v1 goes to the point and v2 goes away from it.
-        return (previousLeft.Normalized() + nextLeft.Normalized()).Normalized();
+        return prevToCurrent.PerpendicularCounterClockwise().Normalized();
     }
 }
