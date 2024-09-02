@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://pb3n5vwlxc8t"]
+
+[ext_resource type="Shader" path="res://Prototypes/MeshTesting/normal_shader.gdshader" id="1_o54a0"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_o54a0")
+shader_parameter/WorldSpace = true
+shader_parameter/RemapRange = false

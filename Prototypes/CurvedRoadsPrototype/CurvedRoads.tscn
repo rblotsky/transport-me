@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bn8bvwsvukofm"]
+[gd_scene load_steps=8 format=3 uid="uid://bn8bvwsvukofm"]
 
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_880qr"]
 [ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="3_0xv0s"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="4_ui2bi"]
 [ext_resource type="Script" path="res://Main/Editor/Cursor.cs" id="5_4lhhj"]
-[ext_resource type="Script" path="res://Prototypes/MeshTesting/RoadMesh.cs" id="6_0dvaj"]
 [ext_resource type="PackedScene" uid="uid://l2dun676hjxf" path="res://Prototypes/CurvedRoadsPrototype/Curved2Lane2Way.tscn" id="6_kdr6q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmewv"]
@@ -14,14 +13,6 @@ albedo_color = Color(0, 0.8977, 0.550284, 1)
 material = SubResource("StandardMaterial3D_tmewv")
 radius = 0.2
 height = 0.4
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gshwp"]
-
-[sub_resource type="Resource" id="Resource_fi0ks"]
-script = ExtResource("6_0dvaj")
-points = [Vector2(-2, 0.5), Vector2(-1.5, 0.5), Vector2(-1.5, 0.25), Vector2(1.5, 0.25), Vector2(1.5, 0.5), Vector2(2, 0.5), Vector2(2, 0), Vector2(-2, 0)]
-numSegments = 9
-meshMaterial = SubResource("StandardMaterial3D_gshwp")
 
 [node name="CurvedRoads" type="Node3D"]
 
@@ -54,7 +45,10 @@ useSmoothing = false
 mesh = SubResource("SphereMesh_7amty")
 
 [node name="Curved2Lane2Way" parent="." instance=ExtResource("6_kdr6q")]
-Start = Vector3(-2, 0, 0)
-End = Vector3(4, -0.015, 5.275)
-Control = Vector2(4, 0)
-roadMesh = SubResource("Resource_fi0ks")
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
+Start = Vector3(-3, 0, 0)
+End = Vector3(2, 0, 5)
+Control = Vector2(2, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.0744536, -0.993961, 0.0806167, 0.577281, 0.108878, 0.809255, -0.813145, -0.0137135, 0.5819, 0, 6, 4)

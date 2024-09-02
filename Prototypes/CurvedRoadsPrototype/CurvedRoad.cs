@@ -36,6 +36,8 @@ public partial class CurvedRoad : Node3D
     [ExportCategory("Mesh")]
     [Export] private RoadMesh roadMesh;
     [Export] private MeshInstance3D meshRenderer;
+    [Export] private bool debugNormals = false;
+    [Export] private MeshInstance3D debugRenderer;
 
 
     // Segment Offset Data
@@ -271,6 +273,11 @@ public partial class CurvedRoad : Node3D
         if (roadMesh != null && meshRenderer != null)
         {
             meshRenderer.Mesh = roadMesh.GenerateRoadMesh(this);
+        }
+
+        if (debugRenderer != null && roadMesh != null && debugNormals)
+        {
+            debugRenderer.Mesh = roadMesh.GenerateRoadNormalsMesh(this);
         }
     }
 }

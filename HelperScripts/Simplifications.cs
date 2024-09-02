@@ -200,6 +200,30 @@ public static class Simplifications
         return arc;
     }
 
+    public static int RealModulo(int a, int b)
+    {
+        // Runs a REAL modulus, because the C# modulo (%) is actually just a remainder
+        // and acts stupid on negative numbers.
+        // Taken from https://github.com/dotnet/csharplang/discussions/4744
+        int c = a % b;
+        if ((c < 0 && b > 0) || (c > 0 && b < 0))
+        {
+            c += b;
+        }
+
+        return c;
+    }
+
+    public static Vector2 PerpendicularCounterClockwise(this Vector2 vector2)
+    {
+        return new Vector2(-vector2.Y, vector2.X);
+    }
+
+    public static Vector2 PerpendicularClockwise(this Vector2 vector2)
+    {
+        return new Vector2(vector2.Y, -vector2.X);
+    }
+
 
     // Miscellaneous
     public static Vector3I FloorVector3(Vector3 vec)

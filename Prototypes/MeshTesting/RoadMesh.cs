@@ -14,6 +14,55 @@ public partial class RoadMesh : Resource
 
     // FUNCTIONS //
     // Mesh Generation
+    public ImmediateMesh GenerateRoadNormalsMesh(CurvedRoad road)
+    {
+        // Creates a surface array and lists of values to assign to it
+        ImmediateMesh mesh = new ImmediateMesh();
+        mesh.SurfaceBegin(Mesh.PrimitiveType.Lines);
+
+        // Creates all the vertices with their associated values
+        for (int t = 0; t <= numSegments; t++)
+        {
+            // Get a transform for this point on the curve
+            Vector3 sliceOrigin = Curves.BezierQuadratic3D(
+                road.Start,
+                road.Control,
+                road.End,
+                t / (float)numSegments
+                );
+
+            Vector3 sliceFacing = Curves.BezierTangentQuadratic3D(
+                road.Start,
+                road.Control,
+                road.End,
+                t / (float)numSegments);
+
+            //Debugger3D.main.SphereEffect(road.ToGlobal(sliceOrigin), 0.1f, Colors.Orange, 1, 20);
+            //Debugger3D.main.LineEffect(road.ToGlobal(sliceOrigin), road.ToGlobal(sliceOrigin + (sliceFacing)), Colors.Orange, 20);
+
+            Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing*new Vector3(1,0,1), road.Transform.Basis.Y), sliceOrigin);
+
+            // Assign vertices for this specific slice
+            for (int i = 0; i < points.Count; i++)
+            {
+                // Put the point as a v3 and transform it to the space of the point on the curve
+                Vector3 pointRelToSlice = sliceTransform * new Vector3(points[i].X, points[i].Y, 0);
+                Vector3 pointVert = pointRelToSlice;
+
+                // Calculates normal and adds a line for it
+                Vector2 pointNormal = CalculateNormal2D(i, i - 1, i + 1);
+                Vector3 normal3D = sliceTransform*new Vector3(pointNormal.X, pointNormal.Y, 0) - sliceOrigin;
+
+                mesh.SurfaceAddVertex(pointVert);
+                mesh.SurfaceAddVertex(normal3D.Normalized() + pointVert);
+            }
+        }
+
+        mesh.SurfaceEnd();
+
+        return mesh;
+    }
+
     public ArrayMesh GenerateRoadMesh(CurvedRoad road)
     {
         // Creates a surface array and lists of values to assign to it
@@ -44,18 +93,10 @@ public partial class RoadMesh : Resource
                 road.End,
                 t / (float)numSegments);
 
-            if (t == 0)
-            {
-                GD.Print($"At first point. Value is {t / (float)numSegments}! Facing: {sliceFacing}");
-            }
-            if (t == numSegments)
-            {
-                GD.Print($"At last point. Value is {t / (float)numSegments}! Facing: {sliceFacing}");
-            }
             //Debugger3D.main.SphereEffect(road.ToGlobal(sliceOrigin), 0.1f, Colors.Orange, 1, 20);
             //Debugger3D.main.LineEffect(road.ToGlobal(sliceOrigin), road.ToGlobal(sliceOrigin + (sliceFacing)), Colors.Orange, 20);
 
-            Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing), sliceOrigin);
+            Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing * new Vector3(1, 0, 1), road.Transform.Basis.Y), sliceOrigin);
 
             // Prepare UV values for this slice (u = 0, v += segment length)
             float uValue = 0;
@@ -68,7 +109,6 @@ public partial class RoadMesh : Resource
                 Vector3 pointRelToSlice = sliceTransform * new Vector3(points[i].X, points[i].Y, 0);
                 Vector3 pointVert = pointRelToSlice;
 
-                verts.Add(pointVert);
                 //Debugger3D.main.SphereEffect(road.ToGlobal(pointVert + sliceOrigin), 0.1f, Colors.Lime, 1, 20);
 
                 // Increment the current U value by the distance from the last point to this one, or 1 if at the end
@@ -84,8 +124,14 @@ public partial class RoadMesh : Resource
                 // Save the UV
                 uvs.Add(new Vector2(uValue, vValue));
 
-                // Set the normal to origin -> vertex, normalized
-                normals.Add(pointVert.Normalized());
+
+                // Sets the normal - calculates it in 2D because it's easier, then transforms to
+                // 3D space relative to the curve
+                Vector2 pointNormal = CalculateNormal2D(i, i - 1, i + 1);
+                Vector3 normal3D = sliceTransform * new Vector3(pointNormal.X, pointNormal.Y, 0) - sliceOrigin;
+                normals.Add((normal3D).Normalized()) ;
+
+                verts.Add(pointVert);
             }
         }
 
@@ -134,8 +180,35 @@ public partial class RoadMesh : Resource
         ArrayMesh generatedMesh = new ArrayMesh();
         generatedMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
         generatedMesh.RegenNormalMaps();
+
+        // Uses SurfaceTool to generate normals
+        /*
+        SurfaceTool surfaceTool = new SurfaceTool();
+        surfaceTool.CreateFrom(generatedMesh, 0);
+        surfaceTool.GenerateNormals();
+        generatedMesh = surfaceTool.Commit();
+        */
+
         generatedMesh.SurfaceSetMaterial(0, meshMaterial);
 
         return generatedMesh;
+    }
+
+
+    private Vector2 CalculateNormal2D(int currentIndex, int previousIndex, int nextIndex)
+    {
+        // Gets vectors to and from this point.
+        // Gets a normal vector, assuming LEFT is outside of the mesh (only works on clockwise meshes)
+        Vector2 prevToCurrent = points[Simplifications.RealModulo(currentIndex,points.Count)] - 
+            points[Simplifications.RealModulo(previousIndex, points.Count)];
+        Vector2 currentToNext = points[Simplifications.RealModulo(nextIndex, points.Count)] - 
+            points[Simplifications.RealModulo(currentIndex, points.Count)];
+
+        Vector2 previousLeft = prevToCurrent.PerpendicularCounterClockwise();
+        Vector2 nextLeft = currentToNext.PerpendicularCounterClockwise();
+
+        // Returns the normal: (v1.left.normalized + v2.left.normalized).normalized,
+        // where v1 goes to the point and v2 goes away from it.
+        return (previousLeft.Normalized() + nextLeft.Normalized()).Normalized();
     }
 }
