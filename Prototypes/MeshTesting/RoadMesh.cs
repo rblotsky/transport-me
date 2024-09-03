@@ -90,7 +90,7 @@ public partial class RoadMesh : Resource
                 // Increment the current U value by the distance from the last point to this one, or 1 if at the end
                 if (i != 0)
                 {
-                    uValue += (points[i] - points[i - 1]).Length();
+                    uValue += (points[i] - points[i - 1]).Length() / CalculateSliceLength();
                 }
                 if(i == points.Count-1)
                 {
@@ -119,20 +119,21 @@ public partial class RoadMesh : Resource
         }
 
         // Connects vertices to form triangles
+        int vertsPerSlice = points.Count * 2 - 2;
         for(int segmentIndex = 0; segmentIndex < numSegments; segmentIndex++)
         {
-            for(int i = 0; i < points.Count; i++)
+            for(int i = 0; i < vertsPerSlice; i+=2)
             {
-                int startPoint = i + (segmentIndex * points.Count);
+                int startPoint = i + (segmentIndex * vertsPerSlice);
 
                 // Formula for all regular points (except last slice)
-                indices.Add(startPoint-1);
-                indices.Add(startPoint + points.Count*2-1);
                 indices.Add(startPoint);
+                indices.Add(startPoint + points.Count*2-2);
+                indices.Add(startPoint+1);
 
-                indices.Add(startPoint + points.Count*2-1);
-                indices.Add(startPoint + points.Count*2 + 1);
-                indices.Add(startPoint + 2);
+                indices.Add(startPoint + points.Count*2 - 2);
+                indices.Add(startPoint + points.Count*2 - 1);
+                indices.Add(startPoint + 1);
             }
         }
         
@@ -169,5 +170,16 @@ public partial class RoadMesh : Resource
             points[Simplifications.RealModulo(previousIndex, points.Count)];
 
         return prevToCurrent.PerpendicularCounterClockwise().Normalized();
+    }
+
+    private float CalculateSliceLength()
+    {
+        float totalLength = 0;
+        for(int i = 1; i < points.Count; i++)
+        {
+            totalLength += points[i].DistanceTo(points[i - 1]);
+        }
+
+        return totalLength;
     }
 }
