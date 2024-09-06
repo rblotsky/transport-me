@@ -74,7 +74,7 @@ public static class EasyShapes
 		return mesh;
 	}
 
-	public static ImmediateMesh CurveMesh(Vector3 startLocal, Vector3 endLocal, Vector3 controlLocal, Color colourToUse, int segments)
+	public static ImmediateMesh CurveMesh(Vector3 startLocal, Vector3 endLocal, Vector2 controlLocal, Color colourToUse, int segments)
 	{        
 		// Creates a Bezier curve
 		ImmediateMesh mesh = new ImmediateMesh();
@@ -89,14 +89,14 @@ public static class EasyShapes
 			// and I bypassed that by just adding each line twice. I have no idea why this
 			// happens and I do not care.
 			mesh.SurfaceAddVertex(
-					Curves.CalculateBezierQuadraticWithHeight(
+					Curves.BezierQuadratic3D(
 						startLocal,
 						controlLocal,
 						endLocal,
 						t / (float)segments)
 				);
 			mesh.SurfaceAddVertex(
-					Curves.CalculateBezierQuadraticWithHeight(
+					Curves.BezierQuadratic3D(
 						startLocal,
 						controlLocal,
 						endLocal,

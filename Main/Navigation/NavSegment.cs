@@ -54,8 +54,9 @@ public partial class NavSegment : Node3D
         if(Engine.IsEditorHint())
         {
             RemoveVisualizers();
-            RequestReady();
         }
+
+        RequestReady();
 
         base._ExitTree();
     }
@@ -78,9 +79,9 @@ public partial class NavSegment : Node3D
 
     public Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {
-        Vector3 localPos = Curves.CalculateBezierQuadraticWithHeight(
+        Vector3 localPos = Curves.BezierQuadratic3D(
             Start,
-            Control,
+            Curves.Vec3RemoveHeight(Control),
             End,
             percentOfSegment
             );
@@ -158,11 +159,11 @@ public partial class NavSegment : Node3D
             controlVisualizer = new MeshInstance3D();
             AddChild(controlVisualizer);
 
-            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.LightBlue, 10);
+            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Curves.Vec3RemoveHeight(Control), Colors.LightBlue, 10);
             endpointVisualizer.Position = End;
             endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
             endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
-            endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
+            endpointDirectionVisualizer.Position = Curves.BezierQuadratic3D(Start, Curves.Vec3RemoveHeight(Control), End, 0.99f);
             directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
             directionVisualizer.LookAtFromPosition(GlobalStart, GlobalEnd);
             directionVisualizer.Position = GetPositionOnSegment(0.5f, false);

@@ -106,7 +106,7 @@ public partial class Debugger3D : Node3D
         CreateMeshEffect(line, durationSeconds, null);
     }
 
-    public void CurveEffect(Vector3 start, Vector3 end, Vector3 control, Color colour, double durationSeconds)
+    public void CurveEffect(Vector3 start, Vector3 end, Vector2 control, Color colour, double durationSeconds)
     {
         ImmediateMesh curve = EasyShapes.CurveMesh(start, end, control, colour, CURVE_SEGMENTS);
         CreateMeshEffect(curve, durationSeconds, null);
@@ -128,7 +128,7 @@ public partial class Debugger3D : Node3D
             CurveEffect(
                 segment.GlobalStart + Vector3I.Up,
                 segment.GlobalEnd + Vector3I.Up,
-                segment.GlobalControl + Vector3I.Up,
+                Curves.Vec3RemoveHeight(segment.GlobalControl),
                 Colors.Black,
                 durationSeconds
                 );

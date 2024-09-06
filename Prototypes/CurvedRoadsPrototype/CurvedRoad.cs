@@ -32,6 +32,14 @@ public partial class CurvedRoad : Node3D
     public Transform3D EndTransform { get { return new Transform3D(Basis.LookingAt(ControlAtEndHeight - End), End); } }
 
 
+    // Road Mesh Data
+    [ExportCategory("Mesh")]
+    [Export] private RoadMesh roadMesh;
+    [Export] private MeshInstance3D meshRenderer;
+    [Export] private bool debugNormals = false;
+    [Export] private MeshInstance3D debugRenderer;
+
+
     // Segment Offset Data
     [ExportCategory("Saving Controlled Segments")]
     [Export] private bool SaveSegmentOffsetsToggle { set { SaveSegmentOffsets(); } get { return true; } }
@@ -74,11 +82,24 @@ public partial class CurvedRoad : Node3D
 
 
     // Controlling
+    private void SaveSegmentOffsets()
+    {
+        // Creates a new list for segment offsets and segments
+        segments = new Array<NavSegment>(Simplifications.GetChildrenOfType<NavSegment>(this, true));
+        segmentOffsets = new Array<CurvedRoadSegmentOffset>();
+
+        for (int i = 0; i < segments.Count; i++)
+        {
+            segmentOffsets.Add(CurvedRoadSegmentOffset.GetSegmentOffset(i, this));
+        }
+    }
+
     private void SetNewStart(Vector3 newValue)
     {
         _start = newValue;
         RecalculateStartPoints();
         RecalculateControlPoints();
+
         UpdateVisualization();
     }
 
@@ -88,6 +109,7 @@ public partial class CurvedRoad : Node3D
         RecalculateControlPoints();
         RecalculateEndPoints();
         RecalculateStartPoints();
+
         UpdateVisualization();
     }
 
@@ -96,19 +118,8 @@ public partial class CurvedRoad : Node3D
         _end = newValue;
         RecalculateEndPoints();
         RecalculateControlPoints();
+
         UpdateVisualization();
-    }
-
-    private void SaveSegmentOffsets()
-    {
-        // Creates a new list for segment offsets and segments
-        segments = new Array<NavSegment>(Simplifications.GetChildrenOfType<NavSegment>(this, true));
-        segmentOffsets = new Array<CurvedRoadSegmentOffset>();
-
-        for(int i = 0; i < segments.Count; i++)
-        {
-            segmentOffsets.Add(CurvedRoadSegmentOffset.GetSegmentOffset(i, this));
-        }
     }
 
     private void RecalculateEndPoints()
@@ -255,8 +266,18 @@ public partial class CurvedRoad : Node3D
             endVisualizer.Position = End;
             endVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
 
-            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, ControlAtAvgHeight, Colors.Gray, 10);
+            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.Gray, 10);
+        }
 
+        // Runs regardless of editor
+        if (roadMesh != null && meshRenderer != null)
+        {
+            meshRenderer.Mesh = roadMesh.GenerateRoadMesh(this);
+        }
+
+        if (debugRenderer != null && roadMesh != null && debugNormals)
+        {
+            debugRenderer.Mesh = roadMesh.GenerateRoadNormalsMesh(this);
         }
     }
 }

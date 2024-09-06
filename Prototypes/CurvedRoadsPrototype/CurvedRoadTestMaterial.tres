@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dgmljnemkrpbq"]
+
+[ext_resource type="Texture2D" uid="uid://j8w62sd6656n" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestTexture.png" id="1_ptoen"]
+
+[resource]
+albedo_texture = ExtResource("1_ptoen")

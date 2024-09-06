@@ -37,6 +37,14 @@ public partial class BezierGenerator : Node
         base._Ready();
     }
 
+    public override void _Process(double delta)
+    {
+        Vector3 startTangent = Curves.BezierTangentQuadratic3D(Start, Curves.Vec3RemoveHeight(Control), End, 0);
+        Vector3 endTangent = Curves.BezierTangentQuadratic3D(Start, Curves.Vec3RemoveHeight(Control), End, 1);
+        Debugger3D.main.LineEffect(Start, Start + startTangent.Normalized()*3, Colors.Lime, delta*5);
+        Debugger3D.main.LineEffect(End, End + endTangent.Normalized()*3, Colors.Orange, delta*5);
+    }
+
     private void UpdateVisualization()
     {
         if (IsNodeReady())
@@ -68,7 +76,7 @@ public partial class BezierGenerator : Node
 
             if (pathMesh != null)
             {
-                pathMesh.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.Red, Segments);
+                pathMesh.Mesh = EasyShapes.CurveMesh(Start, End, Curves.Vec3RemoveHeight(Control), Colors.Red, Segments);
             }
         }
     }
