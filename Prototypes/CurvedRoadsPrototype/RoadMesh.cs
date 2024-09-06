@@ -47,35 +47,37 @@ public partial class RoadMesh : Resource
         Array surfaceArray = new Array();
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
 
-
         List<Vector3> verts = new List<Vector3>();
         List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         List<int> indices = new List<int>();
 
+        // Prepares a length array for the curved road
+        float[] curveLengthSamples = CreateLengthTable(road);
+
         // Extrudes the slice along the curve for each segment
-        float vValue = 0;
-        for (int t = 0; t <= numSegments; t++)
+        for (int segment = 0; segment <= numSegments; segment++)
         {
+            float t = segment / (float)numSegments;
             // Get a transform for this point on the curve
             Vector3 sliceOrigin = Curves.BezierQuadratic3D(
                 road.Start, 
                 road.Control, 
                 road.End, 
-                t / (float)numSegments
+                t
                 );
 
             Vector3 sliceFacing = Curves.BezierTangentQuadratic3D(
                 road.Start,
                 road.Control,
                 road.End,
-                t / (float)numSegments);
+                t);
 
             Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing * new Vector3(1, 0, 1), road.Transform.Basis.Y), sliceOrigin);
 
-            // Prepare UV values for this slice (u = 0, v += segment length)
+            // Prepare UV values for this slice (u = 0, v += segment length / slice length)
             float uValue = 0;
-            vValue += t / (float)numSegments;
+            float vValue = SampleFloatArray(curveLengthSamples, t) / CalculateSliceLength();
 
             // Prepare cached values for storing previous vertex
             Vector3 previousPointVert = Vector3.Zero;
@@ -147,16 +149,6 @@ public partial class RoadMesh : Resource
         // Commit to an ArrayMesh and return it
         ArrayMesh generatedMesh = new ArrayMesh();
         generatedMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
-        generatedMesh.RegenNormalMaps();
-
-        // Uses SurfaceTool to generate normals
-        /*
-        SurfaceTool surfaceTool = new SurfaceTool();
-        surfaceTool.CreateFrom(generatedMesh, 0);
-        surfaceTool.GenerateNormals();
-        generatedMesh = surfaceTool.Commit();
-        */
-
         generatedMesh.SurfaceSetMaterial(0, meshMaterial);
 
         return generatedMesh;
@@ -175,11 +167,54 @@ public partial class RoadMesh : Resource
     private float CalculateSliceLength()
     {
         float totalLength = 0;
-        for(int i = 1; i < points.Count; i++)
+        for (int i = 1; i < points.Count; i++)
         {
             totalLength += points[i].DistanceTo(points[i - 1]);
         }
 
         return totalLength;
     }
+
+    private float[] CreateLengthTable(CurvedRoad road)
+    {
+        // Using an algorithm by Freya Holmér https://www.youtube.com/watch?v=o9RK6O2kOKo
+        // This creates an array that stores the total distance along a Curved Road
+        // at each segment point.
+        float[] returnArray = new float[numSegments];
+        returnArray[0] = 0f;
+        float totalLength = 0f;
+        Vector3 prev = road.Start;
+        for (int i = 1; i < numSegments; i++)
+        {
+            float t = ((float)i) / (numSegments - 1);
+            Vector3 pt = Curves.BezierQuadratic3D(road.Start, road.Control, road.End, t);
+            float diff = (prev - pt).Length();
+            totalLength += diff;
+            returnArray[i] = totalLength;
+            prev = pt;
+        }
+
+        return returnArray;
+    }
+
+
+    private static float SampleFloatArray(float[] fArr, float t)
+    {
+        // Using an algorithm by Freya Holmér https://www.youtube.com/watch?v=o9RK6O2kOKo
+        // This samples an array of floats, and given a t-value returns a lerped value between the
+        // two nearest indices.
+        int count = fArr.Length;
+
+        if (count == 1)
+            return fArr[0];
+        float iFloat = t * (count - 1);
+        int idLower = Mathf.FloorToInt(iFloat);
+        int idUpper = Mathf.FloorToInt(iFloat + 1);
+        if (idUpper >= count)
+            return fArr[count - 1];
+        if (idLower < 0)
+            return fArr[0];
+        return Mathf.Lerp(fArr[idLower], fArr[idUpper], iFloat - idLower);
+    }
+
 }

@@ -5,3 +5,12 @@ Properties/
 # Ignores Visual Studio files
 .vs/
 .vs/*
+
+
+# Ignores images
+*.kra
+*.kra~
+*.png
+*.jpg
+*.png~
+*.jpg~

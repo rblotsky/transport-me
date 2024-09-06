@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="RoadMesh" load_steps=3 format=3 uid="uid://c8pwcoy7tay2u"]
 
-[ext_resource type="Script" path="res://Prototypes/MeshTesting/RoadMesh.cs" id="1_cc2ug"]
+[ext_resource type="Script" path="res://Prototypes/CurvedRoadsPrototype/RoadMesh.cs" id="1_cc2ug"]
 [ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="1_m04qt"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_cc2ug")
-points = [Vector2(-2, 0.5), Vector2(-1.5, 0.5), Vector2(-1.5, 0.25), Vector2(1.5, 0.25), Vector2(1.5, 0.5), Vector2(2, 0.5)]
+points = [Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)]
 numSegments = 15
 meshMaterial = ExtResource("1_m04qt")
