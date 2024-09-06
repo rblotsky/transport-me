@@ -14,16 +14,18 @@ public static class Curves
         Vector2 r = q0.Lerp(q1, t);
         return r;
     }
+    public static Vector3 BezierQuadratic3DControl(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    {
+        Vector3 q0 = p0.Lerp(p1, t);
+        Vector3 q1 = p1.Lerp(p2, t);
 
+        return q0.Lerp(q1, t);
+    }
     public static Vector3 BezierQuadratic3D(Vector3 p0, Vector2 p1, Vector3 p2, float t)
     {
         // Sets control to avg height before doing calculations
         Vector3 controlWithHeight = ControlAtAvgHeight(p0, p1, p2);
-
-        Vector3 q0 = p0.Lerp(controlWithHeight, t);
-        Vector3 q1 = controlWithHeight.Lerp(p2, t);
-
-        return q0.Lerp(q1, t);
+        return BezierQuadratic3DControl(p0, controlWithHeight, p2, t);
     }
 
     public static Vector2 BezierTangentQuadratic2D(Vector2 p0, Vector2 p1, Vector2 p2, float t)
