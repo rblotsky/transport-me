@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=29 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
@@ -15,7 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
 [ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
+[ext_resource type="PackedScene" uid="uid://dhjh2xh1f5br2" path="res://Prototypes/CurvedRoadsPrototype/Curved1Lane2Way.tscn" id="15_d0hc3"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
+[ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="16_8nrvk"]
+[ext_resource type="Script" path="res://Prototypes/CurvedRoadsPrototype/RoadMesh.cs" id="17_oclra"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -24,6 +27,20 @@ outline_size = 10
 shadow_size = 20
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(5, 5)
+
+[sub_resource type="Resource" id="Resource_013tm"]
+resource_local_to_scene = true
+script = ExtResource("17_oclra")
+points = [Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)]
+numSegments = 15
+meshMaterial = ExtResource("16_8nrvk")
+
+[sub_resource type="Resource" id="Resource_p4l3g"]
+resource_local_to_scene = true
+script = ExtResource("17_oclra")
+points = [Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)]
+numSegments = 15
+meshMaterial = ExtResource("16_8nrvk")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)
@@ -137,9 +154,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 
 [node name="2WayRoadTest4" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
-
-[node name="2WayRoadTest5" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 4)
 
 [node name="2WayRoadTest6" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
@@ -306,12 +320,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 0,
 [node name="2WayRoadTest15" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
-[node name="2WayRoadTest41" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
-
-[node name="2WayRoadTest42" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 8)
-
 [node name="4WayIntersectionTest2" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 20)
 
@@ -338,6 +346,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 20)
 
 [node name="CursedHouse" parent="NavGraphContainer" instance=ExtResource("14_onvpj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+
+[node name="Curved1Lane2Way" parent="NavGraphContainer" instance=ExtResource("15_d0hc3")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 3)
+End = Vector3(2.875, 0, -1.99)
+Control = Vector2(1.665, 0)
+roadMesh = SubResource("Resource_013tm")
+segmentOffsets = []
+
+[node name="Curved1Lane2Way2" parent="NavGraphContainer" instance=ExtResource("15_d0hc3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, 9)
+End = Vector3(3.13, 0, -2.015)
+Control = Vector2(1.895, 0)
+roadMesh = SubResource("Resource_p4l3g")
 
 [node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 20)
