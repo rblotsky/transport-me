@@ -1,28 +1,45 @@
-[gd_scene load_steps=3 format=3 uid="uid://d23ffb3sfichq"]
+[gd_scene load_steps=5 format=3 uid="uid://d23ffb3sfichq"]
 
 [ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/NetworkPrototype/low_poly_car_no_light.glb" id="1_jkw01"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_prxr3"]
-size = Vector3(1, 0.7, 2.2)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k0f4p"]
+height = 2.46024
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_usfia"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w45u5"]
 
 [node name="CarTest" type="Node3D"]
 
-[node name="low_poly_car_no_light" parent="." instance=ExtResource("1_jkw01")]
+[node name="Car" type="StaticBody3D" parent="."]
 
-[node name="SpotLight3D" type="SpotLight3D" parent="low_poly_car_no_light"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.05, 0.0220116)
+shape = SubResource("CapsuleShape3D_k0f4p")
+
+[node name="Far" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.11769)
+
+[node name="low_poly_car_no_light" parent="Far" instance=ExtResource("1_jkw01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.11769)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Far/low_poly_car_no_light"]
 visible = false
 light_energy = 1.7
 spot_range = 8.0
 spot_angle = 37.65
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="low_poly_car_no_light"]
+[node name="SpotLight3D2" type="SpotLight3D" parent="Far/low_poly_car_no_light"]
 visible = false
 light_energy = 1.7
 spot_range = 8.0
 spot_angle = 37.65
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Far"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.13259)
+shape = SubResource("BoxShape3D_usfia")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 1.19209e-07)
-shape = SubResource("BoxShape3D_prxr3")
+[node name="Breaks" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Breaks"]
+shape = SubResource("BoxShape3D_w45u5")

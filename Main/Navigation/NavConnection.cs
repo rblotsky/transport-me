@@ -11,23 +11,23 @@ using Godot;
 /// </summary>
 public partial class NavConnection : RefCounted
 {
-    // DATA //
-    // Local values
+	// DATA //
+	// Local values
 	private List<NavSegment> inboundConnections = new List<NavSegment>();
 	private List<NavSegment> outboundConnections = new List<NavSegment>();
 	private Vector3 intersectionPosition;
 
-    // Public Properties
+	// Public Properties
 	public NavSegment[] Inbound { get { return inboundConnections.ToArray(); } }
 	public NavSegment[] Outbound { get { return outboundConnections.ToArray(); } }
 	public int InboundCount { get { return inboundConnections.Count;} }
 	public int OutboundCount { get { return outboundConnections.Count;} }
 
-    // Public Modifiable Properties
+	// Public Modifiable Properties
 	public Vector3 IntersectionPosition { get { return intersectionPosition; } set { intersectionPosition = value; } }
 		
 
-    // FUNCTIONS //
+	// FUNCTIONS //
 	/// <summary>
 	/// Add an Ending (Inbound) to this connection. NOTE: ensure the segment's global end position matches this connection's position
 	/// </summary>
@@ -38,7 +38,7 @@ public partial class NavConnection : RefCounted
 		{
 			inboundConnections.Add(segment);
 		} 
-        else
+		else
 		{
 			GD.PrintErr("Tried to add ending segment endpoint", segment.GlobalEnd.ToString() , " to intersection", intersectionPosition.ToString());
 		}

@@ -1,140 +1,149 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Collections.Generic;
 
 [GlobalClass]
 public partial class Vehicle : Node3D
 {
-    // DATA //
-    // Instance Configs
-    [Export] public double distancePerSecond = 1;
-    [Export] protected NavGraphContainer graph;
-    [Export] protected Vector3 graphOffset;
-    [Export] protected float stoppingDistance;
+	// DATA //
+	// Instance Configs
+	[Export] public double maxVehicleSpeed = 7.5;
+	[Export] public double acceleration = 1;
+	[Export] public double brakeSpeed = 3;
+	[Export] protected NavGraphContainer graph;
+	[Export] protected Vector3 graphOffset;
+	[Export] protected float stoppingDistance;
+	[Export] public bool showVisualizations;
+	[Export] public bool showPositionVisualizations;
 
-    // Properties
-    protected NavSegment CurrentSegment 
-    { 
-        get 
-        {
-            if (route == null) return null;
-            else if (currentSegmentIndex < 0) return null;
-            else if (currentSegmentIndex >= route.OrderedSegments.Length) return null;
-            return route.OrderedSegments[currentSegmentIndex]; 
-        } 
-    }
+	private List<VehicleCollider> attachedColliders;
+	private List<bool> collisions;
+	// Properties
+	protected NavSegment CurrentSegment
+	{
+		get
+		{
+			return route?.GetSegmentAlongRoute(distanceAlongRoute);
+		}
+	}
 
-    // Cached Data
-    private Route route = null;
-    private double distanceAlongSegment = -1;
-    private int currentSegmentIndex = -1;
-    private double timeStopped = 0;
-
-
-    // FUNCTIONS //
-    // Godot Defaults
-    public override void _EnterTree()
-    {
-        graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
-        base._EnterTree();
-    }
+	// Cached Data
+	private Route route = null;
+	private float distanceAlongRoute = 0f;
+	protected double timeStopped = 0;
+	public double speed = 0;
 
 
-    // Collision Detection
-    protected bool ShouldStop(Vector3 startPos, Vector3 direction)
-    {
-        PhysicsRayQueryParameters3D raycast = PhysicsRayQueryParameters3D.Create(
-                        startPos,
-                        (direction.Normalized()*stoppingDistance)+startPos);
+	public Route GetRoute()
+	{
+		return route;
+	}
 
-        Dictionary raycastResult = GetWorld3D().DirectSpaceState.IntersectRay(raycast);
+	public float GetDistanceAlongRoute()
+	{
+		return distanceAlongRoute;
+	}
+	public double GetCurrentSpeed()
+	{
+		return speed;
+	}
 
-        // If it collides with anything, the vehicle should stop.
-        if(raycastResult.Count > 0)
-        {
-            return true;
-        }
+	// FUNCTIONS //
+	// Godot Defaults
+	public override void _EnterTree()
+	{
+		graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
+		attachedColliders = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
+		GD.Print(attachedColliders.Count);
+		foreach(VehicleCollider c in attachedColliders)
+		{
+			c.SetAssociatedVehicle(this);
+		}
+		base._EnterTree();
+	}
 
-        return false;
-    }
+	// Movement Functions
+	protected void RunMovementIteration(double iterationDelta)
+	{
+		if (distanceAlongRoute > route.GetLength())
+		{
+			FinishCurrentRoute(true);
+			return;
+		}
+		// collider checks
+		// Decides whether to move at all this frame (is another vehicle blocking it?)
+		bool shouldStop = false;
+		for(int i = 0; i<attachedColliders.Count; i++)
+		{
+			shouldStop = attachedColliders[i].GetColliderStatus();
+			if (shouldStop) { break; }
+		}
 
-    // Movement Functions
-    protected void RunMovementIteration(double iterationDelta)
-    {
-        // Decides whether to move at all this frame (is another vehicle blocking it?)
-        if (!ShouldStop(GlobalPosition, -GlobalTransform.Basis.Z) || timeStopped > 10)
-        {
-            // Clears time stopped
-            timeStopped = 0;
+		// max speed calculations
+		NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
+		float speedLimit = Mathf.Min((float)maxVehicleSpeed, curSegment.MaxSpeed);
 
-            // Gets how far to move this process frame
-            double newDistance = distancePerSecond * iterationDelta;
+		//accelerating or decelerating
+		if (shouldStop || speed - speedLimit > 0.1f)
+		{
+			speed -= brakeSpeed * iterationDelta;
+		}
+		else if (speed - speedLimit < -0.1f)
+		{
+			speed += acceleration * iterationDelta;
+		}
 
-            distanceAlongSegment += newDistance;
+		//stop at 0
+		if(speed < 0) { speed = 0; timeStopped += iterationDelta; }
+		else { timeStopped = 0; }
 
-            // Moves to next segment if needed
-            if (distanceAlongSegment > CurrentSegment.Length)
-            {
-                distanceAlongSegment -= CurrentSegment.Length;
-                currentSegmentIndex += 1;
-            }
+		// update distance along route
+		double newDistance = speed * iterationDelta;
+		distanceAlongRoute += (float)newDistance;
 
-            // If we reached the destination, stop. 
-            if (CurrentSegment == null)
-            {
-                FinishCurrentRoute(true);
-            }
-            // Sets its position along the segment
-            else
-            {
-                float percentOfSegment = (float)distanceAlongSegment / CurrentSegment.Length;
-                Vector3 newPosition = CurrentSegment.GetPositionOnSegment(percentOfSegment);
-                FaceDirectionOfMotion(newPosition - GlobalPosition);
-                GlobalPosition = newPosition;
-            }
-        }
-        else
-        {
-            timeStopped += iterationDelta;
-        }
-    }
+		//update collider positions
+		foreach(VehicleCollider col in attachedColliders)
+		{
+			col.HandleUpdatePosition();
 
-    protected void FaceDirectionOfMotion(Vector3 positionDelta)
-    {
-        if (positionDelta.LengthSquared() != 0)
-        {
-            LookAt(GlobalPosition + positionDelta, Vector3.Up);
-        }
-    }
+			if (showVisualizations)
+			{
+				col.UpdateVisualization();
+			}
+			if (showPositionVisualizations)
+			{
+				col.UpdatePositionVisualizations();
+			}
+		}
+	}
 
+	// Virtual Functions
+	protected virtual void OnRouteFinish(Route finished)
+	{
+	}
 
-    // Virtual Functions
-    protected virtual void OnRouteFinish(Route finished)
-    {
-    }
+	// Managing Route
+	protected void StartRoute(Route newRoute)
+	{
+		route = newRoute;
+		distanceAlongRoute = 0;
+	}
 
-    // Managing Route
-    protected void StartRoute(Route newRoute)
-    {
-        route = newRoute;
-        distanceAlongSegment = 0;
-        currentSegmentIndex = 0;
-    }
+	protected void FinishCurrentRoute(bool moveToEnd)
+	{
+		if (moveToEnd)
+		{
+			GlobalPosition = route.EndPoint + graphOffset;
+		}
 
-    protected void FinishCurrentRoute(bool moveToEnd)
-    {
-        if (moveToEnd)
-        {
-            GlobalPosition = route.EndPoint + graphOffset;
-        }
+		Route finishedRoute = route;
 
-        Route finishedRoute = route;
+		route = null;
+		distanceAlongRoute = 0;
 
-        route = null;
-        distanceAlongSegment = -1;
-        currentSegmentIndex = -1;
-
-        OnRouteFinish(finishedRoute);
-    }
+		OnRouteFinish(finishedRoute);
+	}
 
 }
+
