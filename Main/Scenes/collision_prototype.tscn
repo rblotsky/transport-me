@@ -1,19 +1,19 @@
 [gd_scene load_steps=22 format=3 uid="uid://bf5ftcmk5mykk"]
 
-[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_a3rsw"]
-[ext_resource type="Script" path="res://HelperScripts/Debugger3D.cs" id="2_wfnwe"]
-[ext_resource type="Script" path="res://Main/Pathfinding/RouteDebugger.cs" id="3_24h18"]
-[ext_resource type="Script" path="res://Main/Editor/PrototypeEditor.cs" id="4_2vxk4"]
-[ext_resource type="Script" path="res://Main/Editor/SceneSaver.cs" id="5_37s05"]
-[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_nqqs1"]
+[ext_resource type="Script" uid="uid://cf54h2ck54yw4" path="res://Main/Editor/InstructionsUI.cs" id="1_a3rsw"]
+[ext_resource type="Script" uid="uid://c7agmdrc66av8" path="res://HelperScripts/Debugger3D.cs" id="2_wfnwe"]
+[ext_resource type="Script" uid="uid://dgv2bxked3e5" path="res://Main/Pathfinding/RouteDebugger.cs" id="3_24h18"]
+[ext_resource type="Script" uid="uid://dlclahwkgvmvf" path="res://Main/Editor/PrototypeEditor.cs" id="4_2vxk4"]
+[ext_resource type="Script" uid="uid://cc8crshyq4nlq" path="res://Main/Editor/SceneSaver.cs" id="5_37s05"]
+[ext_resource type="Script" uid="uid://can2dojlmlrtw" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_nqqs1"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="7_ia4b1"]
-[ext_resource type="Script" path="res://Main/Navigation/NavGraphContainer.cs" id="8_mc8cg"]
+[ext_resource type="Script" uid="uid://cy6fd3ke64yhj" path="res://Main/Navigation/NavGraphContainer.cs" id="8_mc8cg"]
 [ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="9_2a874"]
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="10_gl0rq"]
-[ext_resource type="Script" path="res://Main/Navigation/NavCheckpoint.cs" id="12_cxnxt"]
+[ext_resource type="Script" uid="uid://cyuk6k1yf6e0t" path="res://Main/Navigation/NavCheckpoint.cs" id="12_cxnxt"]
 [ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/NetworkPrototype/2WayRoadEndTest.tscn" id="12_r504d"]
 [ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/NetworkPrototype/Vehicle.tscn" id="14_whmy2"]
-[ext_resource type="Script" path="res://Main/Editor/Cursor.cs" id="15_rk8ku"]
+[ext_resource type="Script" uid="uid://b7885n57krs7j" path="res://Main/Editor/Cursor.cs" id="15_rk8ku"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -183,14 +183,7 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="Vehicle3" parent="VehicleContainer" instance=ExtResource("14_whmy2")]
-maxSpeed = 4.0
-brakeSpeed = 7.5
-showPositionVisualizations = true
 
 [node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_whmy2")]
-maxSpeed = 4.0
-brakeSpeed = 7.5
-showVisualizations = true
-showPositionVisualizations = true
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

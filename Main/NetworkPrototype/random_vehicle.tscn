@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ctomogo8c6muu"]
 
-[ext_resource type="Script" path="res://Main/Pathfinding/RandomVehicle.cs" id="1_3yj52"]
+[ext_resource type="Script" uid="uid://cd18e4hojtcpa" path="res://Main/Pathfinding/RandomVehicle.cs" id="1_3yj52"]
 [ext_resource type="PackedScene" uid="uid://d23ffb3sfichq" path="res://Main/NetworkPrototype/CarTest.tscn" id="2_a855y"]
 
 [node name="RandomVehicle" type="Node3D"]

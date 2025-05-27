@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dj7ka8sphrkpk"]
 
 [ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/NetworkPrototype/low_poly_car_no_light.glb" id="1_g51oh"]
-[ext_resource type="Script" path="res://Main/Pathfinding/RandomVehicle.cs" id="1_jb367"]
-[ext_resource type="Script" path="res://Main/Pathfinding/MainVehicle.cs" id="1_mpqlx"]
-[ext_resource type="Script" path="res://Main/Pathfinding/HardStopCollider.cs" id="3_hsyqr"]
+[ext_resource type="Script" uid="uid://cd18e4hojtcpa" path="res://Main/Pathfinding/RandomVehicle.cs" id="1_jb367"]
+[ext_resource type="Script" uid="uid://wtpmkbxw66dr" path="res://Main/Pathfinding/MainVehicle.cs" id="1_mpqlx"]
+[ext_resource type="Script" uid="uid://bfc2v8bpeaddt" path="res://Main/Pathfinding/HardStopCollider.cs" id="3_hsyqr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6deww"]
 height = 2.30079
