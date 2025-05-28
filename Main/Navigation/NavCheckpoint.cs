@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+//TODO: Remove? Have separate entrance/exit checkpoints for people to spawn/get deleted in?
 [GlobalClass]
 [Tool]
 public partial class NavCheckpoint : Node3D

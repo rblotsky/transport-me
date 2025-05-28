@@ -15,7 +15,7 @@ public partial class NavConnection : RefCounted
 	// Local values
 	private List<NavSegment> inboundConnections = new List<NavSegment>();
 	private List<NavSegment> outboundConnections = new List<NavSegment>();
-	private Vector3 intersectionPosition;
+	private Vector3 position;
 
 	// Public Properties
 	public NavSegment[] Inbound { get { return inboundConnections.ToArray(); } }
@@ -24,7 +24,7 @@ public partial class NavConnection : RefCounted
 	public int OutboundCount { get { return outboundConnections.Count;} }
 
 	// Public Modifiable Properties
-	public Vector3 IntersectionPosition { get { return intersectionPosition; } set { intersectionPosition = value; } }
+	public Vector3 Position { get { return position; } set { position = value; } }
 		
 
 	// FUNCTIONS //
@@ -34,13 +34,13 @@ public partial class NavConnection : RefCounted
 	/// <param name="segment">The segment with the matching end position</param>
 	public void AddInbound(NavSegment segment)
 	{
-		if (Simplifications.V3ApproximatelyEqual(segment.GlobalEnd, intersectionPosition))
+		if (Simplifications.V3ApproximatelyEqual(segment.GlobalEnd, position))
 		{
 			inboundConnections.Add(segment);
 		} 
 		else
 		{
-			GD.PrintErr("Tried to add ending segment endpoint", segment.GlobalEnd.ToString() , " to intersection", intersectionPosition.ToString());
+			GD.PrintErr("Tried to add ending segment endpoint", segment.GlobalEnd.ToString() , " to intersection", position.ToString());
 		}
 	}
 
@@ -50,13 +50,13 @@ public partial class NavConnection : RefCounted
 	/// <param name="segment">The segment with the matching start position</param>
 	public void AddOutbound(NavSegment segment)
 	{
-		if (Simplifications.V3ApproximatelyEqual(segment.GlobalStart, intersectionPosition))
+		if (Simplifications.V3ApproximatelyEqual(segment.GlobalStart, position))
 		{
 			outboundConnections.Add(segment);
 		}
 		else
 		{
-			GD.PrintErr("Tried to add a starting segment endpoint", segment.GlobalStart.ToString(), " to intersection", intersectionPosition.ToString());
+			GD.PrintErr("Tried to add a starting segment endpoint", segment.GlobalStart.ToString(), " to intersection", position.ToString());
 		}
 	}
 

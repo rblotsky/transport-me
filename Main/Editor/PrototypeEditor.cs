@@ -21,14 +21,6 @@ public partial class PrototypeEditor : Node
 
 	// FUNCTIONS //
 	// Godot Defaults
-	public override void _Ready()
-	{
-		InstructionsUI.instance.AddInstruction(this, "Press E to make them all go faster.");
-		InstructionsUI.instance.AddInstruction(this, "Press Q to make them all go slower.");
-
-		base._Ready();
-	}
-
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if(@event is InputEventKey keyInput)

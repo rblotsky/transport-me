@@ -89,14 +89,14 @@ public static class EasyShapes
 			// and I bypassed that by just adding each line twice. I have no idea why this
 			// happens and I do not care.
 			mesh.SurfaceAddVertex(
-					Curves.CalculateBezierQuadraticWithHeight(
+					Curves.CalculateBezierQuadraticIn3D(
 						startLocal,
 						controlLocal,
 						endLocal,
 						t / (float)segments)
 				);
 			mesh.SurfaceAddVertex(
-					Curves.CalculateBezierQuadraticWithHeight(
+					Curves.CalculateBezierQuadraticIn3D(
 						startLocal,
 						controlLocal,
 						endLocal,

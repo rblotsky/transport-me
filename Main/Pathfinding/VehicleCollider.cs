@@ -11,6 +11,7 @@ public enum CollisionState
 
 public abstract partial class VehicleCollider : Area3D
 {
+    // DATA //
 	protected Vehicle associatedVehicle;
 	protected CollisionState collsionState;
 	protected MeshInstance3D visualization;
@@ -18,12 +19,14 @@ public abstract partial class VehicleCollider : Area3D
 	protected MeshInstance3D visPos;
 	[Export] private int NumIntersecting;
 
-	public Vehicle GetAssociatedVehicle()
-	{
-		return associatedVehicle;
-	}
+    // FUNCTIONS //
 	public abstract void HandleUpdatePosition();
 	protected abstract bool ShouldStop(List<VehicleCollider> colliders);
+
+    public Vehicle AssociatedVehicle 
+    { 
+        get { return associatedVehicle; } set { associatedVehicle = value; } 
+    }
 
 	public bool GetColliderStatus()
 	{
@@ -31,7 +34,7 @@ public abstract partial class VehicleCollider : Area3D
 		NumIntersecting = GetOverlappingAreas().Count;
 		foreach (Area3D area in GetOverlappingAreas())
 		{
-			if(area is VehicleCollider && ((VehicleCollider)area).GetAssociatedVehicle() != associatedVehicle)
+			if(area is VehicleCollider && ((VehicleCollider)area).AssociatedVehicle != associatedVehicle)
 			{
 				validColliders.Add((VehicleCollider)area);
 			}
@@ -50,13 +53,14 @@ public abstract partial class VehicleCollider : Area3D
 	public virtual void UpdatePositionVisualizations()
 	{
 		DeletePosVisualization();
-		Route route = associatedVehicle.GetRoute();
-		RoutePoint point = route.GetVehicleRoutePositionAtPoint(associatedVehicle.GetDistanceAlongRoute());
+		Route route = associatedVehicle.CurrentRoute;
+		RoutePoint point = route.GetVehicleRoutePositionAtPoint(associatedVehicle.CurrentDistanceAlongRoute);
 		tangentLine = EasyShapes.AddShapeMesh(this, EasyShapes.LineMesh(ToLocal(point.backPoint), ToLocal(point.forwardPoint), Colors.Black));
 		visPos = EasyShapes.AddShapeMesh(this, EasyShapes.SphereMesh(0.1f));
 		visPos.GlobalPosition = GlobalPosition;
 	}
 
+    // TODO: Extract because it's used elsewhere too
 	protected void FaceDirectionOfMotion(Vector3 positionDelta)
 	{
 		if (!positionDelta.IsEqualApprox(Vector3.Zero))
@@ -89,14 +93,4 @@ public abstract partial class VehicleCollider : Area3D
 		}
 	}
 
-	public void SetAssociatedVehicle(Vehicle vehicle) 
-	{
-		associatedVehicle = vehicle;
-	}
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		base._Ready();
-	}
 }

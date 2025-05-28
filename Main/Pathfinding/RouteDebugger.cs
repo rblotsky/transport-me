@@ -6,11 +6,7 @@ public partial class RouteDebugger : Node
 {
     // FUNCTIONS //
     // Godot Defaults
-    public override void _Ready()
-    {
-        InstructionsUI.instance.AddInstruction(this, "Press P to do a random Route test!");
-        base._Ready();
-    }
+
 
     public override void _UnhandledInput(InputEvent receivedEvent)
     {

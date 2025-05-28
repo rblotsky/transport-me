@@ -5,7 +5,6 @@ using System;
 [Tool]
 public partial class NavSegment : Node3D
 {
-    // TODO refactor curved segments into a subclass
     // DATA
     // Serializable Properties
     private Vector3 _start = Vector3.Zero;
@@ -20,17 +19,16 @@ public partial class NavSegment : Node3D
     public Vector3 GlobalStart { get { return ToGlobal(Start); } }
     public Vector3 GlobalEnd { get { return ToGlobal(End); } }
     public Vector3 GlobalControl { get { return ToGlobal(Control); } }
-    public Vector3[] Endpoints { get { return new Vector3[2] { Start, End}; } }
-    public Vector3[] GlobalEndpoints { get { return new Vector3[2] { GlobalStart, GlobalEnd }; } }
     public Vector3 DirectionalLine { get { return End - Start; }}
     public float SimpleLength { get { return DirectionalLine.Length(); } }
-    public float Length { get { return SimpleLength; } }
+    public float Length { get { return SimpleLength; } } // TODO: Use a proper length calculation
 
     // Runtime only properties
     public NavConnection EndConnection { get; set; }
     public NavConnection StartConnection { get; set; }
 
     // Editor Cached Data
+    // TODO: Make into Gizmos
     private MeshInstance3D curveVisualizer;
     private MeshInstance3D endpointVisualizer;
     private MeshInstance3D endpointDirectionVisualizer;
@@ -85,7 +83,7 @@ public partial class NavSegment : Node3D
     }
     public Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {
-        Vector3 localPos = Curves.CalculateBezierQuadraticWithHeight(
+        Vector3 localPos = Curves.CalculateBezierQuadraticIn3D(
             Start,
             Control,
             End,
@@ -141,15 +139,10 @@ public partial class NavSegment : Node3D
             endpointVisualizer.Position = End;
             endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
             endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
-            endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticWithHeight(Start, Control, End, 0.99f);
+            endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticIn3D(Start, Control, End, 0.99f);
             directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
             directionVisualizer.LookAtFromPosition(GlobalStart, GlobalEnd);
             directionVisualizer.Position = GetPositionOnSegment(0.5f, false);
         }
-    }
-
-    public void DebugPrint()
-    {
-        GD.PrintT("START", GlobalStart.ToString(), "END", GlobalEnd.ToString());
     }
 }

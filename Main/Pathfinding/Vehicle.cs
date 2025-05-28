@@ -18,7 +18,6 @@ public partial class Vehicle : Node3D
 	[Export] public bool showPositionVisualizations;
 
 	private List<VehicleCollider> attachedColliders;
-	private List<bool> collisions;
 	// Properties
 	protected NavSegment CurrentSegment
 	{
@@ -27,27 +26,15 @@ public partial class Vehicle : Node3D
 			return route?.GetSegmentAlongRoute(distanceAlongRoute);
 		}
 	}
+    public Route CurrentRoute { get { return route; } }
+    public float CurrentDistanceAlongRoute { get { return distanceAlongRoute; } }
+    public double CurrentSpeed { get { return speed; } }
 
-	// Cached Data
-	private Route route = null;
+    // Cached Data
+    private Route route = null;
 	private float distanceAlongRoute = 0f;
 	protected double timeStopped = 0;
 	public double speed = 0;
-
-
-	public Route GetRoute()
-	{
-		return route;
-	}
-
-	public float GetDistanceAlongRoute()
-	{
-		return distanceAlongRoute;
-	}
-	public double GetCurrentSpeed()
-	{
-		return speed;
-	}
 
 	// FUNCTIONS //
 	// Godot Defaults
@@ -58,7 +45,7 @@ public partial class Vehicle : Node3D
 		GD.Print(attachedColliders.Count);
 		foreach(VehicleCollider c in attachedColliders)
 		{
-			c.SetAssociatedVehicle(this);
+			c.AssociatedVehicle = this;
 		}
 		base._EnterTree();
 	}
@@ -119,8 +106,10 @@ public partial class Vehicle : Node3D
 	}
 
 	// Virtual Functions
+    //TODO: Rename so it doesnt sound like it should be an `event`
 	protected virtual void OnRouteFinish(Route finished)
-	{
+    { 
+
 	}
 
 	// Managing Route

@@ -15,13 +15,13 @@ public static class Curves
         return r;
     }
 
-    public static Vector3 CalculateBezierQuadraticWithHeight(Vector3 p0, Vector3 p1, Vector3 p2, float t)
-    {
-        float heightDifference = p2.Y - p0.Y;
-        float pointHeight = heightDifference * t;
+    public static Vector3 CalculateBezierQuadraticIn3D(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    { 
+        Vector3 q0 = p0.Lerp(p1, t);
+        Vector3 q1 = p1.Lerp(p2, t);
 
-        // Returns a regular bezier with the added height
-        return Vec2WithHeight(CalculateBezierQuadratic(Vec3RemoveHeight(p0), Vec3RemoveHeight(p1), Vec3RemoveHeight(p2), t), pointHeight + p0.Y);
+        Vector3 r = q0.Lerp(q1, t);
+        return r;
     }
 
     

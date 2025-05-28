@@ -25,8 +25,8 @@ public partial class MainVehicle : VehicleCollider
 
 	public override void HandleUpdatePosition()
 	{
-		Route route = associatedVehicle.GetRoute();
-		float distanceAlongRoute = associatedVehicle.GetDistanceAlongRoute();
+        Route route = associatedVehicle.CurrentRoute;
+		float distanceAlongRoute = associatedVehicle.CurrentDistanceAlongRoute;
 		RoutePoint point = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute);
 
 		FaceDirectionOfMotion(point.Rotation);

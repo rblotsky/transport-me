@@ -18,10 +18,9 @@ public partial class NavGraphContainer : Node3D
     // FUNCTIONS //
     public override void _Ready()
     {
-        SetupNavGraph();
-        AssembleSegments();
-        AddAllCheckpoints();
-        InstructionsUI.instance.AddInstruction(this, "Press G to view a debug version of the nav graph.");
+        InitializeLists();
+        AssembleSegments(Simplifications.GetChildrenOfType<NavSegment>(this, true));
+        AddAllCheckpoints(Simplifications.GetChildrenOfType<NavCheckpoint>(this, true));
         isGraphReady = true;
         base._Ready();
     }
@@ -39,7 +38,6 @@ public partial class NavGraphContainer : Node3D
         {
             if(keyInput.Keycode == Key.G && keyInput.IsPressed())
             {
-                GD.Print("Lol they pressed G");
                 DebugDrawGraph();
             }
         }
@@ -48,7 +46,7 @@ public partial class NavGraphContainer : Node3D
 
 
     // Setup and Cleanup
-    private void SetupNavGraph()
+    private void InitializeLists()
     {
         connections = new List<NavConnection>();
         checkpoints = new List<NavCheckpoint>();
@@ -70,27 +68,26 @@ public partial class NavGraphContainer : Node3D
         }
     }
 
-    private void AssembleSegments()
+    private void AssembleSegments(IEnumerable<NavSegment> segmentsToAssemble)
     {
-        NavSegment[] foundSegments = Simplifications.GetChildrenOfType<NavSegment>(this, true).ToArray();
+        NavSegment[] foundSegments = segmentsToAssemble.ToArray();
         foreach(NavSegment segment in foundSegments)
         {
             segments.Add(segment);
-            segment.DebugPrint();
 
-            NavConnection outbound = GetIntersectionAtPosition(segment.GlobalStart, true);
+            NavConnection outbound = GetConnectionAtPosition(segment.GlobalStart, true);
             segment.StartConnection = outbound;
             outbound.AddOutbound(segment);
 
-            NavConnection inbound = GetIntersectionAtPosition(segment.GlobalEnd, true);
+            NavConnection inbound = GetConnectionAtPosition(segment.GlobalEnd, true);
             segment.EndConnection = inbound;
             inbound.AddInbound(segment);
         }
     }
 
-    private void AddAllCheckpoints()
+    private void AddAllCheckpoints(IEnumerable<NavCheckpoint> checkpoints)
     {
-        NavCheckpoint[] newCheckpoints = Simplifications.GetChildrenOfType<NavCheckpoint>(this, true).ToArray();
+        NavCheckpoint[] newCheckpoints = checkpoints.ToArray();
 
         foreach (NavCheckpoint point in newCheckpoints)
         {
@@ -98,9 +95,9 @@ public partial class NavGraphContainer : Node3D
         }
     }
     
-    public NavConnection GetIntersectionAtPosition(Vector3 position, bool shouldInitialize = false)
+    public NavConnection GetConnectionAtPosition(Vector3 position, bool shouldInitialize = false)
     {
-        NavConnection found = connections.Find((NavConnection conn) => Simplifications.V3ApproximatelyEqual(conn.IntersectionPosition, position));
+        NavConnection found = connections.Find((NavConnection conn) => Simplifications.V3ApproximatelyEqual(conn.Position, position));
         if (found != null)
         {
             return found;
@@ -111,10 +108,10 @@ public partial class NavGraphContainer : Node3D
             {
                 return null;
             }
-            NavConnection newIntersection = new NavConnection();
-            connections.Add(newIntersection);
-            newIntersection.IntersectionPosition = position;
-            return newIntersection;
+            NavConnection newConnection = new NavConnection();
+            connections.Add(newConnection);
+            newConnection.Position = position;
+            return newConnection;
         }
     }
 
@@ -142,7 +139,7 @@ public partial class NavGraphContainer : Node3D
 
         foreach(NavConnection connector in connections)
         {
-            Debugger3D.main.SphereEffect(connector.IntersectionPosition, 0.5f, Colors.Black, 0.3f, 5);
+            Debugger3D.main.SphereEffect(connector.Position, 0.5f, Colors.Black, 0.3f, 5);
         }
 
         foreach(NavCheckpoint checkpoint in checkpoints)
