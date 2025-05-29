@@ -1,18 +1,20 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using Transportme.Main.DevTools;
 
 [GlobalClass]
 [Tool]
-public partial class NavSegment : Node3D
+public partial class NavSegment : Node3D, IDebugVisualizationProvider
 {
     // DATA
     // Serializable Properties
     private Vector3 _start = Vector3.Zero;
-    [Export] private Vector3 Start { get { return _start; } set { _start = value; UpdateVisualization(); } }
+    [Export] private Vector3 Start { get { return _start; } set { _start = value; } }
     private Vector3 _end = Vector3.Zero;
-    [Export] private Vector3 End { get { return _end; } set { _end = value; UpdateVisualization(); } }
+    [Export] private Vector3 End { get { return _end; } set { _end = value; } }
     private Vector3 _control = Vector3.Zero;
-    [Export] private Vector3 Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
+    [Export] private Vector3 Control { get { return _control; } set { _control = value; } }
 
     [Export] public float MaxSpeed = 30f;
     // Readonly Properties
@@ -27,35 +29,9 @@ public partial class NavSegment : Node3D
     public NavConnection EndConnection { get; set; }
     public NavConnection StartConnection { get; set; }
 
-    // Editor Cached Data
-    // TODO: Make into Gizmos
-    private MeshInstance3D curveVisualizer;
-    private MeshInstance3D endpointVisualizer;
-    private MeshInstance3D endpointDirectionVisualizer;
-    private MeshInstance3D directionVisualizer;
 
 
     // FUNCTIONS //
-    // Godot Defaults
-    public override void _EnterTree()
-    {
-        // In editor, run visualization
-        if (Engine.IsEditorHint())
-        {
-            UpdateVisualization();
-        }
-        base._EnterTree();
-    }
-
-    public override void _ExitTree()
-    {
-        if(Engine.IsEditorHint())
-        {
-            RemoveVisualizers();
-        }
-
-        base._ExitTree();
-    }
 
 
     // Data Retrieval
@@ -92,57 +68,11 @@ public partial class NavSegment : Node3D
         return globalCoordinates ? ToGlobal(localPos) : localPos;
     }
 
-    // Visualization
-    private void RemoveVisualizers()
+    public IEnumerable<DebugVisualization> GetVisualization()
     {
-        if (curveVisualizer != null)
-        {
-            curveVisualizer.Free();
-            curveVisualizer = null;
-        }
-
-        if (endpointVisualizer != null)
-        {
-            endpointVisualizer.Free();
-            endpointVisualizer = null;
-        }
-
-        if(endpointDirectionVisualizer != null)
-        {
-            endpointDirectionVisualizer.Free();
-            endpointDirectionVisualizer = null;
-        }
-        if(directionVisualizer != null)
-        {
-            directionVisualizer.Free();
-            directionVisualizer = null;
-        }
-    }
-
-    private void UpdateVisualization()
-    {
-        // Only runs in editor
-        if(Engine.IsEditorHint())
-        {
-            // Removes and creates new visualizers
-            RemoveVisualizers();
-            curveVisualizer = new MeshInstance3D();
-            AddChild(curveVisualizer);
-            endpointVisualizer = new MeshInstance3D();
-            AddChild(endpointVisualizer);
-            endpointDirectionVisualizer = new MeshInstance3D();
-            AddChild(endpointDirectionVisualizer);
-            directionVisualizer = new MeshInstance3D();
-            AddChild(directionVisualizer);
-
-            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Control, Colors.LightBlue, 10);
-            endpointVisualizer.Position = End;
-            endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
-            endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
-            endpointDirectionVisualizer.Position = Curves.CalculateBezierQuadraticIn3D(Start, Control, End, 0.99f);
-            directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
-            directionVisualizer.LookAtFromPosition(GlobalStart, GlobalEnd);
-            directionVisualizer.Position = GetPositionOnSegment(0.5f, false);
-        }
+        yield return DebugVisualizationFactory.Curve(Start, End, Control, Colors.LightBlue);
+        yield return DebugVisualizationFactory.Arrow(End, Control, Colors.Red, 0.5f);
+        yield return DebugVisualizationFactory.Sphere(End, 0.5f, Colors.Red, 0.3f);
+        yield return DebugVisualizationFactory.Sphere(Start, 0.3f, Colors.Blue, 0.7f);
     }
 }

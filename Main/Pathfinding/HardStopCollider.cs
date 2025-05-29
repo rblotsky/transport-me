@@ -1,14 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.DevTools;
 
-public partial class HardStopCollider : VehicleCollider
+public partial class HardStopCollider : VehicleCollider, IDebugVisualizationProvider
 {
-	public override void UpdateVisualization()
-	{
-		base.UpdateVisualization();
-		visualization.Scale = ((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size;
-	}
 	private float GetComputedPositionOnRoute()
 	{
 		float distanceAlongRoute = associatedVehicle.CurrentDistanceAlongRoute;
@@ -17,18 +13,38 @@ public partial class HardStopCollider : VehicleCollider
 		float brakingDistanceOnRoute = (float)distanceAlongRoute + (float)(speed * timeToStop) - 0.25f * (float)associatedVehicle.brakeSpeed * timeToStop * timeToStop;
 		return brakingDistanceOnRoute;
 	}
-	public override void HandleUpdatePosition()
+
+    public override void HandleUpdatePosition()
+    {
+        Route route = associatedVehicle.CurrentRoute;
+
+        float brakingDistanceOnRoute = Mathf.Min(GetComputedPositionOnRoute(), route.GetLength());
+        RoutePoint point = route.GetVehicleRoutePositionAtPoint(brakingDistanceOnRoute);
+        FaceDirectionOfMotion(point.Rotation);
+        GlobalPosition = point.Position;
+    }
+    private RoutePoint getPositionOnRoute()
 	{
 		Route route = associatedVehicle.CurrentRoute;
 		
 		float brakingDistanceOnRoute = Mathf.Min(GetComputedPositionOnRoute(), route.GetLength());
-		RoutePoint point = route.GetVehicleRoutePositionAtPoint(brakingDistanceOnRoute);
-		FaceDirectionOfMotion(point.Rotation);
-		GlobalPosition = point.Position;
+		return route.GetVehicleRoutePositionAtPoint(brakingDistanceOnRoute);
 	}
 
 	protected override bool ShouldStop(List<VehicleCollider> colliders)
 	{
 		return colliders.Count > 0;
 	}
+
+    public IEnumerable<DebugVisualization> GetVisualization()
+    {
+		yield return DebugVisualizationFactory.Box(
+			GlobalPosition,
+			Quaternion,
+			((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size,
+			Colors.Black);
+		RoutePoint point = getPositionOnRoute();
+		yield return DebugVisualizationFactory.Line(point.forwardPoint, point.backPoint, Colors.Black);
+		yield return DebugVisualizationFactory.Sphere(GlobalPosition, 0.1f, Colors.Black);
+    }
 }
