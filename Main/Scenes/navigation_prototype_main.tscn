@@ -1,11 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=25 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" uid="uid://c7agmdrc66av8" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" uid="uid://dgv2bxked3e5" path="res://Main/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
 [ext_resource type="Script" uid="uid://dlclahwkgvmvf" path="res://Main/Editor/PrototypeEditor.cs" id="4_ywgcf"]
 [ext_resource type="Script" uid="uid://b7885n57krs7j" path="res://Main/Editor/Cursor.cs" id="5_mhk0g"]
 [ext_resource type="Script" uid="uid://cc8crshyq4nlq" path="res://Main/Editor/SceneSaver.cs" id="5_rsmg7"]
-[ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
+[ext_resource type="Script" uid="uid://can2dojlmlrtw" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="8_fh4jr"]
 [ext_resource type="Script" uid="uid://cy6fd3ke64yhj" path="res://Main/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
 [ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
 [ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/NetworkPrototype/Vehicle.tscn" id="16_f2xv3"]
+[ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/DevTools/DebugVisualizer.cs" id="16_jf1gt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -49,7 +50,7 @@ size = Vector3(200, 0.1, 200)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" groups=["DebugVisualProvider"]]
 
 [node name="PrototypeUi" type="Control" parent="."]
 layout_mode = 3
@@ -128,12 +129,13 @@ script = ExtResource("1_t2p50")
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("2_jfx1u")
 
-[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph")]
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph", "debugVisualizer")]
 script = ExtResource("4_ywgcf")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 grid = NodePath("../WorldGridViewer")
 navGraph = NodePath("../NavGraphContainer")
+debugVisualizer = NodePath("../Node")
 
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_rsmg7")
@@ -398,9 +400,9 @@ light_energy = 2.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DirectionalLight3D/StaticBody3D"]
 shape = SubResource("SphereShape3D_ciyus")
 
-[node name="VehicleContainer" type="Node" parent="."]
+[node name="VehicleContainer" type="Node" parent="." groups=["DebugVisualProvider"]]
 
-[node name="Vehicle5" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+[node name="Vehicle5" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
 brakeSpeed = 10.0
 showVisualizations = true
@@ -424,3 +426,6 @@ showVisualizations = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
 brakeSpeed = 10.0
 showVisualizations = true
+
+[node name="Node" type="Node" parent="." groups=["DebugVisualProvider"]]
+script = ExtResource("16_jf1gt")

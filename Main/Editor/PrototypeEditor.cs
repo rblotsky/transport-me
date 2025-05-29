@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Diagnostics.Tracing;
+using Transportme.Main.DevTools;
 
 [GlobalClass]
 public partial class PrototypeEditor : Node
@@ -13,6 +14,7 @@ public partial class PrototypeEditor : Node
 	[Export] private Cursor cursor;
 	[Export] private WorldGrid grid;
 	[Export] private NavGraphContainer navGraph;
+	[Export] private DebugVisualizer debugVisualizer;
 
 	// Editor Configs
 	[ExportCategory("Configs")]
@@ -44,6 +46,10 @@ public partial class PrototypeEditor : Node
 				{
 					vehicle.speed-=1;
 				}
+			} else if(keyInput.Keycode == Key.R && keyInput.IsPressed())
+			{
+				GD.Print("Pressed R");
+				debugVisualizer.Refresh();
 			}
 		}
 		base._UnhandledInput(@event);
