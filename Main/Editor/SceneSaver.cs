@@ -7,11 +7,6 @@ public partial class SceneSaver : Node
     // DATA //
     [Export] private string savedSceneName;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-        InstructionsUI.instance.AddInstruction(this, "Press S to save the scene.");
-    }
 
     public override void _UnhandledInput(InputEvent receivedEvent)
     {
