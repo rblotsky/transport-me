@@ -1,0 +1,144 @@
+[gd_scene load_steps=16 format=4 uid="uid://l2dun676hjxf"]
+
+[ext_resource type="Script" uid="uid://cay0grq658jvi" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoad.cs" id="1_kt86m"]
+[ext_resource type="Resource" uid="uid://c8pwcoy7tay2u" path="res://Prototypes/CurvedRoadsPrototype/TestCurvedRoadMesh.tres" id="2_2koku"]
+[ext_resource type="Script" uid="uid://bsmky6dx5q6dd" path="res://Main/Navigation/NavSegment.cs" id="2_4v7a3"]
+[ext_resource type="Script" uid="uid://rwr6cdq5ginu" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadSegmentOffset.cs" id="2_b7yv1"]
+[ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="5_opl8b"]
+
+[sub_resource type="Resource" id="Resource_k0add"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 0
+RoadStartOffset = Vector3(-2, 0, 0)
+RoadEndOffset = Vector3(-2, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_2gagd"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 1
+RoadStartOffset = Vector3(-1, 0, 0)
+RoadEndOffset = Vector3(-1, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_i0n0l"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 2
+RoadStartOffset = Vector3(-1, 0, 0)
+RoadEndOffset = Vector3(-2, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_cmmfn"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 3
+RoadStartOffset = Vector3(-2, 0, 0)
+RoadEndOffset = Vector3(-1, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_wltu8"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 4
+RoadStartOffset = Vector3(1, 0, 0)
+RoadEndOffset = Vector3(1, 0, 0)
+Direction = false
+
+[sub_resource type="Resource" id="Resource_n31po"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 5
+RoadStartOffset = Vector3(2, 0, 0)
+RoadEndOffset = Vector3(2, 0, 0)
+Direction = false
+
+[sub_resource type="Resource" id="Resource_w4r4l"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 6
+RoadStartOffset = Vector3(1, 0, 0)
+RoadEndOffset = Vector3(2, 0, 0)
+Direction = false
+
+[sub_resource type="Resource" id="Resource_8ctfq"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 7
+RoadStartOffset = Vector3(2, 0, 0)
+RoadEndOffset = Vector3(1, 0, 0)
+Direction = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_pebpy"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -2, 2, 0.25001, 4),
+"attribute_data": PackedByteArray("AAAAAAAAAABkCzY9AAAAAGQLNj0AAAAAzszMPQAAAADOzMw9AAAAAGZmZj8AAAAAZmZmPwAAAABKn3Q/AAAAAEqfdD8AAAAAAACAPwAAAAAAAAAA3LnyPGQLNj3cufI8ZAs2Pdy58jzOzMw93LnyPM7MzD3cufI8ZmZmP9y58jxmZmY/3LnyPEqfdD/cufI8Sp90P9y58jwAAIA/3LnyPAAAAADXuXI9ZAs2Pde5cj1kCzY917lyPc7MzD3XuXI9zszMPde5cj1mZmY/17lyPWZmZj/XuXI9Sp90P9e5cj1Kn3Q/17lyPQAAgD/XuXI9AAAAAGELtj1kCzY9YQu2PWQLNj1hC7Y9zszMPWELtj3OzMw9YQu2PWZmZj9hC7Y9ZmZmP2ELtj1Kn3Q/YQu2PUqfdD9hC7Y9AACAP2ELtj0AAAAA17nyPWQLNj3XufI9ZAs2Pde58j3OzMw917nyPc7MzD3XufI9ZmZmP9e58j1mZmY/17nyPUqfdD/XufI9Sp90P9e58j0AAIA/17nyPQAAAAAmtBc+ZAs2PSa0Fz5kCzY9JrQXPs7MzD0mtBc+zszMPSa0Fz5mZmY/JrQXPmZmZj8mtBc+Sp90Pya0Fz5Kn3Q/JrQXPgAAgD8mtBc+AAAAAGELNj5kCzY9YQs2PmQLNj1hCzY+zszMPWELNj7OzMw9YQs2PmZmZj9hCzY+ZmZmP2ELNj5Kn3Q/YQs2PkqfdD9hCzY+AACAP2ELNj4AAAAAnGJUPmQLNj2cYlQ+ZAs2PZxiVD7OzMw9nGJUPs7MzD2cYlQ+ZmZmP5xiVD5mZmY/nGJUPkqfdD+cYlQ+Sp90P5xiVD4AAIA/nGJUPgAAAADXuXI+ZAs2Pde5cj5kCzY917lyPs7MzD3XuXI+zszMPde5cj5mZmY/17lyPmZmZj/XuXI+Sp90P9e5cj5Kn3Q/17lyPgAAgD/XuXI+AAAAAImIiD5kCzY9iYiIPmQLNj2JiIg+zszMPYmIiD7OzMw9iYiIPmZmZj+JiIg+ZmZmP4mIiD5Kn3Q/iYiIPkqfdD+JiIg+AACAP4mIiD4AAAAAJrSXPmQLNj0mtJc+ZAs2PSa0lz7OzMw9JrSXPs7MzD0mtJc+ZmZmPya0lz5mZmY/JrSXPkqfdD8mtJc+Sp90Pya0lz4AAIA/JrSXPgAAAADE36Y+ZAs2PcTfpj5kCzY9xN+mPs7MzD3E36Y+zszMPcTfpj5mZmY/xN+mPmZmZj/E36Y+Sp90P8Tfpj5Kn3Q/xN+mPgAAgD/E36Y+AAAAAGALtj5kCzY9YAu2PmQLNj1gC7Y+zszMPWALtj7OzMw9YAu2PmZmZj9gC7Y+ZmZmP2ALtj5Kn3Q/YAu2PkqfdD9gC7Y+AACAP2ALtj4AAAAA/jbFPmQLNj3+NsU+ZAs2Pf42xT7OzMw9/jbFPs7MzD3+NsU+ZmZmP/42xT5mZmY//jbFPkqfdD/+NsU+Sp90P/42xT4AAIA//jbFPgAAAACbYtQ+ZAs2PZti1D5kCzY9m2LUPs7MzD2bYtQ+zszMPZti1D5mZmY/m2LUPmZmZj+bYtQ+Sp90P5ti1D5Kn3Q/m2LUPgAAgD+bYtQ+AAAAADmO4z5kCzY9OY7jPmQLNj05juM+zszMPTmO4z7OzMw9OY7jPmZmZj85juM+ZmZmPzmO4z5Kn3Q/OY7jPkqfdD85juM+AACAPzmO4z4="),
+"format": 34359742487,
+"index_count": 450,
+"index_data": PackedByteArray("AAAKAAEACgALAAEAAgAMAAMADAANAAMABAAOAAUADgAPAAUABgAQAAcAEAARAAcACAASAAkAEgATAAkACgAUAAsAFAAVAAsADAAWAA0AFgAXAA0ADgAYAA8AGAAZAA8AEAAaABEAGgAbABEAEgAcABMAHAAdABMAFAAeABUAHgAfABUAFgAgABcAIAAhABcAGAAiABkAIgAjABkAGgAkABsAJAAlABsAHAAmAB0AJgAnAB0AHgAoAB8AKAApAB8AIAAqACEAKgArACEAIgAsACMALAAtACMAJAAuACUALgAvACUAJgAwACcAMAAxACcAKAAyACkAMgAzACkAKgA0ACsANAA1ACsALAA2AC0ANgA3AC0ALgA4AC8AOAA5AC8AMAA6ADEAOgA7ADEAMgA8ADMAPAA9ADMANAA+ADUAPgA/ADUANgBAADcAQABBADcAOABCADkAQgBDADkAOgBEADsARABFADsAPABGAD0ARgBHAD0APgBIAD8ASABJAD8AQABKAEEASgBLAEEAQgBMAEMATABNAEMARABOAEUATgBPAEUARgBQAEcAUABRAEcASABSAEkAUgBTAEkASgBUAEsAVABVAEsATABWAE0AVgBXAE0ATgBYAE8AWABZAE8AUABaAFEAWgBbAFEAUgBcAFMAXABdAFMAVABeAFUAXgBfAFUAVgBgAFcAYABhAFcAWABiAFkAYgBjAFkAWgBkAFsAZABlAFsAXABmAF0AZgBnAF0AXgBoAF8AaABpAF8AYABqAGEAagBrAGEAYgBsAGMAbABtAGMAZABuAGUAbgBvAGUAZgBwAGcAcABxAGcAaAByAGkAcgBzAGkAagB0AGsAdAB1AGsAbAB2AG0AdgB3AG0AbgB4AG8AeAB5AG8AcAB6AHEAegB7AHEAcgB8AHMAfAB9AHMAdAB+AHUAfgB/AHUAdgCAAHcAgACBAHcAeACCAHkAggCDAHkAegCEAHsAhACFAHsAfACGAH0AhgCHAH0AfgCIAH8AiACJAH8AgACKAIEAigCLAIEAggCMAIMAjACNAIMAhACOAIUAjgCPAIUAhgCQAIcAkACRAIcAiACSAIkAkgCTAIkAigCUAIsAlACVAIsAjACWAI0AlgCXAI0AjgCYAI8AmACZAI8AkACaAJEAmgCbAJEAkgCcAJMAnACdAJMAlACeAJUAngCfAJUA"),
+"material": ExtResource("5_opl8b"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 160,
+"vertex_data": PackedByteArray("AACAvwAAgD4AAADAAACAvwAAgD5mZua/AACAvwAAgD5mZua/AACAvwAAAABmZua/AACAvwAAAABmZua/AACAvwAAAABmZuY/AACAvwAAAABmZuY/AACAvwAAgD5mZuY/AACAvwAAgD5mZuY/AACAvwAAgD4AAABA3t1dvwAAgD4AAADA3t1dvwAAgD5mZua/3t1dvwAAgD5mZua/3t1dvwAAAABmZua/3t1dvwAAAABmZua/3t1dvwAAAABmZuY/3t1dvwAAAABmZuY/3t1dvwAAgD5mZuY/3t1dvwAAgD5mZuY/3t1dvwAAgD4AAABAvLs7vwAAgD4AAADAvLs7vwAAgD5mZua/vLs7vwAAgD5mZua/vLs7vwAAAABmZua/vLs7vwAAAABmZua/vLs7vwAAAABmZuY/vLs7vwAAAABmZuY/vLs7vwAAgD5mZuY/vLs7vwAAgD5mZuY/vLs7vwAAgD4AAABAmpkZvwAAgD4AAADAmpkZvwAAgD5mZua/mpkZvwAAgD5mZua/mpkZvwAAAABmZua/mpkZvwAAAABmZua/mpkZvwAAAABmZuY/mpkZvwAAAABmZuY/mpkZvwAAgD5mZuY/mpkZvwAAgD5mZuY/mpkZvwAAgD4AAABA7+7uvgAAgD4AAADA7+7uvgAAgD5mZua/7+7uvgAAgD5mZua/7+7uvgAAAABmZua/7+7uvgAAAABmZua/7+7uvgAAAABmZuY/7+7uvgAAAABmZuY/7+7uvgAAgD5mZuY/7+7uvgAAgD5mZuY/7+7uvgAAgD4AAABAqaqqvgAAgD4AAADAqaqqvgAAgD5mZua/qaqqvgAAgD5mZua/qaqqvgAAAABmZua/qaqqvgAAAABmZua/qaqqvgAAAABmZuY/qaqqvgAAAABmZuY/qaqqvgAAgD5mZuY/qaqqvgAAgD5mZuY/qaqqvgAAgD4AAABAzsxMvgAAgD4AAADAzsxMvgAAgD5mZua/zsxMvgAAgD5mZua/zsxMvgAAAABmZua/zsxMvgAAAABmZua/zsxMvgAAAABmZuY/zsxMvgAAAABmZuY/zsxMvgAAgD5mZuY/zsxMvgAAgD5mZuY/zsxMvgAAgD4AAABAhIiIvQAAgD4AAADAhIiIvQAAgD5mZua/hIiIvQAAgD5mZua/hIiIvQAAAABmZua/hIiIvQAAAABmZua/hIiIvQAAAABmZuY/hIiIvQAAAABmZuY/hIiIvQAAgD5mZuY/hIiIvQAAgD5mZuY/hIiIvQAAgD4AAABAkIiIPQAAgD4AAADAkIiIPQAAgD5mZua/kIiIPQAAgD5mZua/kIiIPQAAAABmZua/kIiIPQAAAABmZua/kIiIPQAAAABmZuY/kIiIPQAAAABmZuY/kIiIPQAAgD5mZuY/kIiIPQAAgD5mZuY/kIiIPQAAgD4AAABA0MxMPgAAgD4AAADA0MxMPgAAgD5mZua/0MxMPgAAgD5mZua/0MxMPgAAAABmZua/0MxMPgAAAABmZua/0MxMPgAAAABmZuY/0MxMPgAAAABmZuY/0MxMPgAAgD5mZuY/0MxMPgAAgD5mZuY/0MxMPgAAgD4AAABArKqqPgAAgD4AAADArKqqPgAAgD5mZua/rKqqPgAAgD5mZua/rKqqPgAAAABmZua/rKqqPgAAAABmZua/rKqqPgAAAABmZuY/rKqqPgAAAABmZuY/rKqqPgAAgD5mZuY/rKqqPgAAgD5mZuY/rKqqPgAAgD4AAABA8O7uPgAAgD4AAADA8O7uPgAAgD5mZua/8O7uPgAAgD5mZua/8O7uPgAAAABmZua/8O7uPgAAAABmZua/8O7uPgAAAABmZuY/8O7uPgAAAABmZuY/8O7uPgAAgD5mZuY/8O7uPgAAgD5mZuY/8O7uPgAAgD4AAABAmpkZPwAAgD4AAADAmpkZPwAAgD5mZua/mpkZPwAAgD5mZua/mpkZPwAAAABmZua/mpkZPwAAAABmZua/mpkZPwAAAABmZuY/mpkZPwAAAABmZuY/mpkZPwAAgD5mZuY/mpkZPwAAgD5mZuY/mpkZPwAAgD4AAABAvLs7PwAAgD4AAADAvLs7PwAAgD5mZua/vLs7PwAAgD5mZua/vLs7PwAAAABmZua/vLs7PwAAAABmZua/vLs7PwAAAABmZuY/vLs7PwAAAABmZuY/vLs7PwAAgD5mZuY/vLs7PwAAgD5mZuY/vLs7PwAAgD4AAABA3t1dPwAAgD4AAADA3t1dPwAAgD5mZua/3t1dPwAAgD5mZua/3t1dPwAAAABmZua/3t1dPwAAAABmZua/3t1dPwAAAABmZuY/3t1dPwAAAABmZuY/3t1dPwAAgD5mZuY/3t1dPwAAgD5mZuY/3t1dPwAAgD4AAABAAACAPwAAgD4AAADAAACAPwAAgD5mZua/AACAPwAAgD5mZua/AACAPwAAAABmZua/AACAPwAAAABmZua/AACAPwAAAABmZuY/AACAPwAAAABmZuY/AACAPwAAgD5mZuY/AACAPwAAgD5mZuY/AACAPwAAgD4AAABA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/78=")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_iu2uo"]
+
+[node name="Curved2Lane2Way" type="Node3D" node_paths=PackedStringArray("meshRenderer", "debugRenderer", "segments")]
+script = ExtResource("1_kt86m")
+Start = Vector3(-1, 0, 0)
+End = Vector3(1, 0, 0)
+roadMesh = ExtResource("2_2koku")
+meshRenderer = NodePath("MeshInstance3D")
+debugRenderer = NodePath("MeshInstance3D2")
+SaveSegmentOffsetsToggle = true
+segments = [NodePath("NavSegment"), NodePath("NavSegment2"), NodePath("NavSegment3"), NodePath("NavSegment4"), NodePath("NavSegment5"), NodePath("NavSegment6"), NodePath("NavSegment7"), NodePath("NavSegment8")]
+segmentOffsets = [SubResource("Resource_k0add"), SubResource("Resource_2gagd"), SubResource("Resource_i0n0l"), SubResource("Resource_cmmfn"), SubResource("Resource_wltu8"), SubResource("Resource_n31po"), SubResource("Resource_w4r4l"), SubResource("Resource_8ctfq")]
+
+[node name="NavSegment" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 2)
+End = Vector3(1, 0, 2)
+Control = Vector3(0, 0, 2)
+
+[node name="NavSegment2" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 1)
+End = Vector3(1, 0, 1)
+Control = Vector3(0, 0, 1)
+
+[node name="NavSegment3" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 1)
+End = Vector3(1, 0, 2)
+Control = Vector3(0, 0, 1.41)
+
+[node name="NavSegment4" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 2)
+End = Vector3(1, 0, 1)
+Control = Vector3(0, 0, 1.45)
+
+[node name="NavSegment5" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -1)
+End = Vector3(-1, 0, -1)
+Control = Vector3(0, 0, -1)
+
+[node name="NavSegment6" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -2)
+End = Vector3(-1, 0, -2)
+Control = Vector3(0, 0, -2)
+
+[node name="NavSegment7" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -2)
+End = Vector3(-1, 0, -1)
+Control = Vector3(0, 0, -1.58)
+
+[node name="NavSegment8" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -1)
+End = Vector3(-1, 0, -2)
+Control = Vector3(0, 0, -1.645)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_pebpy")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_iu2uo")

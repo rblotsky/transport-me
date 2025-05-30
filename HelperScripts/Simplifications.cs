@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Runtime.Intrinsics;
 
 public static class Simplifications
 {
@@ -179,6 +180,48 @@ public static class Simplifications
     public static bool IsParentOfType<T>(Node node) where T : Node
     {
         return (node.GetParent() != null) && (node.GetParent() is T);
+    }
+
+
+    // Math
+    public static Quaternion ShortestArc(Vector3 start, Vector3 end)
+    {
+        Vector3 startNormalized = start.Normalized();
+        Vector3 endNormalized = end.Normalized();
+
+        Vector3 a = startNormalized.Cross(endNormalized);
+
+        Quaternion arc = new Quaternion();
+        arc.X = a.X;
+        arc.Y = a.Y;
+        arc.Z = a.Z;
+        arc.W = Mathf.Sqrt(Mathf.Pow(startNormalized.Length(), 2)) * (Mathf.Pow(endNormalized.Length(), 2)) + startNormalized.Dot(endNormalized);
+
+        return arc;
+    }
+
+    public static int RealModulo(int a, int b)
+    {
+        // Runs a REAL modulus, because the C# modulo (%) is actually just a remainder
+        // and acts stupid on negative numbers.
+        // Taken from https://github.com/dotnet/csharplang/discussions/4744
+        int c = a % b;
+        if ((c < 0 && b > 0) || (c > 0 && b < 0))
+        {
+            c += b;
+        }
+
+        return c;
+    }
+
+    public static Vector2 PerpendicularCounterClockwise(this Vector2 vector2)
+    {
+        return new Vector2(-vector2.Y, vector2.X);
+    }
+
+    public static Vector2 PerpendicularClockwise(this Vector2 vector2)
+    {
+        return new Vector2(vector2.Y, -vector2.X);
     }
 
 

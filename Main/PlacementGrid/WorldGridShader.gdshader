@@ -30,16 +30,16 @@ float checker(vec2 pos, float unit){
 void fragment() {
 	// ray from camera to fragemnt in wrold space
 	vec3 rayWorld = normalize(mat3(INV_VIEW_MATRIX) * VIEW) ;
-	
+
 	// calculate fragment position in world space
 	vec3 posWorld;
 	float t = -(CAMERA_POSITION_WORLD.y - centerOffset.y) / (rayWorld.y );
 	posWorld.y = -centerOffset.y;
 	posWorld.xz = CAMERA_POSITION_WORLD.xz + t * rayWorld.xz + centerOffset.xz;
-	
-	// calculate planar distance from camera to fragment (used for fading) 
+
+	// calculate planar distance from camera to fragment (used for fading)
 	float distPlanar = distance(posWorld.xz, centerOffset.xz);
-	
+
 	// grid
 	float line = grid(posWorld.xz, unitSize, majorLineThickness);
 	line += grid(posWorld.xz, unitSize / float(subdivisions), minorLineThickness) * minorLineAlpha;
@@ -47,14 +47,14 @@ void fragment() {
 
 	// checkerboard
 	float chec = checker(posWorld.xz, unitSize);
-	
+
 	// distance fade factor
 	float fadeFactor = 1.0 - clamp((distPlanar - fadeStart) / (fadeEnd - fadeStart), 0.0, 1.0);
-	
+
 	// write ground plane depth into z buffer
 	vec4 pp = (PROJECTION_MATRIX * (VIEW_MATRIX * vec4(posWorld, 1.0)));
 	DEPTH = pp.z / pp.w;
-	
+
 	// final alpha
 	float alphaGrid = line * gridColor.a;
 	float alphaChec = chec * checkerColor.a;
@@ -64,5 +64,5 @@ void fragment() {
 
 	// final color (premultiplied alpha blend)
 	ALBEDO = (checkerColor.rgb * alphaChec) * (1.0 - alphaGrid) + (gridColor.rgb * alphaGrid);
-	
+
 }
