@@ -1,0 +1,144 @@
+[gd_scene load_steps=16 format=4 uid="uid://l2dun676hjxf"]
+
+[ext_resource type="Script" uid="uid://cay0grq658jvi" path="res://Main/Scripts/RoadBuilding/CurvedRoads/CurvedRoad.cs" id="1_kt86m"]
+[ext_resource type="Resource" uid="uid://c8pwcoy7tay2u" path="res://Prototypes/CurvedRoadsPrototype/TestCurvedRoadMesh.tres" id="2_2koku"]
+[ext_resource type="Script" uid="uid://bsmky6dx5q6dd" path="res://Main/Scripts/Navigation/NavSegment.cs" id="2_4v7a3"]
+[ext_resource type="Script" uid="uid://rwr6cdq5ginu" path="res://Main/Scripts/RoadBuilding/CurvedRoads/CurvedRoadSegmentOffset.cs" id="2_b7yv1"]
+[ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="5_opl8b"]
+
+[sub_resource type="Resource" id="Resource_k0add"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 0
+RoadStartOffset = Vector3(-2, 0, 0)
+RoadEndOffset = Vector3(-2, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_2gagd"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 1
+RoadStartOffset = Vector3(-1, 0, 0)
+RoadEndOffset = Vector3(-1, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_i0n0l"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 2
+RoadStartOffset = Vector3(-1, 0, 0)
+RoadEndOffset = Vector3(-2, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_cmmfn"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 3
+RoadStartOffset = Vector3(-2, 0, 0)
+RoadEndOffset = Vector3(-1, 0, 0)
+Direction = true
+
+[sub_resource type="Resource" id="Resource_wltu8"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 4
+RoadStartOffset = Vector3(1, 0, 0)
+RoadEndOffset = Vector3(1, 0, 0)
+Direction = false
+
+[sub_resource type="Resource" id="Resource_n31po"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 5
+RoadStartOffset = Vector3(2, 0, 0)
+RoadEndOffset = Vector3(2, 0, 0)
+Direction = false
+
+[sub_resource type="Resource" id="Resource_w4r4l"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 6
+RoadStartOffset = Vector3(1, 0, 0)
+RoadEndOffset = Vector3(2, 0, 0)
+Direction = false
+
+[sub_resource type="Resource" id="Resource_8ctfq"]
+script = ExtResource("2_b7yv1")
+SegmentIndex = 7
+RoadStartOffset = Vector3(2, 0, 0)
+RoadEndOffset = Vector3(1, 0, 0)
+Direction = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aaxak"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -2, 2, 0.25, 4),
+"attribute_data": PackedByteArray("AAAAAAAAAADNzEw9AAAAAM3MTD0AAAAA7VG4PQAAAADtUbg9AAAAACpcDz4AAAAAKlwPPgAAAAD2KFw/AAAAAPYoXD8AAAAAw/VoPwAAAADD9Wg/AAAAADQzcz8AAAAANDNzPwAAAAAAAIA/AAAAAAAAAAATdNo8zcxMPRN02jzNzEw9E3TaPO1RuD0TdNo87VG4PRN02jwqXA8+E3TaPCpcDz4TdNo89ihcPxN02jz2KFw/E3TaPMP1aD8TdNo8w/VoPxN02jw0M3M/E3TaPDQzcz8TdNo8AACAPxN02jwAAAAADnRaPc3MTD0OdFo9zcxMPQ50Wj3tUbg9DnRaPe1RuD0OdFo9KlwPPg50Wj0qXA8+DnRaPfYoXD8OdFo99ihcPw50Wj3D9Wg/DnRaPcP1aD8OdFo9NDNzPw50Wj00M3M/DnRaPQAAgD8OdFo9AAAAAArXoz3NzEw9CtejPc3MTD0K16M97VG4PQrXoz3tUbg9CtejPSpcDz4K16M9KlwPPgrXoz32KFw/CtejPfYoXD8K16M9w/VoPwrXoz3D9Wg/CtejPTQzcz8K16M9NDNzPwrXoz0AAIA/CtejPQAAAAAOdNo9zcxMPQ502j3NzEw9DnTaPe1RuD0OdNo97VG4PQ502j0qXA8+DnTaPSpcDz4OdNo99ihcPw502j32KFw/DnTaPcP1aD8OdNo9w/VoPw502j00M3M/DnTaPTQzcz8OdNo9AACAPw502j0AAAAAiYgIPs3MTD2JiAg+zcxMPYmICD7tUbg9iYgIPu1RuD2JiAg+KlwPPomICD4qXA8+iYgIPvYoXD+JiAg+9ihcP4mICD7D9Wg/iYgIPsP1aD+JiAg+NDNzP4mICD40M3M/iYgIPgAAgD+JiAg+AAAAAArXIz7NzEw9CtcjPs3MTD0K1yM+7VG4PQrXIz7tUbg9CtcjPipcDz4K1yM+KlwPPgrXIz72KFw/CtcjPvYoXD8K1yM+w/VoPwrXIz7D9Wg/CtcjPjQzcz8K1yM+NDNzPwrXIz4AAIA/CtcjPgAAAACMJT8+zcxMPYwlPz7NzEw9jCU/Pu1RuD2MJT8+7VG4PYwlPz4qXA8+jCU/PipcDz6MJT8+9ihcP4wlPz72KFw/jCU/PsP1aD+MJT8+w/VoP4wlPz40M3M/jCU/PjQzcz+MJT8+AACAP4wlPz4AAAAADnRaPs3MTD0OdFo+zcxMPQ50Wj7tUbg9DnRaPu1RuD0OdFo+KlwPPg50Wj4qXA8+DnRaPvYoXD8OdFo+9ihcPw50Wj7D9Wg/DnRaPsP1aD8OdFo+NDNzPw50Wj40M3M/DnRaPgAAgD8OdFo+AAAAAJDCdT7NzEw9kMJ1Ps3MTD2QwnU+7VG4PZDCdT7tUbg9kMJ1PipcDz6QwnU+KlwPPpDCdT72KFw/kMJ1PvYoXD+QwnU+w/VoP5DCdT7D9Wg/kMJ1PjQzcz+QwnU+NDNzP5DCdT4AAIA/kMJ1PgAAAACJiIg+zcxMPYmIiD7NzEw9iYiIPu1RuD2JiIg+7VG4PYmIiD4qXA8+iYiIPipcDz6JiIg+9ihcP4mIiD72KFw/iYiIPsP1aD+JiIg+w/VoP4mIiD40M3M/iYiIPjQzcz+JiIg+AACAP4mIiD4AAAAAyi+WPs3MTD3KL5Y+zcxMPcovlj7tUbg9yi+WPu1RuD3KL5Y+KlwPPsovlj4qXA8+yi+WPvYoXD/KL5Y+9ihcP8ovlj7D9Wg/yi+WPsP1aD/KL5Y+NDNzP8ovlj40M3M/yi+WPgAAgD/KL5Y+AAAAAArXoz7NzEw9CtejPs3MTD0K16M+7VG4PQrXoz7tUbg9CtejPipcDz4K16M+KlwPPgrXoz72KFw/CtejPvYoXD8K16M+w/VoPwrXoz7D9Wg/CtejPjQzcz8K16M+NDNzPwrXoz4AAIA/CtejPgAAAABLfrE+zcxMPUt+sT7NzEw9S36xPu1RuD1LfrE+7VG4PUt+sT4qXA8+S36xPipcDz5LfrE+9ihcP0t+sT72KFw/S36xPsP1aD9LfrE+w/VoP0t+sT40M3M/S36xPjQzcz9LfrE+AACAP0t+sT4AAAAAiyW/Ps3MTD2LJb8+zcxMPYslvz7tUbg9iyW/Pu1RuD2LJb8+KlwPPoslvz4qXA8+iyW/PvYoXD+LJb8+9ihcP4slvz7D9Wg/iyW/PsP1aD+LJb8+NDNzP4slvz40M3M/iyW/PgAAgD+LJb8+AAAAAM3MzD7NzEw9zczMPs3MTD3NzMw+7VG4Pc3MzD7tUbg9zczMPipcDz7NzMw+KlwPPs3MzD72KFw/zczMPvYoXD/NzMw+w/VoP83MzD7D9Wg/zczMPjQzcz/NzMw+NDNzP83MzD4AAIA/zczMPg=="),
+"format": 34359742487,
+"index_count": 630,
+"index_data": PackedByteArray("AAAOAAEADgAPAAEAAgAQAAMAEAARAAMABAASAAUAEgATAAUABgAUAAcAFAAVAAcACAAWAAkAFgAXAAkACgAYAAsAGAAZAAsADAAaAA0AGgAbAA0ADgAcAA8AHAAdAA8AEAAeABEAHgAfABEAEgAgABMAIAAhABMAFAAiABUAIgAjABUAFgAkABcAJAAlABcAGAAmABkAJgAnABkAGgAoABsAKAApABsAHAAqAB0AKgArAB0AHgAsAB8ALAAtAB8AIAAuACEALgAvACEAIgAwACMAMAAxACMAJAAyACUAMgAzACUAJgA0ACcANAA1ACcAKAA2ACkANgA3ACkAKgA4ACsAOAA5ACsALAA6AC0AOgA7AC0ALgA8AC8APAA9AC8AMAA+ADEAPgA/ADEAMgBAADMAQABBADMANABCADUAQgBDADUANgBEADcARABFADcAOABGADkARgBHADkAOgBIADsASABJADsAPABKAD0ASgBLAD0APgBMAD8ATABNAD8AQABOAEEATgBPAEEAQgBQAEMAUABRAEMARABSAEUAUgBTAEUARgBUAEcAVABVAEcASABWAEkAVgBXAEkASgBYAEsAWABZAEsATABaAE0AWgBbAE0ATgBcAE8AXABdAE8AUABeAFEAXgBfAFEAUgBgAFMAYABhAFMAVABiAFUAYgBjAFUAVgBkAFcAZABlAFcAWABmAFkAZgBnAFkAWgBoAFsAaABpAFsAXABqAF0AagBrAF0AXgBsAF8AbABtAF8AYABuAGEAbgBvAGEAYgBwAGMAcABxAGMAZAByAGUAcgBzAGUAZgB0AGcAdAB1AGcAaAB2AGkAdgB3AGkAagB4AGsAeAB5AGsAbAB6AG0AegB7AG0AbgB8AG8AfAB9AG8AcAB+AHEAfgB/AHEAcgCAAHMAgACBAHMAdACCAHUAggCDAHUAdgCEAHcAhACFAHcAeACGAHkAhgCHAHkAegCIAHsAiACJAHsAfACKAH0AigCLAH0AfgCMAH8AjACNAH8AgACOAIEAjgCPAIEAggCQAIMAkACRAIMAhACSAIUAkgCTAIUAhgCUAIcAlACVAIcAiACWAIkAlgCXAIkAigCYAIsAmACZAIsAjACaAI0AmgCbAI0AjgCcAI8AnACdAI8AkACeAJEAngCfAJEAkgCgAJMAoAChAJMAlACiAJUAogCjAJUAlgCkAJcApAClAJcAmACmAJkApgCnAJkAmgCoAJsAqACpAJsAnACqAJ0AqgCrAJ0AngCsAJ8ArACtAJ8AoACuAKEArgCvAKEAogCwAKMAsACxAKMApACyAKUAsgCzAKUApgC0AKcAtAC1AKcAqAC2AKkAtgC3AKkAqgC4AKsAuAC5AKsArAC6AK0AugC7AK0ArgC8AK8AvAC9AK8AsAC+ALEAvgC/ALEAsgDAALMAwADBALMAtADCALUAwgDDALUAtgDEALcAxADFALcAuADGALkAxgDHALkAugDIALsAyADJALsAvADKAL0AygDLAL0AvgDMAL8AzADNAL8AwADOAMEAzgDPAMEAwgDQAMMA0ADRAMMAxADSAMUA0gDTAMUAxgDUAMcA1ADVAMcAyADWAMkA1gDXAMkAygDYAMsA2ADZAMsAzADaAM0A2gDbAM0AzgDcAM8A3ADdAM8A0ADeANEA3gDfANEA"),
+"material": ExtResource("5_opl8b"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 224,
+"vertex_data": PackedByteArray("AACAvwAAAAAAAADAAACAvwAAgD4AAADAAACAvwAAgD4AAADAAACAvwAAgD5mZua/AACAvwAAgD5mZua/AACAvwAAAABmZua/AACAvwAAAABmZua/AACAvwAAAABmZuY/AACAvwAAAABmZuY/AACAvwAAgD5mZuY/AACAvwAAgD5mZuY/AACAvwAAgD4AAABAAACAvwAAgD4AAABAAACAvwAAAAAAAABA3t1dvwAAAAAAAADA3t1dvwAAgD4AAADA3t1dvwAAgD4AAADA3t1dvwAAgD5mZua/3t1dvwAAgD5mZua/3t1dvwAAAABmZua/3t1dvwAAAABmZua/3t1dvwAAAABmZuY/3t1dvwAAAABmZuY/3t1dvwAAgD5mZuY/3t1dvwAAgD5mZuY/3t1dvwAAgD4AAABA3t1dvwAAgD4AAABA3t1dvwAAAAAAAABAvLs7vwAAAAAAAADAvLs7vwAAgD4AAADAvLs7vwAAgD4AAADAvLs7vwAAgD5mZua/vLs7vwAAgD5mZua/vLs7vwAAAABmZua/vLs7vwAAAABmZua/vLs7vwAAAABmZuY/vLs7vwAAAABmZuY/vLs7vwAAgD5mZuY/vLs7vwAAgD5mZuY/vLs7vwAAgD4AAABAvLs7vwAAgD4AAABAvLs7vwAAAAAAAABAmpkZvwAAAAAAAADAmpkZvwAAgD4AAADAmpkZvwAAgD4AAADAmpkZvwAAgD5mZua/mpkZvwAAgD5mZua/mpkZvwAAAABmZua/mpkZvwAAAABmZua/mpkZvwAAAABmZuY/mpkZvwAAAABmZuY/mpkZvwAAgD5mZuY/mpkZvwAAgD5mZuY/mpkZvwAAgD4AAABAmpkZvwAAgD4AAABAmpkZvwAAAAAAAABA7+7uvgAAAAAAAADA7+7uvgAAgD4AAADA7+7uvgAAgD4AAADA7+7uvgAAgD5mZua/7+7uvgAAgD5mZua/7+7uvgAAAABmZua/7+7uvgAAAABmZua/7+7uvgAAAABmZuY/7+7uvgAAAABmZuY/7+7uvgAAgD5mZuY/7+7uvgAAgD5mZuY/7+7uvgAAgD4AAABA7+7uvgAAgD4AAABA7+7uvgAAAAAAAABAqaqqvgAAAAAAAADAqaqqvgAAgD4AAADAqaqqvgAAgD4AAADAqaqqvgAAgD5mZua/qaqqvgAAgD5mZua/qaqqvgAAAABmZua/qaqqvgAAAABmZua/qaqqvgAAAABmZuY/qaqqvgAAAABmZuY/qaqqvgAAgD5mZuY/qaqqvgAAgD5mZuY/qaqqvgAAgD4AAABAqaqqvgAAgD4AAABAqaqqvgAAAAAAAABAzsxMvgAAAAAAAADAzsxMvgAAgD4AAADAzsxMvgAAgD4AAADAzsxMvgAAgD5mZua/zsxMvgAAgD5mZua/zsxMvgAAAABmZua/zsxMvgAAAABmZua/zsxMvgAAAABmZuY/zsxMvgAAAABmZuY/zsxMvgAAgD5mZuY/zsxMvgAAgD5mZuY/zsxMvgAAgD4AAABAzsxMvgAAgD4AAABAzsxMvgAAAAAAAABAhIiIvQAAAAAAAADAhIiIvQAAgD4AAADAhIiIvQAAgD4AAADAhIiIvQAAgD5mZua/hIiIvQAAgD5mZua/hIiIvQAAAABmZua/hIiIvQAAAABmZua/hIiIvQAAAABmZuY/hIiIvQAAAABmZuY/hIiIvQAAgD5mZuY/hIiIvQAAgD5mZuY/hIiIvQAAgD4AAABAhIiIvQAAgD4AAABAhIiIvQAAAAAAAABAkIiIPQAAAAAAAADAkIiIPQAAgD4AAADAkIiIPQAAgD4AAADAkIiIPQAAgD5mZua/kIiIPQAAgD5mZua/kIiIPQAAAABmZua/kIiIPQAAAABmZua/kIiIPQAAAABmZuY/kIiIPQAAAABmZuY/kIiIPQAAgD5mZuY/kIiIPQAAgD5mZuY/kIiIPQAAgD4AAABAkIiIPQAAgD4AAABAkIiIPQAAAAAAAABA0MxMPgAAAAAAAADA0MxMPgAAgD4AAADA0MxMPgAAgD4AAADA0MxMPgAAgD5mZua/0MxMPgAAgD5mZua/0MxMPgAAAABmZua/0MxMPgAAAABmZua/0MxMPgAAAABmZuY/0MxMPgAAAABmZuY/0MxMPgAAgD5mZuY/0MxMPgAAgD5mZuY/0MxMPgAAgD4AAABA0MxMPgAAgD4AAABA0MxMPgAAAAAAAABArKqqPgAAAAAAAADArKqqPgAAgD4AAADArKqqPgAAgD4AAADArKqqPgAAgD5mZua/rKqqPgAAgD5mZua/rKqqPgAAAABmZua/rKqqPgAAAABmZua/rKqqPgAAAABmZuY/rKqqPgAAAABmZuY/rKqqPgAAgD5mZuY/rKqqPgAAgD5mZuY/rKqqPgAAgD4AAABArKqqPgAAgD4AAABArKqqPgAAAAAAAABA8O7uPgAAAAAAAADA8O7uPgAAgD4AAADA8O7uPgAAgD4AAADA8O7uPgAAgD5mZua/8O7uPgAAgD5mZua/8O7uPgAAAABmZua/8O7uPgAAAABmZua/8O7uPgAAAABmZuY/8O7uPgAAAABmZuY/8O7uPgAAgD5mZuY/8O7uPgAAgD5mZuY/8O7uPgAAgD4AAABA8O7uPgAAgD4AAABA8O7uPgAAAAAAAABAmpkZPwAAAAAAAADAmpkZPwAAgD4AAADAmpkZPwAAgD4AAADAmpkZPwAAgD5mZua/mpkZPwAAgD5mZua/mpkZPwAAAABmZua/mpkZPwAAAABmZua/mpkZPwAAAABmZuY/mpkZPwAAAABmZuY/mpkZPwAAgD5mZuY/mpkZPwAAgD5mZuY/mpkZPwAAgD4AAABAmpkZPwAAgD4AAABAmpkZPwAAAAAAAABAvLs7PwAAAAAAAADAvLs7PwAAgD4AAADAvLs7PwAAgD4AAADAvLs7PwAAgD5mZua/vLs7PwAAgD5mZua/vLs7PwAAAABmZua/vLs7PwAAAABmZua/vLs7PwAAAABmZuY/vLs7PwAAAABmZuY/vLs7PwAAgD5mZuY/vLs7PwAAgD5mZuY/vLs7PwAAgD4AAABAvLs7PwAAgD4AAABAvLs7PwAAAAAAAABA3t1dPwAAAAAAAADA3t1dPwAAgD4AAADA3t1dPwAAgD4AAADA3t1dPwAAgD5mZua/3t1dPwAAgD5mZua/3t1dPwAAAABmZua/3t1dPwAAAABmZua/3t1dPwAAAABmZuY/3t1dPwAAAABmZuY/3t1dPwAAgD5mZuY/3t1dPwAAgD5mZuY/3t1dPwAAgD4AAABA3t1dPwAAgD4AAABA3t1dPwAAAAAAAABAAACAPwAAAAAAAADAAACAPwAAgD4AAADAAACAPwAAgD4AAADAAACAPwAAgD5mZua/AACAPwAAgD5mZua/AACAPwAAAABmZua/AACAPwAAAABmZua/AACAPwAAAABmZuY/AACAPwAAAABmZuY/AACAPwAAgD5mZuY/AACAPwAAgD5mZuY/AACAPwAAgD4AAABAAACAPwAAgD4AAABAAACAPwAAAAAAAABA//////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP//////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID//////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA//////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP//////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID//////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA//////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP//////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID//////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA//////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP//////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID//////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA//////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP//////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9///8AAP+//3///wAA/7///////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID//////38AgP//////fwCA/3///wAA/7//f///AAD/v/9//3//fwCA/3//f/9/AID/f///AAD/v/9///8AAP+///////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA//////9/AID//////38AgP9///8AAP+//3///wAA/7//f/9//38AgP9//3//fwCA/3///wAA/7//f///AAD/v///////fwCA//////9/AID/f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgA==")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_iu2uo"]
+
+[node name="Curved2Lane2Way" type="Node3D" node_paths=PackedStringArray("meshRenderer", "debugRenderer", "segments")]
+script = ExtResource("1_kt86m")
+Start = Vector3(-1, 0, 0)
+End = Vector3(1, 0, 0)
+roadMesh = ExtResource("2_2koku")
+meshRenderer = NodePath("MeshInstance3D")
+debugRenderer = NodePath("MeshInstance3D2")
+SaveSegmentOffsetsToggle = true
+segments = [NodePath("NavSegment"), NodePath("NavSegment2"), NodePath("NavSegment3"), NodePath("NavSegment4"), NodePath("NavSegment5"), NodePath("NavSegment6"), NodePath("NavSegment7"), NodePath("NavSegment8")]
+segmentOffsets = Array[ExtResource("2_b7yv1")]([SubResource("Resource_k0add"), SubResource("Resource_2gagd"), SubResource("Resource_i0n0l"), SubResource("Resource_cmmfn"), SubResource("Resource_wltu8"), SubResource("Resource_n31po"), SubResource("Resource_w4r4l"), SubResource("Resource_8ctfq")])
+
+[node name="NavSegment" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 2)
+End = Vector3(1, 0, 2)
+Control = Vector3(0, 0, 2)
+
+[node name="NavSegment2" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 1)
+End = Vector3(1, 0, 1)
+Control = Vector3(0, 0, 1)
+
+[node name="NavSegment3" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 1)
+End = Vector3(1, 0, 2)
+Control = Vector3(0, 0, 1.41)
+
+[node name="NavSegment4" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(-1, 0, 2)
+End = Vector3(1, 0, 1)
+Control = Vector3(0, 0, 1.45)
+
+[node name="NavSegment5" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -1)
+End = Vector3(-1, 0, -1)
+Control = Vector3(0, 0, -1)
+
+[node name="NavSegment6" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -2)
+End = Vector3(-1, 0, -2)
+Control = Vector3(0, 0, -2)
+
+[node name="NavSegment7" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -2)
+End = Vector3(-1, 0, -1)
+Control = Vector3(0, 0, -1.58)
+
+[node name="NavSegment8" type="Node3D" parent="."]
+script = ExtResource("2_4v7a3")
+Start = Vector3(1, 0, -1)
+End = Vector3(-1, 0, -2)
+Control = Vector3(0, 0, -1.645)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_aaxak")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_iu2uo")

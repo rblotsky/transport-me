@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=4 uid="uid://dhjh2xh1f5br2"]
 
-[ext_resource type="Script" uid="uid://cay0grq658jvi" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoad.cs" id="1_gnwrb"]
-[ext_resource type="Script" uid="uid://bsmky6dx5q6dd" path="res://Main/Navigation/NavSegment.cs" id="2_cfu0r"]
+[ext_resource type="Script" uid="uid://cay0grq658jvi" path="res://Main/Scripts/RoadBuilding/CurvedRoads/CurvedRoad.cs" id="1_gnwrb"]
+[ext_resource type="Script" uid="uid://bsmky6dx5q6dd" path="res://Main/Scripts/Navigation/NavSegment.cs" id="2_cfu0r"]
 [ext_resource type="Resource" uid="uid://c8pwcoy7tay2u" path="res://Prototypes/CurvedRoadsPrototype/TestCurvedRoadMesh.tres" id="2_enus4"]
 [ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="3_5ywpe"]
-[ext_resource type="Script" uid="uid://rwr6cdq5ginu" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadSegmentOffset.cs" id="3_kcy3a"]
+[ext_resource type="Script" uid="uid://rwr6cdq5ginu" path="res://Main/Scripts/RoadBuilding/CurvedRoads/CurvedRoadSegmentOffset.cs" id="3_kcy3a"]
 
 [sub_resource type="Resource" id="Resource_w02j1"]
 script = ExtResource("3_kcy3a")
@@ -20,7 +20,7 @@ RoadStartOffset = Vector3(1, 0, 0)
 RoadEndOffset = Vector3(1, 0, 0)
 Direction = false
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_w02j1"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_phu10"]
 _surfaces = [{
 "aabb": AABB(-1, 0, -2, 2, 0.25, 4),
 "attribute_data": PackedByteArray("AAAAAAAAAADNzEw9AAAAAM3MTD0AAAAA7VG4PQAAAADtUbg9AAAAACpcDz4AAAAAKlwPPgAAAAD2KFw/AAAAAPYoXD8AAAAAw/VoPwAAAADD9Wg/AAAAADQzcz8AAAAANDNzPwAAAAAAAIA/AAAAAAAAAAATdNo8zcxMPRN02jzNzEw9E3TaPO1RuD0TdNo87VG4PRN02jwqXA8+E3TaPCpcDz4TdNo89ihcPxN02jz2KFw/E3TaPMP1aD8TdNo8w/VoPxN02jw0M3M/E3TaPDQzcz8TdNo8AACAPxN02jwAAAAADnRaPc3MTD0OdFo9zcxMPQ50Wj3tUbg9DnRaPe1RuD0OdFo9KlwPPg50Wj0qXA8+DnRaPfYoXD8OdFo99ihcPw50Wj3D9Wg/DnRaPcP1aD8OdFo9NDNzPw50Wj00M3M/DnRaPQAAgD8OdFo9AAAAAArXoz3NzEw9CtejPc3MTD0K16M97VG4PQrXoz3tUbg9CtejPSpcDz4K16M9KlwPPgrXoz32KFw/CtejPfYoXD8K16M9w/VoPwrXoz3D9Wg/CtejPTQzcz8K16M9NDNzPwrXoz0AAIA/CtejPQAAAAAOdNo9zcxMPQ502j3NzEw9DnTaPe1RuD0OdNo97VG4PQ502j0qXA8+DnTaPSpcDz4OdNo99ihcPw502j32KFw/DnTaPcP1aD8OdNo9w/VoPw502j00M3M/DnTaPTQzcz8OdNo9AACAPw502j0AAAAAiYgIPs3MTD2JiAg+zcxMPYmICD7tUbg9iYgIPu1RuD2JiAg+KlwPPomICD4qXA8+iYgIPvYoXD+JiAg+9ihcP4mICD7D9Wg/iYgIPsP1aD+JiAg+NDNzP4mICD40M3M/iYgIPgAAgD+JiAg+AAAAAArXIz7NzEw9CtcjPs3MTD0K1yM+7VG4PQrXIz7tUbg9CtcjPipcDz4K1yM+KlwPPgrXIz72KFw/CtcjPvYoXD8K1yM+w/VoPwrXIz7D9Wg/CtcjPjQzcz8K1yM+NDNzPwrXIz4AAIA/CtcjPgAAAACMJT8+zcxMPYwlPz7NzEw9jCU/Pu1RuD2MJT8+7VG4PYwlPz4qXA8+jCU/PipcDz6MJT8+9ihcP4wlPz72KFw/jCU/PsP1aD+MJT8+w/VoP4wlPz40M3M/jCU/PjQzcz+MJT8+AACAP4wlPz4AAAAADnRaPs3MTD0OdFo+zcxMPQ50Wj7tUbg9DnRaPu1RuD0OdFo+KlwPPg50Wj4qXA8+DnRaPvYoXD8OdFo+9ihcPw50Wj7D9Wg/DnRaPsP1aD8OdFo+NDNzPw50Wj40M3M/DnRaPgAAgD8OdFo+AAAAAJDCdT7NzEw9kMJ1Ps3MTD2QwnU+7VG4PZDCdT7tUbg9kMJ1PipcDz6QwnU+KlwPPpDCdT72KFw/kMJ1PvYoXD+QwnU+w/VoP5DCdT7D9Wg/kMJ1PjQzcz+QwnU+NDNzP5DCdT4AAIA/kMJ1PgAAAACJiIg+zcxMPYmIiD7NzEw9iYiIPu1RuD2JiIg+7VG4PYmIiD4qXA8+iYiIPipcDz6JiIg+9ihcP4mIiD72KFw/iYiIPsP1aD+JiIg+w/VoP4mIiD40M3M/iYiIPjQzcz+JiIg+AACAP4mIiD4AAAAAyi+WPs3MTD3KL5Y+zcxMPcovlj7tUbg9yi+WPu1RuD3KL5Y+KlwPPsovlj4qXA8+yi+WPvYoXD/KL5Y+9ihcP8ovlj7D9Wg/yi+WPsP1aD/KL5Y+NDNzP8ovlj40M3M/yi+WPgAAgD/KL5Y+AAAAAArXoz7NzEw9CtejPs3MTD0K16M+7VG4PQrXoz7tUbg9CtejPipcDz4K16M+KlwPPgrXoz72KFw/CtejPvYoXD8K16M+w/VoPwrXoz7D9Wg/CtejPjQzcz8K16M+NDNzPwrXoz4AAIA/CtejPgAAAABLfrE+zcxMPUt+sT7NzEw9S36xPu1RuD1LfrE+7VG4PUt+sT4qXA8+S36xPipcDz5LfrE+9ihcP0t+sT72KFw/S36xPsP1aD9LfrE+w/VoP0t+sT40M3M/S36xPjQzcz9LfrE+AACAP0t+sT4AAAAAiyW/Ps3MTD2LJb8+zcxMPYslvz7tUbg9iyW/Pu1RuD2LJb8+KlwPPoslvz4qXA8+iyW/PvYoXD+LJb8+9ihcP4slvz7D9Wg/iyW/PsP1aD+LJb8+NDNzP4slvz40M3M/iyW/PgAAgD+LJb8+AAAAAM3MzD7NzEw9zczMPs3MTD3NzMw+7VG4Pc3MzD7tUbg9zczMPipcDz7NzMw+KlwPPs3MzD72KFw/zczMPvYoXD/NzMw+w/VoP83MzD7D9Wg/zczMPjQzcz/NzMw+NDNzP83MzD4AAIA/zczMPg=="),
@@ -60,7 +60,7 @@ End = Vector3(-1, 0, -1)
 Control = Vector3(0, 0, -1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_w02j1")
+mesh = SubResource("ArrayMesh_phu10")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_tto2u")

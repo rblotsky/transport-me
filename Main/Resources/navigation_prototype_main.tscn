@@ -1,23 +1,23 @@
 [gd_scene load_steps=28 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
-[ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
-[ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Editor/PrototypeEditor.cs" id="4_ywgcf"]
-[ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Editor/Cursor.cs" id="5_mhk0g"]
-[ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Editor/SceneSaver.cs" id="5_rsmg7"]
+[ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
+[ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_ywgcf"]
+[ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="5_mhk0g"]
+[ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_rsmg7"]
 [ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
-[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="8_fh4jr"]
-[ext_resource type="Script" uid="uid://cfw0yn56r277v" path="res://Main/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
-[ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
-[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/NetworkPrototype/2WayRoadEndTest.tscn" id="13_x31hm"]
-[ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
-[ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
-[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
-[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
-[ext_resource type="PackedScene" uid="uid://dhjh2xh1f5br2" path="res://Prototypes/CurvedRoadsPrototype/Curved1Lane2Way.tscn" id="15_d0hc3"]
-[ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
+[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="8_fh4jr"]
+[ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
+[ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/Resources/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
+[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/Resources/NetworkPrototype/2WayRoadEndTest.tscn" id="13_x31hm"]
+[ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/Resources/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
+[ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/Resources/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
+[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/Resources/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
+[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/Resources/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
+[ext_resource type="PackedScene" uid="uid://dhjh2xh1f5br2" path="res://Main/Resources/Curved1Lane2Way.tscn" id="15_d0hc3"]
+[ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/Resources/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
 [ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="16_8nrvk"]
-[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Prototypes/CurvedRoadsPrototype/RoadMesh.cs" id="17_oclra"]
+[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Main/Scripts/RoadBuilding/CurvedRoads/RoadMesh.cs" id="17_oclra"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -389,87 +389,59 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle11" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle12" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle2" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle3" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle4" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle5" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle6" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle13" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle14" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle15" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle16" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle17" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle18" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle19" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle20" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle21" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle22" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle23" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle24" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle25" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle26" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle27" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [node name="RandomVehicle28" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-distancePerSecond = 1.0
 
 [connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

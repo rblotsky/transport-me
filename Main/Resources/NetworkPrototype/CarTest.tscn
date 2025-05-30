@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d23ffb3sfichq"]
 
-[ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/NetworkPrototype/low_poly_car_no_light.glb" id="1_jkw01"]
+[ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/Resources/NetworkPrototype/low_poly_car_no_light.glb" id="1_jkw01"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k0f4p"]
 height = 2.46024

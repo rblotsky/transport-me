@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="2_880qr"]
 [ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="3_0xv0s"]
-[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/PlacementGrid/WorldGridViewer.tscn" id="4_ui2bi"]
-[ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Editor/Cursor.cs" id="5_4lhhj"]
-[ext_resource type="PackedScene" uid="uid://l2dun676hjxf" path="res://Prototypes/CurvedRoadsPrototype/Curved2Lane2Way.tscn" id="6_kdr6q"]
+[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="4_ui2bi"]
+[ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="5_4lhhj"]
+[ext_resource type="PackedScene" uid="uid://l2dun676hjxf" path="res://Main/Resources/Curved2Lane2Way.tscn" id="6_kdr6q"]
 [ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="6_uolfg"]
-[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Prototypes/CurvedRoadsPrototype/RoadMesh.cs" id="7_ljjh0"]
+[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Main/Scripts/RoadBuilding/CurvedRoads/RoadMesh.cs" id="7_ljjh0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmewv"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="RoadMesh" load_steps=3 format=3 uid="uid://c8pwcoy7tay2u"]
 
-[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Prototypes/CurvedRoadsPrototype/RoadMesh.cs" id="1_cc2ug"]
+[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Main/Scripts/RoadBuilding/CurvedRoads/RoadMesh.cs" id="1_cc2ug"]
 [ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="1_m04qt"]
 
 [resource]

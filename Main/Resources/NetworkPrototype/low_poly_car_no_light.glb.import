@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://djoi4wgf28io0"
-path="res://.godot/imported/low_poly_car_no_light.glb-1a459503a240688108e45e8b7443b027.scn"
+path="res://.godot/imported/low_poly_car_no_light.glb-3647f47765e7c441964299d84d327957.scn"
 
 [deps]
 
-source_file="res://Main/NetworkPrototype/low_poly_car_no_light.glb"
-dest_files=["res://.godot/imported/low_poly_car_no_light.glb-1a459503a240688108e45e8b7443b027.scn"]
+source_file="res://Main/Resources/NetworkPrototype/low_poly_car_no_light.glb"
+dest_files=["res://.godot/imported/low_poly_car_no_light.glb-3647f47765e7c441964299d84d327957.scn"]
 
 [params]
 
