@@ -161,6 +161,24 @@ public static class Simplifications
         return childrenOfRightType;
     }
 
+    public static List<T> GetChildrenImplementingType<T>(Node parent, bool recursive = false)
+    {
+        // Gets all children to operate on, then takes only the ones that match the right type.
+        List<Node> children = GetChildrenOfNode(parent, recursive);
+        List<T> childrenOfRightType = new List<T>();
+        foreach (Node child in children)
+        {
+            if (child is T t)
+            {
+                childrenOfRightType.Add(t);
+            }
+        }
+
+        // Returns what it found
+        children.Clear();
+        return childrenOfRightType;
+    }
+
     /// <summary>
     /// Gets the first child of the given type, or null if there isn't one.
     /// </summary>
