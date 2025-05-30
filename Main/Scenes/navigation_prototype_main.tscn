@@ -1,6 +1,5 @@
-[gd_scene load_steps=29 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=28 format=3 uid="uid://cdsolc63uov8s"]
 
-[ext_resource type="Script" uid="uid://k4th6a5ii436" path="res://Main/Editor/InstructionsUI.cs" id="1_ex2t5"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Editor/PrototypeEditor.cs" id="4_ywgcf"]
@@ -31,14 +30,14 @@ shadow_offset = Vector2(5, 5)
 [sub_resource type="Resource" id="Resource_013tm"]
 resource_local_to_scene = true
 script = ExtResource("17_oclra")
-points = [Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)]
+points = Array[Vector2]([Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)])
 numSegments = 15
 meshMaterial = ExtResource("16_8nrvk")
 
 [sub_resource type="Resource" id="Resource_p4l3g"]
 resource_local_to_scene = true
 script = ExtResource("17_oclra")
-points = [Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)]
+points = Array[Vector2]([Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)])
 numSegments = 15
 meshMaterial = ExtResource("16_8nrvk")
 
@@ -76,10 +75,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="InstructionsUI" type="Node" parent="PrototypeUi" node_paths=PackedStringArray("panel", "instructions")]
-script = ExtResource("1_ex2t5")
-panel = NodePath("../Panel")
-instructions = NodePath("../Panel/VBoxContainer2")
+[node name="InstructionsUI" type="Node" parent="PrototypeUi"]
 
 [node name="Button" type="Button" parent="PrototypeUi"]
 layout_mode = 0

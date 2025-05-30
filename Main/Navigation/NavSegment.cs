@@ -5,7 +5,6 @@ using System;
 [Tool]
 public partial class NavSegment : Node3D
 {
-    // TODO refactor curved segments into a subclass
     // DATA
     // Serializable Properties
     private Vector3 _start = Vector3.Zero;
@@ -14,6 +13,7 @@ public partial class NavSegment : Node3D
     [Export] public Vector3 End { get { return _end; } set { _end = value; UpdateVisualization(); } }
     private Vector3 _control = Vector3.Zero;
     [Export] public Vector3 Control { get { return _control; } set { _control = value; UpdateVisualization(); } }
+    [Export] public float MaxSpeed = 30f;
     
     // Readonly Properties
     public Vector3 GlobalStart { get { return ToGlobal(Start); } }
