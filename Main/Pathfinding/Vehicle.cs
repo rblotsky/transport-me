@@ -93,15 +93,6 @@ public partial class Vehicle : Node3D
 		foreach(VehicleCollider col in attachedColliders)
 		{
 			col.HandleUpdatePosition();
-
-			if (showVisualizations)
-			{
-				col.UpdateVisualization();
-			}
-			if (showPositionVisualizations)
-			{
-				col.UpdatePositionVisualizations();
-			}
 		}
 	}
 

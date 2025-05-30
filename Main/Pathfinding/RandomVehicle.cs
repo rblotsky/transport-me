@@ -8,7 +8,7 @@ public partial class RandomVehicle : Vehicle
 	public override void _PhysicsProcess(double delta)
 	{
 		// Only moves if we haven't reached the end yet.
-		if (CurrentSegment != null && timeStopped < 2)
+		if (CurrentSegment != null && timeStopped < 10)
 		{
 			RunMovementIteration(delta);
 		}

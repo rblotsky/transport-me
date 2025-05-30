@@ -25,7 +25,7 @@ namespace Transportme.Main.DevTools
             return new()
             {
                 Mesh = EasyShapes.CurveMesh(start, end, control, colour, numSegments),
-                Position = start,
+                Position = Vector3.Zero,
                 Rotation = Quaternion.Identity,
             };
         }
@@ -46,7 +46,7 @@ namespace Transportme.Main.DevTools
             return new()
             {
                 Mesh = EasyShapes.LineMesh(start, end, colour),
-                Position = start,
+                Position = Vector3.Zero,
                 Rotation = Quaternion.Identity,
             };
         }
