@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://dsjqklri6wma5"]
 
-[ext_resource type="Script" uid="uid://cf54h2ck54yw4" path="res://Main/Editor/InstructionsUI.cs" id="1_o8n0e"]
+[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_o8n0e"]
 [ext_resource type="Script" uid="uid://c7agmdrc66av8" path="res://HelperScripts/Debugger3D.cs" id="2_dx22g"]
 [ext_resource type="Script" uid="uid://dgv2bxked3e5" path="res://Main/Pathfinding/RouteDebugger.cs" id="3_fon6f"]
 [ext_resource type="Script" uid="uid://dlclahwkgvmvf" path="res://Main/Editor/PrototypeEditor.cs" id="4_jd5dk"]
@@ -177,7 +177,6 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_yisdv")]
-maxSpeed = 0.7
 brakeSpeed = 7.5
 showPositionVisualizations = true
 

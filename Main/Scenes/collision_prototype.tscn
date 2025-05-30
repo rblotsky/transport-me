@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://bf5ftcmk5mykk"]
 
-[ext_resource type="Script" uid="uid://cf54h2ck54yw4" path="res://Main/Editor/InstructionsUI.cs" id="1_a3rsw"]
+[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_a3rsw"]
 [ext_resource type="Script" uid="uid://c7agmdrc66av8" path="res://HelperScripts/Debugger3D.cs" id="2_wfnwe"]
 [ext_resource type="Script" uid="uid://dgv2bxked3e5" path="res://Main/Pathfinding/RouteDebugger.cs" id="3_24h18"]
 [ext_resource type="Script" uid="uid://dlclahwkgvmvf" path="res://Main/Editor/PrototypeEditor.cs" id="4_2vxk4"]

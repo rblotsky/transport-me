@@ -50,7 +50,7 @@ size = Vector3(200, 0.1, 200)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
 
-[node name="Node3D" type="Node3D" groups=["DebugVisualProvider"]]
+[node name="Root" type="Node3D" groups=["DebugVisualProvider"]]
 
 [node name="PrototypeUi" type="Control" parent="."]
 layout_mode = 3
@@ -407,22 +407,97 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
 brakeSpeed = 10.0
 showVisualizations = true
 
-[node name="Vehicle6" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+[node name="Vehicle6" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
 brakeSpeed = 10.0
 showVisualizations = true
 
-[node name="Vehicle7" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+[node name="Vehicle7" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
 brakeSpeed = 10.0
 showVisualizations = true
 
-[node name="Vehicle8" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+[node name="Vehicle8" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
 brakeSpeed = 10.0
 showVisualizations = true
 
-[node name="Vehicle9" parent="VehicleContainer" instance=ExtResource("16_f2xv3")]
+[node name="Vehicle9" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle10" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle11" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle12" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle13" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle14" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle15" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle16" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle17" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle18" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle19" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle20" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle21" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle22" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle23" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
+brakeSpeed = 10.0
+showVisualizations = true
+
+[node name="Vehicle24" parent="VehicleContainer" groups=["DebugVisualProvider"] instance=ExtResource("16_f2xv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900853, 0, -5.58672)
 brakeSpeed = 10.0
 showVisualizations = true

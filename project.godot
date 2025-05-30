@@ -23,6 +23,10 @@ project/assembly_name="Transport-me"
 
 enabled=PackedStringArray("res://addons/goutte.camera.trackball/plugin.cfg")
 
+[global_group]
+
+DebugVisualProvider=""
+
 [input]
 
 cam_zoom_in={
