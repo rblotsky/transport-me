@@ -229,4 +229,30 @@ public static class Simplifications
 
         node.QueueFree();
     }
+
+    public static Quaternion LookRotation(Vector3 from, Vector3 to, Vector3 up = default)
+    {
+        if (up == default)
+            up = Vector3.Up;
+
+        Vector3 forward = (to - from).Normalized();
+        if (forward.LengthSquared() == 0.0f)
+            return Quaternion.Identity; // Identity quaternion
+
+        Vector3 right = up.Cross(forward).Normalized();
+        if (right.LengthSquared() == 0.0f)
+        {
+            // up and forward are parallel — choose another up vector
+            right = Vector3.Forward.Cross(forward).Normalized();
+        }
+
+        Vector3 correctedUp = forward.Cross(right).Normalized();
+
+        Basis basis = new Basis();
+        basis.X = right;
+        basis.Y = correctedUp;
+        basis.Z = forward;
+
+        return basis.Orthonormalized().GetRotationQuaternion();
+    }
 }

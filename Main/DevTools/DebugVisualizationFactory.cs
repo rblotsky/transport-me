@@ -36,8 +36,8 @@ namespace Transportme.Main.DevTools
             return new()
             {
                 Mesh = EasyShapes.TrianglePointerMesh(colour, alpha),
-                Position = start,
-                Rotation = new Basis(Vector3.Forward, forward, Vector3.Right).GetRotationQuaternion(),
+                Position = start.Lerp(end, 0.5f),
+                Rotation = Simplifications.LookRotation(start, end),
             };
         }
 
