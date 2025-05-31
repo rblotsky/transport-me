@@ -16,14 +16,9 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
 
         NavSegment node = (NavSegment)gizmo.GetNode3D();
 
-        Vector3[] lines = EasyShapes.CurveMesh(node.Start, node.End, node.Control, Colors.Red, 9).Get;
-
-
         Vector3[] handles = new Vector3[] { new Vector3(0, 1, 0), new Vector3(0, 2, 0) };
 
-
-
-        gizmo.AddLines(lines, EasyShapes.ColouredMaterial(Colors.Red, 1), false);
+        gizmo.AddMesh(EasyShapes.CurveMesh(node.Start, node.End, Curves.Vec3RemoveHeight(node.Control), Colors.Red, 9));
 
         gizmo.AddHandles(handles, EasyShapes.ColouredMaterial(Colors.Blue, 1), []);
     }
