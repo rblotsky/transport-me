@@ -159,16 +159,7 @@ public partial class NavSegment : Node3D
             controlVisualizer = new MeshInstance3D();
             AddChild(controlVisualizer);
 
-            curveVisualizer.Mesh = EasyShapes.CurveMesh(Start, End, Curves.Vec3RemoveHeight(Control), Colors.LightBlue, 10);
-            endpointVisualizer.Position = End;
-            endpointVisualizer.Mesh = EasyShapes.SphereMesh(0.1f, EasyShapes.ColouredMaterial(Colors.Red, 0.5f));
-            endpointDirectionVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.HotPink, 0.5f));
-            endpointDirectionVisualizer.Position = Curves.BezierQuadratic3D(Start, Curves.Vec3RemoveHeight(Control), End, 0.99f);
-            directionVisualizer.Mesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
-            directionVisualizer.LookAtFromPosition(GlobalStart, GlobalEnd);
-            directionVisualizer.Position = GetPositionOnSegment(0.5f, false);
-            controlVisualizer.Mesh = EasyShapes.SphereMesh(0.08f, EasyShapes.ColouredMaterial(Colors.Yellow, 0.5f));
-            controlVisualizer.Position = Control;
+            
         }
     }
 
