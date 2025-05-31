@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.ComponentModel.Design;
 
 [GlobalClass]
 [Tool]
@@ -75,6 +76,31 @@ public partial class NavSegment : Node3D
         if (GlobalStart == oneEnd) return GlobalEnd;
         else if (GlobalEnd == oneEnd) return GlobalStart;
         else return Vector3.Zero;
+    }
+
+    /// <summary>
+    /// Gets one of the start, control, or end points by its index.
+    /// </summary>
+    /// <param name="index">0 = Start, 1 = Control, 2 = End</param>
+    /// <returns>The local value of the requested point</returns>
+    public Vector3 GetPointByIndex(int index)
+    {
+        if (index == 0) return Start;
+        else if (index == 1) return Control;
+        else if (index == 2) return End;
+        else return Vector3.Zero;
+    }
+
+    /// <summary>
+    /// Sets one of the start, control, or end points by its index.
+    /// </summary>
+    /// <param name="index">0 = Start, 1 = Control, 2 = End</param>
+    /// <param name="value">The Vector3 value of the point</param>
+    public void SetPointByIndex(int index, Vector3 value)
+    {
+        if (index == 0) Start = value;
+        else if (index == 1) Control = value;
+        else if (index == 2) End = value;
     }
 
     public Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)

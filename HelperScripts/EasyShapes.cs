@@ -1,17 +1,39 @@
 using Godot;
 using System;
 
+[Tool]
 public static class EasyShapes
 {
 	// Creating Shapes and Meshes
-	public static Material ColouredMaterial(Color colour, float alpha)
+    private static void SetDefaultColouredMaterialValues(StandardMaterial3D material)
+    {
+        material.SpecularMode = BaseMaterial3D.SpecularModeEnum.Disabled;
+        material.Roughness = 1;
+        material.Metallic = 0;
+        material.MetallicSpecular = 0;
+        material.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+    }
+
+	public static Material ColouredMaterial(Color colour, float alpha, float pointSize = 20)
 	{
 		StandardMaterial3D material = new StandardMaterial3D();
+        SetDefaultColouredMaterialValues(material);
 		colour.A = Mathf.Clamp(alpha, 0, 1);
 		material.AlbedoColor = colour;
 		material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
-		return material;
+        return material;
 	}
+
+    public static Material GizmoHandleMaterial(Color colour, float pointSize = 20)
+    {
+        StandardMaterial3D material = new StandardMaterial3D();
+        SetDefaultColouredMaterialValues(material);
+        material.AlbedoColor = colour;
+        material.Transparency = BaseMaterial3D.TransparencyEnum.Disabled;
+        material.PointSize = pointSize;
+        material.UsePointSize = true;
+        return material;
+    }
 
 	public static SphereShape3D SphereShape(float radius)
 	{
@@ -49,11 +71,11 @@ public static class EasyShapes
 		mesh.SurfaceAddVertex(startLocal);
 		mesh.SurfaceAddVertex(endLocal);
 		mesh.SurfaceEnd();
-
+        
 		return mesh;
 	}
 	/// <summary>
-	/// Creates a triangle mesh, pointing in the direction of the two positions given.
+	/// Creates a triangle mesh, pointing at Vector3.Forward.
 	/// </summary>
 	/// <param name="startLocal">Starting position</param>
 	/// <param name="endLocal">ending position</param>
@@ -67,9 +89,9 @@ public static class EasyShapes
 
 		Vector3 forward = Vector3.Forward * size;
 		Vector3 side = Vector3.Right * size / 2;
-		mesh.SurfaceAddVertex(-forward + side);
-		mesh.SurfaceAddVertex(-forward - side);
-		mesh.SurfaceAddVertex(forward);
+		mesh.SurfaceAddVertex(side);
+		mesh.SurfaceAddVertex(-side);
+		mesh.SurfaceAddVertex(forward*2);
 		mesh.SurfaceEnd();
 		return mesh;
 	}
