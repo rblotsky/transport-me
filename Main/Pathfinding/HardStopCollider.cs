@@ -39,12 +39,13 @@ public partial class HardStopCollider : VehicleCollider, IDebugVisualizationProv
     public IEnumerable<DebugVisualization> GetVisualization()
     {
 		yield return DebugVisualizationFactory.Box(
+			[DebugVisualizationFilters.VehicleCollisions],
 			GlobalPosition,
 			Quaternion,
 			((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size,
 			Colors.Black);
 		RoutePoint point = getPositionOnRoute();
-		yield return DebugVisualizationFactory.Line(point.forwardPoint, point.backPoint, Colors.Black);
-		yield return DebugVisualizationFactory.Sphere(GlobalPosition, 0.1f, Colors.Black);
+		yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
+		yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);
     }
 }

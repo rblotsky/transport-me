@@ -13,13 +13,6 @@ namespace Transportme.Main.DevTools
         private int _trackedVisuals = 0;
         public void Refresh()
         {
-            //var thing2 = GetParent();
-            //var thing3 = thing2.GetTree();
-            //var thing4 = thing3.GetNodesInGroup("DebugVisualProvider");
-            //var thing = ;
-            //var thing = GetParent().GetTree().GetNodesInGroup("DebugVisualProvider");
-            //GD.Print(thing.Count().ToString());
-            //GD.Print(GetTree().GetNodesInGroup("DebugVisualProvider").OfType<IDebugVisualizationProvider>().Count().ToString());
             var currerntVisualCount = 0;
             foreach (var provider in Simplifications.GetChildrenImplementingType<IDebugVisualizationProvider>(GetParent(), true))
             {

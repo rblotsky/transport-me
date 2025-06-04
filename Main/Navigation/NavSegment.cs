@@ -70,9 +70,9 @@ public partial class NavSegment : Node3D, IDebugVisualizationProvider
 
     public IEnumerable<DebugVisualization> GetVisualization()
     {
-        yield return DebugVisualizationFactory.Curve(GlobalStart, GlobalEnd, GlobalControl, Colors.LightBlue);
-        yield return DebugVisualizationFactory.Arrow(GlobalEnd, GlobalControl, Colors.Red, 0.5f);
-        yield return DebugVisualizationFactory.Sphere(GlobalEnd, 0.5f, Colors.Red, 0.3f);
-        yield return DebugVisualizationFactory.Sphere(GlobalStart, 0.3f, Colors.Blue, 0.7f);
+        yield return DebugVisualizationFactory.Curve([DebugVisualizationFilters.NavSegments], GlobalStart, GlobalEnd, GlobalControl, Colors.LightBlue);
+        yield return DebugVisualizationFactory.Arrow([DebugVisualizationFilters.NavSegments], GlobalEnd, GlobalControl, Colors.Red, 0.5f);
+        yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.NavSegments], GlobalEnd, 0.5f, Colors.Red, 0.3f);
+        yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.NavSegments], GlobalStart, 0.3f, Colors.Blue, 0.7f);
     }
 }

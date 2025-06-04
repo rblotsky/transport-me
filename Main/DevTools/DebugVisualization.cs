@@ -12,6 +12,11 @@ namespace Transportme.Main.DevTools
         public Mesh Mesh;
         public Vector3 Position;
         public Quaternion Rotation;
+        public DebugVisualizationType Type;
+        /// <summary>
+        /// A bitwise operation  of filters from debug visualization filters
+        /// </summary>
+        public DebugVisualizationFilters Filters;
     }
 
     public interface IDebugVisualizationProvider
