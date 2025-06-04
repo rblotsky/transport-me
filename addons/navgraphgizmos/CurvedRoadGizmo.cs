@@ -1,59 +1,43 @@
 using Godot;
-using Godot.Collections;
 using System;
-using System.Collections.Generic;
-using System.Windows.Markup;
 
-[Tool]
-public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
+public partial class CurvedRoadGizmo : EditorNode3DGizmoPlugin
 {
-    private Color defaultLineColour = Colors.Blue;
-    private Color selectedLineColour = Colors.Blue;
-    private Color defaultArrowColour = Colors.Blue;
-    private Color selectedArrowColour = Colors.Blue;
+    private Color handleColour = Colors.Red;
 
     public override string _GetGizmoName()
     {
-        return "NavSegment Gizmo";
+        return "Curved Road Gizmo";
     }
 
     public override bool _HasGizmo(Node3D forNode3D)
     {
-        return forNode3D is NavSegment;
+        return forNode3D is CurvedRoad;
     }
 
     public override void _Redraw(EditorNode3DGizmo gizmo)
     {
         gizmo.Clear();
-        NavSegment node = (NavSegment)gizmo.GetNode3D();
-
-        // Decides colour to use based on whether gizmo is selected
-        Color lineColour = defaultLineColour;
-        Color arrowColour = defaultArrowColour;
-
-        if(EditorInterface.Singleton.GetSelection().GetSelectedNodes().Contains(node))
-        {
-            lineColour = selectedLineColour;
-            arrowColour = selectedArrowColour;
-        }
+        CurvedRoad node = (CurvedRoad)gizmo.GetNode3D();
 
         // Adds the actual visualization
-        ImmediateMesh curveMesh = EasyShapes.CurveMesh(node.Start, node.End, node.Control, lineColour, 9);
-        Mesh arrowMesh = EasyShapes.TrianglePointerMesh(arrowColour, 0.15f);
+        ImmediateMesh curveMesh = EasyShapes.CurveMesh(node.Start, node.End, node.Control, Colors.Green, 9);
+        Mesh arrowMesh = EasyShapes.TrianglePointerMesh(Colors.Green, 0.15f);
         gizmo.AddMesh(curveMesh);
-        gizmo.AddMesh(arrowMesh, null, new Transform3D(Basis.LookingAt(node.DirectionalLine, Vector3.Up), node.GetPositionOnSegment(0.5f, false)));
-
+        gizmo.AddMesh(arrowMesh, null, new Transform3D(Basis.LookingAt(node.DirectionalLine, Vector3.Up), node.Start));
 
         gizmo.AddCollisionSegments(((Vector3[])curveMesh.SurfaceGetArrays(0)[0]));
         gizmo.AddCollisionTriangles(arrowMesh.GenerateTriangleMesh());
 
         // Adds handles to modify the visualization
-        Vector3[] handles = new Vector3[3];
-        handles[NavSegment.StartPointIndex] = node.Start;
-        handles[NavSegment.ControlPointIndex] = node.Control;
-        handles[NavSegment.EndPointIndex] = node.End;
+        Vector3[] handles = {node.Start, node.Control, node.End};
 
-        gizmo.AddHandles(handles, EasyShapes.GizmoHandleMaterial(Colors.Red), [0,1,2], false);
+        gizmo.AddHandles(handles, EasyShapes.GizmoHandleMaterial(handleColour), [0, 1, 2], false);
+        
+        foreach(NavSegment navSegment in Simplifications.GetChildrenOfType<NavSegment>(node))
+        {
+            navSegment.UpdateGizmos();
+        }
     }
 
 
@@ -65,13 +49,13 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
 
     public override Variant _GetHandleValue(EditorNode3DGizmo gizmo, int handleId, bool secondary)
     {
-        NavSegment node = (NavSegment)gizmo.GetNode3D();
+        CurvedRoad node = (CurvedRoad)gizmo.GetNode3D();
         return node.GetPointByIndex(handleId);
     }
 
     public override void _SetHandle(EditorNode3DGizmo gizmo, int handleId, bool secondary, Camera3D camera, Vector2 screenPos)
     {
-        NavSegment node = (NavSegment)gizmo.GetNode3D();
+        CurvedRoad node = (CurvedRoad)gizmo.GetNode3D();
         float pointHeight = node.GetPointByIndex(handleId).Y;
         Plane placementPlane = new Plane(Vector3.Up, pointHeight);
         Vector3? mousePosWorld =
@@ -83,20 +67,20 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
         Vector3 newPosition = node.GetPointByIndex(handleId);
         if (mousePosWorld != null)
         {
-            newPosition =  mousePosWorld.Value;
+            newPosition = mousePosWorld.Value;
         }
 
         if (Input.IsKeyPressed(Key.Ctrl))
         {
             newPosition = newPosition.Snapped(new Vector3(1, 1, 1));
         }
-        node.SetPointByIndex(handleId, newPosition);
+        node.SetPointByIndex(handleId, node.ToLocal(newPosition));
         node.UpdateGizmos();
     }
 
     public override void _CommitHandle(EditorNode3DGizmo gizmo, int handleId, bool secondary, Variant restore, bool cancel)
     {
-        NavSegment node = (NavSegment)gizmo.GetNode3D();
+        CurvedRoad node = (CurvedRoad)gizmo.GetNode3D();
 
         Vector3[] values = { node.Start, node.Control, node.End };
         string[] propertyNames = { "Start", "Control", "End" };
@@ -108,7 +92,7 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
         else
         {
             EditorUndoRedoManager undoRedoManager = EditorInterface.Singleton.GetEditorUndoRedo();
-            undoRedoManager.CreateAction($"Move NavSegment {propertyNames[handleId]}");
+            undoRedoManager.CreateAction($"Move CurvedRoad {propertyNames[handleId]}");
             undoRedoManager.AddDoProperty(node, propertyNames[handleId], values[handleId]);
             undoRedoManager.AddDoMethod(this, MethodName._Redraw, gizmo);
             undoRedoManager.AddUndoProperty(node, propertyNames[handleId], restore);
@@ -116,5 +100,4 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
             undoRedoManager.CommitAction(true);
         }
     }
-
 }

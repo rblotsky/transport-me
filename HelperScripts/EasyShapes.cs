@@ -89,14 +89,22 @@ public static class EasyShapes
 
 		Vector3 forward = Vector3.Forward * size;
 		Vector3 side = Vector3.Right * size / 2;
+
+        // Clockwise for upwards face
 		mesh.SurfaceAddVertex(side);
 		mesh.SurfaceAddVertex(-side);
 		mesh.SurfaceAddVertex(forward*2);
-		mesh.SurfaceEnd();
+
+        // Anti clockwise for downwards face
+        mesh.SurfaceAddVertex(forward * 2);
+        mesh.SurfaceAddVertex(-side);
+        mesh.SurfaceAddVertex(side);
+        
+        mesh.SurfaceEnd();
 		return mesh;
 	}
 
-	public static ImmediateMesh CurveMesh(Vector3 startLocal, Vector3 endLocal, Vector2 controlLocal, Color colourToUse, int segments)
+	public static ImmediateMesh CurveMesh(Vector3 startLocal, Vector3 endLocal, Vector3 controlLocal, Color colourToUse, int segments)
 	{        
 		// Creates a Bezier curve
 		ImmediateMesh mesh = new ImmediateMesh();

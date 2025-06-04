@@ -19,7 +19,7 @@ height = 0.4
 [sub_resource type="Resource" id="Resource_3fbhk"]
 resource_local_to_scene = true
 script = ExtResource("7_ljjh0")
-points = [Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25)]
+points = Array[Vector2]([Vector2(0, 0), Vector2(-2, 0), Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25), Vector2(2, 0), Vector2(0, 0)])
 numSegments = 15
 meshMaterial = ExtResource("6_uolfg")
 
@@ -55,9 +55,9 @@ mesh = SubResource("SphereMesh_7amty")
 
 [node name="Curved2Lane2Way" parent="." instance=ExtResource("6_kdr6q")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
-Start = Vector3(-7.245, 0, 0)
-End = Vector3(2, 3.415, -11.13)
-Control = Vector2(2, 0)
+Start = Vector3(-4.66755, 0, 3.19873)
+End = Vector3(-12.6517, 3.415, -4.53264)
+Control = Vector3(-4.13945, -1.14441e-05, -6.85901)
 roadMesh = SubResource("Resource_3fbhk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
