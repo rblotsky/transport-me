@@ -88,6 +88,7 @@ public static class EasyShapes
 			// I add the vertex twice because every other line seems to be invisible,
 			// and I bypassed that by just adding each line twice. I have no idea why this
 			// happens and I do not care.
+			// But did I ask?
 			mesh.SurfaceAddVertex(
 					Curves.CalculateBezierQuadraticIn3D(
 						startLocal,
