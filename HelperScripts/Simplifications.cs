@@ -255,4 +255,25 @@ public static class Simplifications
 
         return basis.Orthonormalized().GetRotationQuaternion();
     }
+
+    public static Vector2 GetVectorXZ(Vector3 vector)
+    {
+        return new Vector2(vector.X, vector.Z);
+    }
+
+
+    public static Vector2 GetPointOfIntersection(Vector2 pos1, Vector2 dir1, Vector2 pos2, Vector2 dir2)
+    {
+        (float x1, float y1) = pos1;
+        (float x2, float y2) = pos1 + dir1.Normalized();
+        (float x3, float y3) = pos2;
+        (float x4, float y4) = pos2 + dir2.Normalized();
+
+        float topX = (x1 * y2 - x2 * y1) * (x3 - x4) - (x3 * y4 - x4 * y3) * (x1 - x2);
+        float topY = (x1 * y2 - x2 * y1) * (y3 - y4) - (x3 * y4 - x4 * y3) * (y1 - y2);
+        float bottom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        float pX = topX / bottom;
+        float pY = topY / bottom;
+        return new Vector2(pX, pY);
+    }
 }

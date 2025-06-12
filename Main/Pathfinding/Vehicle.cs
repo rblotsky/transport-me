@@ -36,13 +36,35 @@ public partial class Vehicle : Node3D
 	protected double timeStopped = 0;
 	public double speed = 0;
 
+	private double GetTurningSpeedLimit()
+	{
+		RoutePoint original = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute);
+		RoutePoint advance = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute + 3);
+
+		if (original.Rotation.IsEqualApprox(advance.Rotation))
+		{
+			return maxVehicleSpeed;
+		}
+
+		Vector2 radiusPoint = Simplifications.GetPointOfIntersection(
+			Simplifications.GetVectorXZ(original.Position),
+			Simplifications.GetVectorXZ(original.Rotation.Normalized()).Orthogonal(),
+			Simplifications.GetVectorXZ(advance.Position),
+			Simplifications.GetVectorXZ(advance.Rotation.Normalized()).Orthogonal()
+		);
+
+		float radius = (radiusPoint - Simplifications.GetVectorXZ(original.Position)).Length();
+		double thing = Math.Sqrt(10 * (radius + 1));
+		return thing;
+	}
+
 	// FUNCTIONS //
 	// Godot Defaults
 	public override void _EnterTree()
 	{
 		graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
 		attachedColliders = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
-		GD.Print(attachedColliders.Count);
+		//GD.Print(attachedColliders.Count);
 		foreach(VehicleCollider c in attachedColliders)
 		{
 			c.AssociatedVehicle = this;
@@ -70,6 +92,14 @@ public partial class Vehicle : Node3D
 		// max speed calculations
 		NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
 		float speedLimit = Mathf.Min((float)maxVehicleSpeed, curSegment.MaxSpeed);
+		double turningSpeedLimit = GetTurningSpeedLimit();
+
+		if (turningSpeedLimit < speedLimit) {
+			GD.Print("speed limits ", turningSpeedLimit, " ", speed);
+			speedLimit = (float)turningSpeedLimit;
+		}
+
+		speedLimit = Mathf.Min((float)maxVehicleSpeed, route.GetLength());
 
 		//accelerating or decelerating
 		if (shouldStop || speed - speedLimit > 0.1f)
