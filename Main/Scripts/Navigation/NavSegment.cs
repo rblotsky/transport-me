@@ -8,12 +8,12 @@ public partial class NavSegment : Node3D
 {
     // DATA
     // Serializable Properties
-    private Vector3 _start = Vector3.Zero;
-    [Export] public Vector3 Start { get { return _start; } set { _start = value; } }
-    private Vector3 _end = Vector3.Zero;
-    [Export] public Vector3 End { get { return _end; } set { _end = value; } }
-    private Vector3 _control = Vector3.Zero;
-    [Export] public Vector3 Control { get { return _control; } set { _control = value; } }
+    protected Vector3 _start = Vector3.Zero;
+    [Export] public virtual Vector3 Start { get { return _start; } set { _start = value; } }
+    protected Vector3 _end = Vector3.Zero;
+    [Export] public virtual Vector3 End { get { return _end; } set { _end = value; } }
+    protected Vector3 _control = Vector3.Zero;
+    [Export] public virtual Vector3 Control { get { return _control; } set { _control = value; } }
     [Export] public float MaxSpeed = 30f;
 
     // Readonly Properties
@@ -25,21 +25,15 @@ public partial class NavSegment : Node3D
     public Vector3 DirectionalLine { get { return End - Start; } }
     public float SimpleLength { get { return DirectionalLine.Length(); } }
     public float Length { get { return SimpleLength; } }
-    public static int StartPointIndex = 0;
-    public static int ControlPointIndex = 1;
-    public static int EndPointIndex = 2;
+    
+    // Constants
+    public static readonly int StartPointIndex = 0;
+    public static readonly int ControlPointIndex = 1;
+    public static readonly int EndPointIndex = 2;
 
     // Runtime only properties
     public NavConnection EndConnection { get; set; }
     public NavConnection StartConnection { get; set; }
-
-    // Editor Cached Data
-    private MeshInstance3D curveVisualizer;
-    private MeshInstance3D endpointVisualizer;
-    private MeshInstance3D endpointDirectionVisualizer;
-    private MeshInstance3D directionVisualizer;
-    private MeshInstance3D controlVisualizer;
-
 
     // FUNCTIONS //
 
@@ -83,7 +77,13 @@ public partial class NavSegment : Node3D
         else if (index == 2) End = value;
     }
 
-    public Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
+    /// <summary>
+    /// Gets the 3D position a given percentage from the start of the segment.
+    /// </summary>
+    /// <param name="percentOfSegment">How far along the segment</param>
+    /// <param name="globalCoordinates">True if you want the result using global coordinates</param>
+    /// <returns></returns>
+    public virtual Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {
         Vector3 localPos = Curves.BezierQuadratic3D(
             Start,
@@ -94,21 +94,14 @@ public partial class NavSegment : Node3D
         return globalCoordinates ? ToGlobal(localPos) : localPos;
     }
 
-
-    // Extra Setters
-    public void SetEndpoint(int endpoint, Vector3 value)
+    /// <summary>
+    /// Gets a Mesh visualization of the curve of this segment in the requested colour and detail level.
+    /// </summary>
+    /// <param name="colourToUse"></param>
+    /// <param name="numSegments"></param>
+    /// <returns></returns>
+    public virtual ImmediateMesh GetCurveVisualization(Color colourToUse, int numSegments)
     {
-        if (endpoint == 0)
-        {
-            Start = value;
-        }
-        else if (endpoint == 1)
-        {
-            End = value;
-        }
-        else
-        {
-            throw new ArgumentException($"Expected an endpoint of 0 or 1 but got {endpoint}!");
-        }
+        return EasyShapes.CurveMesh(Start, End, Control, colourToUse, numSegments);
     }
 }

@@ -56,8 +56,8 @@ mesh = SubResource("SphereMesh_7amty")
 [node name="Curved2Lane2Way" parent="." instance=ExtResource("6_kdr6q")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 Start = Vector3(-4.66755, 0, 3.19873)
-End = Vector3(-12.6517, 3.415, -4.53264)
-Control = Vector3(-4.13945, -1.14441e-05, -6.85901)
+End = Vector3(-2.35399, 3.41501, -14.3315)
+Control = Vector3(-4.0956, -4.19617e-05, -5.02914)
 roadMesh = SubResource("Resource_3fbhk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

@@ -34,17 +34,11 @@ public partial class CurvedRoad : Node3D
 
     // Road Mesh Data
     [ExportCategory("Mesh")]
+    [Export] private bool generateMeshButton { get { return false; } set { UpdateMesh(); } }
     [Export] private RoadMesh roadMesh;
     [Export] private MeshInstance3D meshRenderer;
     [Export] private bool debugNormals = false;
     [Export] private MeshInstance3D debugRenderer;
-
-
-    // Segment Offset Data
-    [ExportCategory("Saving Controlled Segments")]
-    [Export] private bool SaveSegmentOffsetsToggle { set { SaveSegmentOffsets(); } get { return true; } }
-    [Export] private Array<NavSegment> segments;
-    [Export] private Array<CurvedRoadSegmentOffset> segmentOffsets;
 
 
     // FUNCTIONS //
@@ -69,140 +63,9 @@ public partial class CurvedRoad : Node3D
     /// <param name="value">The Vector3 value of the point</param>
     public void SetPointByIndex(int index, Vector3 value)
     {
-        if (index == 0) SetNewStart(value);
-        else if (index == 1) SetNewControl(value);
-        else if (index == 2) SetNewEnd(value);
-    }
-
-    private void SaveSegmentOffsets()
-    {
-        // Creates a new list for segment offsets and segments
-        segments = new Array<NavSegment>(Simplifications.GetChildrenOfType<NavSegment>(this, true));
-        segmentOffsets = new Array<CurvedRoadSegmentOffset>();
-
-        for (int i = 0; i < segments.Count; i++)
-        {
-            segmentOffsets.Add(CurvedRoadSegmentOffset.GetSegmentOffset(i, this));
-        }
-    }
-
-    private void SetNewStart(Vector3 newValue)
-    {
-        _start = newValue;
-        RecalculateStartPoints();
-        RecalculateControlPoints();
-
-        UpdateMesh();
-    }
-
-    private void SetNewControl(Vector3 newValue)
-    {
-        _control = newValue;
-        RecalculateControlPoints();
-        RecalculateEndPoints();
-        RecalculateStartPoints();
-
-        UpdateMesh();
-    }
-
-    private void SetNewEnd(Vector3 newValue)
-    {
-        _end = newValue;
-        RecalculateEndPoints();
-        RecalculateControlPoints();
-
-        UpdateMesh();
-    }
-
-    private void RecalculateEndPoints()
-    {
-        if (segmentOffsets != null)
-        {
-            // Recalculates all segment offsets using new endpoint
-            foreach (CurvedRoadSegmentOffset offset in segmentOffsets)
-            {
-                GetSegment(offset.SegmentIndex).SetEndpoint(
-                    offset.EndpointAtRoadEnd, 
-                    LocalizeOffsetToSegment(GetSegment(offset.SegmentIndex), EndTransform, offset.RoadEndOffset)
-                    );
-            }
-        }
-    }
-
-    private void RecalculateStartPoints()
-    {
-        // Recalculates all segment offsets using new endpoint
-        if (segmentOffsets != null)
-        {
-            foreach (CurvedRoadSegmentOffset offset in segmentOffsets)
-            {
-                GetSegment(offset.SegmentIndex).SetEndpoint(
-                    offset.EndpointAtRoadStart, 
-                    LocalizeOffsetToSegment(GetSegment(offset.SegmentIndex), StartTransform, offset.RoadStartOffset)
-                    );
-            }
-        }
-    }
-
-    private void RecalculateControlPoints()
-    {
-        // Sets all control points at intersection of lines from start to end
-        if (segmentOffsets != null)
-        {
-            foreach (CurvedRoadSegmentOffset offset in segmentOffsets)
-            {
-                // Gets the control position: intersection of a line drawn through the start and end
-                // of this segment
-                Vector2 startV2 = Curves.Vec3RemoveHeight(
-                    LocalizeSegmentPointToRoad(
-                        GetSegment(offset.SegmentIndex), 
-                        GetSegment(offset.SegmentIndex).Endpoints[offset.EndpointAtRoadStart]
-                        )
-                    );
-                Vector2 endV2 = Curves.Vec3RemoveHeight(
-                    LocalizeSegmentPointToRoad(
-                        GetSegment(offset.SegmentIndex), 
-                        GetSegment(offset.SegmentIndex).Endpoints[offset.EndpointAtRoadEnd]
-                        )
-                    );
-
-                Vector2 startDirection = Curves.Vec3RemoveHeight(Control) - Curves.Vec3RemoveHeight(Start);
-                Vector2 endDirection = Curves.Vec3RemoveHeight(Control) - Curves.Vec3RemoveHeight(End);
-
-                Variant intersection = Geometry2D.LineIntersectsLine(startV2, startDirection, endV2, endDirection);
-
-                if (intersection.VariantType != Variant.Type.Nil)
-                {
-                    GetSegment(offset.SegmentIndex).Control = LocalizeRoadPointToSegment(
-                        GetSegment(offset.SegmentIndex), 
-                        Curves.Vec2WithHeight(intersection.AsVector2(), 
-                        Start.Y)
-                        );
-                }
-            }
-        }
-    }
-
-    private Vector3 LocalizeOffsetToSegment(NavSegment segment, Transform3D transform, Vector3 offset)
-    {
-        return segment.ToLocal(ToGlobal(transform * offset));
-    }
-
-    private Vector3 LocalizeSegmentPointToRoad(NavSegment segment, Vector3 point)
-    {
-        return ToLocal(segment.ToGlobal(point));
-    }
-
-    private Vector3 LocalizeRoadPointToSegment(NavSegment segment, Vector3 point)
-    {
-        return segment.ToLocal(ToGlobal(point));
-    }
-
-
-    // Data Retrieval
-    public NavSegment GetSegment(int index)
-    {
-        return segments[index];
+        if (index == 0) Start = value ;
+        else if (index == 1) Control = value;
+        else if (index == 2) End = value;
     }
 
     // Visualization

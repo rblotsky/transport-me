@@ -19,6 +19,7 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
 
     public override bool _HasGizmo(Node3D forNode3D)
     {
+        //TODO: Update so it doesn't run on CurvedRoadNavSegment
         return forNode3D is NavSegment;
     }
 
@@ -38,7 +39,7 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
         }
 
         // Adds the actual visualization
-        ImmediateMesh curveMesh = EasyShapes.CurveMesh(node.Start, node.End, node.Control, lineColour, 9);
+        ImmediateMesh curveMesh = node.GetCurveVisualization(lineColour, 9);
         Mesh arrowMesh = EasyShapes.TrianglePointerMesh(arrowColour, 0.15f);
         gizmo.AddMesh(curveMesh);
         gizmo.AddMesh(arrowMesh, null, new Transform3D(Basis.LookingAt(node.DirectionalLine, Vector3.Up), node.GetPositionOnSegment(0.5f, false)));
@@ -47,13 +48,16 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
         gizmo.AddCollisionSegments(((Vector3[])curveMesh.SurfaceGetArrays(0)[0]));
         gizmo.AddCollisionTriangles(arrowMesh.GenerateTriangleMesh());
 
-        // Adds handles to modify the visualization
-        Vector3[] handles = new Vector3[3];
-        handles[NavSegment.StartPointIndex] = node.Start;
-        handles[NavSegment.ControlPointIndex] = node.Control;
-        handles[NavSegment.EndPointIndex] = node.End;
+        if (node is not CurvedRoadNavSegment)
+        {
+            // Adds handles to modify the visualization
+            Vector3[] handles = new Vector3[3];
+            handles[NavSegment.StartPointIndex] = node.Start;
+            handles[NavSegment.ControlPointIndex] = node.Control;
+            handles[NavSegment.EndPointIndex] = node.End;
 
-        gizmo.AddHandles(handles, EasyShapes.GizmoHandleMaterial(Colors.Red), [0,1,2], false);
+            gizmo.AddHandles(handles, EasyShapes.GizmoHandleMaterial(Colors.Red), [0, 1, 2], false);
+        }
     }
 
 
