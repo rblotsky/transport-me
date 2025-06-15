@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmljf32j70r2h"]
+
+[ext_resource type="Script" uid="uid://dcqnm7wuhdvv0" path="res://Main/Scripts/Navigation/PloppableGraph.cs" id="2_dn5mt"]
+[ext_resource type="Script" uid="uid://bsmky6dx5q6dd" path="res://Main/Scripts/Navigation/NavSegment.cs" id="4_18dlw"]
+
+[node name="GraphTest" type="Node3D"]
+
+[node name="PloppableGraph" type="Node3D" parent="."]
+script = ExtResource("2_dn5mt")
+
+[node name="NavSegment2" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("4_18dlw")
+Start = Vector3(-3, 0, -2)
+End = Vector3(3, 0, -2)
+Control = Vector3(-1, 0, -2)
+
+[node name="NavSegment" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("4_18dlw")
+Start = Vector3(-3, 0, 2)
+End = Vector3(3, 0, 2)
+Control = Vector3(-1, 0, 2)
+
+[node name="NavSegment3" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("4_18dlw")
+Start = Vector3(-3, 0, -2)
+End = Vector3(3, 0, 2)
+Control = Vector3(-1, 0, -2)
+
+[node name="NavSegment4" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("4_18dlw")
+Start = Vector3(-3, 0, 2)
+End = Vector3(3, 0, -2)
+Control = Vector3(-1, 0, 2)

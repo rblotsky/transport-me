@@ -1,0 +1,419 @@
+[gd_scene load_steps=23 format=3 uid="uid://cdsolc63uov8s"]
+
+[ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
+[ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
+[ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_ywgcf"]
+[ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="5_mhk0g"]
+[ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_rsmg7"]
+[ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
+[ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="8_fh4jr"]
+[ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
+[ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/Resources/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
+[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/Resources/NetworkPrototype/2WayRoadEndTest.tscn" id="13_x31hm"]
+[ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/Resources/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
+[ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/Resources/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
+[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/Resources/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
+[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/Resources/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
+[ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/Resources/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
+[ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/DevTools/DebugVisualizer.cs" id="16_jf1gt"]
+
+
+[sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
+font_size = 30
+font_color = Color(1, 0, 0.933333, 1)
+outline_size = 10
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
+albedo_color = Color(0, 0.8977, 0.550284, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_yc0hq"]
+material = SubResource("StandardMaterial3D_dnkjm")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_53yp5"]
+albedo_color = Color(6.01634e-07, 0.286344, 0.187206, 1)
+metallic_specular = 0.0
+roughness = 0.2
+roughness_texture_channel = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_aghcb"]
+material = SubResource("StandardMaterial3D_53yp5")
+size = Vector2(200, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_py1ys"]
+size = Vector3(200, 0.1, 200)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
+
+[node name="Root" type="Node3D" groups=["DebugVisualProvider"]]
+
+[node name="PrototypeUi" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="InstructionsUI" type="Node" parent="PrototypeUi"]
+
+[node name="Button" type="Button" parent="PrototypeUi"]
+layout_mode = 0
+offset_right = 137.0
+offset_bottom = 31.0
+text = "View Menu"
+
+[node name="Panel" type="Panel" parent="PrototypeUi"]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 517.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel"]
+layout_mode = 2
+offset_right = 218.0
+offset_bottom = 42.0
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Instructions"
+label_settings = SubResource("LabelSettings_i7tsy")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Debugger3D" type="Node3D" parent="."]
+script = ExtResource("1_t2p50")
+
+[node name="RouteDebugger" type="Node" parent="."]
+script = ExtResource("2_jfx1u")
+
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph", "debugVisualizer")]
+script = ExtResource("4_ywgcf")
+camera = NodePath("../CameraAnchor/TrackballCamera")
+cursor = NodePath("../Cursor")
+grid = NodePath("../WorldGridViewer")
+navGraph = NodePath("../NavGraphContainer")
+debugVisualizer = NodePath("../Node")
+
+[node name="SceneSaver" type="Node" parent="."]
+script = ExtResource("5_rsmg7")
+savedSceneName = "GraphScenePrototype"
+
+[node name="CameraAnchor" type="Node3D" parent="."]
+
+[node name="TrackballCamera" type="Camera3D" parent="CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 0.834261, 0.551369, 0, -0.551369, 0.834261, 0, 5.99507, 9)
+script = ExtResource("7_1jqut")
+stabilize_horizon = true
+zoom_strength = 4.0
+zoom_inertia_threshold = 0.0
+inertia_enabled = false
+enable_pitch_limit = true
+pitch_top_limit = 0.87
+pitch_bottom_limit = 0.1
+
+[node name="WorldGridViewer" parent="." instance=ExtResource("8_fh4jr")]
+visible = false
+verticalOffsetFromPointer = 0.0
+
+[node name="NavGraphContainer" type="Node3D" parent="."]
+script = ExtResource("8_kdo4v")
+
+[node name="2WayRoadTest" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 0)
+
+[node name="2WayRoadTest2" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="2WayRoadTest3" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="2WayRoadTest4" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+
+[node name="2WayRoadTest6" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="2WayRoadTest7" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -4)
+
+[node name="2WayRoadTest8" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="2WayRoadTest9" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="2WayRoadTest10" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 4)
+
+[node name="2WayRoadTest11" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 8)
+
+[node name="2WayRoadTest12" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 12)
+
+[node name="2WayRoadTest13" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 12)
+
+[node name="4WayIntersectionTest" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 12)
+
+[node name="2WayRoadTest14" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, 16)
+
+[node name="2WayRoadTest16" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 12)
+
+[node name="2WayRoadTest17" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 12)
+
+[node name="2WayRoadTest19" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, 24)
+
+[node name="2WayRoadTest20" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, 28)
+
+[node name="2WayRoadTest21" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 28)
+
+[node name="2WayRoadTest22" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 28)
+
+[node name="2WayRoadTest23" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 28)
+
+[node name="2WayRoadTest24" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 12)
+
+[node name="2WayRoadTest25" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 12)
+
+[node name="2WayRoadEndTest2" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 23, 0, 12)
+
+[node name="2WayRoadTest26" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 16)
+
+[node name="2WayRoadEndTest4" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 0, 0)
+
+[node name="2WayRoadEndTest5" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, -3)
+
+[node name="2WayRoadTest27" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 28)
+
+[node name="2WayRoadTest28" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12, 0, 24)
+
+[node name="2WayRoadTest30" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12, 0, 16)
+
+[node name="4WayIntersectionTest3" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 12)
+
+[node name="2WayRoadTest31" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 12)
+
+[node name="2WayRoadTest32" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 12)
+
+[node name="2WayRoadTest33" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 12)
+
+[node name="2WayRoadTest34" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24, 0, 8)
+
+[node name="2WayRoadTest35" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24, 0, 4)
+
+[node name="2WayRoadTest36" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24, 0, 0)
+
+[node name="2WayRoadTest37" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+
+[node name="4WayIntersectionTest4" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
+
+[node name="2WayRoadTest38" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 0, 4)
+
+[node name="2WayRoadTest39" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 8)
+
+[node name="2WayRoadTest40" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -12, 0, 8)
+
+[node name="2WayRoadEndTest7" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 0, -3)
+
+[node name="2WayRoadEndTest8" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -7)
+
+[node name="HouseTest" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 9)
+
+[node name="HouseTest2" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 9)
+
+[node name="HouseTest3" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3)
+
+[node name="HouseTest4" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9, 0, 6)
+
+[node name="HouseTest5" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 25)
+
+[node name="HouseTest6" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 25)
+
+[node name="HouseTest7" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19, 0, 6)
+
+[node name="HouseTest8" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -3)
+
+[node name="HouseTest9" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10, 0, 31)
+
+[node name="HouseTest10" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, 0, 31)
+
+[node name="HouseTest11" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27, 0, 2)
+
+[node name="HouseTest12" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0, 26)
+
+[node name="HouseTest13" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -2, 0, 17)
+
+[node name="HouseTest14" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 0, 18)
+
+[node name="2WayRoadTest15" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="4WayIntersectionTest2" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 20)
+
+[node name="HouseTest15" parent="NavGraphContainer" instance=ExtResource("15_sfyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -3)
+
+[node name="2WayRoadTest18" parent="NavGraphContainer" instance=ExtResource("14_kkfix")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0, 20)
+
+[node name="2WayRoadTest29" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 20)
+
+[node name="2WayRoadTest43" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="2WayRoadTest44" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 20)
+
+[node name="2WayRoadTest45" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 20)
+
+[node name="4WayIntersectionTest5" parent="NavGraphContainer" instance=ExtResource("14_ydh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 20)
+
+[node name="CursedHouse" parent="NavGraphContainer" instance=ExtResource("14_onvpj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+
+[node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 20)
+
+[node name="Cursor" type="Node3D" parent="."]
+script = ExtResource("5_mhk0g")
+useSmoothing = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor"]
+mesh = SubResource("SphereMesh_yc0hq")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.457376, 0)
+mesh = SubResource("PlaneMesh_aghcb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_py1ys")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.869581, 1.55493e-07, -0.49379, -0.34255, 0.720249, 0.603242, 0.355652, 0.693716, -0.626315, 0, 12.6915, -10.6137)
+light_energy = 2.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DirectionalLight3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DirectionalLight3D/StaticBody3D"]
+shape = SubResource("SphereShape3D_ciyus")
+
+[node name="VehicleContainer" type="Node" parent="."]
+
+[node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle11" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle12" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle2" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle3" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle4" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle5" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle6" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle13" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle14" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle15" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle16" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle17" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle18" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle19" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle20" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle21" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle22" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle23" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle24" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle25" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle26" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle27" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="RandomVehicle28" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+
+[node name="Node" type="Node" parent="." groups=["DebugVisualProvider"]]
+script = ExtResource("16_jf1gt")

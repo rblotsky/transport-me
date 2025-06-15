@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctomogo8c6muu"]
+
+[ext_resource type="Script" uid="uid://cex6i3ltwwbfb" path="res://Main/Scripts/Pathfinding/RandomVehicle.cs" id="1_3yj52"]
+[ext_resource type="PackedScene" uid="uid://d23ffb3sfichq" path="res://Main/Resources/NetworkPrototype/CarTest.tscn" id="2_a855y"]
+
+[node name="RandomVehicle" type="Node3D"]
+script = ExtResource("1_3yj52")
+acceleration = 16.0
+
+[node name="CarTest" parent="." instance=ExtResource("2_a855y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)

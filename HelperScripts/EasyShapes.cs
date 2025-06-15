@@ -1,17 +1,39 @@
 using Godot;
 using System;
 
+[Tool]
 public static class EasyShapes
 {
 	// Creating Shapes and Meshes
-	public static Material ColouredMaterial(Color colour, float alpha)
+    private static void SetDefaultColouredMaterialValues(StandardMaterial3D material)
+    {
+        material.SpecularMode = BaseMaterial3D.SpecularModeEnum.Disabled;
+        material.Roughness = 1;
+        material.Metallic = 0;
+        material.MetallicSpecular = 0;
+        material.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+    }
+
+	public static Material ColouredMaterial(Color colour, float alpha, float pointSize = 20)
 	{
 		StandardMaterial3D material = new StandardMaterial3D();
+        SetDefaultColouredMaterialValues(material);
 		colour.A = Mathf.Clamp(alpha, 0, 1);
 		material.AlbedoColor = colour;
 		material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
-		return material;
+        return material;
 	}
+
+    public static Material GizmoHandleMaterial(Color colour, float pointSize = 20)
+    {
+        StandardMaterial3D material = new StandardMaterial3D();
+        SetDefaultColouredMaterialValues(material);
+        material.AlbedoColor = colour;
+        material.Transparency = BaseMaterial3D.TransparencyEnum.Disabled;
+        material.PointSize = pointSize;
+        material.UsePointSize = true;
+        return material;
+    }
 
 	public static SphereShape3D SphereShape(float radius)
 	{
@@ -49,11 +71,11 @@ public static class EasyShapes
 		mesh.SurfaceAddVertex(startLocal);
 		mesh.SurfaceAddVertex(endLocal);
 		mesh.SurfaceEnd();
-
+        
 		return mesh;
 	}
 	/// <summary>
-	/// Creates a triangle mesh, pointing in the direction of the two positions given.
+	/// Creates a triangle mesh, pointing at Vector3.Forward.
 	/// </summary>
 	/// <param name="startLocal">Starting position</param>
 	/// <param name="endLocal">ending position</param>
@@ -67,10 +89,18 @@ public static class EasyShapes
 
 		Vector3 forward = Vector3.Forward * size;
 		Vector3 side = Vector3.Right * size / 2;
-		mesh.SurfaceAddVertex(-forward + side);
-		mesh.SurfaceAddVertex(-forward - side);
-		mesh.SurfaceAddVertex(forward);
-		mesh.SurfaceEnd();
+
+        // Clockwise for upwards face
+		mesh.SurfaceAddVertex(side);
+		mesh.SurfaceAddVertex(-side);
+		mesh.SurfaceAddVertex(forward*2);
+
+        // Anti clockwise for downwards face
+        mesh.SurfaceAddVertex(forward * 2);
+        mesh.SurfaceAddVertex(-side);
+        mesh.SurfaceAddVertex(side);
+        
+        mesh.SurfaceEnd();
 		return mesh;
 	}
 
@@ -90,14 +120,14 @@ public static class EasyShapes
 			// happens and I do not care.
 			// But did I ask?
 			mesh.SurfaceAddVertex(
-					Curves.CalculateBezierQuadraticIn3D(
+					Curves.BezierQuadratic3D(
 						startLocal,
 						controlLocal,
 						endLocal,
 						t / (float)segments)
 				);
 			mesh.SurfaceAddVertex(
-					Curves.CalculateBezierQuadraticIn3D(
+					Curves.BezierQuadratic3D(
 						startLocal,
 						controlLocal,
 						endLocal,
@@ -110,7 +140,107 @@ public static class EasyShapes
 		return mesh;
 	}
 
-	public static CapsuleMesh CapsuleMesh(float radius, float height, Material materialToUse = null)
+    /// <summary>
+    /// Creates a mesh that is offset from a bezier curve at the start and end points
+    /// by a certain distance.
+    /// </summary>
+    /// <param name="startLocal"></param>
+    /// <param name="endLocal"></param>
+    /// <param name="controlLocal"></param>
+    /// <param name="startOffset"></param>
+    /// <param name="endOffset"></param>
+    /// <param name="colourToUse"></param>
+    /// <param name="segments"></param>
+    /// <returns></returns>
+    public static ImmediateMesh OffsetCurveMesh(Vector3 startLocal, Vector3 endLocal, Vector3 controlLocal, float startOffset, float endOffset, Color colourToUse, int segments)
+    {
+        // Creates a Bezier curve
+        ImmediateMesh mesh = new ImmediateMesh();
+        mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, ColouredMaterial(colourToUse, 1));
+
+        mesh.SurfaceAddVertex(Curves.BezierQuadratic3DWithOffset(
+                startLocal,
+                controlLocal,
+                endLocal,
+                startOffset,
+                endOffset,
+                0)
+        );
+
+        // Loop through the curve, add a point for each increment
+        for (int t = 1; t <= segments; t++)
+        {
+            float offsetAtDistance = Mathf.Lerp(startOffset, endOffset, t / (float)segments);
+            Vector3 curvePoint = Curves.BezierQuadratic3DWithOffset(
+                startLocal, 
+                controlLocal, 
+                endLocal, 
+                startOffset, 
+                endOffset, 
+                t / (float)segments
+                );
+
+            // I add the vertex twice because every other line seems to be invisible,
+            // and I bypassed that by just adding each line twice. I have no idea why this
+            // happens and I do not care.
+            mesh.SurfaceAddVertex(curvePoint);
+            mesh.SurfaceAddVertex(curvePoint);
+        }
+
+        mesh.SurfaceAddVertex(Curves.BezierQuadratic3DWithOffset(
+                startLocal,
+                controlLocal,
+                endLocal,
+                startOffset,
+                endOffset,
+                1)
+        );
+        mesh.SurfaceEnd();
+
+        return mesh;
+    }
+
+    public static ImmediateMesh CurveNormalsMesh(Vector3 startLocal, Vector3 endLocal, Vector3 controlLocal, Color colourToUse, int segments)
+    {
+        // Creates a Bezier curve
+        ImmediateMesh mesh = new ImmediateMesh();
+        mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, ColouredMaterial(colourToUse, 1));
+
+        Vector3 startNormal = Curves.BezierNormalQuadratic3D(startLocal, controlLocal, endLocal, 0);
+        mesh.SurfaceAddVertex(startLocal);
+        mesh.SurfaceAddVertex(startLocal + startNormal);
+
+        // Loop through the curve, add a point for each increment
+        for (int t = 1; t <= segments; t++)
+        {
+            Vector3 curvePoint = Curves.BezierQuadratic3D(
+                        startLocal,
+                        controlLocal,
+                        endLocal,
+                        t / (float)segments);
+            Vector3 normal = Curves.BezierNormalQuadratic3D(startLocal, controlLocal, endLocal, t / (float)segments);
+
+            // I add the vertex twice because every other line seems to be invisible,
+            // and I bypassed that by just adding each line twice. I have no idea why this
+            // happens and I do not care.
+            mesh.SurfaceAddVertex(
+                    curvePoint
+                );
+            mesh.SurfaceAddVertex(
+                    normal + curvePoint
+                );
+        }
+
+        Vector3 endNormal = Curves.BezierNormalQuadratic3D(startLocal, controlLocal, endLocal, 1);
+        mesh.SurfaceAddVertex(endLocal);
+        mesh.SurfaceAddVertex(endLocal + endNormal);
+        mesh.SurfaceEnd();
+
+        return mesh;
+    }
+
+
+    public static CapsuleMesh CapsuleMesh(float radius, float height, Material materialToUse = null)
 	{
 		CapsuleMesh mesh = new CapsuleMesh();
 		mesh.Radius = radius;
