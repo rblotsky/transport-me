@@ -156,36 +156,83 @@ public static class EasyShapes
         // Creates a Bezier curve
         ImmediateMesh mesh = new ImmediateMesh();
         mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, ColouredMaterial(colourToUse, 1));
-        
-        Vector3 startTangent = Curves.BezierTangentQuadratic3D(startLocal, controlLocal, endLocal, 0);
-        Vector3 startOrthogonal = new Vector3(startTangent.X, startTangent.Y, -startTangent.Z);
-        mesh.SurfaceAddVertex(startOrthogonal * startOffset + startLocal);
+
+        mesh.SurfaceAddVertex(Curves.BezierQuadratic3DWithOffset(
+                startLocal,
+                controlLocal,
+                endLocal,
+                startOffset,
+                endOffset,
+                0)
+        );
 
         // Loop through the curve, add a point for each increment
         for (int t = 1; t <= segments; t++)
         {
-            Vector3 tangent = Curves.BezierQuadratic3D(
+            float offsetAtDistance = Mathf.Lerp(startOffset, endOffset, t / (float)segments);
+            Vector3 curvePoint = Curves.BezierQuadratic3DWithOffset(
+                startLocal, 
+                controlLocal, 
+                endLocal, 
+                startOffset, 
+                endOffset, 
+                t / (float)segments
+                );
+
+            // I add the vertex twice because every other line seems to be invisible,
+            // and I bypassed that by just adding each line twice. I have no idea why this
+            // happens and I do not care.
+            mesh.SurfaceAddVertex(curvePoint);
+            mesh.SurfaceAddVertex(curvePoint);
+        }
+
+        mesh.SurfaceAddVertex(Curves.BezierQuadratic3DWithOffset(
+                startLocal,
+                controlLocal,
+                endLocal,
+                startOffset,
+                endOffset,
+                1)
+        );
+        mesh.SurfaceEnd();
+
+        return mesh;
+    }
+
+    public static ImmediateMesh CurveNormalsMesh(Vector3 startLocal, Vector3 endLocal, Vector3 controlLocal, Color colourToUse, int segments)
+    {
+        // Creates a Bezier curve
+        ImmediateMesh mesh = new ImmediateMesh();
+        mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, ColouredMaterial(colourToUse, 1));
+
+        Vector3 startNormal = Curves.BezierNormalQuadratic3D(startLocal, controlLocal, endLocal, 0);
+        mesh.SurfaceAddVertex(startLocal);
+        mesh.SurfaceAddVertex(startLocal + startNormal);
+
+        // Loop through the curve, add a point for each increment
+        for (int t = 1; t <= segments; t++)
+        {
+            Vector3 curvePoint = Curves.BezierQuadratic3D(
                         startLocal,
                         controlLocal,
                         endLocal,
                         t / (float)segments);
-            Vector3 orthogonal = new Vector3(tangent.X, tangent.Y, -tangent.Z);
-            float offset = (startOffset + endOffset) * (t/(float)segments);
+            Vector3 normal = Curves.BezierNormalQuadratic3D(startLocal, controlLocal, endLocal, t / (float)segments);
 
             // I add the vertex twice because every other line seems to be invisible,
             // and I bypassed that by just adding each line twice. I have no idea why this
             // happens and I do not care.
             mesh.SurfaceAddVertex(
-                    orthogonal* offset
+                    curvePoint
                 );
             mesh.SurfaceAddVertex(
-                    orthogonal * offset
+                    normal + curvePoint
                 );
         }
 
-        Vector3 endTangent = Curves.BezierTangentQuadratic3D(startLocal, controlLocal, endLocal, 0);
-        Vector3 endOrthogonal = new Vector3(endTangent.X, endTangent.Y, -endTangent.Z);
-        mesh.SurfaceAddVertex(endOrthogonal * startOffset + endLocal);
+        Vector3 endNormal = Curves.BezierNormalQuadratic3D(startLocal, controlLocal, endLocal, 1);
+        mesh.SurfaceAddVertex(endLocal);
+        mesh.SurfaceAddVertex(endLocal + endNormal);
         mesh.SurfaceEnd();
 
         return mesh;

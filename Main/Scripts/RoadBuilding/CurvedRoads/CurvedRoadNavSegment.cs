@@ -20,23 +20,20 @@ public partial class CurvedRoadNavSegment : NavSegment
     // Overrides
     public override Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {
-        Vector3 localPos = Curves.BezierQuadratic3D(
-            Start,
-            Control,
-            End,
+        Vector3 localPos = Curves.BezierQuadratic3DWithOffset(
+            roadToFollow.Start,
+            roadToFollow.Control,
+            roadToFollow.End,
+            startOffset, 
+            endOffset,
             percentOfSegment
             );
         return globalCoordinates ? ToGlobal(localPos) : localPos;
     }
 
-    /// <summary>
-    /// Gets a Mesh visualization of the curve of this segment in the requested colour and detail level.
-    /// </summary>
-    /// <param name="colourToUse"></param>
-    /// <param name="numSegments"></param>
-    /// <returns></returns>
+    
     public override ImmediateMesh GetCurveVisualization(Color colourToUse, int numSegments)
     {
-        return EasyShapes.OffsetCurveMesh(Start, End, Control, startOffset, endOffset, colourToUse, numSegments);
+        return EasyShapes.OffsetCurveMesh(roadToFollow.Start, roadToFollow.End, roadToFollow.Control, startOffset, endOffset, colourToUse, numSegments);
     }
 }
