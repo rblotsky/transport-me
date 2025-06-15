@@ -1,11 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_ywgcf"]
 [ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="5_mhk0g"]
 [ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_rsmg7"]
-[ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
+[ext_resource type="Script" uid="uid://can2dojlmlrtw" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="8_fh4jr"]
 [ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
 [ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/Resources/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
@@ -13,10 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/Resources/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
 [ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/Resources/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/Resources/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
-[ext_resource type="PackedScene" uid="uid://ctomogo8c6muu" path="res://Main/Resources/NetworkPrototype/random_vehicle.tscn" id="15_3kwhx"]
+[ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/Resources/Vehicle.tscn" id="15_hmqaa"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/Resources/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
-[ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/DevTools/DebugVisualizer.cs" id="16_jf1gt"]
-
+[ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/Scripts/DevTools/DebugVisualizer.cs" id="16_jf1gt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
 font_size = 30
@@ -359,61 +358,7 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
-[node name="RandomVehicle7" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle8" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle9" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle10" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle11" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle12" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle2" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle3" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle4" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle5" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle6" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle13" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle14" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle15" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle16" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle17" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle18" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle19" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle20" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle21" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle22" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle23" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle24" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle25" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle26" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle27" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
-
-[node name="RandomVehicle28" parent="VehicleContainer" instance=ExtResource("15_3kwhx")]
+[node name="Vehicle" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
 
 [node name="Node" type="Node" parent="." groups=["DebugVisualProvider"]]
 script = ExtResource("16_jf1gt")

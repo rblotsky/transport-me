@@ -19,16 +19,14 @@ public partial class MainVehicle : VehicleCollider, IDebugVisualizationProvider
 		return false;
 	}
 
-    public IEnumerable<DebugVisualization> GetVisualization(bool includeStatic)
+    public IEnumerable<DebugVisualization> GetVisualization()
     {
-        if (includeStatic) { 
-            yield return DebugVisualizationFactory.Box(
-                [DebugVisualizationFilters.VehicleCollisions],
-                GlobalPosition,
-                Quaternion,
-                new Vector3(1, 1, 2),
-                Colors.Black);
-        }
+        yield return DebugVisualizationFactory.Box(
+            [DebugVisualizationFilters.VehicleCollisions],
+            GlobalPosition,
+            Quaternion,
+            new Vector3(1, 1, 2),
+            Colors.Black);
 		RoutePoint point = associatedVehicle.CurrentRoute.GetVehicleRoutePositionAtPoint(associatedVehicle.CurrentDistanceAlongRoute);
         yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
         yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);

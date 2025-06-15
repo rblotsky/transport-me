@@ -24,6 +24,6 @@ namespace Transportme.Main.DevTools
         IEnumerable<DebugVisualization> GetVisualization();
         IEnumerable<DebugVisualization> GetVisualizationStatic() {
             yield break;
-        };
+        }
     }
 }
