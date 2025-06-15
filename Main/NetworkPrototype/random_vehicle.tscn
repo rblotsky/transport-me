@@ -5,6 +5,7 @@
 
 [node name="RandomVehicle" type="Node3D"]
 script = ExtResource("1_3yj52")
+acceleration = 16.0
 
 [node name="CarTest" parent="." instance=ExtResource("2_a855y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)

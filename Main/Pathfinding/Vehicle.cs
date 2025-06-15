@@ -16,6 +16,7 @@ public partial class Vehicle : Node3D
 	[Export] protected float stoppingDistance;
 	[Export] public bool showVisualizations;
 	[Export] public bool showPositionVisualizations;
+	[Export] protected Label3D speedLabel;
 
 	private List<VehicleCollider> attachedColliders;
 	// Properties
@@ -36,10 +37,12 @@ public partial class Vehicle : Node3D
 	protected double timeStopped = 0;
 	public double speed = 0;
 
+	private float turningRadius = 0; 
+
 	private double GetTurningSpeedLimit()
 	{
 		RoutePoint original = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute);
-		RoutePoint advance = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute + 3);
+		RoutePoint advance = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute + 2);
 
 		if (original.Rotation.IsEqualApprox(advance.Rotation))
 		{
@@ -54,13 +57,23 @@ public partial class Vehicle : Node3D
 		);
 
 		float radius = (radiusPoint - Simplifications.GetVectorXZ(original.Position)).Length();
+		this.turningRadius = radius;
 		double thing = Math.Sqrt(10 * (radius + 1));
 		return thing;
 	}
 
-	// FUNCTIONS //
-	// Godot Defaults
-	public override void _EnterTree()
+    public override void _Process(double delta)
+    {
+		if (speedLabel != null)
+		{
+			double speedLimit = GetTurningSpeedLimit();
+			speedLabel.Text = $"""Speed: {speed.ToString("0.##")}   Turning Max Speed: {speedLimit.ToString("0.##")} Turning Radius: {turningRadius.ToString("0.##")}""";
+		}
+        base._Process(delta);
+    }
+    // FUNCTIONS //
+    // Godot Defaults
+    public override void _EnterTree()
 	{
 		graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
 		attachedColliders = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
@@ -99,7 +112,7 @@ public partial class Vehicle : Node3D
 			speedLimit = (float)turningSpeedLimit;
 		}
 
-		speedLimit = Mathf.Min((float)maxVehicleSpeed, route.GetLength());
+		//speedLimit = Mathf.Min((float)maxVehicleSpeed, route.GetLength());
 
 		//accelerating or decelerating
 		if (shouldStop || speed - speedLimit > 0.1f)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,16 +10,34 @@ namespace Transportme.Main.DevTools
 {
     public partial class DebugVisualizer: Node
     {
-        private readonly List<MeshInstance3D> _visuals = new();
+        private readonly List<MeshInstance3D> _visuals = [];
         private int _trackedVisuals = 0;
+        private readonly HashSet<DebugVisualizationType> _activeTypes = new();
+        private DebugVisualizationFilters _activeFilters = 0;
+
+        public HashSet<DebugVisualizationType> ActiveTypes { get { return _activeTypes; } }
+        public DebugVisualizationFilters ActiveFilters { get { return _activeFilters; } set { _activeFilters = value; } }
+
+        public List<IDebugVisualizationProvider> providersCache = [];
+        public override void _Ready()
+        {
+            providersCache.AddRange(Simplifications.GetChildrenImplementingType<IDebugVisualizationProvider>(GetParent(), true));
+            base._Ready();
+        }
         public void Refresh()
         {
             var currerntVisualCount = 0;
-            foreach (var provider in Simplifications.GetChildrenImplementingType<IDebugVisualizationProvider>(GetParent(), true))
+            foreach (IDebugVisualizationProvider provider in providersCache)
             {
                 foreach(var visual in provider.GetVisualization())
                 {
-                    
+                    // if type or filter doesn't match
+                    if(!ActiveTypes.Contains(visual.Type) || ((_activeFilters & visual.Filters) == 0))
+                    {
+                        continue;
+                    }
+
+                    // allocate new mesh instances when there are none left to use
                     if(currerntVisualCount >= _trackedVisuals)
                     {
                         MeshInstance3D debugVisual = new MeshInstance3D
@@ -32,6 +51,7 @@ namespace Transportme.Main.DevTools
                     } 
                     else
                     {
+                        //update mesh to save on creating new meshes
                         var debugVisual = _visuals[currerntVisualCount];
                         debugVisual.Mesh = visual.Mesh;
                         debugVisual.Position = visual.Position;
@@ -40,11 +60,24 @@ namespace Transportme.Main.DevTools
                     currerntVisualCount++;
                 }
             }
-            Myron(currerntVisualCount);
+            FreeMeshes(currerntVisualCount);
             _trackedVisuals = currerntVisualCount;
-            
         }
-        private void Myron(int numItemsAllocated)
+
+        public override void _Process(double delta)
+        {
+            if(_activeTypes.Count > 0)
+            {
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Bot Method
+        /// <seealso cref="_visuals"/>
+        /// </summary>
+        /// <param name="numItemsAllocated"></param>
+        private void FreeMeshes(int numItemsAllocated)
         {
             if(numItemsAllocated >= _visuals.Count)
             {
@@ -59,15 +92,6 @@ namespace Transportme.Main.DevTools
                 }
                 _visuals.RemoveAt(i);
             }
-        }
-        private void ClearVisuals()
-        {
-            foreach (var v in _visuals)
-            {
-                if (IsInstanceValid(v))
-                    v.QueueFree();
-            }
-            _visuals.Clear();
         }
     }
 }
