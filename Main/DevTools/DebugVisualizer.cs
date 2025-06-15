@@ -8,6 +8,17 @@ using System.Threading.Tasks;
 
 namespace Transportme.Main.DevTools
 {
+    /// <summary>
+    /// A manager for most debug visualizations that occur during runtime. Any node which uses this must implement the 
+    /// <seealso cref="IDebugVisualizationProvider"/> interface.
+    /// 
+    /// The main goal is to be able to implement a pretty intuitive system while reducing the amount of code within the components. This mostly applies to visualizations
+    /// which require complex visualizations meant for code. 
+    /// 
+    /// Visualizations come in two flavours: Static and dynamic. Static visualizations just need to be shown once, and doesn't need re-rendering. These also usually are the more expensive
+    /// renderings which shouldn't be re-created every frame
+    /// Dynamic visualizations are easy to create and usually rely on values which change often. Take for example vehicle positioning on the road, and the computations for it.
+    /// </summary>
     public partial class DebugVisualizer: Node
     {
         private readonly List<MeshInstance3D> _visuals = [];
@@ -19,6 +30,10 @@ namespace Transportme.Main.DevTools
         public DebugVisualizationFilters ActiveFilters { get { return _activeFilters; } set { _activeFilters = value; } }
 
         public List<IDebugVisualizationProvider> providersCache = [];
+        private void OnFiltersChange()
+        {
+
+        }
         public override void _Ready()
         {
             providersCache.AddRange(Simplifications.GetChildrenImplementingType<IDebugVisualizationProvider>(GetParent(), true));

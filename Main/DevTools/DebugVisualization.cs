@@ -22,5 +22,8 @@ namespace Transportme.Main.DevTools
     public interface IDebugVisualizationProvider
     {
         IEnumerable<DebugVisualization> GetVisualization();
+        IEnumerable<DebugVisualization> GetVisualizationStatic() {
+            yield break;
+        };
     }
 }

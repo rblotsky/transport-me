@@ -66,7 +66,7 @@ public abstract partial class VehicleCollider : Area3D
 		}
 		else
 		{
-			GD.Print(positionDelta, associatedVehicle.speed);
+			//GD.Print(positionDelta, associatedVehicle.speed);
 		}
 	}
 

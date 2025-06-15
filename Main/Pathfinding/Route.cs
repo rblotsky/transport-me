@@ -52,8 +52,8 @@ public partial class Route : RefCounted
     public RoutePoint GetVehicleRoutePositionAtPoint(float distanceAlongRoute)
     {
         RoutePoint routePoint = new();
-        float backDistance = 1.0f;
-        float frontDistance = 0.4f;
+        float backDistance = 0.6f;
+        float frontDistance = 0.4f; //0.4
         float distanceFrom = Mathf.Max(distanceAlongRoute - backDistance, 0f);
         float distanceTo = Mathf.Min(distanceAlongRoute + frontDistance, (float)length);
 
@@ -66,7 +66,7 @@ public partial class Route : RefCounted
         } else if(distanceTo == (float)length)
         {
             lerpValue = 1f - Mathf.Min((distanceTo - distanceAlongRoute) / (distanceTo - distanceFrom), 1f);
-            GD.Print(lerpValue);
+            //GD.Print(lerpValue);
         } else
         {
             lerpValue = backDistance / (backDistance + frontDistance);
