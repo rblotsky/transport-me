@@ -25,9 +25,29 @@ namespace Transportme.Main.Scripts.DevTools
 
         public static void Init()
         {
-            _shapes[DebugShapeType.Sphere] = new SphereMesh { Radius = 0.5f };
-            _shapes[DebugShapeType.Box] = new BoxMesh { Size = new Vector3(1, 1, 1) };
-            _shapes[DebugShapeType.Capsule] = new CapsuleMesh { Height = 1f, Radius = 1f };
+            _shapes[DebugShapeType.Sphere] = new SphereMesh { 
+                Radius = 0.5f,
+                Material = new StandardMaterial3D()
+                {
+                    VertexColorUseAsAlbedo = true,
+                    AlbedoColor = new Color(1, 1, 1),
+                }
+                
+            };
+            _shapes[DebugShapeType.Box] = new BoxMesh { Size = new Vector3(1, 1, 1),
+                Material = new StandardMaterial3D()
+                {
+                    VertexColorUseAsAlbedo = true,
+                    AlbedoColor = new Color(1, 1, 1),
+                }
+            };
+            _shapes[DebugShapeType.Capsule] = new CapsuleMesh { Height = 1f, Radius = 1f,
+                Material = new StandardMaterial3D()
+                {
+                    VertexColorUseAsAlbedo = true,
+                    AlbedoColor = new Color(1, 1, 1),
+                }
+            };
         }
 
         public static Mesh Get(DebugShapeType type) {

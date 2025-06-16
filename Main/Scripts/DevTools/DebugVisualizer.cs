@@ -23,6 +23,7 @@ namespace Transportme.Main.DevTools
     {
         private readonly Dictionary<Mesh, MultiMeshInstance3D> debugStandardMeshes = new();
         private MeshInstance3D customMeshBatch;
+        private StandardMaterial3D standardMaterial;
 
         private readonly HashSet<DebugVisualizationType> _activeTypes = new();
         private DebugVisualizationFilters _activeFilters = 0;
@@ -60,7 +61,13 @@ namespace Transportme.Main.DevTools
         {
             providersCache.AddRange(Simplifications.GetChildrenImplementingType<IDebugVisualizationProvider>(GetParent(), true));
             customMeshBatch = new MeshInstance3D();
-            customMeshBatch.Mesh = new ArrayMesh();
+            ArrayMesh mesh = new();
+            var mat = new StandardMaterial3D();
+            mat.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+            mat.AlbedoColor = new Color(1,1,1);
+            mat.VertexColorUseAsAlbedo = true;
+            standardMaterial = mat;
+            customMeshBatch.Mesh = mesh;
             AddChild(customMeshBatch);
             base._Ready();
         }
@@ -77,6 +84,9 @@ namespace Transportme.Main.DevTools
             {
                 multiMesh.Multimesh.InstanceCount = 0;
             }
+            (customMeshBatch.Mesh as ArrayMesh).SurfaceSetMaterial(0, standardMaterial);
+            (customMeshBatch.Mesh as ArrayMesh).SurfaceSetMaterial(1, standardMaterial);
+
         }
         public void Refresh()
         {
