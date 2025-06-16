@@ -21,8 +21,9 @@ namespace Transportme.Main.DevTools
     /// </summary>
     public partial class DebugVisualizer: Node
     {
-        private readonly List<MeshInstance3D> _visuals = [];
-        private int _trackedVisuals = 0;
+        private readonly Dictionary<Mesh, MultiMeshInstance3D> debugStandardMeshes = new();
+        private MeshInstance3D customMeshBatch;
+
         private readonly HashSet<DebugVisualizationType> _activeTypes = new();
         private DebugVisualizationFilters _activeFilters = 0;
 
@@ -37,76 +38,98 @@ namespace Transportme.Main.DevTools
         public override void _Ready()
         {
             providersCache.AddRange(Simplifications.GetChildrenImplementingType<IDebugVisualizationProvider>(GetParent(), true));
+            customMeshBatch = new MeshInstance3D();
+            customMeshBatch.Mesh = new ArrayMesh();
+            AddChild(customMeshBatch);
             base._Ready();
+        }
+
+        private bool shouldRender(DebugVisualization vis)
+        {
+            return _activeTypes.Contains(vis.Type) && (_activeFilters & vis.Filters) != 0;
         }
         public void Refresh()
         {
             var currerntVisualCount = 0;
+            List < DebugVisualization > debugVisuals = [];
+            (customMeshBatch.Mesh as ArrayMesh).ClearSurfaces();
+
+
             foreach (IDebugVisualizationProvider provider in providersCache)
             {
-                foreach(var visual in provider.GetVisualization())
+                debugVisuals.AddRange(provider.GetVisualization());
+            }
+
+            // filter out any things which shouldn't render, then group them by their type (kind) as well as their kind specific properties
+            // then arrange them for processing
+            var debugVisualGroups = debugVisuals
+                .Where(x=> shouldRender(x))
+                .GroupBy(x => new { x.Kind, x.PrimitiveType, x.Mesh })
+                .Select(g => new { Keys = g.Key, DebugVisuals = g.ToList() });
+
+            foreach (var debugVisualGroup in debugVisualGroups)
+            {
+                //standard meshes can be combined into mesh specific multi-meshes for fast computing
+                if(debugVisualGroup.Keys.Kind == DebugGeometryKind.StandardMesh)
                 {
-                    // if type or filter doesn't match
-                    if(!ActiveTypes.Contains(visual.Type) || ((_activeFilters & visual.Filters) == 0))
-                    {
-                        continue;
+                    //if we havne't instantiated the multi-mesh for this specific mesh
+                    if (!debugStandardMeshes.ContainsKey(debugVisualGroup.Keys.Mesh))
+                    { 
+                        MultiMesh mesh = new MultiMesh();
+                        mesh.UseColors = true;
+                        mesh.Mesh = debugVisualGroup.Keys.Mesh;
+                        mesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
+                        mesh.InstanceCount = debugVisualGroup.DebugVisuals.Count; //initial count
+
+                        var multiMeshInstance3D = new MultiMeshInstance3D();
+                        multiMeshInstance3D.Multimesh = mesh;
+
+                        debugStandardMeshes[debugVisualGroup.Keys.Mesh] = multiMeshInstance3D;
+                        AddChild(debugStandardMeshes[debugVisualGroup.Keys.Mesh]);
                     }
 
-                    // allocate new mesh instances when there are none left to use
-                    if(currerntVisualCount >= _trackedVisuals)
+                    var multiMeshInstance = debugStandardMeshes[debugVisualGroup.Keys.Mesh];
+                    var count = debugVisualGroup.DebugVisuals.Count;
+                    if (multiMeshInstance.Multimesh.InstanceCount != count)
                     {
-                        MeshInstance3D debugVisual = new MeshInstance3D
-                        {
-                            Mesh = visual.Mesh,
-                            Position = visual.Position,
-                            Quaternion = visual.Rotation,
-                        };
-                        _visuals.Add(debugVisual);
-                        AddChild(debugVisual);
-                    } 
-                    else
-                    {
-                        //update mesh to save on creating new meshes
-                        var debugVisual = _visuals[currerntVisualCount];
-                        debugVisual.Mesh = visual.Mesh;
-                        debugVisual.Position = visual.Position;
-                        debugVisual.Quaternion = visual.Rotation;
+                        multiMeshInstance.Multimesh.InstanceCount = count;
                     }
-                    currerntVisualCount++;
+
+                    for (var i = 0; i < count; i++) {
+                        multiMeshInstance.Multimesh.SetInstanceTransform(i, debugVisualGroup.DebugVisuals[i].Transform);
+                        multiMeshInstance.Multimesh.SetInstanceColor(i, debugVisualGroup.DebugVisuals[i].colour);
+                    }
+                }
+                else //custom meshes (which use fast meshes via points) can all be combined into one array mesh
+                {
+                    SurfaceTool surfaceTool = new SurfaceTool();
+                    surfaceTool.Begin(debugVisualGroup.Keys.PrimitiveType);
+
+                    //add each vertex specified in the debug vis object
+                    for (var i = 0; i < debugVisualGroup.DebugVisuals.Count; i++) {
+                        for (var j = 0; j < debugVisualGroup.DebugVisuals[i].Vertices.Count; j++) {
+                            surfaceTool.SetColor(debugVisualGroup.DebugVisuals[i].colour);
+                            surfaceTool.AddVertex(debugVisualGroup.DebugVisuals[i].Vertices[j]);
+
+                            if (debugVisualGroup.Keys.PrimitiveType == Mesh.PrimitiveType.Lines 
+                                && j != 0 && j != debugVisualGroup.DebugVisuals[i].Vertices.Count - 1)
+                            {
+                                //start of the new line
+                                surfaceTool.SetColor(debugVisualGroup.DebugVisuals[i].colour);
+                                surfaceTool.AddVertex(debugVisualGroup.DebugVisuals[i].Vertices[j]);
+                            }
+                        }
+                    }
+
+                    ArrayMesh mesh = customMeshBatch.Mesh as ArrayMesh;
+                    surfaceTool.Commit(mesh);
                 }
             }
-            FreeMeshes(currerntVisualCount);
-            _trackedVisuals = currerntVisualCount;
         }
 
         public override void _Process(double delta)
         {
-            if(_activeTypes.Count > 0)
-            {
-                Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Bot Method
-        /// <seealso cref="_visuals"/>
-        /// </summary>
-        /// <param name="numItemsAllocated"></param>
-        private void FreeMeshes(int numItemsAllocated)
-        {
-            if(numItemsAllocated >= _visuals.Count)
-            {
-                return;
-            }
-
-            for (int i = _visuals.Count - 1; i >= numItemsAllocated; i--) { 
-                var v = _visuals[i];
-                if (IsInstanceValid(v))
-                {
-                    v.QueueFree();
-                }
-                _visuals.RemoveAt(i);
-            }
+            Refresh();
         }
     }
 }

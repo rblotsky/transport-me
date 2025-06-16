@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 public static class Curves
 {
 
@@ -14,12 +15,42 @@ public static class Curves
         return r;
     }
 
+    /// <summary>
+    /// Generates a bezier quadratic
+    /// </summary>
+    /// <param name="p0"></param>
+    /// <param name="p1"></param>
+    /// <param name="p2"></param>
+    /// <param name="t"></param>
+    /// <returns></returns>
     public static Vector3 BezierQuadratic3D(Vector3 p0, Vector3 p1, Vector3 p2, float t)
     {
         Vector3 q0 = p0.Lerp(p1, t);
         Vector3 q1 = p1.Lerp(p2, t);
 
         return q0.Lerp(q1, t);
+    }
+
+    /// <summary>
+    /// Generates and returns all points along a bezier curve
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <param name="control"></param>
+    /// <param name="segments">Number of points to generate</param>
+    /// <returns></returns>
+    public static IEnumerable<Vector3> BezierQuadraticCurve3D(Vector3 start, Vector3 end, Vector3 control, int segments = 10)
+    {
+        yield return start;
+        // Loop through the curve, add a point for each increment
+        for (int t = 1; t <= segments; t++)
+        {
+            yield return BezierQuadratic3D(
+                start,
+                control,
+                end,
+                t / (float)segments);
+        }
     }
 
     public static Vector2 BezierTangentQuadratic2D(Vector2 p0, Vector2 p1, Vector2 p2, float t)

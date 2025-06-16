@@ -7,16 +7,24 @@ using System.Threading.Tasks;
 
 namespace Transportme.Main.DevTools
 {
+    public enum DebugGeometryKind
+    {
+        StandardMesh,
+        ImmediateMesh
+    }
     public struct DebugVisualization
     {
-        public Mesh Mesh;
-        public Vector3 Position;
-        public Quaternion Rotation;
+        public DebugGeometryKind Kind;
+        public Transform3D Transform;
+
         public DebugVisualizationType Type;
-        /// <summary>
-        /// A bitwise operation  of filters from debug visualization filters
-        /// </summary>
         public DebugVisualizationFilters Filters;
+        public Color colour;
+
+
+        public Mesh Mesh;
+        public List<Vector3> Vertices;
+        public Mesh.PrimitiveType PrimitiveType;
     }
 
     public interface IDebugVisualizationProvider

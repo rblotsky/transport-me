@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Transportme.Main.Scripts.DevTools;
 using Vector3 = Godot.Vector3;
 
 namespace Transportme.Main.DevTools
@@ -15,11 +16,11 @@ namespace Transportme.Main.DevTools
         {
             return new()
             {
-                Mesh = EasyShapes.SphereMesh(radius, EasyShapes.ColouredMaterial(colour, alpha)),
-                Position = position,
-                Rotation = Quaternion.Identity,
+                Kind = DebugGeometryKind.StandardMesh,
+                Mesh = DebugShapeLibrary.Get(DebugShapeType.Sphere),
+                Transform = new Transform3D(Basis.Identity.Scaled(new Vector3(radius, radius, radius)), position),
                 Type = DebugVisualizationType.Zone,
-                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination & next)
+                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
             };
         }
 
@@ -27,24 +28,27 @@ namespace Transportme.Main.DevTools
         {
             return new()
             {
-                Mesh = EasyShapes.CurveMesh(start, end, control, colour, numSegments),
-                Position = Vector3.Zero,
-                Rotation = Quaternion.Identity,
+                Kind = DebugGeometryKind.ImmediateMesh,
                 Type = DebugVisualizationType.Line,
-                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination & next)
+                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
+                Vertices = Curves.BezierQuadraticCurve3D(start, end, control, numSegments).ToList(),
+                PrimitiveType = Mesh.PrimitiveType.Lines,
             };
         }
 
         public static DebugVisualization Arrow(IEnumerable<DebugVisualizationFilters> filters, Vector3 start, Vector3 end, Color? colour, float alpha = 1f)
         {
-            var forward = (end - start).Normalized();
+            var arrowSize = (end - start).Length() / 2;
+            // idk how to handle straight up...
+            var sideDirectionXZ = Simplifications.GetVectorXZ((end - start).Normalized()).Orthogonal();
+            Vector3 orthogonalSideDirection = new Vector3(sideDirectionXZ.X, 0f, sideDirectionXZ.Y);
             return new()
             {
-                Mesh = colour != null ? EasyShapes.TrianglePointerMesh((Color)colour, alpha) : ArrowMesh,
-                Position = start.Lerp(end, 0.5f),
-                Rotation = Simplifications.LookRotation(start, end),
+                Kind = DebugGeometryKind.ImmediateMesh,
                 Type = DebugVisualizationType.Line,
-                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination & next)
+                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
+                Vertices = [start, end + orthogonalSideDirection * arrowSize, end - orthogonalSideDirection * arrowSize],
+                PrimitiveType = Mesh.PrimitiveType.Triangles,
             };
         }
 
@@ -52,27 +56,23 @@ namespace Transportme.Main.DevTools
         {
             return new()
             {
-                Mesh = EasyShapes.LineMesh(start, end, colour),
-                Position = Vector3.Zero,
-                Rotation = Quaternion.Identity,
+                Kind = DebugGeometryKind.ImmediateMesh,
                 Type = DebugVisualizationType.Line,
-                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination & next)
+                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
+                Vertices = [start, end],
+                PrimitiveType = Mesh.PrimitiveType.Lines,
             };
         }
 
-        public static DebugVisualization Box(IEnumerable<DebugVisualizationFilters> filters, Vector3 position, Quaternion rotation, Vector3? size, Color colour, float alpha = 1f)
+        public static DebugVisualization Box(IEnumerable<DebugVisualizationFilters> filters, Vector3 position, Quaternion rotation, Vector3 size, Color colour, float alpha = 1f)
         {
             return new()
             {
-                Mesh = new BoxMesh
-                {
-                    Size = size ?? new Vector3(1, 1, 1),
-                    Material = EasyShapes.ColouredMaterial(colour, alpha),
-                },
-                Position = position,
-                Rotation = rotation,
+                Kind = DebugGeometryKind.StandardMesh,
                 Type = DebugVisualizationType.Zone,
-                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination & next)
+                Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
+                Mesh = DebugShapeLibrary.Get(DebugShapeType.Box),
+                Transform = new Transform3D(new Basis(rotation), position)
             };
         }
     }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dsjqklri6wma5"]
+[gd_scene load_steps=22 format=3 uid="uid://dsjqklri6wma5"]
 
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="2_dx22g"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="3_fon6f"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/Resources/NetworkPrototype/4WayIntersectionTest.tscn" id="11_dy2la"]
 [ext_resource type="Script" uid="uid://c2acksxjlrfeu" path="res://Main/Scripts/Navigation/NavCheckpoint.cs" id="12_fwvoe"]
 [ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="13_crkly"]
+[ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/Scripts/DevTools/DebugVisualizer.cs" id="14_8t60h"]
 [ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/Resources/Vehicle.tscn" id="14_yisdv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
@@ -88,12 +89,13 @@ script = ExtResource("2_dx22g")
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("3_fon6f")
 
-[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph")]
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph", "debugVisualizer")]
 script = ExtResource("4_jd5dk")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 grid = NodePath("../WorldGridViewer")
 navGraph = NodePath("../NavGraphContainer")
+debugVisualizer = NodePath("../Node")
 
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_o5pxy")
@@ -174,3 +176,6 @@ shape = SubResource("SphereShape3D_ciyus")
 acceleration = 16.0
 brakeSpeed = 7.5
 showPositionVisualizations = true
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("14_8t60h")

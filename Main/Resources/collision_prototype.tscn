@@ -1,6 +1,5 @@
-[gd_scene load_steps=22 format=3 uid="uid://bf5ftcmk5mykk"]
+[gd_scene load_steps=21 format=3 uid="uid://bf5ftcmk5mykk"]
 
-[ext_resource type="Script" path="res://Main/Editor/InstructionsUI.cs" id="1_a3rsw"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="2_wfnwe"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="3_24h18"]
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_2vxk4"]
@@ -56,11 +55,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-
-[node name="InstructionsUI" type="Node" parent="PrototypeUi" node_paths=PackedStringArray("panel", "instructions")]
-script = ExtResource("1_a3rsw")
-panel = NodePath("../Panel")
-instructions = NodePath("../Panel/VBoxContainer2")
 
 [node name="Button" type="Button" parent="PrototypeUi"]
 layout_mode = 0
@@ -185,5 +179,3 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="Vehicle3" parent="VehicleContainer" instance=ExtResource("14_whmy2")]
 
 [node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_whmy2")]
-
-[connection signal="pressed" from="PrototypeUi/Button" to="PrototypeUi/InstructionsUI" method="OnButtonPressed"]

@@ -59,7 +59,7 @@ public partial class PrototypeEditor : Node
 					debugVisualizer.ActiveFilters |= DebugVisualizationFilters.VehicleCollisions;
 				}
 			}
-			else if (keyInput.Keycode == Key.G && keyInput.IsPressed())
+			else if (keyInput.Keycode == Key.T && keyInput.IsPressed())
 			{
 				debugVisualizer.ActiveTypes.Add(DebugVisualizationType.Line);
 			}
