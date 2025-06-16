@@ -2,9 +2,10 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.DevTools;
 
 [GlobalClass]
-public partial class Vehicle : Node3D
+public partial class Vehicle : Node3D, IDebugVisualizationProvider
 {
 	// DATA //
 	// Instance Configs
@@ -168,5 +169,10 @@ public partial class Vehicle : Node3D
 		OnRouteFinish(finishedRoute);
 	}
 
+    public IEnumerable<DebugVisualization> GetVisualization()
+    {
+		var point = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute + 2);
+		yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.LimeGreen);
+    }
 }
 
