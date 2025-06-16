@@ -10,14 +10,14 @@ namespace Transportme.Main.DevTools
 {
     /// <summary>
     /// A manager for most debug visualizations that occur during runtime. Any node which uses this must implement the 
-    /// <seealso cref="IDebugVisualizationProvider"/> interface.
+    /// <seealso cref="IDebugVisualizationProvider"/> interface to provide the visualizations.
     /// 
     /// The main goal is to be able to implement a pretty intuitive system while reducing the amount of code within the components. This mostly applies to visualizations
     /// which require complex visualizations meant for code. 
-    /// 
-    /// Visualizations come in two flavours: Static and dynamic. Static visualizations just need to be shown once, and doesn't need re-rendering. These also usually are the more expensive
-    /// renderings which shouldn't be re-created every frame
-    /// Dynamic visualizations are easy to create and usually rely on values which change often. Take for example vehicle positioning on the road, and the computations for it.
+    /// <br/>
+    /// Visualizations are sorted into two types: standard and custom meshes.
+    /// Standard meshes use meshes provided by <seealso cref="Scripts.DevTools.DebugShapeLibrary"/>, and renders all shapes under one multimesh
+    /// Custom meshes use the primitive immediate meshes, and would be geometry such as lines, points and triangles.
     /// </summary>
     public partial class DebugVisualizer: Node
     {
@@ -69,14 +69,19 @@ namespace Transportme.Main.DevTools
         {
             return _activeTypes.Contains(vis.Type) && (_activeFilters & vis.Filters) != 0;
         }
+
+        private void ClearVisuals()
+        {
+            (customMeshBatch.Mesh as ArrayMesh).ClearSurfaces();
+            foreach(MultiMeshInstance3D multiMesh in debugStandardMeshes.Values)
+            {
+                multiMesh.Multimesh.InstanceCount = 0;
+            }
+        }
         public void Refresh()
         {
-            var currerntVisualCount = 0;
+            ClearVisuals();
             List < DebugVisualization > debugVisuals = [];
-            (customMeshBatch.Mesh as ArrayMesh).ClearSurfaces();
-
-            //todo clear old thingies
-
 
             foreach (IDebugVisualizationProvider provider in providersCache)
             {
