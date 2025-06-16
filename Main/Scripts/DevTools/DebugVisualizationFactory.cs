@@ -12,12 +12,13 @@ namespace Transportme.Main.DevTools
     public static class DebugVisualizationFactory
     {
         private static readonly Mesh ArrowMesh = EasyShapes.TrianglePointerMesh(Colors.Red, 0.2f);
-        public static DebugVisualization Sphere(IEnumerable<DebugVisualizationFilters> filters, Vector3 position, float radius, Color colour, float alpha = 1f)
+        public static DebugVisualization Sphere(IEnumerable<DebugVisualizationFilters> filters, Vector3 position, float radius, Color colour)
         {
             return new()
             {
                 Kind = DebugGeometryKind.StandardMesh,
                 Mesh = DebugShapeLibrary.Get(DebugShapeType.Sphere),
+                colour = colour,
                 Transform = new Transform3D(Basis.Identity.Scaled(new Vector3(radius, radius, radius)), position),
                 Type = DebugVisualizationType.Zone,
                 Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
@@ -30,13 +31,14 @@ namespace Transportme.Main.DevTools
             {
                 Kind = DebugGeometryKind.ImmediateMesh,
                 Type = DebugVisualizationType.Line,
+                colour = colour,
                 Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
                 Vertices = Curves.BezierQuadraticCurve3D(start, end, control, numSegments).ToList(),
                 PrimitiveType = Mesh.PrimitiveType.Lines,
             };
         }
 
-        public static DebugVisualization Arrow(IEnumerable<DebugVisualizationFilters> filters, Vector3 start, Vector3 end, Color? colour, float alpha = 1f)
+        public static DebugVisualization Arrow(IEnumerable<DebugVisualizationFilters> filters, Vector3 start, Vector3 end, Color colour)
         {
             var arrowSize = (end - start).Length() / 2;
             // idk how to handle straight up...
@@ -46,33 +48,38 @@ namespace Transportme.Main.DevTools
             {
                 Kind = DebugGeometryKind.ImmediateMesh,
                 Type = DebugVisualizationType.Line,
+                colour = colour,
                 Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
                 Vertices = [start, end + orthogonalSideDirection * arrowSize, end - orthogonalSideDirection * arrowSize],
                 PrimitiveType = Mesh.PrimitiveType.Triangles,
             };
         }
 
-        public static DebugVisualization Line(IEnumerable<DebugVisualizationFilters> filters, Vector3 start, Vector3 end, Color colour, float alpha = 1f)
+        public static DebugVisualization Line(IEnumerable<DebugVisualizationFilters> filters, Vector3 start, Vector3 end, Color colour)
         {
             return new()
             {
                 Kind = DebugGeometryKind.ImmediateMesh,
                 Type = DebugVisualizationType.Line,
+                colour = colour,
                 Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
                 Vertices = [start, end],
                 PrimitiveType = Mesh.PrimitiveType.Lines,
             };
         }
 
-        public static DebugVisualization Box(IEnumerable<DebugVisualizationFilters> filters, Vector3 position, Quaternion rotation, Vector3 size, Color colour, float alpha = 1f)
+        public static DebugVisualization Box(IEnumerable<DebugVisualizationFilters> filters, Vector3 position, Quaternion rotation, Vector3 size, Color colour)
         {
+            Transform3D transform = new Transform3D(new Basis(rotation), position);
+            transform = transform.ScaledLocal(size);
             return new()
             {
                 Kind = DebugGeometryKind.StandardMesh,
                 Type = DebugVisualizationType.Zone,
+                colour = colour,
                 Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
                 Mesh = DebugShapeLibrary.Get(DebugShapeType.Box),
-                Transform = new Transform3D(new Basis(rotation), position)
+                Transform = transform,
             };
         }
     }

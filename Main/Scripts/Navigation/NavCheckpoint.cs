@@ -19,6 +19,6 @@ public partial class NavCheckpoint : Node3D, IDebugVisualizationProvider
 
     public IEnumerable<DebugVisualization> GetVisualization()
     {
-		yield return DebugVisualizationFactory.Sphere( [DebugVisualizationFilters.NavSegments], GlobalPosition, 0.3f, Colors.Orange, 0.3f);
+		yield return DebugVisualizationFactory.Sphere( [DebugVisualizationFilters.NavSegments], GlobalPosition, 0.3f, Colors.Orange);
     }
 }

@@ -73,6 +73,60 @@ offset_top = 31.0
 offset_right = 517.0
 offset_bottom = 648.0
 
+[node name="CheckButton4" type="CheckButton" parent="PrototypeUi/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 186.0
+offset_top = 18.279
+offset_right = 230.0
+offset_bottom = 42.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton4"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Zone"
+
+[node name="CheckButton3" type="CheckButton" parent="PrototypeUi/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 183.0
+offset_top = -10.721
+offset_right = 227.0
+offset_bottom = 13.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton3"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Lines"
+
+[node name="CheckButton2" type="CheckButton" parent="PrototypeUi/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 3.0
+offset_top = 20.279
+offset_right = 47.0
+offset_bottom = 44.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton2"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Navigation"
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel"]
 layout_mode = 2
 offset_right = 218.0
@@ -86,6 +140,24 @@ label_settings = SubResource("LabelSettings_i7tsy")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="CheckButton" type="CheckButton" parent="PrototypeUi/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 2.0
+offset_top = -10.721
+offset_right = 46.0
+offset_bottom = 13.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Vehicles"
 
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("1_t2p50")
@@ -362,3 +434,8 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="Node" type="Node" parent="." groups=["DebugVisualProvider"]]
 script = ExtResource("16_jf1gt")
+
+[connection signal="toggled" from="PrototypeUi/Panel/CheckButton4" to="Node" method="OnZoneFilterEnabled"]
+[connection signal="toggled" from="PrototypeUi/Panel/CheckButton3" to="Node" method="OnLineFilterEnabled"]
+[connection signal="toggled" from="PrototypeUi/Panel/CheckButton2" to="Node" method="OnNavigationFilterToggled"]
+[connection signal="toggled" from="PrototypeUi/Panel/CheckButton" to="Node" method="OnVehiclesFilterToggled"]

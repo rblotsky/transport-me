@@ -31,10 +31,31 @@ namespace Transportme.Main.DevTools
         public DebugVisualizationFilters ActiveFilters { get { return _activeFilters; } set { _activeFilters = value; } }
 
         public List<IDebugVisualizationProvider> providersCache = [];
-        private void OnFiltersChange()
-        {
 
+        public void OnVehiclesFilterToggled(bool toggledOn)
+        {
+            if (toggledOn) ActiveFilters |= DebugVisualizationFilters.VehicleCollisions;
+            else ActiveFilters &= ~DebugVisualizationFilters.VehicleCollisions;
         }
+
+        public void OnNavigationFilterToggled(bool toggledOn)
+        {
+            if (toggledOn) ActiveFilters |= DebugVisualizationFilters.NavSegments;
+            else ActiveFilters &= ~DebugVisualizationFilters.NavSegments;
+        }
+
+        public void OnLineFilterEnabled(bool toggledOn)
+        {
+            if(toggledOn) ActiveTypes.Add(DebugVisualizationType.Line);
+            else ActiveTypes.Remove(DebugVisualizationType.Line);
+        }
+
+        public void OnZoneFilterEnabled(bool toggledOn)
+        {
+            if (toggledOn) ActiveTypes.Add(DebugVisualizationType.Zone);
+            else ActiveTypes.Remove(DebugVisualizationType.Zone);
+        }
+
         public override void _Ready()
         {
             providersCache.AddRange(Simplifications.GetChildrenImplementingType<IDebugVisualizationProvider>(GetParent(), true));
@@ -53,6 +74,8 @@ namespace Transportme.Main.DevTools
             var currerntVisualCount = 0;
             List < DebugVisualization > debugVisuals = [];
             (customMeshBatch.Mesh as ArrayMesh).ClearSurfaces();
+
+            //todo clear old thingies
 
 
             foreach (IDebugVisualizationProvider provider in providersCache)
