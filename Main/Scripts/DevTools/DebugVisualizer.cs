@@ -84,8 +84,6 @@ namespace Transportme.Main.DevTools
             {
                 multiMesh.Multimesh.InstanceCount = 0;
             }
-            (customMeshBatch.Mesh as ArrayMesh).SurfaceSetMaterial(0, standardMaterial);
-            (customMeshBatch.Mesh as ArrayMesh).SurfaceSetMaterial(1, standardMaterial);
 
         }
         public void Refresh()
@@ -142,6 +140,7 @@ namespace Transportme.Main.DevTools
                 {
                     SurfaceTool surfaceTool = new SurfaceTool();
                     surfaceTool.Begin(debugVisualGroup.Keys.PrimitiveType);
+                    surfaceTool.SetMaterial(standardMaterial);
 
                     //add each vertex specified in the debug vis object
                     for (var i = 0; i < debugVisualGroup.DebugVisuals.Count; i++) {
