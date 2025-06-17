@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/Resources/Vehicle.tscn" id="14_whmy2"]
 [ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="15_rk8ku"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
+[sub_resource type="LabelSettings" id="LabelSettings_xj81u"]
 font_size = 30
 font_color = Color(1, 0, 0.933333, 1)
 outline_size = 10
@@ -62,25 +62,96 @@ offset_right = 137.0
 offset_bottom = 31.0
 text = "View Menu"
 
-[node name="Panel" type="Panel" parent="PrototypeUi"]
-layout_mode = 0
+[node name="Panel2" type="Panel" parent="PrototypeUi"]
 offset_top = 31.0
 offset_right = 517.0
 offset_bottom = 648.0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel"]
+[node name="CheckButton4" type="CheckButton" parent="PrototypeUi/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 186.0
+offset_top = 18.279
+offset_right = 230.0
+offset_bottom = 42.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton4"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Zone"
+
+[node name="CheckButton3" type="CheckButton" parent="PrototypeUi/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 183.0
+offset_top = -10.721
+offset_right = 227.0
+offset_bottom = 13.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton3"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Lines"
+
+[node name="CheckButton2" type="CheckButton" parent="PrototypeUi/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 3.0
+offset_top = 20.279
+offset_right = 47.0
+offset_bottom = 44.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton2"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Navigation"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel2"]
 layout_mode = 2
 offset_right = 218.0
 offset_bottom = 42.0
 
-[node name="Label" type="Label" parent="PrototypeUi/Panel/VBoxContainer2"]
+[node name="Label" type="Label" parent="PrototypeUi/Panel2/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Instructions"
-label_settings = SubResource("LabelSettings_i7tsy")
+label_settings = SubResource("LabelSettings_xj81u")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="CheckButton" type="CheckButton" parent="PrototypeUi/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.113
+anchor_bottom = 0.113
+offset_left = 2.0
+offset_top = -10.721
+offset_right = 46.0
+offset_bottom = 13.279
+
+[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -1.0
+offset_right = 115.0
+offset_bottom = 22.0
+text = "Vehicles"
 
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("2_wfnwe")

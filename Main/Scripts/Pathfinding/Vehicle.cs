@@ -173,6 +173,9 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
     {
 		var point = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute + 2);
 		yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.LimeGreen);
+		yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, 0.1f, Colors.LimeGreen);
+        yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.backPoint, 0.1f, Colors.LimeGreen);
+
     }
 }
 
