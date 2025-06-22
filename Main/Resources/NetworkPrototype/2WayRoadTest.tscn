@@ -2,7 +2,7 @@
 
 [ext_resource type="Material" uid="uid://b3h2hsdfu4evw" path="res://Main/Resources/NetworkPrototype/RoadMaterial.tres" id="2_bn3qr"]
 [ext_resource type="Script" uid="uid://dcqnm7wuhdvv0" path="res://Main/Scripts/Navigation/PloppableGraph.cs" id="3_4tpjd"]
-[ext_resource type="Script" uid="uid://bsmky6dx5q6dd" path="res://Main/Scripts/Navigation/NavSegment.cs" id="4_6626q"]
+[ext_resource type="Script" uid="uid://bbhxfp7mi65jt" path="res://Main/Scripts/Navigation/BezierCurveNavSegment.cs" id="3_uhgpm"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_l1j8j"]
 material = ExtResource("2_bn3qr")
@@ -36,14 +36,16 @@ mesh = SubResource("BoxMesh_xw3h3")
 [node name="PloppableGraph" type="Node3D" parent="."]
 script = ExtResource("3_4tpjd")
 
-[node name="NavSegment2" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_6626q")
-Start = Vector3(2, 0, -1)
-End = Vector3(-2, 0, -1)
-Control = Vector3(0, 0, -1)
+[node name="BezierCurveNavSegment" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_uhgpm")
+CurveStart = Vector3(2, 0, -1)
+CurveEnd = Vector3(-2, 0, -1)
+CurveControl = Vector3(0, 0, -1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_6626q")
-Start = Vector3(-2, 0, 1)
-End = Vector3(2, 0, 1)
-Control = Vector3(0, 0, 1)
+[node name="BezierCurveNavSegment2" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_uhgpm")
+CurveStart = Vector3(-2, 0, 1)
+CurveEnd = Vector3(2, 0, 1)
+CurveControl = Vector3(0, 0, 1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"

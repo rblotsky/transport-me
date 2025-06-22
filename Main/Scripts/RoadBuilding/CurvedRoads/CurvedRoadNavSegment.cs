@@ -6,15 +6,15 @@ using System;
 public partial class CurvedRoadNavSegment : NavSegment
 {
     // DATA //
-    [Export] public CurvedRoad roadToFollow;
-    [Export] public float startOffset = 0f;
-    [Export] public float endOffset = 0f;
-    [Export] public bool forward;
+    [Export] private CurvedRoad roadToFollow;
+    [Export] private float startOffset = 0f;
+    [Export] private float endOffset = 0f;
+    [Export] private bool forward;
 
-    public override Vector3 Start { get { return roadToFollow.StartTransform * (Vector3.Right * startOffset); } set { /* empty */ } }
-    public override Vector3 End { get { return roadToFollow.EndTransform * (Vector3.Right * endOffset); } set { /* empty */ } }
-    public override Vector3 Control { get { return roadToFollow.Control; } set { /* empty */ } }
+    public override Vector3 Start { get { return roadToFollow.StartTransform * (Vector3.Right * startOffset); } }
+    public override Vector3 End { get { return roadToFollow.EndTransform * (Vector3.Right * endOffset); } }
 
+    public override float Length { get { return SimpleLength; } }
 
     // FUNCTIONS //
     // Overrides

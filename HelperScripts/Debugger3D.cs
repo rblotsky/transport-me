@@ -125,13 +125,14 @@ public partial class Debugger3D : Node3D
 
         foreach (NavSegment segment in route.OrderedSegments)
         {
-            CurveEffect(
+            //TODO FIX THIS
+            /*CurveEffect(
                 segment.GlobalStart + Vector3I.Up,
                 segment.GlobalEnd + Vector3I.Up,
                 segment.GlobalControl,
                 Colors.Black,
                 durationSeconds
-                );
+                );*/
         }
     }
 

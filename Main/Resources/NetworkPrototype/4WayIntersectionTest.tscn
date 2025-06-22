@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bjh5oenwws237"]
 
 [ext_resource type="Material" uid="uid://b3h2hsdfu4evw" path="res://Main/Resources/NetworkPrototype/RoadMaterial.tres" id="2_y8l8r"]
+[ext_resource type="Script" uid="uid://bbhxfp7mi65jt" path="res://Main/Scripts/Navigation/BezierCurveNavSegment.cs" id="3_03vap"]
 [ext_resource type="Script" uid="uid://dcqnm7wuhdvv0" path="res://Main/Scripts/Navigation/PloppableGraph.cs" id="3_8kbfo"]
-[ext_resource type="Script" uid="uid://bsmky6dx5q6dd" path="res://Main/Scripts/Navigation/NavSegment.cs" id="4_b3jrp"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_l1j8j"]
 material = ExtResource("2_y8l8r")
@@ -39,74 +39,84 @@ skeleton = NodePath("../MeshInstance3D")
 [node name="PloppableGraph" type="Node3D" parent="."]
 script = ExtResource("3_8kbfo")
 
-[node name="NavSegment2" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(2, 0, -1)
-End = Vector3(-2, 0, -1)
-Control = Vector3(0, 0, -1)
+[node name="BezierCurveNavSegment2" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(2, 0, -1)
+CurveEnd = Vector3(-2, 0, -1)
+CurveControl = Vector3(0, 0, -1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(-2, 0, 1)
-End = Vector3(2, 0, 1)
-Control = Vector3(0, 0, 1)
+[node name="BezierCurveNavSegment" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(1, 0, 2)
+CurveEnd = Vector3(1, 0, -2)
+CurveControl = Vector3(1, 0, 0)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment3" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(1, 0, 2)
-End = Vector3(1, 0, -2)
-Control = Vector3(1, 0, 0)
+[node name="BezierCurveNavSegment3" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(-2, 0, 1)
+CurveEnd = Vector3(2, 0, 1)
+CurveControl = Vector3(0, 0, 1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment4" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(-1, 0, -2)
-End = Vector3(-1, 0, 2)
-Control = Vector3(-1, 0, 0)
+[node name="BezierCurveNavSegment4" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(-1, 0, -2)
+CurveEnd = Vector3(-1, 0, 2)
+CurveControl = Vector3(-1, 0, 0)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment5" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(-2, 0, 1)
-End = Vector3(-1, 0, 2)
-Control = Vector3(-1, 0, 1)
+[node name="BezierCurveNavSegment5" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(-1, 0, -2)
+CurveEnd = Vector3(-2, 0, -1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment6" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(1, 0, 2)
-End = Vector3(2, 0, 1)
-Control = Vector3(1, 0, 1)
+[node name="BezierCurveNavSegment6" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(-2, 0, 1)
+CurveEnd = Vector3(-1, 0, 2)
+CurveControl = Vector3(-1, 0, 1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment7" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(-1, 0, -2)
-End = Vector3(-2, 0, -1)
-Control = Vector3(-1, 0, -1)
+[node name="BezierCurveNavSegment7" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(1, 0, 2)
+CurveEnd = Vector3(2, 0, 1)
+CurveControl = Vector3(1, 0, 1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment8" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(2, 0, -1)
-End = Vector3(1, 0, -2)
-Control = Vector3(1, 0, -1)
+[node name="BezierCurveNavSegment8" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(2, 0, -1)
+CurveEnd = Vector3(1, 0, -2)
+CurveControl = Vector3(1, 0, -1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment9" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(-1, 0, -2)
-End = Vector3(2, 0, 1)
-Control = Vector3(-1, 0, 1)
+[node name="BezierCurveNavSegment9" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(2, 0, -1)
+CurveEnd = Vector3(-1, 0, 2)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment10" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(2, 0, -1)
-End = Vector3(-1, 0, 2)
-Control = Vector3(-1, 0, -1)
+[node name="BezierCurveNavSegment10" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(1, 0, 2)
+CurveEnd = Vector3(-2, 0, -1)
+CurveControl = Vector3(1, 0, -1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment11" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(1, 0, 2)
-End = Vector3(-2, 0, -1)
-Control = Vector3(1, 0, -1)
+[node name="BezierCurveNavSegment11" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(-1, 0, -2)
+CurveEnd = Vector3(2, 0, 1)
+CurveControl = Vector3(-1, 0, 1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
-[node name="NavSegment12" type="Node3D" parent="PloppableGraph"]
-script = ExtResource("4_b3jrp")
-Start = Vector3(-2, 0, 1)
-End = Vector3(1, 0, -2)
-Control = Vector3(1, 0, 1)
+[node name="BezierCurveNavSegment12" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_03vap")
+CurveStart = Vector3(-2, 0, 1)
+CurveEnd = Vector3(1, 0, -2)
+CurveControl = Vector3(1, 0, 1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
