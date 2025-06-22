@@ -134,8 +134,7 @@ public partial class NavGraphContainer : Node3D
     {
         foreach(NavSegment segment in segments)
         {
-            // TODO: Fix this to use the navsegment's own visualization
-            //Debugger3D.main.CurveEffect(segment.GlobalStart, segment.GlobalEnd, segment.GlobalControl, Colors.Red, 5);
+            Debugger3D.main.OrderedLinesEffect(segment.ConvertPointsToGlobal(segment.SubdivideIntoPoints(9)), Colors.Red, 5);
         }
 
         foreach(NavConnection connector in connections)

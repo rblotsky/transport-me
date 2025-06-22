@@ -11,8 +11,20 @@ public partial class CurvedRoadNavSegment : NavSegment
     [Export] private float endOffset = 0f;
     [Export] private bool forward;
 
-    public override Vector3 Start { get { return roadToFollow.StartTransform * (Vector3.Right * startOffset); } }
-    public override Vector3 End { get { return roadToFollow.EndTransform * (Vector3.Right * endOffset); } }
+    public override Vector3 Start { 
+        get 
+        { 
+            if (forward) { return roadToFollow.StartTransform * (Vector3.Right * startOffset); } 
+            else { return roadToFollow.EndTransform * (Vector3.Left * startOffset); } 
+        } 
+    }
+    public override Vector3 End {
+        get
+        {
+            if (forward) { return roadToFollow.EndTransform * (Vector3.Right * endOffset); }
+            else { return roadToFollow.StartTransform * (Vector3.Left * endOffset); }
+        }
+    }
 
     public override float Length { get { return SimpleLength; } }
 
@@ -20,20 +32,29 @@ public partial class CurvedRoadNavSegment : NavSegment
     // Overrides
     public override Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {
-        Vector3 localPos = Curves.BezierQuadratic3DWithOffset(
+        Vector3 localPos = Vector3.Zero;
+        float percentToUse = percentOfSegment;
+
+        if(!forward)
+        {
+            percentToUse = 1.0f - percentOfSegment;
+        }
+
+        localPos = Curves.BezierQuadraticWithOffset3D(
             roadToFollow.Start,
             roadToFollow.Control,
             roadToFollow.End,
-            startOffset, 
+            startOffset,
             endOffset,
-            percentOfSegment
+            percentToUse
             );
+
         return globalCoordinates ? ToGlobal(localPos) : localPos;
     }
 
-    
-    public override ImmediateMesh GetCurveVisualization(Color colourToUse, int numSegments)
+
+    public override Vector3[] SubdivideIntoPoints(int numPoints)
     {
-        return EasyShapes.OffsetCurveMesh(roadToFollow.Start, roadToFollow.End, roadToFollow.Control, startOffset, endOffset, colourToUse, numSegments);
+        return Curves.BezierQuadraticWithOffset3DToPoints(roadToFollow.Start, roadToFollow.Control, roadToFollow.End, startOffset, endOffset, numPoints);
     }
 }

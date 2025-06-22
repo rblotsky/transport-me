@@ -42,13 +42,13 @@ public partial class BezierCurveNavSegmentGizmo : EditorNode3DGizmoPlugin
     public override Variant _GetHandleValue(EditorNode3DGizmo gizmo, int handleId, bool secondary)
     {
         BezierCurveNavSegment node = (BezierCurveNavSegment)gizmo.GetNode3D();
-        return node.GetPointByIndex(handleId);
+        return node.GetCurvePointByIndex(handleId);
     }
 
     public override void _SetHandle(EditorNode3DGizmo gizmo, int handleId, bool secondary, Camera3D camera, Vector2 screenPos)
     {
         BezierCurveNavSegment node = (BezierCurveNavSegment)gizmo.GetNode3D();
-        float pointHeight = node.GetPointByIndex(handleId).Y;
+        float pointHeight = node.GetCurvePointByIndex(handleId).Y;
         Plane placementPlane = new Plane(Vector3.Up, pointHeight);
         Vector3? mousePosWorld =
             placementPlane.IntersectsRay(
@@ -56,7 +56,7 @@ public partial class BezierCurveNavSegmentGizmo : EditorNode3DGizmoPlugin
             camera.ProjectRayNormal(screenPos));
 
         // Returns the placement point (at the same height as it currently is) or the current position if mouse position wasn't found
-        Vector3 newPosition = node.GetPointByIndex(handleId);
+        Vector3 newPosition = node.GetCurvePointByIndex(handleId);
         if (mousePosWorld != null)
         {
             newPosition = mousePosWorld.Value;
@@ -66,7 +66,7 @@ public partial class BezierCurveNavSegmentGizmo : EditorNode3DGizmoPlugin
         {
             newPosition = newPosition.Snapped(new Vector3(1, 1, 1));
         }
-        node.SetPointByIndex(handleId, newPosition);
+        node.SetCurvePointByIndex(handleId, newPosition);
         node.UpdateGizmos();
     }
 

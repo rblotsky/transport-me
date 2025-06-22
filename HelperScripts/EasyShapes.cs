@@ -157,7 +157,7 @@ public static class EasyShapes
         ImmediateMesh mesh = new ImmediateMesh();
         mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, ColouredMaterial(colourToUse, 1));
 
-        mesh.SurfaceAddVertex(Curves.BezierQuadratic3DWithOffset(
+        mesh.SurfaceAddVertex(Curves.BezierQuadraticWithOffset3D(
                 startLocal,
                 controlLocal,
                 endLocal,
@@ -170,7 +170,7 @@ public static class EasyShapes
         for (int t = 1; t <= segments; t++)
         {
             float offsetAtDistance = Mathf.Lerp(startOffset, endOffset, t / (float)segments);
-            Vector3 curvePoint = Curves.BezierQuadratic3DWithOffset(
+            Vector3 curvePoint = Curves.BezierQuadraticWithOffset3D(
                 startLocal, 
                 controlLocal, 
                 endLocal, 
@@ -186,7 +186,7 @@ public static class EasyShapes
             mesh.SurfaceAddVertex(curvePoint);
         }
 
-        mesh.SurfaceAddVertex(Curves.BezierQuadratic3DWithOffset(
+        mesh.SurfaceAddVertex(Curves.BezierQuadraticWithOffset3D(
                 startLocal,
                 controlLocal,
                 endLocal,
@@ -194,6 +194,20 @@ public static class EasyShapes
                 endOffset,
                 1)
         );
+        mesh.SurfaceEnd();
+
+        return mesh;
+    }
+
+    public static ImmediateMesh OrderedLinesMesh(Vector3[] points, Color colourToUse)
+    {
+        ImmediateMesh mesh = new ImmediateMesh();
+        mesh.SurfaceBegin(Mesh.PrimitiveType.LineStrip, ColouredMaterial(colourToUse, 1));
+
+        foreach(Vector3 point in points)
+        {
+            mesh.SurfaceAddVertex(point);
+        }
         mesh.SurfaceEnd();
 
         return mesh;

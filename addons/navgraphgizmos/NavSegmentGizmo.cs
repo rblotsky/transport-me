@@ -41,14 +41,13 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
         }
 
         // Adds the actual visualization
-        ImmediateMesh curveMesh = node.GetCurveVisualization(lineColour, 9);
+        ImmediateMesh curveMesh = EasyShapes.OrderedLinesMesh(node.SubdivideIntoPoints(9), lineColour);
         Mesh arrowMesh = EasyShapes.TrianglePointerMesh(arrowColour, 0.15f);
         gizmo.AddMesh(curveMesh);
         gizmo.AddMesh(arrowMesh, null, new Transform3D(Basis.LookingAt(node.DirectionalLine, Vector3.Up), node.GetPositionOnSegment(0.5f, false)));
 
-        gizmo.AddCollisionSegments(((Vector3[])curveMesh.SurfaceGetArrays(0)[0]));
+        gizmo.AddCollisionSegments((Vector3[])curveMesh.SurfaceGetArrays(0)[0]);
         gizmo.AddCollisionTriangles(arrowMesh.GenerateTriangleMesh());
-
     }
 
 }

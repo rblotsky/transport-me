@@ -32,7 +32,7 @@ public partial class BezierCurveNavSegment : NavSegment
     /// </summary>
     /// <param name="index">0 = Start, 1 = Control, 2 = End</param>
     /// <returns>The local value of the requested point</returns>
-    public Vector3 GetPointByIndex(int index)
+    public Vector3 GetCurvePointByIndex(int index)
     {
         if (index == 0) return CurveStart;
         else if (index == 1) return CurveControl;
@@ -45,19 +45,13 @@ public partial class BezierCurveNavSegment : NavSegment
     /// </summary>
     /// <param name="index">0 = Start, 1 = Control, 2 = End</param>
     /// <param name="value">The Vector3 value of the point</param>
-    public void SetPointByIndex(int index, Vector3 value)
+    public void SetCurvePointByIndex(int index, Vector3 value)
     {
         if (index == 0) CurveStart = value;
         else if (index == 1) CurveControl = value;
         else if (index == 2) CurveEnd = value;
     }
 
-    /// <summary>
-    /// Gets the 3D position a given percentage from the start of the segment.
-    /// </summary>
-    /// <param name="percentOfSegment">How far along the segment</param>
-    /// <param name="globalCoordinates">True if you want the result using global coordinates</param>
-    /// <returns></returns>
     public override Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
     {
         Vector3 localPos = Curves.BezierQuadratic3D(
@@ -69,14 +63,8 @@ public partial class BezierCurveNavSegment : NavSegment
         return globalCoordinates ? ToGlobal(localPos) : localPos;
     }
 
-    /// <summary>
-    /// Gets a Mesh visualization of the curve of this segment in the requested colour and detail level.
-    /// </summary>
-    /// <param name="colourToUse"></param>
-    /// <param name="numSegments"></param>
-    /// <returns></returns>
-    public override ImmediateMesh GetCurveVisualization(Color colourToUse, int numSegments)
+    public override Vector3[] SubdivideIntoPoints(int numPoints)
     {
-        return EasyShapes.CurveMesh(CurveStart, CurveEnd, CurveControl, colourToUse, numSegments);
+        return Curves.BezierQuadratic3DToPoints(CurveStart, CurveControl, CurveEnd, numPoints);
     }
 }

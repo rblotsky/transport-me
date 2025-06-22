@@ -49,10 +49,19 @@ public abstract partial class NavSegment : Node3D
     public abstract Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true);
 
     /// <summary>
-    /// Gets a Mesh visualization of the curve of this segment in the requested colour and detail level.
+    /// Returns a list of discrete points from the start to end of the segment.
     /// </summary>
-    /// <param name="colourToUse"></param>
-    /// <param name="numSegments"></param>
+    /// <param name="numPoints"></param>
     /// <returns></returns>
-    public abstract ImmediateMesh GetCurveVisualization(Color colourToUse, int numSegments);
+    public abstract Vector3[] SubdivideIntoPoints(int numPoints);
+
+    public Vector3[] ConvertPointsToGlobal(Vector3[] points)
+    {
+        Vector3[] convertedPoints = new Vector3[points.Length];
+        for(int i = 0; i < points.Length; i++)
+        {
+            convertedPoints[i] = ToGlobal(points[i]);
+        }
+        return convertedPoints;
+    }
 }

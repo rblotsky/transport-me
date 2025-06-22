@@ -105,7 +105,7 @@ public static class Simplifications
         }
     }
 
-    public static bool V3ApproximatelyEqual(Vector3 p1, Vector3 p2, float radius = 0.1f)
+    public static bool V3ApproximatelyEqual(Vector3 p1, Vector3 p2, float radius = 0.5f)
     {
         return (p1 - p2).Length() <= radius;
     }

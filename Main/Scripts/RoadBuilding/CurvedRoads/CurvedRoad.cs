@@ -34,11 +34,9 @@ public partial class CurvedRoad : Node3D
 
     // Road Mesh Data
     [ExportCategory("Mesh")]
-    [Export] private bool generateMeshButton { get { return false; } set { UpdateMesh(); } }
     [Export] private RoadMesh roadMesh;
     [Export] private MeshInstance3D meshRenderer;
     [Export] private bool debugNormals = false;
-    [Export] private MeshInstance3D debugRenderer;
 
 
     // FUNCTIONS //
@@ -71,15 +69,16 @@ public partial class CurvedRoad : Node3D
     // Visualization
     public void UpdateMesh()
     {
-        // Runs regardless of editor
         if (roadMesh != null && meshRenderer != null)
         {
-            meshRenderer.Mesh = roadMesh.GenerateRoadMesh(this);
-        }
-
-        if (debugRenderer != null && roadMesh != null && debugNormals)
-        {
-            debugRenderer.Mesh = roadMesh.GenerateRoadNormalsMesh(this);
+            // If debug normals enabled, uses the normals mesh instead
+            if (debugNormals)
+            {
+                meshRenderer.Mesh = roadMesh.GenerateRoadNormalsMesh(this);
+            }
+            else { 
+                meshRenderer.Mesh = roadMesh.GenerateRoadMesh(this); 
+            }
         }
     }
 }
