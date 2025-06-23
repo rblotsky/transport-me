@@ -34,7 +34,7 @@ namespace Transportme.Main.DevTools
                 colour = colour,
                 Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
                 Vertices = Curves.BezierQuadraticCurve3D(start, end, control, numSegments).ToList(),
-                PrimitiveType = Mesh.PrimitiveType.Lines,
+                PrimitiveType = Mesh.PrimitiveType.LineStrip,
             };
         }
 

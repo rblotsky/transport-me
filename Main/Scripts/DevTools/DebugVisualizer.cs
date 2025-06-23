@@ -33,29 +33,18 @@ namespace Transportme.Main.DevTools
 
         public List<IDebugVisualizationProvider> providersCache = [];
 
-        public void OnVehiclesFilterToggled(bool toggledOn)
+        public void OnFilterToggled(DebugVisualizationFilters filter, bool toggledOn)
         {
-            if (toggledOn) ActiveFilters |= DebugVisualizationFilters.VehicleCollisions;
-            else ActiveFilters &= ~DebugVisualizationFilters.VehicleCollisions;
+            if (toggledOn) ActiveFilters |= filter;
+            else ActiveFilters &= ~filter;
         }
 
-        public void OnNavigationFilterToggled(bool toggledOn)
+        public void OnTypeToggled(DebugVisualizationType type, bool toggledOn)
         {
-            if (toggledOn) ActiveFilters |= DebugVisualizationFilters.NavSegments;
-            else ActiveFilters &= ~DebugVisualizationFilters.NavSegments;
+            if(toggledOn) ActiveTypes.Add(type);
+            else ActiveTypes.Remove(type);
         }
 
-        public void OnLineFilterEnabled(bool toggledOn)
-        {
-            if(toggledOn) ActiveTypes.Add(DebugVisualizationType.Line);
-            else ActiveTypes.Remove(DebugVisualizationType.Line);
-        }
-
-        public void OnZoneFilterEnabled(bool toggledOn)
-        {
-            if (toggledOn) ActiveTypes.Add(DebugVisualizationType.Zone);
-            else ActiveTypes.Remove(DebugVisualizationType.Zone);
-        }
 
         public override void _Ready()
         {
@@ -147,14 +136,6 @@ namespace Transportme.Main.DevTools
                         for (var j = 0; j < debugVisualGroup.DebugVisuals[i].Vertices.Count; j++) {
                             surfaceTool.SetColor(debugVisualGroup.DebugVisuals[i].colour);
                             surfaceTool.AddVertex(debugVisualGroup.DebugVisuals[i].Vertices[j]);
-
-                            if (debugVisualGroup.Keys.PrimitiveType == Mesh.PrimitiveType.Lines 
-                                && j != 0 && j != debugVisualGroup.DebugVisuals[i].Vertices.Count - 1)
-                            {
-                                //start of the new line
-                                surfaceTool.SetColor(debugVisualGroup.DebugVisuals[i].colour);
-                                surfaceTool.AddVertex(debugVisualGroup.DebugVisuals[i].Vertices[j]);
-                            }
                         }
                     }
 

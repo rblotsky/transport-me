@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuch527r34ce4"]
+
+[ext_resource type="Script" uid="uid://btjhyan55i3v0" path="res://Main/Scripts/DevTools/DebugVisualizationUI.cs" id="1_srhb1"]
+
+[node name="DebugVisualizerUI" type="VBoxContainer" node_paths=PackedStringArray("_debugVisualizer")]
+size_flags_stretch_ratio = 4.45
+script = ExtResource("1_srhb1")
+_debugVisualizer = NodePath("")
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 2
+text = "Filters"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="CheckButton2" type="CheckButton" parent="HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer3"]
+layout_mode = 2
+text = "Navigation"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer4"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer4"]
+layout_mode = 2
+text = "Vehicles"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Visual Types"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ZoneToggle" type="CheckButton" parent="HBoxContainer"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Zone"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LinesToggle" type="CheckButton" parent="HBoxContainer2"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Lines"
+
+[connection signal="toggled" from="HBoxContainer3/CheckButton2" to="." method="OnNavigationFilterToggled"]
+[connection signal="toggled" from="HBoxContainer4/CheckButton" to="." method="OnVehiclesFilterToggled"]
+[connection signal="toggled" from="HBoxContainer/ZoneToggle" to="." method="OnZoneFilterEnabled"]
+[connection signal="toggled" from="HBoxContainer2/LinesToggle" to="." method="OnLineFilterEnabled"]
