@@ -8,11 +8,11 @@ public partial class BezierCurveNavSegment : NavSegment
 {
     // DATA
     // Controlling Position
-    private Vector3 _start = new Vector3(1,0,1);
+    private Vector3 _start = new Vector3(1,0,0);
     [Export] public Vector3 CurveStart { get { return _start; } set { _start = value; } }
-    private Vector3 _end = Vector3.Zero;
+    private Vector3 _end = new Vector3(-1, 0, 0);
     [Export] public Vector3 CurveEnd { get { return _end; } set { _end = value; } }
-    private Vector3 _control = new Vector3(-1, 0, -1);
+    private Vector3 _control = Vector3.Zero;
     [Export] public Vector3 CurveControl { get { return _control; } set { _control = value; } }
 
     // Readonly Properties

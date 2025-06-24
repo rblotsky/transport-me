@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
@@ -6,13 +6,11 @@
 [ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="5_mhk0g"]
 [ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_rsmg7"]
 [ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
-[ext_resource type="PackedScene" uid="uid://l2dun676hjxf" path="res://Main/Resources/Curved1Lane2Way.tscn" id="8_ay3sy"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="8_fh4jr"]
 [ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
-[ext_resource type="Material" uid="uid://dgmljnemkrpbq" path="res://Prototypes/CurvedRoadsPrototype/CurvedRoadTestMaterial.tres" id="9_6crjd"]
-[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Main/Scripts/RoadBuilding/CurvedRoads/RoadMesh.cs" id="10_asdyh"]
 [ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/Resources/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]
 [ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/Resources/NetworkPrototype/2WayRoadEndTest.tscn" id="13_x31hm"]
+[ext_resource type="PackedScene" uid="uid://cy0l4wap6gnhq" path="res://Main/Resources/NetworkPrototype/CurvedRoadSimple.tscn" id="14_hmqaa"]
 [ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/Resources/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="14_kkfix"]
 [ext_resource type="PackedScene" uid="uid://dyql68okv8eso" path="res://Main/Resources/NetworkPrototype/CursedHouse.tscn" id="14_onvpj"]
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/Resources/NetworkPrototype/4WayIntersectionTest.tscn" id="14_ydh1o"]
@@ -26,20 +24,6 @@ outline_size = 10
 shadow_size = 20
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(5, 5)
-
-[sub_resource type="Resource" id="Resource_er7ih"]
-resource_local_to_scene = true
-script = ExtResource("10_asdyh")
-points = Array[Vector2]([Vector2(-2, 0), Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25), Vector2(2, 0)])
-numSegments = 15
-meshMaterial = ExtResource("9_6crjd")
-
-[sub_resource type="Resource" id="Resource_ay3sy"]
-resource_local_to_scene = true
-script = ExtResource("10_asdyh")
-points = Array[Vector2]([Vector2(-2, 0), Vector2(-2, 0.25), Vector2(-1.8, 0.25), Vector2(-1.8, 0), Vector2(1.8, 0), Vector2(1.8, 0.25), Vector2(2, 0.25), Vector2(2, 0)])
-numSegments = 15
-meshMaterial = ExtResource("9_6crjd")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)
@@ -139,13 +123,6 @@ verticalOffsetFromPointer = 0.0
 
 [node name="NavGraphContainer" type="Node3D" parent="."]
 script = ExtResource("8_kdo4v")
-
-[node name="Curved2Lane2Way" parent="NavGraphContainer" instance=ExtResource("8_ay3sy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9)
-Start = Vector3(0, 0, 1)
-End = Vector3(-2, 0, -3)
-Control = Vector3(0, 0, -2)
-roadMesh = SubResource("Resource_er7ih")
 
 [node name="2WayRoadTest" parent="NavGraphContainer" instance=ExtResource("13_0n1v6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 0)
@@ -353,12 +330,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
 [node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("13_x31hm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 20)
 
-[node name="Curved2Lane2Way2" parent="NavGraphContainer" instance=ExtResource("8_ay3sy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9)
-Start = Vector3(-2, 0, -3)
-End = Vector3(-4, 0, -7)
-Control = Vector3(-4, 0, -4)
-roadMesh = SubResource("Resource_ay3sy")
+[node name="CurvedRoadSimple2" parent="NavGraphContainer" instance=ExtResource("14_hmqaa")]
+skeleton = NodePath("../CurvedRoadSimple")
+Start = Vector3(2, 0, 6)
+End = Vector3(0, 0, 2)
+Control = Vector3(0, 0, 5)
+
+[node name="CurvedRoadSimple" parent="NavGraphContainer" instance=ExtResource("14_hmqaa")]
+Start = Vector3(4, 0, 10)
+End = Vector3(2, 0, 6)
+Control = Vector3(4, 0, 7)
 
 [node name="Cursor" type="Node3D" parent="."]
 script = ExtResource("5_mhk0g")

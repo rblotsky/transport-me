@@ -30,7 +30,9 @@ public partial class CurvedRoadGizmo : EditorNode3DGizmoPlugin
         gizmo.AddCollisionTriangles(arrowMesh.GenerateTriangleMesh());
 
         // Regenerates the road mesh
-        node.UpdateMesh();
+        Mesh renderMesh = node.GetDisplayMesh();
+        gizmo.AddMesh(renderMesh);
+        gizmo.AddCollisionTriangles(renderMesh.GenerateTriangleMesh());
 
         // Adds handles to modify the visualization
         Vector3[] handles = {node.Start, node.Control, node.End};
