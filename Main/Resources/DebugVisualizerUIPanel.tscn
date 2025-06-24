@@ -1,65 +1,93 @@
-[gd_scene load_steps=2 format=3 uid="uid://cuch527r34ce4"]
+[gd_scene load_steps=3 format=3 uid="uid://cuch527r34ce4"]
 
 [ext_resource type="Script" uid="uid://btjhyan55i3v0" path="res://Main/Scripts/DevTools/DebugVisualizationUI.cs" id="1_srhb1"]
 
-[node name="DebugVisualizerUI" type="VBoxContainer" node_paths=PackedStringArray("_debugVisualizer")]
+[sub_resource type="LabelSettings" id="LabelSettings_srhb1"]
+font_size = 36
+
+[node name="DebugVisualizerUI" type="VBoxContainer"]
 size_flags_stretch_ratio = 4.45
 script = ExtResource("1_srhb1")
-_debugVisualizer = NodePath("")
 
-[node name="Label2" type="Label" parent="."]
+[node name="Debug Panel Title" type="Label" parent="."]
 layout_mode = 2
+text = "Debug Panel"
+label_settings = SubResource("LabelSettings_srhb1")
+
+[node name="DebugPanel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="DebugPanel"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 132.0
+offset_bottom = 27.0
 text = "Filters"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+[node name="HBoxContainer3" type="HBoxContainer" parent="DebugPanel"]
+layout_mode = 2
+offset_top = 31.0
+offset_right = 132.0
+offset_bottom = 55.0
+
+[node name="CheckButton2" type="CheckButton" parent="DebugPanel/HBoxContainer3"]
 layout_mode = 2
 
-[node name="CheckButton2" type="CheckButton" parent="HBoxContainer3"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="HBoxContainer3"]
+[node name="Label2" type="Label" parent="DebugPanel/HBoxContainer3"]
 layout_mode = 2
 text = "Navigation"
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+[node name="HBoxContainer4" type="HBoxContainer" parent="DebugPanel"]
+layout_mode = 2
+offset_top = 59.0
+offset_right = 132.0
+offset_bottom = 83.0
+
+[node name="CheckButton" type="CheckButton" parent="DebugPanel/HBoxContainer4"]
 layout_mode = 2
 
-[node name="CheckButton" type="CheckButton" parent="HBoxContainer4"]
-layout_mode = 2
-
-[node name="Label3" type="Label" parent="HBoxContainer4"]
+[node name="Label3" type="Label" parent="DebugPanel/HBoxContainer4"]
 layout_mode = 2
 text = "Vehicles"
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="DebugPanel"]
 layout_mode = 2
+offset_top = 87.0
+offset_right = 132.0
+offset_bottom = 110.0
 text = "Visual Types"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="DebugPanel"]
 layout_mode = 2
+offset_top = 114.0
+offset_right = 132.0
+offset_bottom = 138.0
 
-[node name="ZoneToggle" type="CheckButton" parent="HBoxContainer"]
+[node name="ZoneToggle" type="CheckButton" parent="DebugPanel/HBoxContainer"]
 layout_direction = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="DebugPanel/HBoxContainer"]
 layout_mode = 2
 text = "Zone"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+[node name="HBoxContainer2" type="HBoxContainer" parent="DebugPanel"]
 layout_mode = 2
+offset_top = 142.0
+offset_right = 132.0
+offset_bottom = 166.0
 
-[node name="LinesToggle" type="CheckButton" parent="HBoxContainer2"]
+[node name="LinesToggle" type="CheckButton" parent="DebugPanel/HBoxContainer2"]
 layout_direction = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="HBoxContainer2"]
+[node name="Label" type="Label" parent="DebugPanel/HBoxContainer2"]
 layout_mode = 2
 text = "Lines"
 
-[connection signal="toggled" from="HBoxContainer3/CheckButton2" to="." method="OnNavigationFilterToggled"]
-[connection signal="toggled" from="HBoxContainer4/CheckButton" to="." method="OnVehiclesFilterToggled"]
-[connection signal="toggled" from="HBoxContainer/ZoneToggle" to="." method="OnZoneFilterEnabled"]
-[connection signal="toggled" from="HBoxContainer2/LinesToggle" to="." method="OnLineFilterEnabled"]
+[connection signal="toggled" from="DebugPanel/HBoxContainer3/CheckButton2" to="." method="OnNavigationFilterToggled"]
+[connection signal="toggled" from="DebugPanel/HBoxContainer4/CheckButton" to="." method="OnVehiclesFilterToggled"]
+[connection signal="toggled" from="DebugPanel/HBoxContainer/ZoneToggle" to="." method="OnZoneFilterEnabled"]
+[connection signal="toggled" from="DebugPanel/HBoxContainer2/LinesToggle" to="." method="OnLineFilterEnabled"]
