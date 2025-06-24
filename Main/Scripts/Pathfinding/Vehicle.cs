@@ -109,7 +109,6 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		double turningSpeedLimit = GetTurningSpeedLimit();
 
 		if (turningSpeedLimit < speedLimit) {
-			GD.Print("speed limits ", turningSpeedLimit, " ", speed);
 			speedLimit = (float)turningSpeedLimit;
 		}
 
