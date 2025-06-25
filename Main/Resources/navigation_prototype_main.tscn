@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=25 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="PackedScene" uid="uid://cuch527r34ce4" path="res://Main/Resources/DebugVisualizerUIPanel.tscn" id="1_olv4u"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
@@ -354,6 +354,16 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="Vehicle" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
+
+[node name="Vehicle2" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
+
+[node name="Vehicle3" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
+
+[node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
+
+[node name="Vehicle5" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
+
+[node name="Vehicle6" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
 
 [node name="Debug Visualizer" type="Node" parent="."]
 script = ExtResource("16_jf1gt")

@@ -45,5 +45,6 @@ metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 [node name="BezierCurveNavSegment2" type="Node3D" parent="PloppableGraph"]
 script = ExtResource("3_jorla")
 CurveStart = Vector3(1, 0, -1)
+CurveEnd = Vector3(0, 0, 0)
 CurveControl = Vector3(0, 0, -1)
 metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
