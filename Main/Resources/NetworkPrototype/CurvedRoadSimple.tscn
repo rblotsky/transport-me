@@ -7,16 +7,14 @@
 
 [sub_resource type="Resource" id="Resource_xibjw"]
 script = ExtResource("3_f2km3")
-points = Array[Vector2]([Vector2(-2.5, -0.5), Vector2(-2.5, 0), Vector2(-2.25, 0), Vector2(-2.25, -0.25), Vector2(2.25, -0.25), Vector2(2.25, 0), Vector2(2.5, 0), Vector2(2.5, -0.5)])
+points = Array[Vector2]([Vector2(-2.5, -0.5), Vector2(-2.5, 0), Vector2(-2.25, 0), Vector2(-2.25, -0.25), Vector2(-0.2, 0), Vector2(0.2, 0), Vector2(2.25, -0.25), Vector2(2.25, 0), Vector2(2.5, 0), Vector2(2.5, -0.5)])
+uValues = Array[float]([0.0, 0.05, 0.05, 0.1, 0.2, 0.8, 0.9, 0.9, 0.9, 1.0])
 numSegments = 19
 meshMaterial = ExtResource("2_sbxw6")
 metadata/_custom_type_script = "uid://cd813ufp61ga2"
 
 [node name="CurvedRoadSimple" type="MeshInstance3D"]
 script = ExtResource("1_uha11")
-Start = Vector3(5.52456, 2.86102e-06, 10.7999)
-End = Vector3(0.145445, 4.76837e-06, -2.00597)
-Control = Vector3(10.8401, 3.8147e-06, 1.47411)
 roadMesh = SubResource("Resource_xibjw")
 metadata/_custom_type_script = "uid://cay0grq658jvi"
 

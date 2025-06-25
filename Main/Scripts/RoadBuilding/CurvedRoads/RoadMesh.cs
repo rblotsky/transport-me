@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 [GlobalClass]
 [Tool]
@@ -8,6 +9,7 @@ public partial class RoadMesh : Resource
 {
     // DATA //
     [Export] private Array<Vector2> points = new Array<Vector2>();
+    [Export] private Array<float> uValues = new Array<float>();
     [Export] private int numSegments = 9;
     [Export] private Material meshMaterial;
 
@@ -43,6 +45,12 @@ public partial class RoadMesh : Resource
 
     public ArrayMesh GenerateRoadMesh(CurvedRoad road)
     {
+        // Throw an exception if the uValues isnt the same length as points
+        if(uValues.Count != points.Count)
+        {
+            throw new System.Exception("Must provide a U value for each point and vice versa!");
+        }
+
         // Creates a surface array and lists of values to assign to it
         Array surfaceArray = new Array();
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
@@ -76,28 +84,16 @@ public partial class RoadMesh : Resource
             Transform3D sliceTransform = new Transform3D(Basis.LookingAt(sliceFacing * new Vector3(1, 0, 1), road.Transform.Basis.Y), sliceOrigin);
 
             // Prepare UV values for this slice (u = 0, v += segment length / slice length)
-            float uValue = 0;
             float vValue = SampleFloatArray(curveLengthSamples, t) / CalculateSliceLength();
 
             // Prepare cached values for storing previous vertex
             Vector3 previousPointVert = Vector3.Zero;
-            float previousPointU = 0;
 
             // Create vertices for this specific slice
             for (int i = 0; i < points.Count; i++)
             {
                 // Prepare the point, U value and normal for this vertex
                 Vector3 pointVert = sliceTransform * new Vector3(points[i].X, points[i].Y, 0);
-
-                // Increment the current U value by the distance from the last point to this one, or 1 if at the end
-                if (i != 0)
-                {
-                    uValue += (points[i] - points[i - 1]).Length() / CalculateSliceLength();
-                }
-                if(i == points.Count-1)
-                {
-                    uValue = 1;
-                }                
 
                 Vector2 pointNormal = CalculateNormal2D(i, i - 1);
                 Vector3 normal3D = sliceTransform * new Vector3(pointNormal.X, pointNormal.Y, 0) - sliceOrigin;
@@ -106,17 +102,16 @@ public partial class RoadMesh : Resource
                 if (i != 0)
                 {
                     normals.Add(normal3D.Normalized());
-                    uvs.Add(new Vector2(previousPointU, vValue));
+                    uvs.Add(new Vector2(uValues[i-1], vValue));
                     verts.Add(previousPointVert);
 
                     normals.Add(normal3D.Normalized());
-                    uvs.Add(new Vector2(uValue, vValue));
+                    uvs.Add(new Vector2(uValues[i], vValue));
                     verts.Add(pointVert);
                 }
 
                 // Stores this vertex as the previous vertex
                 previousPointVert = pointVert;
-                previousPointU = uValue;
             }
         }
 

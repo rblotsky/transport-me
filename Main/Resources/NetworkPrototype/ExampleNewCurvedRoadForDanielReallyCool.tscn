@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://t4vb2djnxc0o"]
+
+[ext_resource type="Script" uid="uid://cay0grq658jvi" path="res://Main/Scripts/RoadBuilding/CurvedRoads/CurvedRoad.cs" id="1_dynid"]
+[ext_resource type="Script" uid="uid://cd813ufp61ga2" path="res://Main/Scripts/RoadBuilding/CurvedRoads/RoadMesh.cs" id="2_5apj3"]
+[ext_resource type="Script" uid="uid://b6vkjkm85m4w6" path="res://Main/Scripts/RoadBuilding/CurvedRoads/CurvedRoadNavSegment.cs" id="3_qa78w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_030my"]
+albedo_color = Color(0.172603, 0.312848, 0.349847, 1)
+
+[sub_resource type="Resource" id="Resource_i4ipe"]
+script = ExtResource("2_5apj3")
+points = Array[Vector2]([Vector2(-2, -1), Vector2(-1, -0.8), Vector2(1, -0.8), Vector2(2, -1), Vector2(-2, -1)])
+numSegments = 9
+meshMaterial = SubResource("StandardMaterial3D_030my")
+metadata/_custom_type_script = "uid://cd813ufp61ga2"
+
+[node name="ExampleNewCurvedRoadForDanielReallyCool" type="MeshInstance3D"]
+script = ExtResource("1_dynid")
+roadMesh = SubResource("Resource_i4ipe")
+metadata/_custom_type_script = "uid://cay0grq658jvi"
+
+[node name="CurvedRoadNavSegment" type="Node3D" parent="." node_paths=PackedStringArray("roadToFollow")]
+script = ExtResource("3_qa78w")
+roadToFollow = NodePath("..")
+startOffset = 1.0
+endOffset = 1.0
+metadata/_custom_type_script = "uid://b6vkjkm85m4w6"
+
+[node name="CurvedRoadNavSegment2" type="Node3D" parent="." node_paths=PackedStringArray("roadToFollow")]
+script = ExtResource("3_qa78w")
+roadToFollow = NodePath("..")
+startOffset = -1.0
+endOffset = -1.0
+forward = true
+metadata/_custom_type_script = "uid://b6vkjkm85m4w6"

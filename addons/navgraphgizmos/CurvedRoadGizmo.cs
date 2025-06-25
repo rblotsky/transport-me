@@ -4,6 +4,7 @@ using System;
 public partial class CurvedRoadGizmo : EditorNode3DGizmoPlugin
 {
     private Color handleColour = Colors.Red;
+    private Color handleLineColour = Colors.Orange;
 
     public override string _GetGizmoName()
     {
@@ -26,13 +27,22 @@ public partial class CurvedRoadGizmo : EditorNode3DGizmoPlugin
         gizmo.AddMesh(curveMesh);
         gizmo.AddMesh(arrowMesh, null, new Transform3D(Basis.LookingAt(node.DirectionalLine, Vector3.Up), node.Start));
 
+        if (EditorInterface.Singleton.GetSelection().GetSelectedNodes().Contains(node))
+        {
+            Vector3[] handleLines = { node.Start, node.Control, node.Control, node.End };
+            gizmo.AddLines(handleLines, EasyShapes.ColouredMaterial(handleLineColour, 1));
+        }
+
         gizmo.AddCollisionSegments(((Vector3[])curveMesh.SurfaceGetArrays(0)[0]));
         gizmo.AddCollisionTriangles(arrowMesh.GenerateTriangleMesh());
 
         // Regenerates the road mesh
         Mesh renderMesh = node.GetDisplayMesh();
-        gizmo.AddMesh(renderMesh);
-        gizmo.AddCollisionTriangles(renderMesh.GenerateTriangleMesh());
+        if (renderMesh != null)
+        {
+            gizmo.AddMesh(renderMesh);
+            gizmo.AddCollisionTriangles(renderMesh.GenerateTriangleMesh());
+        }
 
         // Adds handles to modify the visualization
         Vector3[] handles = {node.Start, node.Control, node.End};

@@ -6,6 +6,7 @@ using System;
 /// </summary>
 public partial class BezierCurveNavSegmentGizmo : EditorNode3DGizmoPlugin
 {
+    private Color handleLineColour = Colors.Orange;
 
     public override string _GetGizmoName()
     {
@@ -14,7 +15,6 @@ public partial class BezierCurveNavSegmentGizmo : EditorNode3DGizmoPlugin
 
     public override bool _HasGizmo(Node3D forNode3D)
     {
-        //TODO: Update so it doesn't run on CurvedRoadNavSegment
         return forNode3D is BezierCurveNavSegment;
     }
 
@@ -22,6 +22,12 @@ public partial class BezierCurveNavSegmentGizmo : EditorNode3DGizmoPlugin
     {
         gizmo.Clear();
         BezierCurveNavSegment node = (BezierCurveNavSegment)gizmo.GetNode3D();
+
+        if (EditorInterface.Singleton.GetSelection().GetSelectedNodes().Contains(node))
+        {
+            Vector3[] lines = { node.CurveStart, node.CurveControl, node.CurveControl, node.CurveEnd };
+            gizmo.AddLines(lines, EasyShapes.ColouredMaterial(handleLineColour, 1));
+        }
 
         // Adds handles to modify the visualization
         Vector3[] handles = new Vector3[3];
