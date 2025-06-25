@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Diagnostics.Tracing;
+using Transportme.Main.DevTools;
 
 [GlobalClass]
 public partial class PrototypeEditor : Node
@@ -13,6 +14,7 @@ public partial class PrototypeEditor : Node
 	[Export] private Cursor cursor;
 	[Export] private WorldGrid grid;
 	[Export] private NavGraphContainer navGraph;
+	[Export] private DebugVisualizer debugVisualizer;
 
 	// Editor Configs
 	[ExportCategory("Configs")]
@@ -25,16 +27,16 @@ public partial class PrototypeEditor : Node
 	{
 		if(@event is InputEventKey keyInput)
 		{
-			if(keyInput.Keycode == Key.V && keyInput.IsPressed())
+			if (keyInput.Keycode == Key.V && keyInput.IsPressed())
 			{
 				GD.Print("TODO spawn a vehicle!");
 			}
 			else if (keyInput.Keycode == Key.E && keyInput.IsPressed())
 			{
 				Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
-				foreach(Vehicle vehicle in allVehicles)
+				foreach (Vehicle vehicle in allVehicles)
 				{
-					vehicle.speed+=1;
+					vehicle.speed += 1;
 				}
 			}
 			else if (keyInput.Keycode == Key.Q && keyInput.IsPressed())
@@ -42,8 +44,27 @@ public partial class PrototypeEditor : Node
 				Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
 				foreach (Vehicle vehicle in allVehicles)
 				{
-					vehicle.speed-=1;
+					vehicle.speed -= 1;
 				}
+			}
+			else if (keyInput.Keycode == Key.R && keyInput.IsPressed())
+			{
+				GD.Print("Pressed R");
+				if ((debugVisualizer.ActiveFilters & DebugVisualizationFilters.VehicleCollisions) != 0)
+				{
+					debugVisualizer.ActiveFilters &= ~DebugVisualizationFilters.VehicleCollisions;
+				}
+				else
+				{
+					debugVisualizer.ActiveFilters |= DebugVisualizationFilters.VehicleCollisions;
+				}
+			}
+			else if (keyInput.Keycode == Key.T && keyInput.IsPressed())
+			{
+				debugVisualizer.ActiveTypes.Add(DebugVisualizationType.Line);
+			}
+			else if (keyInput.Keycode == Key.F && keyInput.IsPressed()) {
+				debugVisualizer.ActiveTypes.Add(DebugVisualizationType.Zone);
 			}
 		}
 		base._UnhandledInput(@event);

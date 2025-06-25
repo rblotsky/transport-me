@@ -1,28 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.DevTools;
 
-public partial class MainVehicle : VehicleCollider
+public partial class MainVehicle : VehicleCollider, IDebugVisualizationProvider
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	public override void UpdateVisualization()
-	{
-		//DeleteVisualization();
-		//visualization = EasyShapes.AddShapeMesh(this, EasyShapes.Box(0.1f));
-		//visualization.GlobalPosition = GlobalPosition;
-		base.UpdateVisualization();
-		visualization.Scale = new Vector3(1, 1, 2);
-	}
-
 	public override void HandleUpdatePosition()
 	{
         Route route = associatedVehicle.CurrentRoute;
@@ -36,4 +18,17 @@ public partial class MainVehicle : VehicleCollider
 	{
 		return false;
 	}
+
+    public IEnumerable<DebugVisualization> GetVisualization()
+    {
+        yield return DebugVisualizationFactory.Box(
+            [DebugVisualizationFilters.VehicleCollisions],
+            GlobalPosition,
+            Quaternion,
+            new Vector3(1, 1, 2),
+            Colors.Black);
+		RoutePoint point = associatedVehicle.CurrentRoute.GetVehicleRoutePositionAtPoint(associatedVehicle.CurrentDistanceAlongRoute);
+        yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
+        yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);
+    }
 }

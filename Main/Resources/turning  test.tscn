@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://dsjqklri6wma5"]
+[gd_scene load_steps=23 format=3 uid="uid://dsjqklri6wma5"]
 
+[ext_resource type="PackedScene" uid="uid://cuch527r34ce4" path="res://Main/Resources/DebugVisualizerUIPanel.tscn" id="1_whxuq"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="2_dx22g"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="3_fon6f"]
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_jd5dk"]
 [ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_o5pxy"]
-[ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_3j5hg"]
+[ext_resource type="Script" uid="uid://can2dojlmlrtw" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_3j5hg"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="7_0rqjj"]
 [ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_glrcr"]
 [ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/Resources/NetworkPrototype/2WayRoadEndTest.tscn" id="9_tt4oe"]
@@ -12,9 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/Resources/NetworkPrototype/4WayIntersectionTest.tscn" id="11_dy2la"]
 [ext_resource type="Script" uid="uid://c2acksxjlrfeu" path="res://Main/Scripts/Navigation/NavCheckpoint.cs" id="12_fwvoe"]
 [ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="13_crkly"]
-[ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/Resources/NetworkPrototype/Vehicle.tscn" id="14_yisdv"]
+[ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/Scripts/DevTools/DebugVisualizer.cs" id="14_8t60h"]
+[ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/Resources/Vehicle.tscn" id="14_yisdv"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
+[sub_resource type="LabelSettings" id="LabelSettings_8t60h"]
 font_size = 30
 font_color = Color(1, 0, 0.933333, 1)
 outline_size = 10
@@ -62,25 +64,32 @@ offset_right = 137.0
 offset_bottom = 31.0
 text = "View Menu"
 
-[node name="Panel" type="Panel" parent="PrototypeUi"]
+[node name="Panel2" type="Panel" parent="PrototypeUi"]
 layout_mode = 0
-offset_top = 31.0
+offset_top = 62.0
 offset_right = 517.0
-offset_bottom = 648.0
+offset_bottom = 679.0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel"]
+[node name="PanelContainer" type="PanelContainer" parent="PrototypeUi"]
+layout_direction = 2
+layout_mode = 1
+offset_right = 581.0
+offset_bottom = 310.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/PanelContainer"]
 layout_mode = 2
-offset_right = 218.0
-offset_bottom = 42.0
 
-[node name="Label" type="Label" parent="PrototypeUi/Panel/VBoxContainer2"]
+[node name="Label" type="Label" parent="PrototypeUi/PanelContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Instructions"
-label_settings = SubResource("LabelSettings_i7tsy")
+label_settings = SubResource("LabelSettings_8t60h")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="DebugVisualizerUI" parent="PrototypeUi/PanelContainer/VBoxContainer2" instance=ExtResource("1_whxuq")]
+layout_mode = 2
 
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("2_dx22g")
@@ -88,12 +97,13 @@ script = ExtResource("2_dx22g")
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("3_fon6f")
 
-[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph")]
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph", "debugVisualizer")]
 script = ExtResource("4_jd5dk")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 grid = NodePath("../WorldGridViewer")
 navGraph = NodePath("../NavGraphContainer")
+debugVisualizer = NodePath("../DebugVisualizer")
 
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_o5pxy")
@@ -171,5 +181,9 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_yisdv")]
+acceleration = 16.0
 brakeSpeed = 7.5
 showPositionVisualizations = true
+
+[node name="DebugVisualizer" type="Node" parent="."]
+script = ExtResource("14_8t60h")

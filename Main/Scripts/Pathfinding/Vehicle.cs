@@ -2,9 +2,10 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.DevTools;
 
 [GlobalClass]
-public partial class Vehicle : Node3D
+public partial class Vehicle : Node3D, IDebugVisualizationProvider
 {
 	// DATA //
 	// Instance Configs
@@ -16,6 +17,7 @@ public partial class Vehicle : Node3D
 	[Export] protected float stoppingDistance;
 	[Export] public bool showVisualizations;
 	[Export] public bool showPositionVisualizations;
+	[Export] protected Label3D speedLabel;
 
 	private List<VehicleCollider> attachedColliders;
 	// Properties
@@ -36,13 +38,47 @@ public partial class Vehicle : Node3D
 	protected double timeStopped = 0;
 	public double speed = 0;
 
-	// FUNCTIONS //
-	// Godot Defaults
-	public override void _EnterTree()
+	private float turningRadius = 0; 
+
+	private double GetTurningSpeedLimit()
+	{
+		RoutePoint original = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute);
+		RoutePoint advance = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute + 2);
+
+		if (original.Rotation.IsEqualApprox(advance.Rotation))
+		{
+			return maxVehicleSpeed;
+		}
+
+		Vector2 radiusPoint = Simplifications.GetPointOfIntersection(
+			Simplifications.GetVectorXZ(original.Position),
+			Simplifications.GetVectorXZ(original.Rotation.Normalized()).Orthogonal(),
+			Simplifications.GetVectorXZ(advance.Position),
+			Simplifications.GetVectorXZ(advance.Rotation.Normalized()).Orthogonal()
+		);
+
+		float radius = (radiusPoint - Simplifications.GetVectorXZ(original.Position)).Length();
+		this.turningRadius = radius;
+		double thing = Math.Sqrt(10 * (radius + 1));
+		return thing;
+	}
+
+    public override void _Process(double delta)
+    {
+		if (speedLabel != null)
+		{
+			double speedLimit = GetTurningSpeedLimit();
+			speedLabel.Text = $"""Speed: {speed.ToString("0.##")}   Turning Max Speed: {speedLimit.ToString("0.##")} Turning Radius: {turningRadius.ToString("0.##")}""";
+		}
+        base._Process(delta);
+    }
+    // FUNCTIONS //
+    // Godot Defaults
+    public override void _EnterTree()
 	{
 		graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
 		attachedColliders = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
-		GD.Print(attachedColliders.Count);
+		//GD.Print(attachedColliders.Count);
 		foreach(VehicleCollider c in attachedColliders)
 		{
 			c.AssociatedVehicle = this;
@@ -70,6 +106,13 @@ public partial class Vehicle : Node3D
 		// max speed calculations
 		NavSegment curSegment = route.GetSegmentAlongRoute(distanceAlongRoute);
 		float speedLimit = Mathf.Min((float)maxVehicleSpeed, curSegment.MaxSpeed);
+		double turningSpeedLimit = GetTurningSpeedLimit();
+
+		if (turningSpeedLimit < speedLimit) {
+			speedLimit = (float)turningSpeedLimit;
+		}
+
+		//speedLimit = Mathf.Min((float)maxVehicleSpeed, route.GetLength());
 
 		//accelerating or decelerating
 		if (shouldStop || speed - speedLimit > 0.1f)
@@ -93,15 +136,6 @@ public partial class Vehicle : Node3D
 		foreach(VehicleCollider col in attachedColliders)
 		{
 			col.HandleUpdatePosition();
-
-			if (showVisualizations)
-			{
-				col.UpdateVisualization();
-			}
-			if (showPositionVisualizations)
-			{
-				col.UpdatePositionVisualizations();
-			}
 		}
 	}
 
@@ -134,5 +168,13 @@ public partial class Vehicle : Node3D
 		OnRouteFinish(finishedRoute);
 	}
 
+    public IEnumerable<DebugVisualization> GetVisualization()
+    {
+		var point = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute + 2);
+		yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.LimeGreen);
+		yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, 0.1f, Colors.LimeGreen);
+        yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.backPoint, 0.1f, Colors.LimeGreen);
+
+    }
 }
 

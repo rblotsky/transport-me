@@ -162,6 +162,24 @@ public static class Simplifications
         return childrenOfRightType;
     }
 
+    public static List<T> GetChildrenImplementingType<T>(Node parent, bool recursive = false)
+    {
+        // Gets all children to operate on, then takes only the ones that match the right type.
+        List<Node> children = GetChildrenOfNode(parent, recursive);
+        List<T> childrenOfRightType = new List<T>();
+        foreach (Node child in children)
+        {
+            if (child is T t)
+            {
+                childrenOfRightType.Add(t);
+            }
+        }
+
+        // Returns what it found
+        children.Clear();
+        return childrenOfRightType;
+    }
+
     /// <summary>
     /// Gets the first child of the given type, or null if there isn't one.
     /// </summary>
@@ -253,5 +271,52 @@ public static class Simplifications
         }
 
         node.QueueFree();
+    }
+
+    public static Quaternion LookRotation(Vector3 from, Vector3 to, Vector3 up = default)
+    {
+        if (up == default)
+            up = Vector3.Up;
+
+        Vector3 forward = (to - from).Normalized();
+        if (forward.LengthSquared() == 0.0f)
+            return Quaternion.Identity; // Identity quaternion
+
+        Vector3 right = up.Cross(forward).Normalized();
+        if (right.LengthSquared() == 0.0f)
+        {
+            // up and forward are parallel — choose another up vector
+            right = Vector3.Forward.Cross(forward).Normalized();
+        }
+
+        Vector3 correctedUp = forward.Cross(right).Normalized();
+
+        Basis basis = new Basis();
+        basis.X = right;
+        basis.Y = correctedUp;
+        basis.Z = forward;
+
+        return basis.Orthonormalized().GetRotationQuaternion();
+    }
+
+    public static Vector2 GetVectorXZ(Vector3 vector)
+    {
+        return new Vector2(vector.X, vector.Z);
+    }
+
+
+    public static Vector2 GetPointOfIntersection(Vector2 pos1, Vector2 dir1, Vector2 pos2, Vector2 dir2)
+    {
+        (float x1, float y1) = pos1;
+        (float x2, float y2) = pos1 + dir1.Normalized();
+        (float x3, float y3) = pos2;
+        (float x4, float y4) = pos2 + dir2.Normalized();
+
+        float topX = (x1 * y2 - x2 * y1) * (x3 - x4) - (x3 * y4 - x4 * y3) * (x1 - x2);
+        float topY = (x1 * y2 - x2 * y1) * (y3 - y4) - (x3 * y4 - x4 * y3) * (y1 - y2);
+        float bottom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        float pX = topX / bottom;
+        float pY = topY / bottom;
+        return new Vector2(pX, pY);
     }
 }
