@@ -1,5 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://cdsolc63uov8s"]
 
+[ext_resource type="PackedScene" uid="uid://cuch527r34ce4" path="res://Main/Resources/DebugVisualizerUIPanel.tscn" id="1_olv4u"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="2_jfx1u"]
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_ywgcf"]
@@ -16,14 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/Resources/Vehicle.tscn" id="15_hmqaa"]
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/Resources/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
 [ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/Scripts/DevTools/DebugVisualizer.cs" id="16_jf1gt"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_i7tsy"]
-font_size = 30
-font_color = Color(1, 0, 0.933333, 1)
-outline_size = 10
-shadow_size = 20
-shadow_color = Color(0, 0, 0, 1)
-shadow_offset = Vector2(5, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)
@@ -70,94 +63,13 @@ text = "View Menu"
 [node name="Panel" type="Panel" parent="PrototypeUi"]
 layout_mode = 0
 offset_top = 31.0
-offset_right = 517.0
-offset_bottom = 648.0
+offset_right = 238.0
+offset_bottom = 289.0
 
-[node name="CheckButton4" type="CheckButton" parent="PrototypeUi/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 186.0
-offset_top = 18.279
-offset_right = 230.0
-offset_bottom = 42.279
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton4"]
+[node name="DebugVisualizerUI" parent="PrototypeUi/Panel" instance=ExtResource("1_olv4u")]
 layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Zone"
-
-[node name="CheckButton3" type="CheckButton" parent="PrototypeUi/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 183.0
-offset_top = -10.721
-offset_right = 227.0
-offset_bottom = 13.279
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton3"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Lines"
-
-[node name="CheckButton2" type="CheckButton" parent="PrototypeUi/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 3.0
-offset_top = 20.279
-offset_right = 47.0
-offset_bottom = 44.279
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton2"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Navigation"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel"]
-layout_mode = 2
-offset_right = 218.0
-offset_bottom = 42.0
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel/VBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Instructions"
-label_settings = SubResource("LabelSettings_i7tsy")
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="CheckButton" type="CheckButton" parent="PrototypeUi/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 2.0
-offset_top = -10.721
-offset_right = 46.0
-offset_bottom = 13.279
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel/CheckButton"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Vehicles"
+offset_right = 238.0
+offset_bottom = 261.0
 
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("1_t2p50")
@@ -165,13 +77,12 @@ script = ExtResource("1_t2p50")
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("2_jfx1u")
 
-[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph", "debugVisualizer")]
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph")]
 script = ExtResource("4_ywgcf")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 grid = NodePath("../WorldGridViewer")
 navGraph = NodePath("../NavGraphContainer")
-debugVisualizer = NodePath("../Node")
 
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_rsmg7")
@@ -432,10 +343,5 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="Vehicle" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
 
-[node name="Node" type="Node" parent="." groups=["DebugVisualProvider"]]
+[node name="Debug Visualizer" type="Node" parent="."]
 script = ExtResource("16_jf1gt")
-
-[connection signal="toggled" from="PrototypeUi/Panel/CheckButton4" to="Node" method="OnZoneFilterEnabled"]
-[connection signal="toggled" from="PrototypeUi/Panel/CheckButton3" to="Node" method="OnLineFilterEnabled"]
-[connection signal="toggled" from="PrototypeUi/Panel/CheckButton2" to="Node" method="OnNavigationFilterToggled"]
-[connection signal="toggled" from="PrototypeUi/Panel/CheckButton" to="Node" method="OnVehiclesFilterToggled"]

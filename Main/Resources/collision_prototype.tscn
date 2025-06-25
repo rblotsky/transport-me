@@ -63,6 +63,7 @@ offset_bottom = 31.0
 text = "View Menu"
 
 [node name="Panel2" type="Panel" parent="PrototypeUi"]
+layout_mode = 0
 offset_top = 31.0
 offset_right = 517.0
 offset_bottom = 648.0

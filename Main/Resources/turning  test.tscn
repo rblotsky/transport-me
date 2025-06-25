@@ -1,5 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://dsjqklri6wma5"]
+[gd_scene load_steps=23 format=3 uid="uid://dsjqklri6wma5"]
 
+[ext_resource type="PackedScene" uid="uid://cuch527r34ce4" path="res://Main/Resources/DebugVisualizerUIPanel.tscn" id="1_whxuq"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="2_dx22g"]
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="3_fon6f"]
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_jd5dk"]
@@ -64,70 +65,21 @@ offset_bottom = 31.0
 text = "View Menu"
 
 [node name="Panel2" type="Panel" parent="PrototypeUi"]
+layout_mode = 0
 offset_top = 62.0
 offset_right = 517.0
 offset_bottom = 679.0
 
-[node name="CheckButton4" type="CheckButton" parent="PrototypeUi/Panel2"]
+[node name="PanelContainer" type="PanelContainer" parent="PrototypeUi"]
+layout_direction = 2
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 186.0
-offset_top = 18.279
-offset_right = 230.0
-offset_bottom = 42.279
+offset_right = 581.0
+offset_bottom = 310.0
 
-[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton4"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Zone"
-
-[node name="CheckButton3" type="CheckButton" parent="PrototypeUi/Panel2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 183.0
-offset_top = -10.721
-offset_right = 227.0
-offset_bottom = 13.279
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton3"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Lines"
-
-[node name="CheckButton2" type="CheckButton" parent="PrototypeUi/Panel2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 3.0
-offset_top = 20.279
-offset_right = 47.0
-offset_bottom = 44.279
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton2"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Navigation"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/Panel2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PrototypeUi/PanelContainer"]
 layout_mode = 2
-offset_right = 218.0
-offset_bottom = 42.0
 
-[node name="Label" type="Label" parent="PrototypeUi/Panel2/VBoxContainer2"]
+[node name="Label" type="Label" parent="PrototypeUi/PanelContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Instructions"
@@ -136,23 +88,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="CheckButton" type="CheckButton" parent="PrototypeUi/Panel2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.113
-anchor_bottom = 0.113
-offset_left = 2.0
-offset_top = -10.721
-offset_right = 46.0
-offset_bottom = 13.279
-
-[node name="Label" type="Label" parent="PrototypeUi/Panel2/CheckButton"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = -1.0
-offset_right = 115.0
-offset_bottom = 22.0
-text = "Vehicles"
+[node name="DebugVisualizerUI" parent="PrototypeUi/PanelContainer/VBoxContainer2" instance=ExtResource("1_whxuq")]
+layout_mode = 2
 
 [node name="Debugger3D" type="Node3D" parent="."]
 script = ExtResource("2_dx22g")
@@ -166,7 +103,7 @@ camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 grid = NodePath("../WorldGridViewer")
 navGraph = NodePath("../NavGraphContainer")
-debugVisualizer = NodePath("../Node")
+debugVisualizer = NodePath("../DebugVisualizer")
 
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_o5pxy")
@@ -248,10 +185,5 @@ acceleration = 16.0
 brakeSpeed = 7.5
 showPositionVisualizations = true
 
-[node name="Node" type="Node" parent="."]
+[node name="DebugVisualizer" type="Node" parent="."]
 script = ExtResource("14_8t60h")
-
-[connection signal="toggled" from="PrototypeUi/Panel2/CheckButton4" to="Node" method="OnZoneFilterEnabled"]
-[connection signal="toggled" from="PrototypeUi/Panel2/CheckButton3" to="Node" method="OnLineFilterEnabled"]
-[connection signal="toggled" from="PrototypeUi/Panel2/CheckButton2" to="Node" method="OnNavigationFilterToggled"]
-[connection signal="toggled" from="PrototypeUi/Panel2/CheckButton" to="Node" method="OnVehiclesFilterToggled"]
