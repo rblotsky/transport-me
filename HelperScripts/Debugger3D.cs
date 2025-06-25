@@ -106,6 +106,12 @@ public partial class Debugger3D : Node3D
         CreateMeshEffect(line, durationSeconds, null);
     }
 
+    public void OrderedLinesEffect(Vector3[] points, Color colour, double durationSeconds)
+    {
+        ImmediateMesh line = EasyShapes.OrderedLinesMesh(points, colour);
+        CreateMeshEffect(line, durationSeconds, null);
+    }
+
     public void CurveEffect(Vector3 start, Vector3 end, Vector3 control, Color colour, double durationSeconds)
     {
         ImmediateMesh curve = EasyShapes.CurveMesh(start, end, control, colour, CURVE_SEGMENTS);
@@ -125,10 +131,8 @@ public partial class Debugger3D : Node3D
 
         foreach (NavSegment segment in route.OrderedSegments)
         {
-            CurveEffect(
-                segment.GlobalStart + Vector3I.Up,
-                segment.GlobalEnd + Vector3I.Up,
-                segment.GlobalControl,
+            OrderedLinesEffect(
+                segment.ConvertPointsToGlobal(segment.SubdivideIntoPoints(9)),
                 Colors.Black,
                 durationSeconds
                 );

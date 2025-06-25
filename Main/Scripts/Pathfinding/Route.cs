@@ -178,7 +178,7 @@ public partial class Route : RefCounted
         }
         
         //there is no route to the destination
-        if (!prev.ContainsKey(dst))
+        if (prev != null && !prev.ContainsKey(dst))
         {
             GD.PrintErr($"Failed to find a path from to origin {origin} to {destination}. CreateRouteDjikstras.");
 

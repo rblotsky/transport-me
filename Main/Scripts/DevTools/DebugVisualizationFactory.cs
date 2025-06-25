@@ -33,7 +33,7 @@ namespace Transportme.Main.DevTools
                 Type = DebugVisualizationType.Line,
                 colour = colour,
                 Filters = filters.Aggregate(DebugVisualizationFilters.None, static (combination, next) => combination | next),
-                Vertices = Curves.BezierQuadraticCurve3D(start, end, control, numSegments).ToList(),
+                Vertices = Curves.BezierQuadratic3DToPoints(start, end, control, numSegments).ToList(),
                 PrimitiveType = Mesh.PrimitiveType.LineStrip,
             };
         }

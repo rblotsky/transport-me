@@ -4,14 +4,14 @@ using System;
 
 [GlobalClass]
 [Tool]
-public partial class CurvedRoad : Node3D
+public partial class CurvedRoad : MeshInstance3D
 {
     // DATA //
     // Graph data
-    [ExportCategory("Road Shape Data")]
-    private Vector3 _start = Vector3.Zero;
+    [ExportCategory("Road Shape")]
+    private Vector3 _start = new Vector3(1,0,0);
     [Export] public Vector3 Start { get { return _start; } set { _start = value; } }
-    private Vector3 _end = Vector3.Zero;
+    private Vector3 _end = new Vector3(-1, 0, 0);
     [Export] public Vector3 End { get { return _end; } set { _end = value; } }
     private Vector3 _control = Vector3.Zero;
     [Export] public Vector3 Control { get { return _control; } set { _control = value ; } }
@@ -34,14 +34,20 @@ public partial class CurvedRoad : Node3D
 
     // Road Mesh Data
     [ExportCategory("Mesh")]
-    [Export] private bool generateMeshButton { get { return false; } set { UpdateMesh(); } }
     [Export] private RoadMesh roadMesh;
-    [Export] private MeshInstance3D meshRenderer;
     [Export] private bool debugNormals = false;
-    [Export] private MeshInstance3D debugRenderer;
 
 
     // FUNCTIONS //
+    public override void _EnterTree()
+    {
+        if (!Engine.IsEditorHint())
+        {
+            Mesh = GetDisplayMesh();
+        }
+    }
+
+
     // Controlling
     /// <summary>
     /// Gets one of the start, control, or end points by its index.
@@ -69,17 +75,21 @@ public partial class CurvedRoad : Node3D
     }
 
     // Visualization
-    public void UpdateMesh()
+    public Mesh GetDisplayMesh()
     {
-        // Runs regardless of editor
-        if (roadMesh != null && meshRenderer != null)
+        if (roadMesh != null)
         {
-            meshRenderer.Mesh = roadMesh.GenerateRoadMesh(this);
+            // If debug normals enabled, uses the normals mesh instead
+            if (debugNormals)
+            {
+                return roadMesh.GenerateRoadNormalsMesh(this);
+            }
+            else 
+            { 
+                return roadMesh.GenerateRoadMesh(this); 
+            }
         }
 
-        if (debugRenderer != null && roadMesh != null && debugNormals)
-        {
-            debugRenderer.Mesh = roadMesh.GenerateRoadNormalsMesh(this);
-        }
+        return null;
     }
 }
