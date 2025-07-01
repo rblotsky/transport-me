@@ -7,67 +7,27 @@ using System.Threading.Tasks;
 
 namespace Transportme.Main.Scripts.RouteGeneration
 {
-    public struct AStarCosts
-    {
-        public NavConnection connection;
-        public float cost;
-    }
-
     public partial class AStar : RefCounted
     {
-        private float Heuristic(Vector3 a, Vector3 b)
+        private static float Heuristic(Vector3 a, Vector3 b)
         {
             return a.DistanceTo(b);
         }
-
-        private readonly Dictionary<NavConnection, float> cost = new();
-        private readonly PriorityQueue<NavConnection, float> queue = new();
-        private readonly Dictionary<NavConnection, NavSegment> cameFrom = new();
-        private NavConnection _start;
-        private NavConnection _end;
-
-        public void Compute(NavConnection start, NavConnection end)
+        public static RouteResult Compute(NavConnection start, NavConnection end)
         {
-            _start = start;
-            _end = end;
+            Dictionary<NavConnection, float> cost = new();
+            PriorityQueue<NavConnection, float> queue = new();
+            Dictionary<NavConnection, NavSegment> cameFrom = new();
+
             queue.Enqueue(start, 0);
             cameFrom[start] = null;
             cost[start] = 0;
-            Pathfind(end);
-        }
 
-        public IEnumerable<NavSegment> GetPath() {
-            List<NavSegment> segments = new List<NavSegment>();
-            NavConnection current = _end;
-            while (cameFrom[current] != null) {
-                NavSegment path = cameFrom[current];
-                segments.Insert(0, path);
-                current = path.StartConnection;
-            }
-            segments.Reverse();
-            return segments;
-        }
-
-        public List<AStarCosts> GetComputedPoints()
-        {
-            List<AStarCosts> costs = new();
-            foreach((NavConnection point, float cost) in cost)
+            while (queue.Count > 0)
             {
-                costs.Add(new()
-                {
-                    connection = point,
-                    cost = cost
-                });
-            }
-            return costs;
-
-        }
-
-        private void Pathfind(NavConnection end)
-        {
-            while (queue.Count > 0) {
                 NavConnection current = queue.Dequeue();
-                if (current.Equals(end)) {
+                if (current.Equals(end))
+                {
                     break;
                 }
 
@@ -84,6 +44,13 @@ namespace Transportme.Main.Scripts.RouteGeneration
                     }
                 }
             }
+            return new RouteResult(cost, cameFrom, start, end);
+        }
+
+
+        private void Pathfind(NavConnection end)
+        {
+            
         }
     }
 }

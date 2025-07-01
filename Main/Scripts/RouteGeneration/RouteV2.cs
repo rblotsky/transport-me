@@ -11,21 +11,30 @@ namespace Transportme.Main.Scripts.RouteGeneration
     //this just tracks one thingy
     public partial class RouteV2 : RefCounted, IRouteMovementIterator
     {
+        private RouteResult _routeResult;
         private List<NavSegment> route;
         private int _index;
         private float _currentDistanceAlongSegment;
         private float _distanceAlongRoute;
         private float? _length = null;
-        public float Length { get { !_length.HasValue ? computeLength() : _length.Value } }
+        public float Length { get { !_length.HasValue ? ComputeLength() : _length.Value } }
 
-        private float computeLength()
+        public void InitializeRoute(NavConnection start, NavConnection end)
+        {
+            _routeResult = AStar.Compute(start, end);
+            route = _routeResult.GetPath().ToList();
+
+        }
+
+        private float ComputeLength()
         {
             float length = 0f;
-            foreach (NavSegment segment in route) { 
+            foreach (NavSegment segment in route) {
                 length += segment.Length;
             }
             _length = length;
             return length;
+        }
         
         //how to communicate it was cut off? - maybe include the ability to overflow via extending points
         private Vector3 GetPointAlongRoute(float relativeToPosition, bool exterpolate)
@@ -69,18 +78,24 @@ namespace Transportme.Main.Scripts.RouteGeneration
         
         public RoutePoint Move(float distance)
         {
-            
-            throw new NotImplementedException();
+            _distanceAlongRoute += distance;
+            _currentDistanceAlongSegment += distance;
+            if(_currentDistanceAlongSegment > route[_index].Length)
+            {
+                _index += 1;
+                _currentDistanceAlongSegment -= route[_index].Length;
+            }
+            return GetVehicleRoutePositionAtPoint(0);
         }
 
         public RoutePoint GetPositionOnRoute(float delta)
         {
-            throw new NotImplementedException();
+            return GetVehicleRoutePositionAtPoint(delta);
         }
 
         public NavSegment GetCurrentSegment()
         {
-            throw new NotImplementedException();
+            return route[_index];
         }
 
 
