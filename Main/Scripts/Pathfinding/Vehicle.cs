@@ -20,6 +20,7 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 	[Export] protected Label3D speedLabel;
 
 	private List<VehicleCollider> attachedColliders;
+	
 	// Properties
 	protected NavSegment CurrentSegment
 	{
@@ -97,7 +98,7 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		// collider checks
 		// Decides whether to move at all this frame (is another vehicle blocking it?)
 		bool shouldStop = false;
-		for(int i = 0; i<attachedColliders.Count; i++)
+		for(int i = 0; i < attachedColliders.Count; i++)
 		{
 			shouldStop = attachedColliders[i].GetColliderStatus();
 			if (shouldStop) { break; }

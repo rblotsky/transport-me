@@ -13,14 +13,12 @@ namespace Transportme.Main.Scripts.RouteGeneration
         public float cost;
     }
 
-
     public partial class AStar : RefCounted
     {
         private float Heuristic(Vector3 a, Vector3 b)
         {
             return a.DistanceTo(b);
         }
-
 
         private readonly Dictionary<NavConnection, float> cost = new();
         private readonly PriorityQueue<NavConnection, float> queue = new();
