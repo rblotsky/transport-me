@@ -2,14 +2,13 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Transportme.Main.DevTools;
+using Transportme.Main.Scripts.Pathfinding;
 
 public partial class MainVehicle : VehicleCollider, IDebugVisualizationProvider
 {
-	public override void HandleUpdatePosition()
+	public override void HandleUpdatePosition(IRouteMovementIterator route)
 	{
-        Route route = associatedVehicle.CurrentRoute;
-		float distanceAlongRoute = associatedVehicle.CurrentDistanceAlongRoute;
-		RoutePoint point = route.GetVehicleRoutePositionAtPoint(distanceAlongRoute);
+		RoutePoint point = route.GetPositionOnRoute(0);
 
 		FaceDirectionOfMotion(point.Rotation);
 		GlobalPosition = point.Position;
@@ -27,7 +26,7 @@ public partial class MainVehicle : VehicleCollider, IDebugVisualizationProvider
             Quaternion,
             new Vector3(1, 1, 2),
             Colors.Black);
-		RoutePoint point = associatedVehicle.CurrentRoute.GetVehicleRoutePositionAtPoint(associatedVehicle.CurrentDistanceAlongRoute);
+        RoutePoint point = associatedVehicle.Route.GetPositionOnRoute(0);
         yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
         yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);
     }

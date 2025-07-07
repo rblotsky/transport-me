@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Transportme.Main.Scripts.Pathfinding;
 
 public enum CollisionState
 {
@@ -17,7 +18,7 @@ public abstract partial class VehicleCollider : Area3D
 	[Export] private int NumIntersecting;
 
     // FUNCTIONS //
-	public abstract void HandleUpdatePosition();
+	public abstract void HandleUpdatePosition(IRouteMovementIterator route);
 	protected abstract bool ShouldStop(List<VehicleCollider> colliders);
 
     public Vehicle AssociatedVehicle 

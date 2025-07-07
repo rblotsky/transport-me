@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Transportme.Main.Scripts.Pathfinding
 {
-    internal interface IRouteMovementIterator
+    public interface IRouteMovementIterator
     {
-        RoutePoint Move(float distance);
+        RoutePoint Move(double distance);
         RoutePoint GetPositionOnRoute(float delta);
         NavSegment GetCurrentSegment();
+        bool IsFinishedRoute();
     }
 }

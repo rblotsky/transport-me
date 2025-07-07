@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Transportme.Main.Scripts.RouteGeneration;
 
 [GlobalClass]
 public partial class RandomVehicle : Vehicle
@@ -15,7 +16,7 @@ public partial class RandomVehicle : Vehicle
 		else
 		{
 			StartRandomRoute();
-			speed = 0f;
+			Speed = 0f;
 			timeStopped = 0;
 		}
 
@@ -33,15 +34,12 @@ public partial class RandomVehicle : Vehicle
 			rng.Randomize();
 
 			NavCheckpoint[] endpoints = graph.GetTwoRandomCheckpoints(rng);
-
-			if (endpoints.Length == 0)
-			{
-				GD.PrintErr("Failed to find two valid endpoints for a random path!");
+			if (endpoints.Length != 2) {
+				throw new Exception("booo");
 			}
-			else
-			{
-				StartRoute(Route.CreateRouteDjikstras(endpoints[0].GlobalPosition, endpoints[1].GlobalPosition, graph));
-			}
+			RouteV2 route = new RouteV2();
+			route.InitializeRoute(graph.GetConnectionAtPosition(endpoints[0].GlobalPosition), graph.GetConnectionAtPosition(endpoints[1].GlobalPosition));
+			Route = route;
 		}
 	}
 }

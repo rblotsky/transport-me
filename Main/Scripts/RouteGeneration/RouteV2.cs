@@ -8,27 +8,28 @@ using Transportme.Main.Scripts.Pathfinding;
 
 namespace Transportme.Main.Scripts.RouteGeneration
 {
-    //this just tracks one thingy
+    /// <summary>
+    /// First iteration of the new route system. This simply provides all of the code needed to move a vehicle along a route
+    /// </summary>
     public partial class RouteV2 : RefCounted, IRouteMovementIterator
     {
         private RouteResult _routeResult;
         private List<NavSegment> route;
         private int _index;
-        private float _currentDistanceAlongSegment;
-        private float _distanceAlongRoute;
-        private float? _length = null;
-        public float Length { get { !_length.HasValue ? ComputeLength() : _length.Value } }
+        private double _currentDistanceAlongSegment;
+        private double _distanceAlongRoute;
+        private double? _length = null;
+        public double Length { get { return _length ?? ComputeLength(); } }
 
         public void InitializeRoute(NavConnection start, NavConnection end)
         {
             _routeResult = AStar.Compute(start, end);
             route = _routeResult.GetPath().ToList();
-
         }
 
-        private float ComputeLength()
+        private double ComputeLength()
         {
-            float length = 0f;
+            double length = 0f;
             foreach (NavSegment segment in route) {
                 length += segment.Length;
             }
@@ -39,7 +40,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
         //how to communicate it was cut off? - maybe include the ability to overflow via extending points
         private Vector3 GetPointAlongRoute(float relativeToPosition, bool exterpolate)
         {
-            float currentDistance = _currentDistanceAlongSegment + relativeToPosition;
+            double currentDistance = _currentDistanceAlongSegment + relativeToPosition;
             int trackedIndex = _index;
             if (currentDistance < 0) {
                 while(trackedIndex > 0 && currentDistance > 0)
@@ -62,7 +63,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
                     return route[trackedIndex].GlobalStart;
                 }
                 Vector3 direction = (route[trackedIndex].GlobalEnd - route[trackedIndex].GlobalStart).Normalized();
-                return route[trackedIndex].GlobalStart + (currentDistance * direction);
+                return route[trackedIndex].GlobalStart + ((float)currentDistance * direction);
             }
             else if (trackedIndex == route.Count)
             {
@@ -71,12 +72,12 @@ namespace Transportme.Main.Scripts.RouteGeneration
                     return route[trackedIndex].GlobalEnd;
                 }
                 Vector3 direction = (route.Last().GlobalEnd - route.Last().GlobalStart).Normalized();
-                return route.Last().GlobalEnd + (currentDistance * direction);
+                return route.Last().GlobalEnd + ((float)currentDistance * direction);
             }
-            return route[trackedIndex].GetPositionOnSegment(currentDistance);
+            return route[trackedIndex].GetPositionOnSegment((float)currentDistance);
         }
         
-        public RoutePoint Move(float distance)
+        public RoutePoint Move(double distance)
         {
             _distanceAlongRoute += distance;
             _currentDistanceAlongSegment += distance;
@@ -98,19 +99,23 @@ namespace Transportme.Main.Scripts.RouteGeneration
             return route[_index];
         }
 
+        public bool IsFinishedRoute()
+        {
+            return _currentDistanceAlongSegment >= Length;
+        }
 
         public RoutePoint GetVehicleRoutePositionAtPoint(float relativeDistanceOnRoute)
         {
             RoutePoint routePoint = new();
             float backDistance = 0.6f;
             float frontDistance = 0.4f;
-            float actualPosition = Math.Max(
+            double actualPosition = Math.Max(
                 Math.Min(_distanceAlongRoute + relativeDistanceOnRoute, Length),
-                0fs);
-            float finalRelativeDistanceOnRoute = actualPosition - relativeDistanceOnRoute;
+                0f);
+            double finalRelativeDistanceOnRoute = actualPosition - relativeDistanceOnRoute;
 
-            Vector3 from = GetPointAlongRoute(finalRelativeDistanceOnRoute - 0.6f, true);
-            Vector3 to = GetPointAlongRoute(finalRelativeDistanceOnRoute + 0.4f, true);
+            Vector3 from = GetPointAlongRoute((float)finalRelativeDistanceOnRoute - 0.6f, true);
+            Vector3 to = GetPointAlongRoute((float)finalRelativeDistanceOnRoute + 0.4f, true);
             float lerpValue;
             //if (distanceFrom == 0f)
             //{
@@ -126,7 +131,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
             //    lerpValue = backDistance / (backDistance + frontDistance);
             //}
 
-            routePoint.Position = from.Lerp(to, lerpValue);
+            routePoint.Position = from.Lerp(to, 0.5f);
             routePoint.Rotation = (to - from).Normalized();
             routePoint.backPoint = from;
             routePoint.forwardPoint = to;

@@ -8,7 +8,7 @@ using Transportme.Main.Scripts.RouteGeneration;
 [GlobalClass]
 public partial class RouteDebugger : Node, IDebugVisualizationProvider
 {
-    private AStar routeTest;
+    private RouteResult routeTest;
     public static Color ValueToRedGradient(float value, float maxValue)
     {
         // Clamp value between 0 and maxValue
@@ -68,9 +68,7 @@ public partial class RouteDebugger : Node, IDebugVisualizationProvider
                 NavConnection origin = graph.GetConnectionAtPosition(checkpoints[0].GlobalPosition);
                 NavConnection destination = graph.GetConnectionAtPosition(checkpoints[1].GlobalPosition);
 
-                AStar aStar = new AStar();
-                aStar.Compute(origin, destination);
-                routeTest = aStar;
+                routeTest = AStar.Compute(origin, destination);
                 return;
 
                 //Route createdRoute = Route.CreateRouteDjikstras(origin.GlobalSnappedPos, destination.GlobalSnappedPos, graph);
