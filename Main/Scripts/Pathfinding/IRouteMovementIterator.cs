@@ -9,7 +9,7 @@ namespace Transportme.Main.Scripts.Pathfinding
     public interface IRouteMovementIterator
     {
         RoutePoint Move(double distance);
-        RoutePoint GetPositionOnRoute(float delta);
+        RoutePoint GetPositionOnRoute(VehicleProperties properties, float delta);
         NavSegment GetCurrentSegment();
         bool IsFinishedRoute();
     }

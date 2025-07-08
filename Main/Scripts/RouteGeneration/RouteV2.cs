@@ -89,7 +89,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
             return GetVehicleRoutePositionAtPoint(0);
         }
 
-        public RoutePoint GetPositionOnRoute(float delta)
+        public RoutePoint GetPositionOnRoute(VehicleProperties properties, float delta)
         {
             return GetVehicleRoutePositionAtPoint(delta);
         }

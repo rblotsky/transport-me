@@ -40,8 +40,8 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 
 	private double GetTurningSpeedLimit()
 	{
-		RoutePoint original = Route.GetPositionOnRoute(0);
-		RoutePoint advance = Route.GetPositionOnRoute(2);
+		RoutePoint original = Route.GetPositionOnRoute(VehicleProperties, 0);
+		RoutePoint advance = Route.GetPositionOnRoute(VehicleProperties, 2);
 
 		if (original.Rotation.IsEqualApprox(advance.Rotation))
 		{
@@ -95,6 +95,10 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		//}
 		// collider checks
 		// Decides whether to move at all this frame (is another vehicle blocking it?)
+		if(_route == null || _route.IsFinishedRoute())
+		{
+			return;
+		}
 		bool shouldStop = false;
 		for(int i = 0; i < attachedColliders.Count; i++)
 		{
@@ -140,7 +144,7 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 
     public IEnumerable<DebugVisualization> GetVisualization()
     {
-		var point = Route.GetPositionOnRoute(2);
+		var point = Route.GetPositionOnRoute(VehicleProperties, 2);
 		yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.LimeGreen);
 		yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, 0.1f, Colors.LimeGreen);
         yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.backPoint, 0.1f, Colors.LimeGreen);

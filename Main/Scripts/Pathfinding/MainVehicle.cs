@@ -8,7 +8,7 @@ public partial class MainVehicle : VehicleCollider, IDebugVisualizationProvider
 {
 	public override void HandleUpdatePosition(IRouteMovementIterator route)
 	{
-		RoutePoint point = route.GetPositionOnRoute(0);
+		RoutePoint point = route.GetPositionOnRoute(associatedVehicle.VehicleProperties, 0);
 
 		FaceDirectionOfMotion(point.Rotation);
 		GlobalPosition = point.Position;
@@ -26,7 +26,7 @@ public partial class MainVehicle : VehicleCollider, IDebugVisualizationProvider
             Quaternion,
             new Vector3(1, 1, 2),
             Colors.Black);
-        RoutePoint point = associatedVehicle.Route.GetPositionOnRoute(0);
+        RoutePoint point = associatedVehicle.Route.GetPositionOnRoute(associatedVehicle.VehicleProperties, 0);
         yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
         yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);
     }
