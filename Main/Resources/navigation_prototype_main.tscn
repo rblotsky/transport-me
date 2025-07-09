@@ -353,17 +353,8 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
-[node name="Vehicle" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
-
-[node name="Vehicle2" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
-
-[node name="Vehicle3" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
-
-[node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
-
-[node name="Vehicle5" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
-
-[node name="Vehicle6" parent="VehicleContainer" instance=ExtResource("15_hmqaa")]
+[node name="Vehicle" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("15_hmqaa")]
+graph = NodePath("../../NavGraphContainer")
 
 [node name="Debug Visualizer" type="Node" parent="."]
 script = ExtResource("16_jf1gt")

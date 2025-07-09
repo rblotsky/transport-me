@@ -9,7 +9,7 @@ public partial class RandomVehicle : Vehicle
 	public override void _PhysicsProcess(double delta)
 	{
 		// Only moves if we haven't reached the end yet.
-		if (CurrentSegment != null && timeStopped < 10)
+		if (Route != null && !Route.IsFinishedRoute() && timeStopped < 10)
 		{
 			RunMovementIteration(delta);
 		}
@@ -23,8 +23,7 @@ public partial class RandomVehicle : Vehicle
 		base._PhysicsProcess(delta);
 	}
 
-
-	private void StartRandomRoute()
+    private void StartRandomRoute()
 	{
 		// Does nothing if graph isn't ready
 		if (graph.isGraphReady)

@@ -181,9 +181,6 @@ shape = SubResource("SphereShape3D_ciyus")
 [node name="VehicleContainer" type="Node" parent="."]
 
 [node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_yisdv")]
-acceleration = 16.0
-brakeSpeed = 7.5
-showPositionVisualizations = true
 
 [node name="DebugVisualizer" type="Node" parent="."]
 script = ExtResource("14_8t60h")

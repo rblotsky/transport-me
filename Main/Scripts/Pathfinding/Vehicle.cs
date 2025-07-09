@@ -95,10 +95,16 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		//}
 		// collider checks
 		// Decides whether to move at all this frame (is another vehicle blocking it?)
-		if(_route == null || _route.IsFinishedRoute())
+		if(_route == null)
 		{
 			return;
 		}
+		if (_route.IsFinishedRoute())
+		{
+			OnRouteEnd();
+			return;
+		}
+
 		bool shouldStop = false;
 		for(int i = 0; i < attachedColliders.Count; i++)
 		{
@@ -118,11 +124,11 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		//speedLimit = Mathf.Min((float)maxVehicleSpeed, route.GetLength());
 
 		//accelerating or decelerating
-		if (shouldStop || _speed - speedLimit > 0.1f)
+		if (shouldStop || _speed - speedLimit > 0f)
 		{
             _speed -= VehicleProperties.brakingPower * iterationDelta;
 		}
-		else if (_speed - speedLimit < -0.1f)
+		else if (_speed - speedLimit < 0f)
 		{
             _speed += VehicleProperties.accelerationPower * iterationDelta;
 		}
@@ -142,12 +148,20 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		}
 	}
 
+	protected void OnRouteEnd()
+	{
+	}
+
     public IEnumerable<DebugVisualization> GetVisualization()
     {
 		var point = Route.GetPositionOnRoute(VehicleProperties, 2);
 		yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.LimeGreen);
 		yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, 0.1f, Colors.LimeGreen);
         yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.backPoint, 0.1f, Colors.LimeGreen);
+		foreach(var thing in _route.GetVisualization())
+		{
+			yield return thing;
+		}
 
     }
 }
