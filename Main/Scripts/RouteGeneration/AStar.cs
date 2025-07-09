@@ -15,6 +15,10 @@ namespace Transportme.Main.Scripts.RouteGeneration
         }
         public static RouteResult Compute(NavConnection start, NavConnection end)
         {
+            if(start == null || end == null)
+            {
+                throw new ArgumentNullException("connections are null");
+            }
             Dictionary<NavConnection, float> cost = new();
             PriorityQueue<NavConnection, float> queue = new();
             Dictionary<NavConnection, NavSegment> cameFrom = new();

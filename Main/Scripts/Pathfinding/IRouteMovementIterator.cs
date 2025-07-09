@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Transportme.Main.DevTools;
 
 namespace Transportme.Main.Scripts.Pathfinding
 {
-    public interface IRouteMovementIterator
+    public interface IRouteMovementIterator : IDebugVisualizationProvider
     {
-        RoutePoint Move(double distance);
+        bool Move(double distance);
         RoutePoint GetPositionOnRoute(VehicleProperties properties, float delta);
         NavSegment GetCurrentSegment();
         bool IsFinishedRoute();

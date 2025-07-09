@@ -34,7 +34,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
             while (cameFrom[current] != null)
             {
                 NavSegment path = cameFrom[current];
-                segments.Insert(0, path);
+                segments.Add(path);
                 current = path.StartConnection;
             }
             segments.Reverse();

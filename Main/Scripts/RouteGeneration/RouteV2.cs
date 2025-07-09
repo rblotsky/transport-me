@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Transportme.Main.DevTools;
 using Transportme.Main.Scripts.Pathfinding;
 
 namespace Transportme.Main.Scripts.RouteGeneration
@@ -42,13 +43,14 @@ namespace Transportme.Main.Scripts.RouteGeneration
         {
             double currentDistance = _currentDistanceAlongSegment + relativeToPosition;
             int trackedIndex = _index;
+            // backwards
             if (currentDistance < 0) {
-                while(trackedIndex > 0 && currentDistance > 0)
+                while(trackedIndex > 0 && currentDistance < 0)
                 {
                     trackedIndex--;
                     currentDistance += route[trackedIndex].Length;
                 }
-            } else
+            } else //forwards
             {
                 while(trackedIndex < route.Count && currentDistance > route[trackedIndex].Length)
                 {
@@ -56,37 +58,41 @@ namespace Transportme.Main.Scripts.RouteGeneration
                     trackedIndex++;
                 }
             }
+
+            // before the start
             if (currentDistance < 0)
             {
                 if (!exterpolate)
                 {
-                    return route[trackedIndex].GlobalStart;
+                    return route[0].GlobalStart;
                 }
                 Vector3 direction = (route[trackedIndex].GlobalEnd - route[trackedIndex].GlobalStart).Normalized();
                 return route[trackedIndex].GlobalStart + ((float)currentDistance * direction);
             }
-            else if (trackedIndex == route.Count)
+            else if (trackedIndex == route.Count) //after the end
             {
                 if (!exterpolate)
                 {
-                    return route[trackedIndex].GlobalEnd;
+                    return route.Last().GlobalEnd;
                 }
                 Vector3 direction = (route.Last().GlobalEnd - route.Last().GlobalStart).Normalized();
                 return route.Last().GlobalEnd + ((float)currentDistance * direction);
             }
-            return route[trackedIndex].GetPositionOnSegment((float)currentDistance);
+
+            //actually found a segment
+            return route[trackedIndex].GetPositionOnSegmentAbsolute((float)currentDistance);
         }
         
-        public RoutePoint Move(double distance)
+        public bool Move(double distance)
         {
             _distanceAlongRoute += distance;
             _currentDistanceAlongSegment += distance;
-            if(_currentDistanceAlongSegment > route[_index].Length)
+            while(_index < route.Count && _currentDistanceAlongSegment > route[_index].Length )
             {
-                _index += 1;
                 _currentDistanceAlongSegment -= route[_index].Length;
+                _index += 1;
             }
-            return GetVehicleRoutePositionAtPoint(0);
+            return _distanceAlongRoute > Length;
         }
 
         public RoutePoint GetPositionOnRoute(VehicleProperties properties, float delta)
@@ -101,7 +107,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
 
         public bool IsFinishedRoute()
         {
-            return _currentDistanceAlongSegment >= Length;
+            return _distanceAlongRoute >= Length || _index >= route.Count;
         }
 
         public RoutePoint GetVehicleRoutePositionAtPoint(float relativeDistanceOnRoute)
@@ -109,10 +115,11 @@ namespace Transportme.Main.Scripts.RouteGeneration
             RoutePoint routePoint = new();
             float backDistance = 0.6f;
             float frontDistance = 0.4f;
-            double actualPosition = Math.Max(
+
+            double boundedPosition = Math.Max(
                 Math.Min(_distanceAlongRoute + relativeDistanceOnRoute, Length),
                 0f);
-            double finalRelativeDistanceOnRoute = actualPosition - relativeDistanceOnRoute;
+            double finalRelativeDistanceOnRoute = boundedPosition - _distanceAlongRoute;
 
             Vector3 from = GetPointAlongRoute((float)finalRelativeDistanceOnRoute - 0.6f, true);
             Vector3 to = GetPointAlongRoute((float)finalRelativeDistanceOnRoute + 0.4f, true);
@@ -136,6 +143,15 @@ namespace Transportme.Main.Scripts.RouteGeneration
             routePoint.backPoint = from;
             routePoint.forwardPoint = to;
             return routePoint;
+        }
+
+        public IEnumerable<DebugVisualization> GetVisualization()
+        {
+            foreach(NavSegment segment in route)
+            {
+                Color colors = segment.Equals(route.ElementAtOrDefault(_index)) ? Colors.Black : Colors.White;
+                yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.NavSegments], segment.GlobalStart, segment.GlobalEnd, colors);
+            }
         }
     }
 }
