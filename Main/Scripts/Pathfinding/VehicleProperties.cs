@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Transportme.Main.Scripts.Pathfinding
 {
-    public partial class VehicleProperties : RefCounted
+    [GlobalClass]
+    public partial class VehicleProperties : Resource
     {
         [Export] public float chassisLength;
         [Export] public float chassisWidth;

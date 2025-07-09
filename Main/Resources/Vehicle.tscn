@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dj7ka8sphrkpk"]
+[gd_scene load_steps=8 format=3 uid="uid://dj7ka8sphrkpk"]
 
 [ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/Resources/NetworkPrototype/low_poly_car_no_light.glb" id="1_g51oh"]
 [ext_resource type="Script" uid="uid://cex6i3ltwwbfb" path="res://Main/Scripts/Pathfinding/RandomVehicle.cs" id="1_jb367"]
 [ext_resource type="Script" uid="uid://wtpmkbxw66dr" path="res://Main/Scripts/Pathfinding/MainVehicle.cs" id="1_mpqlx"]
+[ext_resource type="Resource" uid="uid://dfg587hd3gdvo" path="res://Main/Resources/Vehicles/standard_car.tres" id="2_047b1"]
 [ext_resource type="Script" uid="uid://bfc2v8bpeaddt" path="res://Main/Scripts/Pathfinding/HardStopCollider.cs" id="3_hsyqr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6deww"]
@@ -13,6 +14,7 @@ size = Vector3(0.543085, 1.01514, 2.08533)
 
 [node name="Vehicle" type="Node3D" node_paths=PackedStringArray("speedLabel")]
 script = ExtResource("1_jb367")
+VehicleProperties = ExtResource("2_047b1")
 speedLabel = NodePath("Area3D/Label3D")
 
 [node name="Area3D" type="Area3D" parent="."]
