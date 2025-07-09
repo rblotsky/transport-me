@@ -18,13 +18,12 @@ public partial class BezierCurveNavSegment : NavSegment
     // Readonly Properties
     public override Vector3 Start { get { return CurveStart; } }
     public override Vector3 End { get { return CurveEnd; } }
-    public override float Length { get { return SimpleLength; } }
+
 
     // Constants
     public static readonly int StartPointIndex = 0;
     public static readonly int ControlPointIndex = 1;
     public static readonly int EndPointIndex = 2;
-
 
     // FUNCTIONS //
     /// <summary>
@@ -61,6 +60,12 @@ public partial class BezierCurveNavSegment : NavSegment
             percentOfSegment
             );
         return globalCoordinates ? ToGlobal(localPos) : localPos;
+    }
+
+    public override Vector3 GetPositionOnSegmentAbsolute(float distanceAlongSegment, bool globalCoordinates = true)
+    {
+        float percentage = distanceAlongSegment / Length;
+        return GetPositionOnSegment(percentage, globalCoordinates);
     }
 
     public override Vector3[] SubdivideIntoPoints(int numPoints)
