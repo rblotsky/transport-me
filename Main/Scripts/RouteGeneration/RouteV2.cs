@@ -149,8 +149,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
         {
             foreach(NavSegment segment in route)
             {
-                Color colors = segment.Equals(route.ElementAtOrDefault(_index)) ? Colors.Black : Colors.White;
-                yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.NavSegments], segment.GlobalStart, segment.GlobalEnd, colors);
+                yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.NavSegments], segment.GlobalStart, segment.GlobalEnd, Colors.White);
             }
         }
     }

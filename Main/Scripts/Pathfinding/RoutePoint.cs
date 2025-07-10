@@ -7,7 +7,7 @@ using Godot;
 /// <summary>
 /// This model tracks the essential information needed to visually display a vehicle (or collider) on the route
 /// Usually this would be returned by a route, which knows where the vehicle is, and knows where the vehicle will
-/// be going next
+/// be going next. This does not represent the true position along the route!
 /// </summary>
 public partial class RoutePoint : RefCounted
 	{
