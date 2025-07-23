@@ -16,8 +16,9 @@ public abstract partial class NavSegment : Node3D
     public Vector3 GlobalEnd { get { return ToGlobal(End); } }
     public Vector3 DirectionalLine { get { return End - Start; } }
     public float SimpleLength { get { return DirectionalLine.Length(); } }
-    public abstract float Length { get ; }
-    
+    public float Length { get { return _length.HasValue ? _length.Value : ComputeLength(); } }
+    private float? _length;
+
     // Runtime only properties
     public NavConnection EndConnection { get; set; }
     public NavConnection StartConnection { get; set; }
@@ -39,6 +40,18 @@ public abstract partial class NavSegment : Node3D
         else return Vector3.Zero;
     }
 
+    private float ComputeLength()
+    {
+        float trueLength = 0f;
+        Vector3[] points = SubdivideIntoPoints(10);
+        for (int i = 1; i < points.Length; i++)
+        {
+            trueLength += (points[i-1] - points[i]).Length();
+        }
+        _length = trueLength;
+        return trueLength;
+    }
+
     // Abstract Methods
     /// <summary>
     /// Gets the 3D position a given percentage from the start of the segment.
@@ -47,6 +60,13 @@ public abstract partial class NavSegment : Node3D
     /// <param name="globalCoordinates">True if you want the result using global coordinates</param>
     /// <returns></returns>
     public abstract Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true);
+    /// <summary>
+    /// Gets the 3D position a given distance from the start of the segment
+    /// </summary>
+    /// <param name="distanceAlongSegment"></param>
+    /// <param name="globalCoordinates"></param>
+    /// <returns></returns>
+    public abstract Vector3 GetPositionOnSegmentAbsolute(float distanceAlongSegment,  bool globalCoordinates = true);
 
     /// <summary>
     /// Returns a list of discrete points from the start to end of the segment.

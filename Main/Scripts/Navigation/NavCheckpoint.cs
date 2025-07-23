@@ -14,11 +14,14 @@ public partial class NavCheckpoint : Node3D, IDebugVisualizationProvider
 	public Vector3 GlobalSnappedPos { get { return Simplifications.SnapV3ToGrid(GlobalPosition); } }
 	public Vector3 LocalSnappedPos { get { return Simplifications.SnapV3ToGrid(Position); } }
 
+	private NavConnection _associatedConnection;
+	public NavConnection AssociatedConnection { get { return _associatedConnection; } set { GD.Print(value); _associatedConnection = value; } }
 
 	// FUNCTIONS //
 
     public IEnumerable<DebugVisualization> GetVisualization()
     {
-		yield return DebugVisualizationFactory.Sphere( [DebugVisualizationFilters.NavSegments], GlobalPosition, 0.3f, Colors.Orange);
+		Color color = _associatedConnection == null ? Colors.Red : Colors.Green;
+		yield return DebugVisualizationFactory.Sphere( [DebugVisualizationFilters.NavSegments], GlobalPosition, 0.3f, color);
     }
 }

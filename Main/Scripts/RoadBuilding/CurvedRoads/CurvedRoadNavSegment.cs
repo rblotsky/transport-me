@@ -26,8 +26,6 @@ public partial class CurvedRoadNavSegment : NavSegment
         }
     }
 
-    public override float Length { get { return SimpleLength; } }
-
     // FUNCTIONS //
     // Overrides
     public override Vector3 GetPositionOnSegment(float percentOfSegment, bool globalCoordinates = true)
@@ -50,6 +48,12 @@ public partial class CurvedRoadNavSegment : NavSegment
             );
 
         return globalCoordinates ? ToGlobal(localPos) : localPos;
+    }
+
+    public override Vector3 GetPositionOnSegmentAbsolute(float distanceAlongSegment, bool globalCoordinates = true)
+    {
+        float percentage = distanceAlongSegment / Length;
+        return GetPositionOnSegment(percentage, globalCoordinates);
     }
 
 

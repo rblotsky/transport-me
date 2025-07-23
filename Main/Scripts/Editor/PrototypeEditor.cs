@@ -3,6 +3,7 @@ using Godot.Collections;
 using System;
 using System.Diagnostics.Tracing;
 using Transportme.Main.DevTools;
+using Transportme.Main.Scripts.Vehicle;
 
 [GlobalClass]
 public partial class PrototypeEditor : Node
@@ -36,7 +37,7 @@ public partial class PrototypeEditor : Node
 				Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
 				foreach (Vehicle vehicle in allVehicles)
 				{
-					vehicle.speed += 1;
+					vehicle.Speed += 1;
 				}
 			}
 			else if (keyInput.Keycode == Key.Q && keyInput.IsPressed())
@@ -44,7 +45,7 @@ public partial class PrototypeEditor : Node
 				Vehicle[] allVehicles = Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray();
 				foreach (Vehicle vehicle in allVehicles)
 				{
-					vehicle.speed -= 1;
+					vehicle.Speed -= 1;
 				}
 			}
 			else if (keyInput.Keycode == Key.R && keyInput.IsPressed())

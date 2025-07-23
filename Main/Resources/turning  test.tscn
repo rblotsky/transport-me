@@ -10,9 +10,9 @@
 [ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_glrcr"]
 [ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/Resources/NetworkPrototype/2WayRoadEndTest.tscn" id="9_tt4oe"]
 [ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/Resources/NetworkPrototype/2WayRoadTest.tscn" id="10_mtn85"]
-[ext_resource type="PackedScene" uid="uid://bjh5oenwws237" path="res://Main/Resources/NetworkPrototype/4WayIntersectionTest.tscn" id="11_dy2la"]
 [ext_resource type="Script" uid="uid://c2acksxjlrfeu" path="res://Main/Scripts/Navigation/NavCheckpoint.cs" id="12_fwvoe"]
 [ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="13_crkly"]
+[ext_resource type="PackedScene" uid="uid://dai5m4o3ttf3w" path="res://Main/Resources/NetworkPrototype/2WayRoadRightTurnTest.tscn" id="13_whxuq"]
 [ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/Scripts/DevTools/DebugVisualizer.cs" id="14_8t60h"]
 [ext_resource type="PackedScene" uid="uid://dj7ka8sphrkpk" path="res://Main/Resources/Vehicle.tscn" id="14_yisdv"]
 
@@ -130,28 +130,31 @@ verticalOffsetFromPointer = 0.0
 [node name="NavGraphContainer" type="Node3D" parent="."]
 script = ExtResource("8_glrcr")
 
-[node name="4WayIntersectionTest" parent="NavGraphContainer" instance=ExtResource("11_dy2la")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.7174, -0.00752997, 0)
+[node name="2WayRoadTest" parent="NavGraphContainer" instance=ExtResource("13_whxuq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("9_tt4oe")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 0, 4)
+
+[node name="2WayRoadTest2" parent="NavGraphContainer" instance=ExtResource("10_mtn85")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 0, 0)
+
+[node name="2WayRoadTest3" parent="NavGraphContainer" instance=ExtResource("13_whxuq")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4, 0, -4)
+
+[node name="2WayRoadTest4" parent="NavGraphContainer" instance=ExtResource("13_whxuq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -4)
+
+[node name="2WayRoadEndTest2" parent="NavGraphContainer" instance=ExtResource("9_tt4oe")]
+transform = Transform3D(5.96046e-08, 0, 1, 0, 1, 0, -1, 0, 5.96046e-08, -8, 0, -1)
 
 [node name="Checkpoint" type="Node3D" parent="NavGraphContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27537, -0.010167, -1.00065)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.01, 4)
 script = ExtResource("12_fwvoe")
 
 [node name="Checkpoint2" type="Node3D" parent="NavGraphContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72239, 0.000602519, -5.99784)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.001, 5)
 script = ExtResource("12_fwvoe")
-
-[node name="2WayRoadTest" parent="NavGraphContainer" instance=ExtResource("10_mtn85")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.277487, -0.010167, 0)
-
-[node name="2WayRoadEndTest" parent="NavGraphContainer" instance=ExtResource("9_tt4oe")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.7157, 0, -6.98946)
-
-[node name="2WayRoadEndTest2" parent="NavGraphContainer" instance=ExtResource("9_tt4oe")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.27288, -0.0091117, 0)
-
-[node name="2WayRoadTest2" parent="NavGraphContainer" instance=ExtResource("10_mtn85")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.71151, -0.0187422, -3.99892)
 
 [node name="Cursor" type="Node3D" parent="."]
 script = ExtResource("13_crkly")
@@ -180,10 +183,8 @@ shape = SubResource("SphereShape3D_ciyus")
 
 [node name="VehicleContainer" type="Node" parent="."]
 
-[node name="Vehicle4" parent="VehicleContainer" instance=ExtResource("14_yisdv")]
-acceleration = 16.0
-brakeSpeed = 7.5
-showPositionVisualizations = true
+[node name="Vehicle4" parent="VehicleContainer" node_paths=PackedStringArray("graph") instance=ExtResource("14_yisdv")]
+graph = NodePath("../../NavGraphContainer")
 
 [node name="DebugVisualizer" type="Node" parent="."]
 script = ExtResource("14_8t60h")

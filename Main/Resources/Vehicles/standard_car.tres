@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VehicleProperties" load_steps=2 format=3 uid="uid://dfg587hd3gdvo"]
+
+[ext_resource type="Script" uid="uid://dxavw8roijd1r" path="res://Main/Scripts/Vehicle/VehicleProperties.cs" id="1_s0rhg"]
+
+[resource]
+script = ExtResource("1_s0rhg")
+chassisLength = 0.0
+chassisWidth = 0.0
+maxSpeed = 7.5
+accelerationPower = 1.0
+brakingPower = 1.5
