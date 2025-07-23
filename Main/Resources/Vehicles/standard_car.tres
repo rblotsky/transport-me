@@ -8,5 +8,5 @@ chassisLength = 0.0
 chassisWidth = 0.0
 maxSpeed = 7.5
 accelerationPower = 1.0
-brakingPower = 1.5
+brakingPower = 10.5
 metadata/_custom_type_script = "uid://5m43sm2ivi3w"

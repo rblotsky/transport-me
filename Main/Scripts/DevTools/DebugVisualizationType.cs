@@ -17,5 +17,6 @@ namespace Transportme.Main.DevTools
         None = 0,
         NavSegments = 1,
         VehicleCollisions = 2,
+        PathFinding = 3,
     }
 }

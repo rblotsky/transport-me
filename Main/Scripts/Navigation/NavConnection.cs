@@ -40,7 +40,7 @@ public partial class NavConnection : RefCounted
 		} 
 		else
 		{
-			GD.PrintErr("Tried to add ending segment endpoint", segment.GlobalEnd.ToString() , " to intersection", position.ToString());
+			GD.PrintErr("NavConnection > Tried to add ending segment endpoint", segment.GlobalEnd.ToString() , " to intersection", position.ToString());
 		}
 	}
 
@@ -56,7 +56,7 @@ public partial class NavConnection : RefCounted
 		}
 		else
 		{
-			GD.PrintErr("Tried to add a starting segment endpoint", segment.GlobalStart.ToString(), " to intersection", position.ToString());
+			GD.PrintErr("NavConnection > Tried to add a starting segment endpoint", segment.GlobalStart.ToString(), " to intersection", position.ToString());
 		}
 	}
 
