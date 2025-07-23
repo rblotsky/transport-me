@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Transportme.Main.DevTools;
-using Transportme.Main.Scripts.Pathfinding;
+using Transportme.Main.Scripts.Vehicle;
 
-namespace Transportme.Main.Scripts.RouteGeneration
+namespace Transportme.Main.Scripts.Route
 {
     /// <summary>
     /// First iteration of the new route system. This simply provides all of the code needed to move a vehicle along a route

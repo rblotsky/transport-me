@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Transportme.Main.Scripts.RouteGeneration;
+using Transportme.Main.Scripts.Route;
 
-namespace Transportme.Main.Scripts.Pathfinding
+namespace Transportme.Main.Scripts.Vehicle
 {
     public partial class RandomPathfindingVehicle : VehicleController
     {

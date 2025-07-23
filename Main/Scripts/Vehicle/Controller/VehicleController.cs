@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Transportme.Main.Scripts.Pathfinding
+namespace Transportme.Main.Scripts.Vehicle
 {
     public delegate void RouteCompleteHandler(Vehicle invokingVehicle);
     public partial class VehicleController : Node3D
@@ -18,3 +18,4 @@ namespace Transportme.Main.Scripts.Pathfinding
         }
     }
 }
+

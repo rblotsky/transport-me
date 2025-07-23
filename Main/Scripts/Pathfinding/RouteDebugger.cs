@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Transportme.Main.DevTools;
-using Transportme.Main.Scripts.RouteGeneration;
+using Transportme.Main.Scripts.Route;
 
 [GlobalClass]
 public partial class RouteDebugger : Node, IDebugVisualizationProvider

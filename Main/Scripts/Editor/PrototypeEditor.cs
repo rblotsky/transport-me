@@ -3,6 +3,7 @@ using Godot.Collections;
 using System;
 using System.Diagnostics.Tracing;
 using Transportme.Main.DevTools;
+using Transportme.Main.Scripts.Vehicle;
 
 [GlobalClass]
 public partial class PrototypeEditor : Node

@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://dj7ka8sphrkpk"]
 
+[ext_resource type="Script" uid="uid://cptcteh41gs42" path="res://Main/Scripts/Vehicle/Vehicle.cs" id="1_047b1"]
 [ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/Resources/NetworkPrototype/low_poly_car_no_light.glb" id="1_g51oh"]
-[ext_resource type="Script" uid="uid://cex6i3ltwwbfb" path="res://Main/Scripts/Pathfinding/RandomVehicle.cs" id="1_jb367"]
-[ext_resource type="Script" uid="uid://wtpmkbxw66dr" path="res://Main/Scripts/Pathfinding/MainVehicle.cs" id="1_mpqlx"]
+[ext_resource type="Script" uid="uid://bumbrr155ry5f" path="res://Main/Scripts/Vehicle/Collider/MainVehicle.cs" id="1_mpqlx"]
 [ext_resource type="Resource" uid="uid://dfg587hd3gdvo" path="res://Main/Resources/Vehicles/standard_car.tres" id="2_047b1"]
-[ext_resource type="Script" uid="uid://bfc2v8bpeaddt" path="res://Main/Scripts/Pathfinding/HardStopCollider.cs" id="3_hsyqr"]
-[ext_resource type="Script" uid="uid://bsf2doaq4r8el" path="res://Main/Scripts/Pathfinding/RandomPathfindingVehicle.cs" id="6_67850"]
+[ext_resource type="Script" uid="uid://c8n8pxyxa2ss7" path="res://Main/Scripts/Vehicle/Collider/HardStopCollider.cs" id="3_hsyqr"]
+[ext_resource type="Script" uid="uid://8ehvhak1ntt5" path="res://Main/Scripts/Vehicle/Controller/RandomPathfindingVehicle.cs" id="6_67850"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6deww"]
 height = 2.30079
@@ -14,7 +14,7 @@ height = 2.30079
 size = Vector3(0.543085, 1.01514, 2.08533)
 
 [node name="Vehicle" type="Node3D" node_paths=PackedStringArray("VehicleController", "speedLabel")]
-script = ExtResource("1_jb367")
+script = ExtResource("1_047b1")
 VehicleProperties = ExtResource("2_047b1")
 VehicleController = NodePath("Controller")
 speedLabel = NodePath("Area3D/Label3D")

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Transportme.Main.Scripts.Pathfinding
+namespace Transportme.Main.Scripts.Vehicle
 {
     [GlobalClass]
     public partial class VehicleProperties : Resource

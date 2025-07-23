@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Transportme.Main.Scripts.RouteGeneration
+namespace Transportme.Main.Scripts.Route
 {
     public struct AStarCosts
     {
