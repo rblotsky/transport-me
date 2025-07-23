@@ -11,9 +11,11 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 	// DATA //
 	// Instance Configs
 	[Export] public VehicleProperties VehicleProperties { get; set; }
+	[Export] public VehicleController VehicleController { get; set; }
 	private double _speed;
 	public double Speed { get { return _speed; } set { _speed = value; } }
-	[Export] protected NavGraphContainer graph;
+
+	[Export] public NavGraphContainer graph;
 	//[Export] protected Vector3 graphOffset;
 	[Export] protected float stoppingDistance;
 	[Export] protected Label3D speedLabel;
@@ -29,15 +31,19 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 			return _route.GetCurrentSegment();
 		}
 	}
-	public IRouteMovementIterator Route { get { return _route; } set { _route = value; } }
+	public IRouteMovementIterator Route { get { return _route; } set { Initialize(); _route = value; } }
     // Cached Data
  //   private Route route = null;
 	//private float distanceAlongRoute = 0f;
 
+	private void Initialize()
+	{
+		timeStopped = 0f;
+	}
+
 	//public double speed = 0;
 	protected double timeStopped = 0;
 	private float turningRadius = 0; 
-
 	private double GetTurningSpeedLimit()
 	{
 		RoutePoint original = Route.GetPositionOnRoute(VehicleProperties, 0);
@@ -70,6 +76,12 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		}
         base._Process(delta);
     }
+
+    public override void _Ready()
+    {
+		VehicleController.NotifyRouteComplete(this);
+        base._Ready();
+    }
     // FUNCTIONS //
     // Godot Defaults
     public override void _EnterTree()
@@ -95,13 +107,9 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		//}
 		// collider checks
 		// Decides whether to move at all this frame (is another vehicle blocking it?)
-		if(_route == null)
+		if (_route == null || _route.IsFinishedRoute() || timeStopped > 10)
 		{
-			return;
-		}
-		if (_route.IsFinishedRoute())
-		{
-			OnRouteEnd();
+			VehicleController.NotifyRouteComplete(this);
 			return;
 		}
 
@@ -146,10 +154,6 @@ public partial class Vehicle : Node3D, IDebugVisualizationProvider
 		{
 			col.HandleUpdatePosition(_route);
 		}
-	}
-
-	protected void OnRouteEnd()
-	{
 	}
 
     public IEnumerable<DebugVisualization> GetVisualization()

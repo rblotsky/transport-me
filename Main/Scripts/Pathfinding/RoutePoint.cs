@@ -18,6 +18,8 @@ public partial class RoutePoint : RefCounted
 		private Vector3 _globalPoint;
 		private Vector3 _rotationVector;
 		private NavSegment _segment;
+
+		// FOR DEBUGGING ONLY
 		public Vector3 backPoint { set; get; }
 		public Vector3 forwardPoint { set; get; }
 		public float lerpValue { set; get; }

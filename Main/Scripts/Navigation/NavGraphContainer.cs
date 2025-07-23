@@ -91,7 +91,7 @@ public partial class NavGraphContainer : Node3D
 
         foreach (NavCheckpoint point in newCheckpoints)
         {
-            AddCheckpoint(point.GlobalSnappedPos, point);
+            AddCheckpoint(point.GlobalPosition, point);
         }
     }
     
@@ -118,12 +118,18 @@ public partial class NavGraphContainer : Node3D
     private void AddCheckpoint(Vector3 position, NavCheckpoint checkpoint)
     {
         NavCheckpoint found = GetCheckpointAtPosition(position);
+        NavConnection connection = GetConnectionAtPosition(position);
+        if (connection == null)
+        {
+            GD.PrintErr($"NavGraphContainer > Cannot find NavConnection to bind to Checkpoint at position: {position}");
+        }
         if (found != null)
         {
-            GD.PrintErr($"Checkpoint already exists at position: {position}");
+            GD.PrintErr($"NavGraphContainer > Checkpoint already exists at position: {position}");
         }
         else
         {
+            checkpoint.AssociatedConnection = connection;
             checkpoints.Add(checkpoint);
         }
     }
@@ -164,8 +170,9 @@ public partial class NavGraphContainer : Node3D
         }
         else
         {
-            int first = rng.RandiRange(0, checkpoints.Count - 1);
-            int second = rng.RandiRange(0, checkpoints.Count - 1);
+            List<NavCheckpoint> tmp = checkpoints.Where(c => c.AssociatedConnection != null).ToList();
+            int first = rng.RandiRange(0, tmp.Count - 1);
+            int second = rng.RandiRange(0, tmp.Count - 1);
 
             // If we got the same, tries moving the second one below or above (depending on where there's more space)
             if (second == first)
@@ -181,7 +188,7 @@ public partial class NavGraphContainer : Node3D
             }
 
             // Returns
-            return new NavCheckpoint[2] { checkpoints[first], checkpoints[second] };
+            return new NavCheckpoint[2] { tmp[first], tmp[second] };
         }
     }
 

@@ -46,7 +46,7 @@ public abstract partial class NavSegment : Node3D
         Vector3[] points = SubdivideIntoPoints(10);
         for (int i = 1; i < points.Length; i++)
         {
-            trueLength += (points[0] - points[1]).Length();
+            trueLength += (points[i-1] - points[i]).Length();
         }
         _length = trueLength;
         return trueLength;

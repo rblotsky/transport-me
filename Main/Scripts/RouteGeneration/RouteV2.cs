@@ -16,7 +16,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
     {
         private RouteResult _routeResult;
         private List<NavSegment> route;
-        private int _index;
+        private int _currentSegmentIndex;
         private double _currentDistanceAlongSegment;
         private double _distanceAlongRoute;
         private double? _length = null;
@@ -42,7 +42,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
         private Vector3 GetPointAlongRoute(float relativeToPosition, bool exterpolate)
         {
             double currentDistance = _currentDistanceAlongSegment + relativeToPosition;
-            int trackedIndex = _index;
+            int trackedIndex = _currentSegmentIndex;
             // backwards
             if (currentDistance < 0) {
                 while(trackedIndex > 0 && currentDistance < 0)
@@ -66,7 +66,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
                 {
                     return route[0].GlobalStart;
                 }
-                Vector3 direction = (route[trackedIndex].GlobalEnd - route[trackedIndex].GlobalStart).Normalized();
+                Vector3 direction = (route[trackedIndex].GetPositionOnSegment(0.01f) - route[trackedIndex].GlobalStart).Normalized();
                 return route[trackedIndex].GlobalStart + ((float)currentDistance * direction);
             }
             else if (trackedIndex == route.Count) //after the end
@@ -75,7 +75,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
                 {
                     return route.Last().GlobalEnd;
                 }
-                Vector3 direction = (route.Last().GlobalEnd - route.Last().GlobalStart).Normalized();
+                Vector3 direction = (route.Last().GlobalEnd - route.Last().GetPositionOnSegment(0.99f)).Normalized();
                 return route.Last().GlobalEnd + ((float)currentDistance * direction);
             }
 
@@ -87,10 +87,10 @@ namespace Transportme.Main.Scripts.RouteGeneration
         {
             _distanceAlongRoute += distance;
             _currentDistanceAlongSegment += distance;
-            while(_index < route.Count && _currentDistanceAlongSegment > route[_index].Length )
+            while(_currentSegmentIndex < route.Count && _currentDistanceAlongSegment > route[_currentSegmentIndex].Length )
             {
-                _currentDistanceAlongSegment -= route[_index].Length;
-                _index += 1;
+                _currentDistanceAlongSegment -= route[_currentSegmentIndex].Length;
+                _currentSegmentIndex += 1;
             }
             return _distanceAlongRoute > Length;
         }
@@ -102,12 +102,12 @@ namespace Transportme.Main.Scripts.RouteGeneration
 
         public NavSegment GetCurrentSegment()
         {
-            return route[_index];
+            return route[_currentSegmentIndex];
         }
 
         public bool IsFinishedRoute()
         {
-            return _distanceAlongRoute >= Length || _index >= route.Count;
+            return _distanceAlongRoute >= Length || _currentSegmentIndex >= route.Count;
         }
 
         public RoutePoint GetVehicleRoutePositionAtPoint(float relativeDistanceOnRoute)
@@ -147,9 +147,32 @@ namespace Transportme.Main.Scripts.RouteGeneration
 
         public IEnumerable<DebugVisualization> GetVisualization()
         {
+            var thing = route.ElementAtOrDefault(_currentSegmentIndex)?.GetPositionOnSegmentAbsolute((float)_currentDistanceAlongSegment);
+            if (thing.HasValue) { 
+                yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.NavSegments], thing.Value, 1f, Colors.Red);
+            }
+            int alt = 0;
             foreach(NavSegment segment in route)
             {
                 yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.NavSegments], segment.GlobalStart, segment.GlobalEnd, Colors.White);
+                float i = 0.1f;
+                while (i < segment.Length)
+                {
+                    float oijasdfj = 0.05f;
+                    Color funny = Colors.White;
+                    if(alt % 2 == 0)
+                    {
+                        funny = Colors.LimeGreen;
+                    }
+                    if(i == 0.1f)
+                    {
+                        funny = Colors.Red;
+                        oijasdfj = 0.1f;
+                    }
+                    yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.NavSegments], segment.GetPositionOnSegmentAbsolute(i), oijasdfj, funny);
+                    i += 0.2f;
+                }
+                alt += 1;
             }
         }
     }

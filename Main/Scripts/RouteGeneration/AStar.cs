@@ -17,11 +17,43 @@ namespace Transportme.Main.Scripts.RouteGeneration
         {
             if(start == null || end == null)
             {
-                throw new ArgumentNullException("connections are null");
+                throw new ArgumentNullException("Pathfinding-AStar: connections are null");
             }
             Dictionary<NavConnection, float> cost = new();
-            PriorityQueue<NavConnection, float> queue = new();
             Dictionary<NavConnection, NavSegment> cameFrom = new();
+
+            PerformPathfindingThingy(start, end, ref cost, ref cameFrom);
+
+            return new RouteResult(cost, cameFrom, start, end);
+        }
+
+        public static List<NavSegment> GetPathTo(NavConnection start, NavConnection end)
+        {
+            Dictionary<NavConnection, float> cost = new();
+            Dictionary<NavConnection, NavSegment> cameFrom = new();
+
+            PerformPathfindingThingy(start, end, ref cost, ref cameFrom);
+            return Path(end, cost, cameFrom);
+            
+        }
+
+        private static List<NavSegment> Path(NavConnection end, Dictionary<NavConnection, float> cost, Dictionary<NavConnection, NavSegment> cameFrom)
+        {
+            List<NavSegment> segments = new List<NavSegment>();
+            NavConnection current = end;
+            while (cameFrom[current] != null)
+            {
+                NavSegment path = cameFrom[current];
+                segments.Add(path);
+                current = path.StartConnection;
+            }
+            segments.Reverse();
+            return segments;
+        }
+
+        private static void PerformPathfindingThingy(NavConnection start, NavConnection end, ref Dictionary<NavConnection, float> cost, ref Dictionary<NavConnection, NavSegment> cameFrom)
+        {
+            PriorityQueue<NavConnection, float> queue = new();
 
             queue.Enqueue(start, 0);
             cameFrom[start] = null;
@@ -48,7 +80,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
                     }
                 }
             }
-            return new RouteResult(cost, cameFrom, start, end);
+
         }
 
 

@@ -27,7 +27,7 @@ namespace Transportme.Main.Scripts.RouteGeneration
             _end = end;
         }
 
-        public IEnumerable<NavSegment> GetPath()
+        public List<NavSegment> GetPath()
         {
             List<NavSegment> segments = new List<NavSegment>();
             NavConnection current = _end;
