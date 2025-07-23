@@ -36,8 +36,7 @@ namespace Transportme.Main.Scripts.Vehicle
                 {
                     GD.PrintErr("RandomVehicleController > Generated checkpoints have no associated connection!");
                 }
-                RouteV2 route = new RouteV2();
-                route.InitializeRoute(start.AssociatedConnection, end.AssociatedConnection);
+                SingleRoute route = SingleRoute.Pathfind(start.AssociatedConnection, end.AssociatedConnection);
                 vehicle.Speed = 0f;
                 vehicle.Route = route;
             }

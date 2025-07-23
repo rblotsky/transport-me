@@ -8,4 +8,4 @@ chassisLength = 0.0
 chassisWidth = 0.0
 maxSpeed = 7.5
 accelerationPower = 1.0
-brakingPower = 1.5
+brakingPower = 3.5
