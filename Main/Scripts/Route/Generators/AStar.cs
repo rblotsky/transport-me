@@ -17,7 +17,7 @@ namespace Transportme.Main.Scripts.Route
         {
             if(start == null || end == null)
             {
-                throw new ArgumentNullException("Pathfinding-AStar: connections are null");
+                throw new ArgumentNullException("Pathfinding-AStar: Connections are null");
             }
             Dictionary<NavConnection, float> cost = new();
             Dictionary<NavConnection, NavSegment> cameFrom = new();

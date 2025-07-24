@@ -74,7 +74,7 @@ namespace Transportme.Main.Scripts.Route
                 Vector3 direction = (route[trackedIndex].GetPositionOnSegment(0.01f) - route[trackedIndex].GlobalStart).Normalized();
                 return route[trackedIndex].GlobalStart + ((float)currentDistance * direction);
             }
-            else if (trackedIndex == route.Count) //after the end
+            else if (trackedIndex == route.Count) // after the end
             {
                 if (!exterpolate)
                 {
@@ -84,7 +84,7 @@ namespace Transportme.Main.Scripts.Route
                 return route.Last().GlobalEnd + ((float)currentDistance * direction);
             }
 
-            //actually found a segment
+            // actually found a segment
             return route[trackedIndex].GetPositionOnSegmentAbsolute((float)currentDistance);
         }
         
