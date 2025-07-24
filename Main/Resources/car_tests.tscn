@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c2hmgwa2g5sib"]
+[gd_scene load_steps=24 format=3 uid="uid://c2hmgwa2g5sib"]
 
 [ext_resource type="PackedScene" uid="uid://cuch527r34ce4" path="res://Main/Resources/DebugVisualizerUIPanel.tscn" id="1_yn3ch"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="2_nmvsy"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_xgohg"]
 [ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_rhtpp"]
 [ext_resource type="Script" uid="uid://can2dojlmlrtw" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_4te8r"]
+[ext_resource type="Script" uid="uid://b0hfppsfwtirj" path="res://Main/Scripts/Editor/CameraMovement.cs" id="6_nmvsy"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="7_0g7jp"]
 [ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_tr6be"]
 [ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/Resources/NetworkPrototype/2WayRoadEndTest.tscn" id="10_jhruy"]
@@ -110,7 +111,8 @@ script = ExtResource("5_rhtpp")
 savedSceneName = "GraphScenePrototype"
 
 [node name="CameraAnchor" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.02622, 0.03368, -2.02475)
+script = ExtResource("6_nmvsy")
 
 [node name="TrackballCamera" type="Camera3D" parent="CameraAnchor"]
 transform = Transform3D(1, 0, 0, 0, 0.834261, 0.551369, 0, -0.551369, 0.834261, 0, 5.99507, 9)
@@ -130,11 +132,38 @@ verticalOffsetFromPointer = 0.0
 [node name="NavGraphContainer" type="Node3D" parent="."]
 script = ExtResource("8_tr6be")
 
+[node name="2WayRoadTest5" parent="NavGraphContainer" instance=ExtResource("11_headu")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -12, 0, 6)
+
+[node name="2WayRoadEndTest3" parent="NavGraphContainer" instance=ExtResource("10_jhruy")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12, 0, 3)
+
+[node name="2WayRoadTest6" parent="NavGraphContainer" instance=ExtResource("11_headu")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -17, 0, 6)
+
+[node name="2WayRoadEndTest4" parent="NavGraphContainer" instance=ExtResource("10_jhruy")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -17, 0, 3)
+
+[node name="2WayRoadTest7" parent="NavGraphContainer" instance=ExtResource("11_headu")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -22, 0, 6)
+
+[node name="2WayRoadEndTest5" parent="NavGraphContainer" instance=ExtResource("10_jhruy")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -22, 0, 3)
+
 [node name="2WayRoadTest" parent="NavGraphContainer" instance=ExtResource("11_headu")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7, 0, -1)
 
 [node name="2WayRoadTest2" parent="NavGraphContainer" instance=ExtResource("11_headu")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7, 0, 3)
+
+[node name="2WayRoadTest8" parent="NavGraphContainer" instance=ExtResource("11_headu")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -17, 0, 10)
+
+[node name="2WayRoadTest9" parent="NavGraphContainer" instance=ExtResource("11_headu")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -22, 0, 10)
+
+[node name="2WayRoadTest10" parent="NavGraphContainer" instance=ExtResource("11_headu")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -22, 0, 14)
 
 [node name="2WayRoadTest3" parent="NavGraphContainer" instance=ExtResource("11_headu")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7, 0, 7)
@@ -162,6 +191,30 @@ script = ExtResource("12_04cna")
 
 [node name="Start2" type="Node3D" parent="NavGraphContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0.001, 11)
+script = ExtResource("12_04cna")
+
+[node name="End3" type="Node3D" parent="NavGraphContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, -0.01, 8)
+script = ExtResource("12_04cna")
+
+[node name="Start3" type="Node3D" parent="NavGraphContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0.001, 8)
+script = ExtResource("12_04cna")
+
+[node name="End4" type="Node3D" parent="NavGraphContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, -0.01, 12)
+script = ExtResource("12_04cna")
+
+[node name="Start4" type="Node3D" parent="NavGraphContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.001, 12)
+script = ExtResource("12_04cna")
+
+[node name="End5" type="Node3D" parent="NavGraphContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, -0.01, 16)
+script = ExtResource("12_04cna")
+
+[node name="Start5" type="Node3D" parent="NavGraphContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.001, 16)
 script = ExtResource("12_04cna")
 
 [node name="Cursor" type="Node3D" parent="."]
@@ -211,6 +264,39 @@ graph = NodePath("../../NavGraphContainer")
 script = ExtResource("13_tisgn")
 Start = NodePath("../../../NavGraphContainer/Start2")
 End = NodePath("../../../NavGraphContainer/End2")
+metadata/_custom_type_script = "uid://d2bnw7v3euuw3"
+
+[node name="Vehicle3" parent="VehicleContainer" node_paths=PackedStringArray("VehicleController", "graph") instance=ExtResource("14_cthtj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.103, 0, 6.73373)
+VehicleController = NodePath("PredeterminedRouteController")
+graph = NodePath("../../NavGraphContainer")
+
+[node name="PredeterminedRouteController" type="Node3D" parent="VehicleContainer/Vehicle3" node_paths=PackedStringArray("Start", "End")]
+script = ExtResource("13_tisgn")
+Start = NodePath("../../../NavGraphContainer/Start3")
+End = NodePath("../../../NavGraphContainer/End3")
+metadata/_custom_type_script = "uid://d2bnw7v3euuw3"
+
+[node name="Vehicle4" parent="VehicleContainer" node_paths=PackedStringArray("VehicleController", "graph") instance=ExtResource("14_cthtj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8057, 0, 11)
+VehicleController = NodePath("PredeterminedRouteController")
+graph = NodePath("../../NavGraphContainer")
+
+[node name="PredeterminedRouteController" type="Node3D" parent="VehicleContainer/Vehicle4" node_paths=PackedStringArray("Start", "End")]
+script = ExtResource("13_tisgn")
+Start = NodePath("../../../NavGraphContainer/Start4")
+End = NodePath("../../../NavGraphContainer/End4")
+metadata/_custom_type_script = "uid://d2bnw7v3euuw3"
+
+[node name="Vehicle5" parent="VehicleContainer" node_paths=PackedStringArray("VehicleController", "graph") instance=ExtResource("14_cthtj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1597, 0, 11)
+VehicleController = NodePath("PredeterminedRouteController")
+graph = NodePath("../../NavGraphContainer")
+
+[node name="PredeterminedRouteController" type="Node3D" parent="VehicleContainer/Vehicle5" node_paths=PackedStringArray("Start", "End")]
+script = ExtResource("13_tisgn")
+Start = NodePath("../../../NavGraphContainer/Start5")
+End = NodePath("../../../NavGraphContainer/End5")
 metadata/_custom_type_script = "uid://d2bnw7v3euuw3"
 
 [node name="DebugVisualizer" type="Node" parent="."]
