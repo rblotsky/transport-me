@@ -15,7 +15,6 @@ namespace Transportme.Main.Scripts.Editor
             camera = GetChild<Camera3D>(0);
         }
 
-
         public override void _Process(double delta)
         {
             Vector3 move = new Vector3();
@@ -23,28 +22,28 @@ namespace Transportme.Main.Scripts.Editor
             {
                 move += Vector3.Forward;
             }
-
             if (Input.IsActionPressed("move_backward"))
             {
                 move += Vector3.Back;
             }
             if (Input.IsActionPressed("move_left"))
             {
-                move += Vector3.Left;
+                move += Vector3.Right;
             }
             if (Input.IsActionPressed("move_right"))
             {
-                move += Vector3.Right;
+                move += Vector3.Left;
             }
 
-            camera.GetParent<Node3D>().Position += GetNoHeightVector(move * Quaternion.FromEuler(camera.Rotation)) * (float)delta * 4;
+            camera.GetParent<Node3D>().Position += GetNoHeightVector(move * Quaternion.FromEuler(camera.Rotation)) * (float)delta * 4 * (Input.IsActionPressed("move_amplifier") ? 4 : 1);
             base._Process(delta);
         }
 
         private Vector3 GetNoHeightVector(Vector3 v)
         {
             v.Y = 0;
-            return v;
+            v.X *= -1;
+            return v.Normalized();
         }
     }
 }
