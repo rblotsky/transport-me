@@ -171,9 +171,9 @@ namespace Transportme.Main.Scripts.Vehicle
 			yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.LimeGreen);
 			yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, 0.1f, Colors.LimeGreen);
 			yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.backPoint, 0.1f, Colors.LimeGreen);
-			foreach(var thing in _route.GetVisualization())
+			foreach(var visualization in _route.GetVisualization())
 			{
-				yield return thing;
+				yield return visualization;
 			}
 
 		}

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Godot;
-/// <summary>
-/// This model tracks the essential information needed to visually display a vehicle (or collider) on the route
-/// Usually this would be returned by a route, which knows where the vehicle is, and knows where the vehicle will
-/// be going next. This does not represent the true position along the route!
-/// </summary>
-public partial class RoutePoint : RefCounted
+namespace Transportme.Main.Scripts.Route
+{
+	/// <summary>
+	/// This model tracks the essential information needed to visually display a vehicle (or collider) on the route
+	/// Usually this would be returned by a route, which knows where the vehicle is, and knows where the vehicle will
+	/// be going next. This does not represent the true position along the route!
+	/// </summary>
+	public partial class RoutePoint : RefCounted
 	{
 		public Vector3 Position { get { return _globalPoint;  } set { _globalPoint = value; } }
 		public Vector3 Rotation { get { return _rotationVector; } set { _rotationVector = value; } }
@@ -24,3 +26,5 @@ public partial class RoutePoint : RefCounted
 		public Vector3 forwardPoint { set; get; }
 		public float lerpValue { set; get; }
 	}
+
+}

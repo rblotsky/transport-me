@@ -12,7 +12,7 @@ namespace Transportme.Main.Scripts.Route
     /// <summary>
     /// First iteration of the new route system. This simply provides all of the code needed to move a vehicle along a route
     /// </summary>
-    public partial class RouteV2 : RefCounted, IRouteMovementIterator
+    public partial class SingleRoute : RefCounted, IRouteMovementIterator
     {
         private RouteResult _routeResult;
         private List<NavSegment> route;
@@ -22,7 +22,12 @@ namespace Transportme.Main.Scripts.Route
         private double? _length = null;
         public double Length { get { return _length ?? ComputeLength(); } }
 
-        public void InitializeRoute(NavConnection start, NavConnection end)
+        public static SingleRoute Pathfind(NavConnection start, NavConnection end)
+        {
+            SingleRoute singleRoute = new SingleRoute(start, end);
+            return singleRoute;
+        }
+        public SingleRoute(NavConnection start, NavConnection end)
         {
             _routeResult = AStar.Compute(start, end);
             route = _routeResult.GetPath().ToList();
@@ -69,7 +74,7 @@ namespace Transportme.Main.Scripts.Route
                 Vector3 direction = (route[trackedIndex].GetPositionOnSegment(0.01f) - route[trackedIndex].GlobalStart).Normalized();
                 return route[trackedIndex].GlobalStart + ((float)currentDistance * direction);
             }
-            else if (trackedIndex == route.Count) //after the end
+            else if (trackedIndex == route.Count) // after the end
             {
                 if (!exterpolate)
                 {
@@ -79,7 +84,7 @@ namespace Transportme.Main.Scripts.Route
                 return route.Last().GlobalEnd + ((float)currentDistance * direction);
             }
 
-            //actually found a segment
+            // actually found a segment
             return route[trackedIndex].GetPositionOnSegmentAbsolute((float)currentDistance);
         }
         
