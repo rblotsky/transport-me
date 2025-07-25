@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://vsc84g2baeuc" path="res://Main/Scripts/Editor/Cursor.cs" id="5_mhk0g"]
 [ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_rsmg7"]
 [ext_resource type="Script" uid="uid://b0hfppsfwtirj" path="res://Main/Scripts/Editor/CameraMovement.cs" id="6_6crjd"]
-[ext_resource type="Script" uid="uid://can2dojlmlrtw" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
+[ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="7_1jqut"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="8_fh4jr"]
 [ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_kdo4v"]
 [ext_resource type="PackedScene" uid="uid://cd3hxbasfduee" path="res://Main/Resources/NetworkPrototype/2WayRoadTest.tscn" id="13_0n1v6"]

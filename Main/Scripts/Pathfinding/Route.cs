@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Transportme.Main.Scripts.Route;
 
 [Obsolete]
 public partial class Route : RefCounted
