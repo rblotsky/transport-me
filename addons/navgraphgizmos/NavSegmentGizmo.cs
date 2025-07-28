@@ -10,10 +10,10 @@ using System.Windows.Markup;
 [Tool]
 public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
 {
-    private Color defaultLineColour = Colors.Blue;
-    private Color selectedLineColour = Colors.Blue;
-    private Color defaultArrowColour = Colors.Blue;
-    private Color selectedArrowColour = Colors.Blue;
+    private Color defaultColour = Colors.Blue;
+    private Color teleportColour = Colors.DarkBlue;
+    private int defaultLineSubdivisions = 9;
+    private int teleportLineSubdivisions = 20;
 
     public override string _GetGizmoName()
     {
@@ -31,17 +31,22 @@ public partial class NavSegmentGizmo : EditorNode3DGizmoPlugin
         NavSegment node = (NavSegment)gizmo.GetNode3D();
 
         // Decides colour to use based on whether gizmo is selected
-        Color lineColour = defaultLineColour;
-        Color arrowColour = defaultArrowColour;
+        Color lineColour = defaultColour;
+        Color arrowColour = defaultColour;
+        int lineSubdivisions = defaultLineSubdivisions;
+        bool isLineDashed = false;
 
-        if(EditorInterface.Singleton.GetSelection().GetSelectedNodes().Contains(node))
+        // Changes the display a bit if the segment is a teleport segment
+        if (node.Teleport)
         {
-            lineColour = selectedLineColour;
-            arrowColour = selectedArrowColour;
+            lineSubdivisions = teleportLineSubdivisions;
+            isLineDashed = true;
+            lineColour = teleportColour;
+            arrowColour = teleportColour;
         }
 
         // Adds the actual visualization
-        ImmediateMesh curveMesh = EasyShapes.OrderedLinesMesh(node.SubdivideIntoPoints(9), lineColour);
+        ImmediateMesh curveMesh = EasyShapes.OrderedLinesMesh(node.SubdivideIntoPoints(lineSubdivisions), lineColour, isLineDashed);
         Mesh arrowMesh = EasyShapes.TrianglePointerMesh(arrowColour, 0.15f);
         gizmo.AddMesh(curveMesh);
         gizmo.AddMesh(arrowMesh, null, new Transform3D(Basis.LookingAt(node.DirectionalLine, Vector3.Up), node.GetPositionOnSegment(0.5f, false)));

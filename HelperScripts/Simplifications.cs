@@ -200,7 +200,6 @@ public static class Simplifications
         return (node.GetParent() != null) && (node.GetParent() is T);
     }
 
-
     // Math
     public static Quaternion ShortestArc(Vector3 start, Vector3 end)
     {
@@ -285,7 +284,7 @@ public static class Simplifications
         Vector3 right = up.Cross(forward).Normalized();
         if (right.LengthSquared() == 0.0f)
         {
-            // up and forward are parallel — choose another up vector
+            // up and forward are parallel ï¿½ choose another up vector
             right = Vector3.Forward.Cross(forward).Normalized();
         }
 

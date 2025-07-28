@@ -200,10 +200,16 @@ public static class EasyShapes
         return mesh;
     }
 
-    public static ImmediateMesh OrderedLinesMesh(Vector3[] points, Color colourToUse)
+    public static ImmediateMesh OrderedLinesMesh(Vector3[] points, Color colourToUse, bool isDashed = false)
     {
         ImmediateMesh mesh = new ImmediateMesh();
-        mesh.SurfaceBegin(Mesh.PrimitiveType.LineStrip, ColouredMaterial(colourToUse, 1));
+        Mesh.PrimitiveType linesType = Mesh.PrimitiveType.LineStrip;
+        if(isDashed)
+        {
+            linesType = Mesh.PrimitiveType.Lines;
+        }
+
+        mesh.SurfaceBegin(linesType, ColouredMaterial(colourToUse, 1));
 
         foreach(Vector3 point in points)
         {

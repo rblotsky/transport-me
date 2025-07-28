@@ -2,21 +2,24 @@ using Godot;
 using System;
 using System.ComponentModel.Design;
 
+[GlobalClass]
 [Tool]
 public abstract partial class NavSegment : Node3D
 {
     // DATA //
     // Navigation and Usage
     [Export] public float MaxSpeed = 30f;
+    [Export] private bool teleport = false;
 
     // Readonly Properties
+    public bool Teleport { get { return teleport; } }
     public abstract Vector3 Start { get; }
     public abstract Vector3 End { get; }
     public Vector3 GlobalStart { get { return ToGlobal(Start); } }
     public Vector3 GlobalEnd { get { return ToGlobal(End); } }
     public Vector3 DirectionalLine { get { return End - Start; } }
-    public float SimpleLength { get { return DirectionalLine.Length(); } }
-    public float Length { get { return _length.HasValue ? _length.Value : ComputeLength(); } }
+    public virtual float SimpleLength { get { return DirectionalLine.Length(); } }
+    public virtual float Length { get { return _length.HasValue ? _length.Value : ComputeLength(); } }
     private float? _length;
 
     // Runtime only properties
@@ -42,6 +45,11 @@ public abstract partial class NavSegment : Node3D
 
     private float ComputeLength()
     {
+        if(teleport)
+        {
+            return 0;
+        }
+
         float trueLength = 0f;
         Vector3[] points = SubdivideIntoPoints(10);
         for (int i = 1; i < points.Length; i++)

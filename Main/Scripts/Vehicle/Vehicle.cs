@@ -13,7 +13,7 @@ namespace Transportme.Main.Scripts.Vehicle
 	/// of the vehicle at certain events should be passed to the <seealso cref="VehicleController"/>.
 	/// </summary>
 	[GlobalClass]
-	public partial class Vehicle : Node3D, IDebugVisualizationProvider, ISimulatedEntity
+	public partial class Vehicle : Node3D, IDebugVisualizationProvider
 	{
 		// DATA //
 		// Instance Configs
@@ -51,9 +51,14 @@ namespace Transportme.Main.Scripts.Vehicle
         #region Godot Overrides
         public override void _Ready()
         {
-            SimulationController.instance.RegisterEntity(this);
             VehicleController.NotifyRouteComplete(this);
             base._Ready();
+        }
+
+        public override void _PhysicsProcess(double delta)
+        {
+            RunMovementIteration(delta);
+            base._PhysicsProcess(delta);
         }
 
         public override void _Process(double delta)
@@ -78,19 +83,7 @@ namespace Transportme.Main.Scripts.Vehicle
             base._EnterTree();
         }
 
-        public override void _ExitTree()
-        {
-            SimulationController.instance.DeregisterEntity(this);
-            base._ExitTree();
-        }
-
         #endregion
-
-        public void SimulationStep(double delta)
-        {
-            RunMovementIteration(delta);
-            base._PhysicsProcess(delta);
-        }
 
 
         private double GetTurningSpeedLimit()
