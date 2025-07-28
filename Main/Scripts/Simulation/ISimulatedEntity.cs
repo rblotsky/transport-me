@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public interface ISimulatedEntity
 {
-    public void BeforeSimulationStep(float deltaTimeInSim) { }
-    public void AfterSimulationStep(float deltaTimeInSim) { }
-    public void SimulationStep(float deltaTimeInSim) { }
+    public void BeforeSimulationStep(double deltaTimeInSim) { }
+    public void AfterSimulationStep(double deltaTimeInSim) { }
+    public void SimulationStep(double deltaTimeInSim) { }
 }

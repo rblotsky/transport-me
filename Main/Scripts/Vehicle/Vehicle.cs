@@ -13,7 +13,7 @@ namespace Transportme.Main.Scripts.Vehicle
 	/// of the vehicle at certain events should be passed to the <seealso cref="VehicleController"/>.
 	/// </summary>
 	[GlobalClass]
-	public partial class Vehicle : Node3D, IDebugVisualizationProvider
+	public partial class Vehicle : Node3D, IDebugVisualizationProvider, ISimulatedEntity
 	{
 		// DATA //
 		// Instance Configs
@@ -35,18 +35,65 @@ namespace Transportme.Main.Scripts.Vehicle
 				return _route.GetCurrentSegment();
 			}
 		}
-		// Cached Data
+        private void OnNewRoute()
+        {
+            timeStopped = 0f;
+        }
 
-		private void OnNewRoute()
-		{
-			timeStopped = 0f;
-		}
-
-		protected double timeStopped = 0;
+        // Cached Data
+        protected double timeStopped = 0;
 		private float turningRadius = 0;
 		private double _speed;
 		public double Speed { get { return _speed; } set { _speed = value; } }
-		private double GetTurningSpeedLimit()
+
+
+        // METHODS //
+        #region Godot Overrides
+        public override void _Ready()
+        {
+            SimulationController.instance.RegisterEntity(this);
+            VehicleController.NotifyRouteComplete(this);
+            base._Ready();
+        }
+
+        public override void _Process(double delta)
+        {
+            if (speedLabel != null)
+            {
+                double speedLimit = GetTurningSpeedLimit();
+                speedLabel.Text = $"""Speed: {Speed.ToString("0.##")}   Turning Max Speed: {speedLimit.ToString("0.##")} Turning Radius: {turningRadius.ToString("0.##")}""";
+            }
+            base._Process(delta);
+        }
+
+        public override void _EnterTree()
+        {
+            graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
+            attachedColliders = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
+            //GD.Print(attachedColliders.Count);
+            foreach (VehicleCollider c in attachedColliders)
+            {
+                c.AssociatedVehicle = this;
+            }
+            base._EnterTree();
+        }
+
+        public override void _ExitTree()
+        {
+            SimulationController.instance.DeregisterEntity(this);
+            base._ExitTree();
+        }
+
+        #endregion
+
+        public void SimulationStep(double delta)
+        {
+            RunMovementIteration(delta);
+            base._PhysicsProcess(delta);
+        }
+
+
+        private double GetTurningSpeedLimit()
 		{
 			RoutePoint original = Route.GetPositionOnRoute(VehicleProperties, 0);
 			RoutePoint advance = Route.GetPositionOnRoute(VehicleProperties, 2);
@@ -68,42 +115,6 @@ namespace Transportme.Main.Scripts.Vehicle
 			double thing = Math.Sqrt(10 * (radius + 1));
 			return thing;
 		}
-
-		#region Godot Overrides
-		public override void _Ready()
-		{
-			VehicleController.NotifyRouteComplete(this);
-			base._Ready();
-		}
-		public override void _PhysicsProcess(double delta)
-		{
-			RunMovementIteration(delta);
-			base._PhysicsProcess(delta);
-		}
-
-		public override void _Process(double delta)
-		{
-			if (speedLabel != null)
-			{
-				double speedLimit = GetTurningSpeedLimit();
-				speedLabel.Text = $"""Speed: {Speed.ToString("0.##")}   Turning Max Speed: {speedLimit.ToString("0.##")} Turning Radius: {turningRadius.ToString("0.##")}""";
-			}
-			base._Process(delta);
-		}
-
-		public override void _EnterTree()
-		{
-			graph = Simplifications.GetFirstChildOfType<NavGraphContainer>(GetNode("/root/"), true);
-			attachedColliders = Simplifications.GetChildrenOfType<VehicleCollider>(this, true);
-			//GD.Print(attachedColliders.Count);
-			foreach(VehicleCollider c in attachedColliders)
-			{
-				c.AssociatedVehicle = this;
-			}
-			base._EnterTree();
-		}
-
-		#endregion
 
 		// Movement Functions
 		protected void RunMovementIteration(double iterationDelta)
