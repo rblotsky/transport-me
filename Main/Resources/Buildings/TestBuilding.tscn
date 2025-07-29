@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvqgfgvu5aajy"]
-
-[ext_resource type="Script" uid="uid://dfcmge7tl5s" path="res://Main/Scripts/Buildings/Building.cs" id="1_tr0ew"]
-
-[node name="TestBuilding" type="Node3D"]
-script = ExtResource("1_tr0ew")
-metadata/_custom_type_script = "uid://dfcmge7tl5s"

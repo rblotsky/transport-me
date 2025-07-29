@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://bvqgfgvu5aajy"]
+
+[ext_resource type="Script" uid="uid://dfcmge7tl5s" path="res://Main/Scripts/Buildings/Building.cs" id="1_tr0ew"]
+[ext_resource type="Script" uid="uid://bbhxfp7mi65jt" path="res://Main/Scripts/Navigation/BezierCurveNavSegment.cs" id="2_vtwu1"]
+[ext_resource type="Script" uid="uid://c2acksxjlrfeu" path="res://Main/Scripts/Navigation/NavCheckpoint.cs" id="3_a8k7f"]
+[ext_resource type="PackedScene" uid="uid://hh5wtl3vfvou" path="res://Main/Resources/NetworkPrototype/2WayRoadEndTest.tscn" id="4_y65m0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kgpmf"]
+albedo_color = Color(0.62723, 0.299185, 0.196946, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_atp50"]
+material = SubResource("StandardMaterial3D_kgpmf")
+size = Vector3(5, 2, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtwu1"]
+albedo_color = Color(1, 0.565872, 0.826758, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_vtwu1"]
+material = SubResource("StandardMaterial3D_vtwu1")
+size = Vector2(1, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ay7ju"]
+albedo_color = Color(0.267498, 0.108522, 0.0591637, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_je3fy"]
+material = SubResource("StandardMaterial3D_ay7ju")
+size = Vector3(5, 1, 5)
+
+[node name="AmandasHouse" type="Node3D" node_paths=PackedStringArray("accessPoint")]
+script = ExtResource("1_tr0ew")
+name = "Amanda's House"
+accessPoint = NodePath("NavSegments/NavCheckpoint")
+metadata/_custom_type_script = "uid://dfcmge7tl5s"
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_atp50")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.53086, 0.7, -1)
+mesh = SubResource("QuadMesh_vtwu1")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.50971, 0.7, -1)
+mesh = SubResource("QuadMesh_vtwu1")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0.7, 2.526)
+mesh = SubResource("QuadMesh_vtwu1")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+mesh = SubResource("PrismMesh_je3fy")
+skeleton = NodePath("../..")
+
+[node name="NavSegments" type="Node3D" parent="."]
+
+[node name="BezierCurveNavSegment" type="Node3D" parent="NavSegments"]
+script = ExtResource("2_vtwu1")
+CurveStart = Vector3(0, 0, 3)
+CurveEnd = Vector3(0, 0, 0)
+CurveControl = Vector3(-1, 0, 1)
+teleport = true
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
+
+[node name="BezierCurveNavSegment4" type="Node3D" parent="NavSegments"]
+script = ExtResource("2_vtwu1")
+CurveStart = Vector3(0, 0, 0)
+CurveEnd = Vector3(0, 0, 3)
+CurveControl = Vector3(1, 0, 1)
+teleport = true
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
+
+[node name="BezierCurveNavSegment2" type="Node3D" parent="NavSegments"]
+script = ExtResource("2_vtwu1")
+CurveStart = Vector3(3, 0, -1)
+CurveEnd = Vector3(0, 0, 0)
+CurveControl = Vector3(1, 0, -1)
+teleport = true
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
+
+[node name="BezierCurveNavSegment5" type="Node3D" parent="NavSegments"]
+script = ExtResource("2_vtwu1")
+CurveStart = Vector3(0, 0, 0)
+CurveEnd = Vector3(3, 0, -1)
+CurveControl = Vector3(1, 0, 1)
+teleport = true
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
+
+[node name="BezierCurveNavSegment3" type="Node3D" parent="NavSegments"]
+script = ExtResource("2_vtwu1")
+CurveStart = Vector3(-3, 0, -1)
+CurveEnd = Vector3(0, 0, 0)
+CurveControl = Vector3(-1, 0, -1)
+teleport = true
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
+
+[node name="BezierCurveNavSegment6" type="Node3D" parent="NavSegments"]
+script = ExtResource("2_vtwu1")
+CurveStart = Vector3(0, 0, 0)
+CurveEnd = Vector3(-3, 0, -1)
+CurveControl = Vector3(-1, 0, 1)
+teleport = true
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
+
+[node name="NavCheckpoint" type="Node3D" parent="NavSegments"]
+script = ExtResource("3_a8k7f")
+metadata/_custom_type_script = "uid://c2acksxjlrfeu"
+
+[node name="2WayRoadEndTest" parent="." instance=ExtResource("4_y65m0")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 3)
+
+[node name="2WayRoadEndTest2" parent="." instance=ExtResource("4_y65m0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, -1)
+
+[node name="2WayRoadEndTest3" parent="." instance=ExtResource("4_y65m0")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 3, 0, -1)

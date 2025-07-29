@@ -65,7 +65,7 @@ public partial class BezierCurveNavSegmentGizmo : EditorNode3DGizmoPlugin
         Vector3 newPosition = node.GetCurvePointByIndex(handleId);
         if (mousePosWorld != null)
         {
-            newPosition = mousePosWorld.Value;
+            newPosition = node.ToLocal(mousePosWorld.Value);
         }
 
         if (Input.IsKeyPressed(Key.Ctrl))

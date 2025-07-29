@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyql68okv8eso"]
+[gd_scene load_steps=4 format=3 uid="uid://dyql68okv8eso"]
 
 [ext_resource type="Script" uid="uid://dcqnm7wuhdvv0" path="res://Main/Scripts/Navigation/PloppableGraph.cs" id="1_n53sf"]
 [ext_resource type="Script" uid="uid://c2acksxjlrfeu" path="res://Main/Scripts/Navigation/NavCheckpoint.cs" id="3_7tt38"]
+[ext_resource type="Script" uid="uid://bbhxfp7mi65jt" path="res://Main/Scripts/Navigation/BezierCurveNavSegment.cs" id="3_x7p23"]
 
 [node name="CursedHouse" type="Node3D"]
 
@@ -11,3 +12,17 @@ script = ExtResource("1_n53sf")
 [node name="NavCheckpoint" type="Node3D" parent="PloppableGraph"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 10, 0)
 script = ExtResource("3_7tt38")
+
+[node name="BezierCurveNavSegment" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_x7p23")
+CurveStart = Vector3(0, 0, 0)
+CurveEnd = Vector3(1, 10, 0)
+CurveControl = Vector3(0, 5, 1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
+
+[node name="BezierCurveNavSegment2" type="Node3D" parent="PloppableGraph"]
+script = ExtResource("3_x7p23")
+CurveStart = Vector3(1, 10, 0)
+CurveEnd = Vector3(0, 0, 0)
+CurveControl = Vector3(0, 5, -1)
+metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
