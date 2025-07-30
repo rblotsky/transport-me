@@ -36,17 +36,11 @@ public partial class PrototypeEditor : Node
 						GD.Print("TODO spawn a vehicle!");
 						break;
 					case Key.E:
-                        foreach (var vehicle in Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray())
-                        {
-                            vehicle.Speed += 1;
-						}
+						GetNode<SimulationController>("/root/root/SimulationController").simulationTimeMultiplier += 1;
 						break;
 					case Key.Q:
-                        foreach (var item in Simplifications.GetChildrenOfType<Vehicle>(GetParent(), true).ToArray())
-                        {
-							item.Speed -= 1;
-                        };
-						break;
+                        GetNode<SimulationController>("/root/root/SimulationController").simulationTimeMultiplier -= 1;
+                        break;
 					case Key.R:
 						GD.Print("Pressed R");
 						if ((debugVisualizer.ActiveFilters & DebugVisualizationFilters.VehicleCollisions) != 0)

@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bbvgi821f26l6" path="res://Main/Scripts/Pathfinding/RouteDebugger.cs" id="3_hdc8g"]
 [ext_resource type="Script" uid="uid://dpg1tr80y0gne" path="res://Main/Scripts/Editor/PrototypeEditor.cs" id="4_xgohg"]
 [ext_resource type="Script" uid="uid://tm1mp2ddijny" path="res://Main/Scripts/Editor/SceneSaver.cs" id="5_rhtpp"]
-[ext_resource type="Script" uid="uid://baaflhdu6rbpm" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_4te8r"]
+[ext_resource type="Script" uid="uid://can2dojlmlrtw" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="6_4te8r"]
 [ext_resource type="Script" uid="uid://b0hfppsfwtirj" path="res://Main/Scripts/Editor/CameraMovement.cs" id="6_nmvsy"]
 [ext_resource type="PackedScene" uid="uid://dkodwwif53crr" path="res://Main/Resources/WorldGridViewer.tscn" id="7_0g7jp"]
 [ext_resource type="Script" path="res://Main/Scripts/Navigation/NavGraphContainer.cs" id="8_tr6be"]
@@ -51,7 +51,7 @@ size = Vector3(200, 0.1, 200)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
 
-[node name="Node3D" type="Node3D"]
+[node name="root" type="Node3D"]
 
 [node name="PrototypeUi" type="Control" parent="."]
 layout_mode = 3
@@ -275,7 +275,6 @@ script = ExtResource("14_rhtpp")
 CurveStart = Vector3(1, 0, 9)
 CurveEnd = Vector3(3, 0, -3)
 CurveControl = Vector3(1, 0, -3)
-teleport = true
 metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
 [node name="BezierCurveNavSegment2" type="Node3D" parent="NavGraphContainer"]
@@ -283,7 +282,6 @@ script = ExtResource("14_rhtpp")
 CurveStart = Vector3(3, 0, -5)
 CurveEnd = Vector3(-1, 0, 9)
 CurveControl = Vector3(-1, 0, -5)
-teleport = true
 metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
 [node name="Cursor" type="Node3D" parent="."]

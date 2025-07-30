@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Transportme.Main.DevTools;
 using Transportme.Main.Scripts.Route;
+using Transportme.Main.Scripts.Simulation;
 
 namespace Transportme.Main.Scripts.Vehicle
 {
@@ -13,7 +14,7 @@ namespace Transportme.Main.Scripts.Vehicle
 	/// of the vehicle at certain events should be passed to the <seealso cref="VehicleController"/>.
 	/// </summary>
 	[GlobalClass]
-	public partial class Vehicle : Node3D, IDebugVisualizationProvider
+	public partial class Vehicle : Node3D, IDebugVisualizationProvider, ISimulatable
 	{
 		// DATA //
 		// Instance Configs
@@ -52,13 +53,14 @@ namespace Transportme.Main.Scripts.Vehicle
         public override void _Ready()
         {
             VehicleController.NotifyRouteComplete(this);
+			var a = GetNode("/root/root/SimulationController");
+			GD.Print(a.GetType().ToString());
+            SimulationController sim = GetNode<SimulationController>("/root/root/SimulationController");
+			if (sim == null) {
+				GD.PrintErr("Vehicle > Couldn't find a Simulation Controller Node!");
+			}
+			sim.Register(this);
             base._Ready();
-        }
-
-        public override void _PhysicsProcess(double delta)
-        {
-            RunMovementIteration(delta);
-            base._PhysicsProcess(delta);
         }
 
         public override void _Process(double delta)
@@ -109,8 +111,32 @@ namespace Transportme.Main.Scripts.Vehicle
 			return thing;
 		}
 
-		// Movement Functions
-		protected void RunMovementIteration(double iterationDelta)
+        // Movement Functions
+
+        public void BeforeSimulationStep()
+        {
+            if (_route == null || _route.IsFinishedRoute() || timeStopped > 10)
+            {
+                VehicleController.NotifyRouteComplete(this);
+                return;
+            }
+        }
+
+        public void Simulate(double delta)
+        {
+            RunMovementIteration(delta);
+        }
+
+        public void AfterSimulationStep()
+        {
+            //update collider positions
+            foreach (VehicleCollider col in attachedColliders)
+            {
+                col.HandleUpdatePosition(_route);
+            }
+        }
+
+        protected void RunMovementIteration(double iterationDelta)
 		{
 			//figure out how to do this
 			//if (distanceAlongRoute > route.GetLength())
@@ -120,11 +146,7 @@ namespace Transportme.Main.Scripts.Vehicle
 			//}
 			// collider checks
 			// Decides whether to move at all this frame (is another vehicle blocking it?)
-			if (_route == null || _route.IsFinishedRoute() || timeStopped > 10)
-			{
-				VehicleController.NotifyRouteComplete(this);
-				return;
-			}
+
 
 			bool shouldStop = false;
 			for(int i = 0; i < attachedColliders.Count; i++)
@@ -161,12 +183,6 @@ namespace Transportme.Main.Scripts.Vehicle
 			// update distance along route
 			double newDistance = _speed * iterationDelta;
 			_route.Move(newDistance);
-
-			//update collider positions
-			foreach(VehicleCollider col in attachedColliders)
-			{
-				col.HandleUpdatePosition(_route);
-			}
 		}
 
 		public IEnumerable<DebugVisualization> GetVisualization()
@@ -181,5 +197,5 @@ namespace Transportme.Main.Scripts.Vehicle
 			}
 
 		}
-	}
+    }
 }
