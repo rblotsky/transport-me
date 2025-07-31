@@ -85,6 +85,13 @@ namespace Transportme.Main.Scripts.Vehicle
             base._EnterTree();
         }
 
+        public override void _ExitTree()
+        {
+            SimulationController sim = GetNode<SimulationController>("/root/root/SimulationController");
+			sim.Unregister(this);
+            base._ExitTree();
+        }
+
         #endregion
 
 
@@ -183,6 +190,11 @@ namespace Transportme.Main.Scripts.Vehicle
 			// update distance along route
 			double newDistance = _speed * iterationDelta;
 			_route.Move(newDistance);
+		}
+
+		public void ResetSimulation()
+		{
+			throw new NotImplementedException();
 		}
 
 		public IEnumerable<DebugVisualization> GetVisualization()

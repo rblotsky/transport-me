@@ -8,6 +8,7 @@ namespace Transportme.Main.Scripts.Simulation
 {
     public interface ISimulatable
     {
+        void ResetSimulation();
         void BeforeSimulationStep();
         void Simulate(double delta);
         void AfterSimulationStep();

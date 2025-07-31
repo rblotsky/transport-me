@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cdsolc63uov8s"]
+[gd_scene load_steps=28 format=3 uid="uid://cdsolc63uov8s"]
 
 [ext_resource type="PackedScene" uid="uid://cuch527r34ce4" path="res://Main/Resources/DebugVisualizerUIPanel.tscn" id="1_olv4u"]
 [ext_resource type="Script" uid="uid://ctwwrpt8yb0kp" path="res://HelperScripts/Debugger3D.cs" id="1_t2p50"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://c88hq48phuv84" path="res://Main/Resources/NetworkPrototype/HouseTest.tscn" id="15_sfyuv"]
 [ext_resource type="Script" uid="uid://b2sf4loy7waro" path="res://Main/Scripts/DevTools/DebugVisualizer.cs" id="16_jf1gt"]
 [ext_resource type="PackedScene" uid="uid://bvqgfgvu5aajy" path="res://Main/Resources/Buildings/AmandasHouse.tscn" id="18_01ode"]
+[ext_resource type="Script" uid="uid://dj5mmvp811txh" path="res://Main/Scripts/Simulation/SimulationController.cs" id="21_er7ih"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnkjm"]
 albedo_color = Color(0, 0.8977, 0.550284, 1)
@@ -44,7 +45,7 @@ size = Vector3(200, 0.1, 200)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciyus"]
 
-[node name="Root" type="Node3D" groups=["DebugVisualProvider"]]
+[node name="root" type="Node3D" groups=["DebugVisualProvider"]]
 
 [node name="PrototypeUi" type="Control" parent="."]
 layout_mode = 3
@@ -80,12 +81,13 @@ script = ExtResource("1_t2p50")
 [node name="RouteDebugger" type="Node" parent="."]
 script = ExtResource("2_jfx1u")
 
-[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph")]
+[node name="PrototypeEditor" type="Node" parent="." node_paths=PackedStringArray("camera", "cursor", "grid", "navGraph", "debugVisualizer")]
 script = ExtResource("4_ywgcf")
 camera = NodePath("../CameraAnchor/TrackballCamera")
 cursor = NodePath("../Cursor")
 grid = NodePath("../WorldGridViewer")
 navGraph = NodePath("../NavGraphContainer")
+debugVisualizer = NodePath("../Debug Visualizer")
 
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("5_rsmg7")
@@ -425,3 +427,7 @@ graph = NodePath("../../NavGraphContainer")
 
 [node name="Debug Visualizer" type="Node" parent="."]
 script = ExtResource("16_jf1gt")
+
+[node name="SimulationController" type="Node" parent="."]
+script = ExtResource("21_er7ih")
+metadata/_custom_type_script = "uid://dj5mmvp811txh"

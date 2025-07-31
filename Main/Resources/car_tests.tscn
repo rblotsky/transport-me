@@ -390,6 +390,7 @@ metadata/_custom_type_script = "uid://d2bnw7v3euuw3"
 
 [node name="Vehicle6" parent="VehicleContainer" node_paths=PackedStringArray("VehicleController", "graph") instance=ExtResource("14_cthtj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1597, 0, -2)
+visible = false
 VehicleController = NodePath("PredeterminedRouteController")
 graph = NodePath("../../NavGraphContainer")
 
@@ -401,6 +402,7 @@ metadata/_custom_type_script = "uid://d2bnw7v3euuw3"
 
 [node name="Vehicle7" parent="VehicleContainer" node_paths=PackedStringArray("VehicleController", "graph") instance=ExtResource("14_cthtj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1597, 0, -2)
+visible = false
 VehicleController = NodePath("PredeterminedRouteController")
 graph = NodePath("../../NavGraphContainer")
 
@@ -415,4 +417,5 @@ script = ExtResource("15_3e7pg")
 
 [node name="SimulationController" type="Node" parent="."]
 script = ExtResource("18_xgohg")
+_isSimulationRunning = true
 metadata/_custom_type_script = "uid://dj5mmvp811txh"

@@ -41,7 +41,13 @@ public partial class PrototypeEditor : Node
 					case Key.Q:
                         GetNode<SimulationController>("/root/root/SimulationController").simulationTimeMultiplier -= 1;
                         break;
-					case Key.R:
+					case Key.Space:
+						GetNode<SimulationController>("/root/root/SimulationController").ToggleSimulation();
+						break;
+					case Key.Y:
+						GetNode<SimulationController>("/root/root/SimulationController").SimulateSteps(100);
+						break;
+                    case Key.R:
 						GD.Print("Pressed R");
 						if ((debugVisualizer.ActiveFilters & DebugVisualizationFilters.VehicleCollisions) != 0)
 						{

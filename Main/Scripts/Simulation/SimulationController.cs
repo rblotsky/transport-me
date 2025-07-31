@@ -13,27 +13,57 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
     [Export] public double simulationTimeMultiplier { get { return _multiplier; } set { UpdateSimulationStep(value); _multiplier = value; } }
     // the base we use as modifiers. Represents the amount of seconds per (in game) minute
     private static double baseSimulationSpeed = 0.2d;
-    private double cachedSimulationStep = 0.2f;
+    private double cachedSimulationStep = 0.2d;
     // Usually gets re-freshed and goes down
     private double _timeUntilNextSimTick = 0f;
+    [Export] private bool _isSimulationRunning = false;
+    public bool IsSimulationRunning { get { return _isSimulationRunning; } }
 
     private List<ISimulatable> subscribers;
+    private List<ISimulatable> pendingRemoval;
 
     public override void _EnterTree()
     {
         subscribers = new List<ISimulatable>();
+        pendingRemoval = new List<ISimulatable>();
         base._EnterTree();
     }
     // METHODS //
     public override void _PhysicsProcess(double delta)
     {
+        if(!_isSimulationRunning) return;
         _timeUntilNextSimTick -= delta;
         while (_timeUntilNextSimTick < 0f)
         {
             _timeUntilNextSimTick += cachedSimulationStep;
-            subscribers.ForEach(s => s.BeforeSimulationStep());
-            subscribers.ForEach((s) => s.Simulate(0.02));
-            subscribers.ForEach(s => s.AfterSimulationStep());
+            SimulationStep();
+        }   
+    }
+
+    private void SimulationStep()
+    {
+        subscribers.ForEach(s => s.BeforeSimulationStep());
+        subscribers.ForEach((s) => s.Simulate(0.02));
+        subscribers.ForEach(s => s.AfterSimulationStep());
+
+        foreach (ISimulatable toRemove in pendingRemoval)
+        {
+            subscribers.Remove(toRemove);
+        }
+        pendingRemoval.Clear();
+
+    }
+
+    public void ToggleSimulation()
+    {
+        _isSimulationRunning = !IsSimulationRunning;
+    }
+
+    public void SimulateSteps(int stepsCount)
+    {
+        for (int i = 0; i < stepsCount; i++)
+        {
+            SimulationStep();
         }
     }
 
@@ -59,8 +89,9 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
 
     public void Unregister(ISimulatable item)
     {
-        if (subscribers.Contains(item)) { 
-            subscribers.Remove(item);
+        if (subscribers.Contains(item))
+        {
+            pendingRemoval.Add(item);
         }
     }
 }
