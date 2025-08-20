@@ -27,9 +27,13 @@ namespace Transportme.Main.Scripts.Vehicle
                 Quaternion,
                 new Vector3(1, 1, 2),
                 Colors.Black);
+            yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);
+            if(associatedVehicle.Route == null)
+            {
+                yield break;
+            }
             RoutePoint point = associatedVehicle.Route.GetPositionOnRoute(associatedVehicle.VehicleProperties, 0);
             yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
-            yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);
         }
     }
 }

@@ -275,6 +275,7 @@ script = ExtResource("14_rhtpp")
 CurveStart = Vector3(1, 0, 9)
 CurveEnd = Vector3(3, 0, -3)
 CurveControl = Vector3(1, 0, -3)
+teleport = true
 metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
 [node name="BezierCurveNavSegment2" type="Node3D" parent="NavGraphContainer"]
@@ -282,6 +283,7 @@ script = ExtResource("14_rhtpp")
 CurveStart = Vector3(3, 0, -5)
 CurveEnd = Vector3(-1, 0, 9)
 CurveControl = Vector3(-1, 0, -5)
+teleport = true
 metadata/_custom_type_script = "uid://bbhxfp7mi65jt"
 
 [node name="Cursor" type="Node3D" parent="."]

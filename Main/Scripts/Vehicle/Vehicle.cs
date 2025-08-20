@@ -65,11 +65,17 @@ namespace Transportme.Main.Scripts.Vehicle
 
         public override void _Process(double delta)
         {
-            if (speedLabel != null)
-            {
-                double speedLimit = GetTurningSpeedLimit();
-                speedLabel.Text = $"""Speed: {Speed.ToString("0.##")}   Turning Max Speed: {speedLimit.ToString("0.##")} Turning Radius: {turningRadius.ToString("0.##")}""";
-            }
+			if(speedLabel != null)
+			{
+				string speedText;
+				if(Route != null){
+					speedText = GetTurningSpeedLimit().ToString("0.##");
+				} else
+				{
+					speedText = "NULL";
+				}
+				speedLabel.Text = $"""Speed: {Speed.ToString("0.##")}   Turning Max Speed: {speedText} Turning Radius: {turningRadius.ToString("0.##")}""";
+			}
             base._Process(delta);
         }
 
@@ -199,6 +205,10 @@ namespace Transportme.Main.Scripts.Vehicle
 
 		public IEnumerable<DebugVisualization> GetVisualization()
 		{
+			if(Route == null)
+			{
+				yield break;
+			}
 			var point = Route.GetPositionOnRoute(VehicleProperties, 2);
 			yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.LimeGreen);
 			yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, 0.1f, Colors.LimeGreen);

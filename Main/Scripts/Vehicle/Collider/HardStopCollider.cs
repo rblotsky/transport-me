@@ -16,7 +16,7 @@ namespace Transportme.Main.Scripts.Vehicle
 
 		public override void HandleUpdatePosition(IRouteMovementIterator route)
 		{
-			float brakingDistance = GetBrakingDistance();
+			float brakingDistance = GetBrakingDistance() + associatedVehicle.VehicleProperties.chassisLength / 2;
 			RoutePoint point = route.GetPositionOnRoute(associatedVehicle.VehicleProperties, brakingDistance);
 			FaceDirectionOfMotion(point.Rotation);
 			GlobalPosition = point.Position;
@@ -35,9 +35,12 @@ namespace Transportme.Main.Scripts.Vehicle
 				Quaternion,
 				((BoxShape3D)Simplifications.GetFirstChildOfType<CollisionShape3D>(this).Shape).Size,
 				Colors.Black);
-			RoutePoint point = associatedVehicle.Route.GetPositionOnRoute(AssociatedVehicle.VehicleProperties, GetBrakingDistance());
-			yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
 			yield return DebugVisualizationFactory.Sphere([DebugVisualizationFilters.VehicleCollisions], GlobalPosition, 0.1f, Colors.Black);
+			if(associatedVehicle.Route != null)
+			{
+				RoutePoint point = associatedVehicle.Route.GetPositionOnRoute(AssociatedVehicle.VehicleProperties, GetBrakingDistance());
+				yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
+			}
 		}
 	}
 }

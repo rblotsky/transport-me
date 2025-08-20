@@ -8,6 +8,7 @@ using Transportme.Main.Scripts.Route;
 
 namespace Transportme.Main.Scripts.Vehicle
 {
+    [GlobalClass]
     public partial class RandomPathfindingVehicle : VehicleController
     {
         public override void _EnterTree()

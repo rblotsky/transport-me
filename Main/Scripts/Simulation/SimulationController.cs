@@ -10,7 +10,7 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
 {
     // DATA //
     private double _multiplier = 1.0f;
-    [Export] public double simulationTimeMultiplier { get { return _multiplier; } set { UpdateSimulationStep(value); _multiplier = value; } }
+    [Export] public double simulationTimeMultiplier { get { return _multiplier; } set { UpdateSimulationStep(value); } }
     // the base we use as modifiers. Represents the amount of seconds per (in game) minute
     private static double baseSimulationSpeed = 0.2d;
     private double cachedSimulationStep = 0.2d;
@@ -20,12 +20,14 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
     public bool IsSimulationRunning { get { return _isSimulationRunning; } }
 
     private List<ISimulatable> subscribers;
+    private List<ISimulatable> pendingAddition;
     private List<ISimulatable> pendingRemoval;
 
     public override void _EnterTree()
     {
         subscribers = new List<ISimulatable>();
         pendingRemoval = new List<ISimulatable>();
+        pendingAddition = new List<ISimulatable>();
         base._EnterTree();
     }
     // METHODS //
@@ -42,6 +44,11 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
 
     private void SimulationStep()
     {
+        foreach (ISimulatable toAdd in pendingAddition)
+        {
+            subscribers.Add(toAdd);
+        }
+        //todo pending additons
         subscribers.ForEach(s => s.BeforeSimulationStep());
         subscribers.ForEach((s) => s.Simulate(0.02));
         subscribers.ForEach(s => s.AfterSimulationStep());
@@ -51,6 +58,7 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
             subscribers.Remove(toRemove);
         }
         pendingRemoval.Clear();
+        pendingAddition.Clear();
 
     }
 
@@ -70,7 +78,8 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
     private void UpdateSimulationStep(double newMultiplier)
     {
         GD.Print("Simulation Controller > Updated multiplier to ", newMultiplier);
-        cachedSimulationStep = baseSimulationSpeed / simulationTimeMultiplier;
+        _multiplier = newMultiplier;
+        cachedSimulationStep = baseSimulationSpeed / newMultiplier;
     }
 
     public double CurrentSimulationTimeSeconds()
@@ -83,7 +92,7 @@ public partial class SimulationController : Node, IMyObservable<ISimulatable>
         if (!subscribers.Contains(item))
         {
             GD.Print("SimController > Registered", item);
-            subscribers.Add(item);
+            pendingAddition.Add(item);
         }
     }
 

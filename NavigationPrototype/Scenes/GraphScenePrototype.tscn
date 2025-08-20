@@ -196,11 +196,11 @@ script = ExtResource("6_vr73p")
 savedSceneName = "GraphScenePrototype"
 
 [node name="CameraAnchor" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.95159, 0, 18.9148)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18963, 0, 13.501)
 script = ExtResource("7_v7p14")
 
 [node name="TrackballCamera" type="Camera3D" parent="CameraAnchor"]
-transform = Transform3D(1, 0, 0, 0, 0.834261, 0.551369, 0, -0.551369, 0.834261, 0, 10.4922, 15.8044)
+transform = Transform3D(-0.95694, 0.224766, -0.183699, 9.31323e-09, 0.632824, 0.774297, 0.290285, 0.740955, -0.605573, -3.23199, 13.6848, -10.6544)
 current = true
 script = ExtResource("8_3pbgc")
 stabilize_horizon = true
@@ -212,7 +212,7 @@ pitch_top_limit = 0.87
 pitch_bottom_limit = 0.1
 
 [node name="WorldGridViewer" type="Node3D" parent="." node_paths=PackedStringArray("gridRenderer") instance=ExtResource("9_0f55j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.0581, 0, 27.002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 19)
 visible = false
 script = ExtResource("10_shym1")
 gridRenderer = NodePath("MeshInstance3D")
@@ -486,7 +486,7 @@ accessPoint = NodePath("NavSegments/NavCheckpoint")
 metadata/_custom_type_script = "uid://dfcmge7tl5s"
 
 [node name="Cursor" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 27)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 19)
 script = ExtResource("24_d2k0d")
 useSmoothing = false
 
@@ -630,6 +630,6 @@ script = ExtResource("28_m5rxr")
 
 [node name="SimulationController" type="Node" parent="."]
 script = ExtResource("29_fbfef")
-simulationTimeMultiplier = 21.0
+simulationTimeMultiplier = 7.0
 _isSimulationRunning = true
 metadata/_custom_type_script = "uid://dj5mmvp811txh"
