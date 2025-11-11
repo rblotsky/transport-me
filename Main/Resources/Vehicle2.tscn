@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://dj7ka8sphrkpk"]
+[gd_scene load_steps=10 format=3 uid="uid://bi4w1ifv73484"]
 
-[ext_resource type="Script" uid="uid://cptcteh41gs42" path="res://Main/Scripts/Vehicle/Vehicle.cs" id="1_047b1"]
-[ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/Resources/NetworkPrototype/low_poly_car_no_light.glb" id="1_g51oh"]
-[ext_resource type="Script" uid="uid://bumbrr155ry5f" path="res://Main/Scripts/Vehicle/Collider/MainVehicle.cs" id="1_mpqlx"]
-[ext_resource type="Resource" uid="uid://dfg587hd3gdvo" path="res://Main/Resources/Vehicles/standard_car.tres" id="2_047b1"]
-[ext_resource type="Script" uid="uid://c8n8pxyxa2ss7" path="res://Main/Scripts/Vehicle/Collider/HardStopCollider.cs" id="3_hsyqr"]
-[ext_resource type="Script" uid="uid://8ehvhak1ntt5" path="res://Main/Scripts/Vehicle/Controller/RandomPathfindingVehicle.cs" id="6_67850"]
+[ext_resource type="Script" uid="uid://cptcteh41gs42" path="res://Main/Scripts/Vehicle/Vehicle.cs" id="1_byhmi"]
+[ext_resource type="Resource" uid="uid://dfg587hd3gdvo" path="res://Main/Resources/Vehicles/standard_car.tres" id="2_bsijn"]
+[ext_resource type="Script" uid="uid://bumbrr155ry5f" path="res://Main/Scripts/Vehicle/Collider/MainVehicle.cs" id="3_iadpk"]
+[ext_resource type="PackedScene" uid="uid://djoi4wgf28io0" path="res://Main/Resources/NetworkPrototype/low_poly_car_no_light.glb" id="4_mu4c5"]
+[ext_resource type="Script" uid="uid://c8n8pxyxa2ss7" path="res://Main/Scripts/Vehicle/Collider/HardStopCollider.cs" id="5_vlmoq"]
+[ext_resource type="Script" uid="uid://8ehvhak1ntt5" path="res://Main/Scripts/Vehicle/Controller/RandomPathfindingVehicle.cs" id="6_livwd"]
+[ext_resource type="Script" uid="uid://bjfdq0ysv4ecf" path="res://Main/Scripts/Vehicle/Collider/DynamicVehicleColliderManager.cs" id="7_bsijn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6deww"]
 height = 2.30079
@@ -14,13 +15,13 @@ height = 2.30079
 size = Vector3(0.543085, 1.01514, 2.01789)
 
 [node name="Vehicle" type="Node3D" node_paths=PackedStringArray("VehicleController", "speedLabel")]
-script = ExtResource("1_047b1")
-VehicleProperties = ExtResource("2_047b1")
+script = ExtResource("1_byhmi")
+VehicleProperties = ExtResource("2_bsijn")
 VehicleController = NodePath("Controller")
 speedLabel = NodePath("Area3D/Label3D")
 
 [node name="Area3D" type="Area3D" parent="."]
-script = ExtResource("1_mpqlx")
+script = ExtResource("3_iadpk")
 
 [node name="Label3D" type="Label3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75883, 0)
@@ -31,7 +32,7 @@ text = "adsfadsf"
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.460936, 0.00593746)
 shape = SubResource("CapsuleShape3D_6deww")
 
-[node name="low_poly_car_no_light" parent="Area3D" instance=ExtResource("1_g51oh")]
+[node name="low_poly_car_no_light" parent="Area3D" instance=ExtResource("4_mu4c5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Area3D/low_poly_car_no_light"]
@@ -47,7 +48,7 @@ spot_range = 8.0
 spot_angle = 37.65
 
 [node name="Area3D2" type="Area3D" parent="."]
-script = ExtResource("3_hsyqr")
+script = ExtResource("5_vlmoq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000614002, 0.467529, 0.0387763)
@@ -55,4 +56,8 @@ shape = SubResource("BoxShape3D_872b6")
 debug_fill = false
 
 [node name="Controller" type="Node3D" parent="."]
-script = ExtResource("6_67850")
+script = ExtResource("6_livwd")
+
+[node name="DynamicVehicleColliderManager" type="Area3D" parent="."]
+script = ExtResource("7_bsijn")
+metadata/_custom_type_script = "uid://bjfdq0ysv4ecf"

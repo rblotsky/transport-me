@@ -34,6 +34,11 @@ namespace Transportme.Main.Scripts.Vehicle
             }
             RoutePoint point = associatedVehicle.Route.GetPositionOnRoute(associatedVehicle.VehicleProperties, 0);
             yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.forwardPoint, point.backPoint, Colors.Black);
+            yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.Position, point.Position + Transform.Basis.X, Colors.Aqua);
+            yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.Position, point.Position + Transform.Basis.Y, Colors.Green);
+            yield return DebugVisualizationFactory.Line([DebugVisualizationFilters.VehicleCollisions], point.Position, point.Position + Transform.Basis.Z, Colors.Yellow);
+
+
         }
     }
 }

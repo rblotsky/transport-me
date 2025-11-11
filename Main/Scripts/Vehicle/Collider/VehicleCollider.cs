@@ -37,7 +37,7 @@ namespace Transportme.Main.Scripts.Vehicle
 			{
 				if(area is VehicleCollider && ((VehicleCollider)area).AssociatedVehicle != associatedVehicle)
 				{
-					validColliders.Add((VehicleCollider)area);
+                    validColliders.Add((VehicleCollider)area);
 				}
 			}
 			return ShouldStop(validColliders);

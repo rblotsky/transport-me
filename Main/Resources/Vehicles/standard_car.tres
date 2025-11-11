@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_s0rhg")
-chassisLength = 0.0
+chassisLength = 2.0
 chassisWidth = 0.0
 maxSpeed = 7.5
 accelerationPower = 1.0

@@ -5,7 +5,9 @@ using Transportme.Main.DevTools;
 using Transportme.Main.Scripts.Route;
 namespace Transportme.Main.Scripts.Vehicle
 {
-	public partial class HardStopCollider : VehicleCollider, IDebugVisualizationProvider
+    [GlobalClass]
+
+    public partial class HardStopCollider : VehicleCollider, IDebugVisualizationProvider
 	{
 		private float GetBrakingDistance()
 		{
@@ -24,7 +26,8 @@ namespace Transportme.Main.Scripts.Vehicle
 
 		protected override bool ShouldStop(List<VehicleCollider> colliders)
 		{
-			return colliders.Count > 0;
+			//GD.Print("Hard stop collider stopping: ", colliders.Count);
+            return colliders.Count > 0;
 		}
 
 		public IEnumerable<DebugVisualization> GetVisualization()

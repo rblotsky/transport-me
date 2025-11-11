@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3gxobwwt4wfd"]
+
+[ext_resource type="Script" uid="uid://b5wnirupb5w0q" path="res://Main/Scripts/Vehicle/Collider/DynamicVehicleCollider.cs" id="1_vt8jo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_872b6"]
+size = Vector3(0.543085, 1.01514, 2.01789)
+
+[node name="DynamicVehicleCollider" type="Area3D"]
+script = ExtResource("1_vt8jo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000614002, 0.467529, 0.0387763)
+shape = SubResource("BoxShape3D_872b6")
+debug_fill = false
